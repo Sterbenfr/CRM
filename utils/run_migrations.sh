@@ -3,7 +3,7 @@
 DATABASE_NAME=${DATABASE_NAME:-stage}
 USERNAME=${USERNAME:-root}
 PASSWORD=${PASSWORD:-welcome1}
-HOST=${HOST:-172.21.144.1}
+HOST=${HOST:-172.22.240.1}
 
 for file in ../migration/*.sql
 do

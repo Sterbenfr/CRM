@@ -330,6 +330,7 @@ function DonsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
+                        url: 'http://localhost:3000/api/dons',
                     }}
                 />
                 <Pagination
