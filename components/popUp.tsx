@@ -247,10 +247,10 @@ const PopUp: React.FC<PopUpProps> = ({
 
     return (
         <div className={'popup-container'}>
-            <div className={style.page}>
+            <div className={style.page1}>
                 <h2 className={style.lg}>Ajouter une nouvelle entrée</h2>
                 {inputs.map(input => (
-                    <div key={input.id}>
+                    <div className={style.rowPop} key={input.id}>
                         <label className={style.label}>
                             {fieldLabels[input.id]}
                         </label>
@@ -309,7 +309,6 @@ const PopUp: React.FC<PopUpProps> = ({
                     </button>
 
                     <button className={style.BTNsub} onClick={handleSubmit}>
-                    
                         Envoyer
                     </button>
                 </div>

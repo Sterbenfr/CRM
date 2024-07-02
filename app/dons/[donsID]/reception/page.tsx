@@ -64,6 +64,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Réception</h1>
                 <List
                     items={Receptions.map(Reception => ({
                         value1: Reception.code_Don.toString(),

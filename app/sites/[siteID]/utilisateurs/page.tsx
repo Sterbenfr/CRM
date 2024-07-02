@@ -62,6 +62,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Utilisateurs</h1>
                 <List
                     items={Utilisateurs.map(user => ({
                         value1: user.code_utilisateur.toString(),

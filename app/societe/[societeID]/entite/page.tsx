@@ -4,6 +4,7 @@ import List from '../../../../components/list'
 import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
+import style from '../../../../styles/components.module.css'
 
 export interface Entite {
     code_entite: number
@@ -75,7 +76,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
 
     return (
         <>
-            <div>
+            <div className={style.page}>
+                <h1 className={style.lg}>Entité</h1>
                 <List
                     items={Entites.map(entite => ({
                         value1: entite.code_entite.toString(),
@@ -108,137 +110,139 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 />
                 {''}
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/societe/${params.societeID}/entite`}
-                        fields={[
-                            {
-                                id: 'raison_sociale',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'nom_commercial',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'logo',
-                                type: 'file',
-                                value: null,
-                            },
-                            {
-                                id: 'Siret',
-                                type: 'number',
-                                value: null,
-                            },
-                            {
-                                id: 'code_ape',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'code_rna',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'code_cee',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'code_societe_appartenance',
-                                type: 'number',
-                                value: null,
-                            },
-                            {
-                                id: 'adresse',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'telephone',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'mail',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'site_internet',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'commentaires',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'code_type_entite',
-                                type: 'select',
-                                value: null,
-                                url: `../../api/societe/${params.societeID}/entite/type-entites`,
-                            },
-                            {
-                                id: 'code_type_don',
-                                type: 'select',
-                                value: null,
-                                url: `../../api/dons/type-don`,
-                            },
-                            {
-                                id: 'code_type_produit',
-                                type: 'select',
-                                value: null,
-                                url: `../../api/dons/type-produits`,
-                            },
-                            {
-                                id: 'code_type_competence',
-                                type: 'select',
-                                value: null,
-                                url: `../../api/dons/type-competences`,
-                            },
-                            {
-                                id: 'commentaires_logistique',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'presence_quai',
-                                type: 'checkbox',
-                                value: false,
-                            },
-                            {
-                                id: 'pieces_associees',
-                                type: 'file',
-                                value: null,
-                            },
-                            {
-                                id: 'mail_contact_prestataire',
-                                type: 'input',
-                                value: null,
-                            },
-                            {
-                                id: 'cerfa',
-                                type: 'checkbox',
-                                value: false,
-                            },
-                            {
-                                id: 'code_frequence_cerfa',
-                                type: 'select',
-                                value: null,
-                                url: `../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
-                            },
-                            {
-                                id: 'date_arret_activite',
-                                type: 'date',
-                                value: null,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUp}>
+                        <PopUp
+                            onClose={handleClose}
+                            url={`http://localhost:3000/api/societe/${params.societeID}/entite`}
+                            fields={[
+                                {
+                                    id: 'raison_sociale',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'nom_commercial',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'logo',
+                                    type: 'file',
+                                    value: null,
+                                },
+                                {
+                                    id: 'Siret',
+                                    type: 'number',
+                                    value: null,
+                                },
+                                {
+                                    id: 'code_ape',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'code_rna',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'code_cee',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'code_societe_appartenance',
+                                    type: 'number',
+                                    value: null,
+                                },
+                                {
+                                    id: 'adresse',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'telephone',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'mail',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'site_internet',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'commentaires',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'code_type_entite',
+                                    type: 'select',
+                                    value: null,
+                                    url: `../../api/societe/${params.societeID}/entite/type-entites`,
+                                },
+                                {
+                                    id: 'code_type_don',
+                                    type: 'select',
+                                    value: null,
+                                    url: `../../api/dons/type-don`,
+                                },
+                                {
+                                    id: 'code_type_produit',
+                                    type: 'select',
+                                    value: null,
+                                    url: `../../api/dons/type-produits`,
+                                },
+                                {
+                                    id: 'code_type_competence',
+                                    type: 'select',
+                                    value: null,
+                                    url: `../../api/dons/type-competences`,
+                                },
+                                {
+                                    id: 'commentaires_logistique',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'presence_quai',
+                                    type: 'checkbox',
+                                    value: false,
+                                },
+                                {
+                                    id: 'pieces_associees',
+                                    type: 'file',
+                                    value: null,
+                                },
+                                {
+                                    id: 'mail_contact_prestataire',
+                                    type: 'input',
+                                    value: null,
+                                },
+                                {
+                                    id: 'cerfa',
+                                    type: 'checkbox',
+                                    value: false,
+                                },
+                                {
+                                    id: 'code_frequence_cerfa',
+                                    type: 'select',
+                                    value: null,
+                                    url: `../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
+                                },
+                                {
+                                    id: 'date_arret_activite',
+                                    type: 'date',
+                                    value: null,
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>

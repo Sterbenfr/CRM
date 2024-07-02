@@ -4,6 +4,7 @@ import List from '@/components/list'
 import { Pagination } from '../../../../components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../../styles/components.module.css'
 
 export interface Groupe {
     code_Groupe: number
@@ -58,54 +59,75 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     return (
         <div>
             <>
-                <List
-                    items={groupes.map(groupe => ({
-                        value1: groupe.code_Groupe.toString(),
-                        value2: groupe.nom_du_Groupe,
-                        value3: groupe.site_web,
-                        value4: groupe.commentaires,
-                        value5:
-                            groupe.date_arret_activite_du_groupe == null
-                                ? ''
-                                : groupe.date_arret_activite_du_groupe
-                                      .toString()
-                                      .split('T')[0],
-                    }))}
-                    functions={{
-                        fonc1: () => {
-                            isPopUpOpen
-                                ? setIsPopUpOpen(false)
-                                : setIsPopUpOpen(true)
-                        },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/groupe`,
-                    }}
-                />
-                <Pagination
-                    onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
-                    itemsPerPage={itemsPerPage}
-                    currentPage={page}
-                />
-                {''}
-                {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
-                        fields={[
-                            { id: 'nom_du_groupe', type: 'input', value: null },
-                            { id: 'Logo', type: 'file', value: null },
-                            { id: 'site_Web', type: 'input', value: null },
-                            { id: 'date_fermeture', type: 'date', value: null },
-                            { id: 'commentaires', type: 'input', value: null },
-                            {
-                                id: 'date_arret_activite_du_Groupe',
-                                type: 'date',
-                                value: null,
+                <div className={style.page}>
+                    <h1 className={style.lg}>Groupe</h1>
+                    <List
+                        items={groupes.map(groupe => ({
+                            value1: groupe.code_Groupe.toString(),
+                            value2: groupe.nom_du_Groupe,
+                            value3: groupe.site_web,
+                            value4: groupe.commentaires,
+                            value5:
+                                groupe.date_arret_activite_du_groupe == null
+                                    ? ''
+                                    : groupe.date_arret_activite_du_groupe
+                                          .toString()
+                                          .split('T')[0],
+                        }))}
+                        functions={{
+                            fonc1: () => {
+                                isPopUpOpen
+                                    ? setIsPopUpOpen(false)
+                                    : setIsPopUpOpen(true)
                             },
-                        ]}
+                            url: `http://localhost:3000/api/societe/${params.societeID}/groupe`,
+                        }}
                     />
-                )}
+                    <Pagination
+                        onPageChange={handlePageChange}
+                        onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
+                        totalItems={totalItems} // use the total items from the state
+                        itemsPerPage={itemsPerPage}
+                        currentPage={page}
+                    />
+                    {''}
+                    {isPopUpOpen && (
+                        <div className={style.PopUp}>
+                            <PopUp
+                                onClose={handleClose}
+                                url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
+                                fields={[
+                                    {
+                                        id: 'nom_du_groupe',
+                                        type: 'input',
+                                        value: null,
+                                    },
+                                    { id: 'Logo', type: 'file', value: null },
+                                    {
+                                        id: 'site_Web',
+                                        type: 'input',
+                                        value: null,
+                                    },
+                                    {
+                                        id: 'date_fermeture',
+                                        type: 'date',
+                                        value: null,
+                                    },
+                                    {
+                                        id: 'commentaires',
+                                        type: 'input',
+                                        value: null,
+                                    },
+                                    {
+                                        id: 'date_arret_activite_du_Groupe',
+                                        type: 'date',
+                                        value: null,
+                                    },
+                                ]}
+                            />
+                        </div>
+                    )}
+                </div>
             </>
         </div>
     )
