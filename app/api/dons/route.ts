@@ -39,6 +39,7 @@ export async function GET(request: Request) {
 
 export async function POST(req: NextApiRequest) {
     let dons: Don
+    console.log(req.body)
     try {
         dons = JSON.parse(await streamToString(req.body))
     } catch (error) {
@@ -50,6 +51,9 @@ export async function POST(req: NextApiRequest) {
         !dons.code_type_don ||
         !dons.code_Utilisateur_saisie_don
     ) {
+        console.log(dons.date_proposition_don)
+        console.log(dons.code_type_don)
+        console.log(dons.code_Utilisateur_saisie_don)
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -57,8 +61,10 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log('hamburger')
         const query = 'INSERT INTO `dons` SET ?'
         const [rows] = await pool.query(query, dons)
+        console.log('poulets')
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

@@ -20,7 +20,7 @@ export interface Don {
     date_debut_mise_disposition: Date
     date_fin_mise_disposition: Date
     commentaires: string
-    pieces_associees: Blob
+    pieces_associees: Blob //Faire blob
     code_Utilisateur_saisie_don: number
     statut_acceptation_don: string
     date_acceptation_refus_don: Date
@@ -40,7 +40,7 @@ export interface Don {
 }
 
 function DonsPage() {
-    const [EntiteDonatrice, setEntiteDonatrice] = useState('2')
+    const [EntiteDonatrice, setEntiteDonatrice] = useState('')
     const [datePropositionDon, setDatePropositionDon] = useState(new Date())
     const [selectedTypeMarchandise, setSelectedTypeMarchandise] =
         useState('ALI')
@@ -53,15 +53,31 @@ function DonsPage() {
     const [finMiseDispo, setFinMiseDispo] = useState(new Date())
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
 
-    const [laststatutAcceptationDon, setLastStatutAcceptationDon] = useState('B')
+    const [laststatutAcceptationDon, setLastStatutAcceptationDon] =
+        useState('B')
     const [statutAcceptationDon, setStatutAcceptationDon] = useState(
-        laststatutAcceptationDon !== '' ? laststatutAcceptationDon : 'B')
+        laststatutAcceptationDon !== '' ? laststatutAcceptationDon : 'B',
+    )
 
-    const [dateAcceptationRefusDon, setDateAcceptationRefusDon] = useState(new Date())
-    const [codeUtilisateurAccepteRefuseDon, setCodeUtilisateurAccepteRefuseDon] = useState('')
+    const [dateAcceptationRefusDon, setDateAcceptationRefusDon] = useState(
+        new Date(),
+    )
+    const [
+        codeUtilisateurAccepteRefuseDon,
+        setCodeUtilisateurAccepteRefuseDon,
+    ] = useState('')
     const [siteBeneficiaireDon, setSiteBeneficiaireDon] = useState('')
-    const [checkboxChecked, setCheckboxChecked] = useState(false) //remerciemeD
+    const [indicateurRemerciement, setindicateurRemerciement] = useState(false) //remerciemeD
     const [dateRemerciement, setDateRemerciement] = useState(new Date())
+    const [nomDestinataireCerfa, setNomDestinataireCerfa] = useState('')
+    const [adresseDestinataireCerfa, setadresseDestinataireCerfa] = useState('')
+    const [adresseMailDestinataireCerfa, setAdresseMailDestinataireCerfa] =
+        useState('')
+    const [telephoneDestinataireCerfa, setTelephoneDestinataireCerfa] =
+        useState('')
+    const [valeurCerfa, setValeurCerfa] = useState(0)
+    const [cerfaFait, setCerfaFait] = useState(false)
+    const [dateCerfa, setDateCerfa] = useState(new Date())
 
     const [Dons, setDons] = useState<Don[]>([]) // list of dons
     const [page, setPage] = useState(1) // new state for the current page
@@ -82,7 +98,8 @@ function DonsPage() {
 
     const handleClose = () => {
         setIsPopUpOpen(false)
-        setCheckboxChecked(false)
+        setindicateurRemerciement(false)
+        setCerfaFait(false)
     }
     const handleEntiteDonatriceChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -160,6 +177,42 @@ function DonsPage() {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setCommentaires(event.target.value)
+    }
+
+    const handleNomDestinataireCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomDestinataireCerfa(event.target.value)
+    }
+
+    const handleadresseDestinataireCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setadresseDestinataireCerfa(event.target.value)
+    }
+
+    const handleAdresseMailDestinataireCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setAdresseMailDestinataireCerfa(event.target.value)
+    }
+
+    const handleTelephoneDestinataireCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setTelephoneDestinataireCerfa(event.target.value)
+    }
+
+    const handleValeurCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setValeurCerfa(parseInt(event.target.value))
+    }
+
+    const handleDateCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateCerfa(new Date(event.target.value))
     }
 
     type FieldType =
@@ -267,8 +320,9 @@ function DonsPage() {
                 {
                     id: 'indicateur_remerciement',
                     type: 'checkbox',
-                    value: checkboxChecked ? 'O' : 'N',
-                    onChange: () => setCheckboxChecked(!checkboxChecked),
+                    value: indicateurRemerciement ? 'O' : 'N',
+                    onChange: () =>
+                        setindicateurRemerciement(!indicateurRemerciement),
                 },
                 {
                     id: 'date_remerciement',
@@ -276,7 +330,53 @@ function DonsPage() {
                     value: dateRemerciement.toISOString().split('T')[0],
                     onInputChange: handleDateRemerciement,
                 },
-
+                {
+                    id: 'nom_destinataire_cerfa',
+                    type: 'input',
+                    value: nomDestinataireCerfa,
+                    placeholder: 'Exemple: Dupont',
+                    onInputChange: handleNomDestinataireCerfaChange,
+                },
+                {
+                    id: 'adresse_destinataire_cerfa',
+                    type: 'input',
+                    value: adresseDestinataireCerfa,
+                    placeholder: 'Exemple: 12 rue des lilas',
+                    onInputChange: handleadresseDestinataireCerfaChange,
+                },
+                {
+                    id: 'adresse_mail_destinataire_cerfa',
+                    type: 'input',
+                    value: adresseMailDestinataireCerfa,
+                    placeholder: 'Exemple: Exemple@exemple.com',
+                    onInputChange: handleAdresseMailDestinataireCerfaChange,
+                },
+                {
+                    id: 'telephone_destinataire_cerfa',
+                    type: 'input',
+                    value: telephoneDestinataireCerfa,
+                    placeholder: 'Exemple: 0601020304',
+                    onInputChange: handleTelephoneDestinataireCerfaChange,
+                },
+                {
+                    id: 'valeur_cerfa',
+                    type: 'number',
+                    value: valeurCerfa.toString(),
+                    placeholder: 'Exemple: 100',
+                    onInputChange: handleValeurCerfaChange,
+                },
+                {
+                    id: 'cerfa_fait',
+                    type: 'checkbox',
+                    value: cerfaFait ? 'O' : 'N',
+                    onChange: () => setCerfaFait(!cerfaFait),
+                },
+                {
+                    id: 'date_cerfa',
+                    type: 'date',
+                    value: dateCerfa.toISOString().split('T')[0],
+                    onInputChange: handleDateCerfaChange,
+                },
             ]
 
             if (selectedTypeDon === 'SIP') {
@@ -302,7 +402,7 @@ function DonsPage() {
 
             if (statutAcceptationDon !== 'B') {
                 setLastStatutAcceptationDon(statutAcceptationDon)
-                fields.push(                {
+                fields.push({
                     id: 'date_acceptation_refus_don',
                     type: 'date',
                     value: dateAcceptationRefusDon.toISOString().split('T')[0],
@@ -331,7 +431,7 @@ function DonsPage() {
             return fields
         },
         [
-            checkboxChecked,
+            indicateurRemerciement,
             EntiteDonatrice,
             commentaires,
             selectedTypeDon,
@@ -406,6 +506,7 @@ function DonsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
+                        url: 'http://localhost:3000/api/dons',
                     }}
                 />
                 <Pagination
