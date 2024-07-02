@@ -15,7 +15,6 @@ export interface Groupe {
 }
 
 function GroupesPage({ params }: { params: { societeID: string } }) {
-function GroupesPage({ params }: { params: { societeID: string } }) {
     const [groupes, setGroupes] = useState<Groupe[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
@@ -113,4 +112,3 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
 }
 
 export default withAuthorization(GroupesPage, ['AD', 'PR'])
-

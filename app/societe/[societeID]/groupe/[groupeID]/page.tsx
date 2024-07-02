@@ -96,6 +96,16 @@ export default function GroupePage({
                                       .split('T')[0]}
                         </p>
                     </div>
+                    <div className={style.info}>
+                        <a
+                            href={`/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}
+                        >
+                            <p className={style.titre}>
+                                {' '}
+                                Utilisateur(s) suivant le groupe{' '}
+                            </p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

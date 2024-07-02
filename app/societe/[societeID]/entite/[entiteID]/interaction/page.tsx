@@ -51,7 +51,6 @@ function InteractionsPage({
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
             }
-
             const { data, total }: { data: Interactions[]; total: number } =
                 await res.json()
             setInteractions(data)
@@ -112,13 +111,13 @@ function InteractionsPage({
                                     id: 'code_Utilisateur_Prospecteur',
                                     type: 'search',
                                     value: null,
-                                    url: '../api/select/sites/utilisateurs',
+                                    url: '../../../../../api/select/sites/utilisateurs',
                                 },
                                 {
                                     id: 'code_Entite_Prospectee',
                                     type: 'search',
                                     value: null,
-                                    url: '../api/select/societe/entite',
+                                    url: '../../../../../api/select/societe/entite',
                                 },
                                 {
                                     id: 'date_interaction',
@@ -129,19 +128,19 @@ function InteractionsPage({
                                     id: 'code_type_interaction',
                                     type: 'select',
                                     value: null,
-                                    url: '../api/interactions/type-interactions',
+                                    url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
                                 },
                                 {
                                     id: 'code_modalite_interaction',
                                     type: 'select',
                                     value: null,
-                                    url: '../api/interactions/type-modalite-interactions',
+                                    url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
                                 },
                                 {
                                     id: 'code_contact_entite',
                                     type: 'search',
                                     value: null,
-                                    url: `../api/select/societe/entite/${EntiteInteraction}/contact`,
+                                    url: `../../../../../api/select/societe/entite/${EntiteInteraction}/contact`,
                                     onInputChange: handleEntiteInteraction,
                                 },
                                 {
