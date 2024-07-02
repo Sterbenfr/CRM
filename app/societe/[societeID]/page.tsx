@@ -142,7 +142,7 @@ export default function SocietePage({
                         <a href={`/societe/${params.societeID}/entite`}>
                             <p className={style.titre}>
                                 {' '}
-                                Entités appartenant à l'entreprise{' '}
+                                Entité(s) appartenant à l&apos;entreprise{' '}
                             </p>
                         </a>
                     </div>
@@ -150,7 +150,17 @@ export default function SocietePage({
                         <a href={`/societe/${params.societeID}/groupe`}>
                             <p className={style.titre}>
                                 {' '}
-                                Groupe d'appartenance de la societe{' '}
+                                Groupe d&apos;appartenance de l&apos;entreprise{' '}
+                            </p>
+                        </a>
+                    </div>
+                    <div className={style.info}>
+                        <a
+                            href={`/societe/${params.societeID}/societe-site-link`}
+                        >
+                            <p className={style.titre}>
+                                {' '}
+                                Utilisateur(s) suivant l&apos;entreprise{' '}
                             </p>
                         </a>
                     </div>

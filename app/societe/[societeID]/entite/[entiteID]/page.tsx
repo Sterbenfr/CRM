@@ -274,6 +274,16 @@ export default function EntitePage({
                             </p>
                         </a>
                     </div>
+                    <div className={style.info}>
+                        <a
+                            href={`/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`}
+                        >
+                            <p className={style.titre}>
+                                {' '}
+                                Utilisateur(s) suivant l&apos;entité{' '}
+                            </p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
