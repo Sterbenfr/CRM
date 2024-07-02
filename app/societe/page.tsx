@@ -63,6 +63,7 @@ function SocietesPage() {
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Société</h1>
                 <List
                     items={Societes.map(Societe => ({
                         value1: Societe.code_Societe.toString(),

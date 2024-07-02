@@ -494,6 +494,8 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Modalités livraison</h1>
+
                 <List
                     items={ModalitesLivraisons.map(ModalitesLivraison => ({
                         value1: ModalitesLivraison.numero_livraison.toString(),

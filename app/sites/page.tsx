@@ -62,6 +62,7 @@ function SitesPage() {
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Sites</h1>
                 <List
                     items={Sites.map(Sites => ({
                         value1: Sites.code_site.toString(),

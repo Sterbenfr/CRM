@@ -1,6 +1,6 @@
 'use client'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Mukta } from 'next/font/google'
 import NavBar from '../components/NavBar'
 import { SessionProvider } from 'next-auth/react'
 import { ReactNode } from 'react'
@@ -10,7 +10,7 @@ interface RootLayoutProps {
     session: Session
 }
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Mukta({ weight: '500', subsets: ['latin'] })
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
     return (
