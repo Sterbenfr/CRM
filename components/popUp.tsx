@@ -25,6 +25,14 @@ const fieldLabels: { [key: string]: string } = {
     code_site_beneficiaire_don: 'Site du bénéficiaire',
     indicateur_remerciement: 'Indicateur du remerciement',
     date_remerciement: 'Date de remerciement du don',
+    nom_destinataire_cerfa: 'Nom du destinataire cerfa',
+    adresse_destinataire_cerfa: 'Adresse du destinataire cerfa',
+    adresse_mail_destinataire_cerfa: 'Adresse mail du destinataire cerfa',
+    telephone_destinataire_cerfa: 'Téléphone du destinataire cerfa',
+    valeur_cerfa: 'Valeur du cerfa',
+    cerfa_fait: 'Cerfa fait',
+    date_cerfa: 'Date du cerfa',
+    cerfa: 'Cerfa',
     //Modaliteés Livraison
     numero_livraison: 'Numéro de livraison',
     code_Don: 'Don',
@@ -148,7 +156,6 @@ const fieldLabels: { [key: string]: string } = {
     code_type_competence: 'Type de compétence',
     commentaires_logistique: 'Commentaires de logistique',
     presence_quai: 'Présence en quai',
-    cerfa: 'Cerfa',
     code_frequence_cerfa: 'Fréquence de Cerfa',
     date_arret_activite: "Date d'arrêt d'activité de l'entité",
     //ContactEntite
@@ -276,6 +283,22 @@ const PopUp: React.FC<PopUpProps> = ({
                                                 )
                                             }
                                             onInputChange={input.onInputChange}
+                                        />
+                                    )
+                                case 'checkbox':
+                                    return (
+                                        // Utilisez une classe CSS spécifique pour le style de la checkbox
+                                        <input
+                                            key={input.id}
+                                            type='checkbox'
+                                            checked={input.value === true}
+                                            className={style.checkboxF} // Appliquez votre classe CSS ici
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.checked,
+                                                )
+                                            }
                                         />
                                     )
                                 default:

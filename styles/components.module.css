@@ -413,6 +413,28 @@
     border: 2px solid black;
 }
 
+.checkboxF {
+    padding: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 1rem;
+    margin-left: 12.5rem;
+    margin-right: 13rem;
+    margin-top: 2rem;
+    border: 2px solid black;
+    border-radius: 0%;
+    font-family: inherit;
+    width: 25px;
+    height: 25px;
+    border: 10px solid white;
+    background-color: black;
+    accent-color: #e5007d;
+}
+
+.checkboxF:focus {
+    border: 2px solid black;
+}
+
 .BTNsub {
     width: 10rem;
     padding: 1rem;
