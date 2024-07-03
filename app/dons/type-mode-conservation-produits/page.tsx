@@ -59,8 +59,8 @@ function Mode_Conservations_ProduitsPage() {
                     onClose={handleClose}
                     url='http://localhost:3000/api/dons/type-mode-conservation-produits'
                     fields={[
-                        { id: 'id', type: 'input', value: null },
-                        { id: 'label', type: 'input', value: null },
+                        { id: 'id', type: 'input', value: null, required: true},
+                        { id: 'label', type: 'input', value: null, required: true},
                     ]}
                 />
             )}

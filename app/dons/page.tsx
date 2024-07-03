@@ -104,6 +104,7 @@ function DonsPage() {
             value: string | null
             placeholder?: string
             url?: string
+            required?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[]
@@ -268,6 +269,7 @@ function DonsPage() {
                 value: string | null
                 placeholder?: string
                 url?: string
+                required?: boolean
                 onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
                 onInputChange?: (
                     event: React.ChangeEvent<HTMLInputElement>,
@@ -278,12 +280,14 @@ function DonsPage() {
                     type: 'search',
                     value: EntiteDonatrice,
                     url: '../api/select/societe/entite',
+                    required: true,
                     onInputChange: handleEntiteDonatriceChange,
                 },
                 {
                     id: 'date_proposition_don',
                     type: 'date',
                     value: datePropositionDon.toISOString().split('T')[0],
+                    required: true,
                     onInputChange: handleDatePropositionDon,
                 },
                 {
@@ -291,12 +295,13 @@ function DonsPage() {
                     type: 'select',
                     value: null,
                     url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
-                },
+                },//si c'est un nouveau contact ?
                 {
                     id: 'code_type_don',
                     type: 'select',
                     value: selectedTypeDon,
                     url: '../api/dons/type-don',
+                    required: true,
                     onChange: handleTypeDonChange,
                 },
                 {

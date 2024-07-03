@@ -99,19 +99,16 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                             url={`http://localhost:3000/api/dons/${params.donsID}/reception`}
                             fields={[
                                 {
-                                    id: 'numero_reception',
-                                    type: 'number',
-                                    value: null,
-                                },
-                                {
                                     id: 'numero_livraison',
                                     type: 'number',
                                     value: null,
+                                    required: true,
                                 },
                                 {
                                     id: 'date_reception',
                                     type: 'date',
                                     value: null,
+                                    required: true,
                                 },
                                 {
                                     id: 'heure_reception',
@@ -122,7 +119,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                     id: 'nombre_palettes_recues',
                                     type: 'number',
                                     value: null,
-                                }, //remplissage auto
+                                },
                                 {
                                     id: 'nombre_palettes_consignees_recues',
                                     type: 'number',
