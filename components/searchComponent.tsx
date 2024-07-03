@@ -3,6 +3,7 @@ import style from '../styles/components.module.css'
 
 interface SelectComponentProps {
     url: string
+    required?: boolean
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     onInputChange?: React.ChangeEventHandler<HTMLInputElement>
 }

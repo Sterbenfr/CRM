@@ -4,6 +4,7 @@ import style from '../styles/components.module.css'
 interface SelectComponentProps {
     url: string
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    required?: boolean
 }
 
 interface Option {

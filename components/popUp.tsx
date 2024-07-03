@@ -183,6 +183,7 @@ type Field = {
     value: string | boolean | null
     placeholder?: string
     url?: string
+    required?: boolean
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
     onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -267,6 +268,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                         <SelectComponent
                                             key={input.id}
                                             url={input.url as string}
+                                            required={input.required}
                                             onChange={input.onChange}
                                         />
                                     )
@@ -275,6 +277,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                         <SearchComponent
                                             key={input.id}
                                             url={input.url as string}
+                                            required={input.required}
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
@@ -289,6 +292,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                         <input
                                             key={input.id}
                                             type='checkbox'
+                                            required={input.required}
                                             checked={input.value === true}
                                             className={style.checkboxF}
                                             onChange={e =>
@@ -306,6 +310,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                             key={input.id}
                                             type={input.type}
                                             placeholder={input.placeholder}
+                                            required={input.required}
                                             className={style.selectF}
                                             value={
                                                 input.value === null
