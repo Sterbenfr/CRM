@@ -15,7 +15,7 @@ CREATE TABLE Prestataires (
     mail_contact_prestataire VARCHAR(255),
     commentaires VARCHAR(200),
     date_arret_activite_du_prestataire DATE,
-    FOREIGN KEY (code_type_de_Prestataire) REFERENCES TypePrestataires(code_type_de_Prestataire)
+    FOREIGN KEY (code_type_de_Prestataire) REFERENCES TypePrestataires(code_type_de_Prestataire) ON UPDATE CASCADE
 );
 INSERT INTO Prestataires (
     code_type_de_Prestataire,

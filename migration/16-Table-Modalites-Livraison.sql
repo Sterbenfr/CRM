@@ -1,5 +1,5 @@
 CREATE TABLE ModalitesLivraison (
-    numero_livraison INT PRIMARY KEY,
+    numero_livraison INT AUTO_INCREMENT,
     code_Don INT,
     code_type_livraison CHAR(3),
     date_prevue_livraison DATE,
@@ -25,9 +25,10 @@ CREATE TABLE ModalitesLivraison (
     temperature_conserv_produits INT,
     commentaires VARCHAR(200),
     pieces_associees BLOB,
-    FOREIGN KEY (code_Don) REFERENCES Dons(code_Don),
-    FOREIGN KEY (code_type_livraison) REFERENCES TypeLivraison(code_type_livraison),
-    FOREIGN KEY (code_Prestataire_transporteur) REFERENCES Prestataires(code_Prestataire)
+    PRIMARY KEY (numero_livraison),
+    FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (code_type_livraison) REFERENCES TypeLivraison(code_type_livraison) ON UPDATE CASCADE,
+    FOREIGN KEY (code_Prestataire_transporteur) REFERENCES Prestataires(code_Prestataire) ON UPDATE CASCADE ON DELETE SET NULL
 );
 INSERT INTO ModalitesLivraison (
     numero_livraison,

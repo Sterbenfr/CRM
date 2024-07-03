@@ -10,7 +10,7 @@ CREATE TABLE Sites (
     adresse_mail TEXT,
     commentaires VARCHAR(200),
     PRIMARY KEY (code_site),
-    FOREIGN KEY (code_type_site) REFERENCES SiteTypes(code_type_site)
+    FOREIGN KEY (code_type_site) REFERENCES SiteTypes(code_type_site) ON UPDATE CASCADE
 );
 INSERT INTO Sites (
     designation_longue,
