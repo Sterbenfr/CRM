@@ -9,7 +9,7 @@ const fieldLabels: { [key: string]: string } = {
     code_Entite_donatrice: 'Entité donatrice',
     date_proposition_don: 'Date de proposition du don',
     code_contact_Entite_donatrice: "Contact de l'entité donatrice",
-    code_type_don: 'Type de don',
+    code_type_don: 'Type de dons',
     code_type_competences: 'Type de compétences',
     code_type_produits: 'Type de produits',
     code_mode_conservation_produits: 'Mode de conservation des produits',
@@ -20,9 +20,8 @@ const fieldLabels: { [key: string]: string } = {
     code_Utilisateur_saisie_don: 'Utilisateur de la saisie du don',
     statut_acceptation_don: 'Statut du don',
     date_acceptation_refus_don: "Date d'acceptation ou de refus du don",
-    type_date_acceptation_refus: 'TOSEE',
-    code_Utilisateur_accepte_refuse_don: 'Utilisateur',
-    code_site_beneficiaire_don: 'Site du bénéficiaire',
+    code_Utilisateur_accepte_refuse_don: 'Utilisateur statut du don',
+    code_site_beneficiaire_don: 'Site bénéficiaire du don',
     indicateur_remerciement: 'Indicateur du remerciement',
     date_remerciement: 'Date de remerciement du don',
     nom_destinataire_cerfa: 'Nom du destinataire cerfa',
@@ -287,18 +286,18 @@ const PopUp: React.FC<PopUpProps> = ({
                                     )
                                 case 'checkbox':
                                     return (
-                                        // Utilisez une classe CSS spécifique pour le style de la checkbox
                                         <input
                                             key={input.id}
                                             type='checkbox'
                                             checked={input.value === true}
-                                            className={style.checkboxF} // Appliquez votre classe CSS ici
+                                            className={style.checkboxF}
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
                                                     e.target.checked,
                                                 )
                                             }
+                                            onInput={input.onInputChange}
                                         />
                                     )
                                 default:
