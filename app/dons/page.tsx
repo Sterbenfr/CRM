@@ -36,7 +36,7 @@ export interface Don {
     valeur_cerfa: number
     cerfa_fait: string
     date_cerfa: Date
-    cerfa: Blob
+    cerfa: Blob //Faire blob
 }
 
 function DonsPage() {
@@ -49,15 +49,30 @@ function DonsPage() {
         lastSelectedTypeDon !== '' ? lastSelectedTypeDon : 'FIN',
     )
     const [commentaires, setCommentaires] = useState('')
-    const [debutMiseDispo, setDebutMiseDispo] = useState(new Date())
-    const [finMiseDispo, setFinMiseDispo] = useState(new Date())
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
-
+    
     const [laststatutAcceptationDon, setLastStatutAcceptationDon] =
-        useState('B')
+    useState('B')
     const [statutAcceptationDon, setStatutAcceptationDon] = useState(
         laststatutAcceptationDon !== '' ? laststatutAcceptationDon : 'B',
     )
+    
+    const [lastindicateurRemerciement, setLastIndicateurRemerciement] = useState(false)
+    const [indicateurRemerciement, setindicateurRemerciement] = useState(
+        lastindicateurRemerciement !== false ? lastindicateurRemerciement : false)
+        
+    const [lastcerfaFait, setLastcerfaFait] = useState(false)
+    const [cerfaFait, setCerfaFait] = useState(
+        lastcerfaFait !== false ? lastcerfaFait : false)
+        
+        
+    const [lastdebutMiseDispo, setLastDebutMiseDispo] = useState(new Date())
+    const [debutMiseDispo, setDebutMiseDispo] = useState(
+        lastdebutMiseDispo !== new Date() ? lastdebutMiseDispo : new Date())
+
+    const [lastfinMiseDispo, setLastFinMiseDispo] = useState(new Date())
+    const [finMiseDispo, setFinMiseDispo] = useState(
+        lastfinMiseDispo !== new Date() ? lastfinMiseDispo : new Date())
 
     const [dateAcceptationRefusDon, setDateAcceptationRefusDon] = useState(
         new Date(),
@@ -67,7 +82,6 @@ function DonsPage() {
         setCodeUtilisateurAccepteRefuseDon,
     ] = useState('')
     const [siteBeneficiaireDon, setSiteBeneficiaireDon] = useState('')
-    const [indicateurRemerciement, setindicateurRemerciement] = useState(false) //remerciemeD
     const [dateRemerciement, setDateRemerciement] = useState(new Date())
     const [nomDestinataireCerfa, setNomDestinataireCerfa] = useState('')
     const [adresseDestinataireCerfa, setadresseDestinataireCerfa] = useState('')
@@ -75,8 +89,7 @@ function DonsPage() {
         useState('')
     const [telephoneDestinataireCerfa, setTelephoneDestinataireCerfa] =
         useState('')
-    const [valeurCerfa, setValeurCerfa] = useState(0)
-    const [cerfaFait, setCerfaFait] = useState(false)
+    const [valeurCerfa, setValeurCerfa] = useState('') 
     const [dateCerfa, setDateCerfa] = useState(new Date())
 
     const [Dons, setDons] = useState<Don[]>([]) // list of dons
@@ -113,16 +126,30 @@ function DonsPage() {
         setSiteBeneficiaireDon(event.target.value)
     }
 
+    const handleIndicateurRemerciement = () => {
+        setindicateurRemerciement(!indicateurRemerciement)
+    }
+
+    const handleCerfaFait = () => {
+        setCerfaFait(!cerfaFait)
+    }
+
     const handleDatePropositionDon = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDatePropositionDon(new Date(event.target.value))
     }
 
-    const handleDateRemerciement = (
+    const handleDateRemerciementChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateRemerciement(new Date(event.target.value))
+    }
+
+    const handleDateCerfaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateCerfa(new Date(event.target.value))
     }
 
     const handleTypeDonChange = (
@@ -137,11 +164,17 @@ function DonsPage() {
         setDebutMiseDispo(new Date(event.target.value))
     }
 
-    const handleFinMiseDispoChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setFinMiseDispo(new Date(event.target.value))
-    }
+    const handleFinMiseDispoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let returnedDate = new Date(event.target.value);
+        const newFinMiseDispo = new Date(event.target.value).toISOString().split('T')[0];
+        const debut = debutMiseDispo.toISOString().split('T')[0]
+        if (newFinMiseDispo < debut) {
+            returnedDate = debutMiseDispo;
+            setFinMiseDispo(returnedDate);
+        } else {
+            setFinMiseDispo(returnedDate);
+        }
+    };
 
     const handleDateAcceptationRefusDonChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -206,14 +239,9 @@ function DonsPage() {
     const handleValeurCerfaChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setValeurCerfa(parseInt(event.target.value))
+        setValeurCerfa(event.target.value)
     }
 
-    const handleDateCerfaChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setDateCerfa(new Date(event.target.value))
-    }
 
     type FieldType =
         | 'number'
@@ -227,6 +255,8 @@ function DonsPage() {
 
     const generateFields = useCallback(
         (
+            debutMiseDispo: Date,
+            finMiseDispo: Date,
             selectedTypeDon: string,
             selectedTypeMarchandise: string,
             commentaires: string,
@@ -265,9 +295,9 @@ function DonsPage() {
                 {
                     id: 'code_type_don',
                     type: 'select',
-                    value: selectedTypeDon, // Use the state as the value
+                    value: selectedTypeDon,
                     url: '../api/dons/type-don',
-                    onChange: handleTypeDonChange, // Handle changes with the new function
+                    onChange: handleTypeDonChange,
                 },
                 {
                     id: 'date_debut_mise_disposition',
@@ -280,7 +310,7 @@ function DonsPage() {
                     type: 'date',
                     value: finMiseDispo.toISOString().split('T')[0],
                     onInputChange: handleFinMiseDispoChange,
-                }, //depend de si date_debut_mise_disposition (pas avant stp)
+                },
                 {
                     id: 'commentaires',
                     type: 'input',
@@ -291,11 +321,12 @@ function DonsPage() {
                 { id: 'pieces_associees', type: 'file', value: null }, //type blob ?
                 {
                     id: 'code_Utilisateur_saisie_don',
-                    type: 'number',
+                    type: 'search',
+                    placeholder: 'Exemple: Jean Dupont',
                     value: codeUtilisateurSaisieDon,
-                    placeholder: 'Exemple: 15',
+                    url: '../api/select/sites/utilisateurs',
                     onInputChange: handleCodeUtilisateurSaisieDonChange,
-                }, // a voir si search / default : login
+                }, //default : login
                 {
                     id: 'statut_acceptation_don',
                     type: 'select',
@@ -305,11 +336,11 @@ function DonsPage() {
                 },
                 {
                     id: 'code_Utilisateur_accepte_refuse_don',
-                    type: 'number',
-                    placeholder: 'Exemple: 4',
+                    type: 'search',
                     value: codeUtilisateurAccepteRefuseDon,
+                    url: '../api/select/sites/utilisateurs/donsAccepteRefuse',
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
-                }, // a voir si search / default : login
+                }, //default : login
                 {
                     id: 'code_site_beneficiaire_don',
                     type: 'search',
@@ -321,14 +352,7 @@ function DonsPage() {
                     id: 'indicateur_remerciement',
                     type: 'checkbox',
                     value: indicateurRemerciement ? 'O' : 'N',
-                    onChange: () =>
-                        setindicateurRemerciement(!indicateurRemerciement),
-                },
-                {
-                    id: 'date_remerciement',
-                    type: 'date',
-                    value: dateRemerciement.toISOString().split('T')[0],
-                    onInputChange: handleDateRemerciement,
+                    onInputChange: handleIndicateurRemerciement,
                 },
                 {
                     id: 'nom_destinataire_cerfa',
@@ -369,15 +393,22 @@ function DonsPage() {
                     id: 'cerfa_fait',
                     type: 'checkbox',
                     value: cerfaFait ? 'O' : 'N',
-                    onChange: () => setCerfaFait(!cerfaFait),
+                    onInputChange: handleCerfaFait,
                 },
-                {
-                    id: 'date_cerfa',
-                    type: 'date',
-                    value: dateCerfa.toISOString().split('T')[0],
-                    onInputChange: handleDateCerfaChange,
-                },
+                { id: 'cerfa', type: 'file', value: null }, //type blob ?
             ]
+
+            if (debutMiseDispo !== new Date()) {
+                setLastDebutMiseDispo(debutMiseDispo)
+                if (debutMiseDispo > finMiseDispo) {
+                    setFinMiseDispo(debutMiseDispo)
+                }
+            }
+
+            if (finMiseDispo !== new Date()) {
+                setLastFinMiseDispo(finMiseDispo)
+            }
+
 
             if (selectedTypeDon === 'SIP') {
                 setLastSelectedTypeDon(selectedTypeDon)
@@ -410,6 +441,27 @@ function DonsPage() {
                 }) //que si status different de attente)
             }
 
+            if (cerfaFait !== false) {
+                setLastcerfaFait(cerfaFait)
+                fields.push({
+                    id: 'date_cerfa',
+                    type: 'date',
+                    value: dateCerfa.toISOString().split('T')[0],
+                    onInputChange: handleDateCerfaChange,
+                })// depend de cerfa_fait
+            }
+
+            if (indicateurRemerciement !== false) {
+                setLastIndicateurRemerciement(indicateurRemerciement)
+                fields.push({
+                    id: 'date_remerciement',
+                    type: 'date',
+                    value: dateRemerciement.toISOString().split('T')[0],
+                    onInputChange: handleDateRemerciementChange,
+                })//depend de indicateur_remerciement
+            }
+
+
             if (
                 selectedTypeDon === 'MAR' &&
                 selectedTypeMarchandise === 'ALI'
@@ -437,6 +489,9 @@ function DonsPage() {
             selectedTypeDon,
             selectedTypeMarchandise,
             statutAcceptationDon,
+            debutMiseDispo,
+            finMiseDispo,
+            cerfaFait,
         ],
     )
 
@@ -456,6 +511,8 @@ function DonsPage() {
             setTotalItems(total) // set the total items
             setFields(
                 generateFields(
+                    debutMiseDispo,
+                    finMiseDispo,
                     selectedTypeDon,
                     selectedTypeMarchandise,
                     commentaires,
@@ -471,6 +528,7 @@ function DonsPage() {
         selectedTypeDon,
         selectedTypeMarchandise,
         statutAcceptationDon,
+        debutMiseDispo,
         generateFields,
     ])
 
@@ -486,6 +544,7 @@ function DonsPage() {
     return (
         <>
             <div className={style.page}>
+                <h1></h1>
                 <List
                     items={Dons.map(Don => ({
                         value1: Don.code_Don.toString(),
