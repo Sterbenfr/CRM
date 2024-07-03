@@ -49,12 +49,10 @@ function DonsPage() {
         lastSelectedTypeDon !== '' ? lastSelectedTypeDon : 'FIN',
     )
     const [commentaires, setCommentaires] = useState('')
-    const [debutMiseDispo, setDebutMiseDispo] = useState(new Date())
-    const [finMiseDispo, setFinMiseDispo] = useState(new Date())
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
-
+    
     const [laststatutAcceptationDon, setLastStatutAcceptationDon] =
-        useState('B')
+    useState('B')
     const [statutAcceptationDon, setStatutAcceptationDon] = useState(
         laststatutAcceptationDon !== '' ? laststatutAcceptationDon : 'B',
     )
@@ -62,10 +60,19 @@ function DonsPage() {
     const [lastindicateurRemerciement, setLastIndicateurRemerciement] = useState(false)
     const [indicateurRemerciement, setindicateurRemerciement] = useState(
         lastindicateurRemerciement !== false ? lastindicateurRemerciement : false)
-
+        
     const [lastcerfaFait, setLastcerfaFait] = useState(false)
     const [cerfaFait, setCerfaFait] = useState(
         lastcerfaFait !== false ? lastcerfaFait : false)
+        
+        
+    const [lastdebutMiseDispo, setLastDebutMiseDispo] = useState(new Date())
+    const [debutMiseDispo, setDebutMiseDispo] = useState(
+        lastdebutMiseDispo !== new Date() ? lastdebutMiseDispo : new Date())
+
+    const [lastfinMiseDispo, setLastFinMiseDispo] = useState(new Date())
+    const [finMiseDispo, setFinMiseDispo] = useState(
+        lastfinMiseDispo !== new Date() ? lastfinMiseDispo : new Date())
 
     const [dateAcceptationRefusDon, setDateAcceptationRefusDon] = useState(
         new Date(),
@@ -154,28 +161,17 @@ function DonsPage() {
     const handleDebutMiseDispoChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        console.log("date de début");
         setDebutMiseDispo(new Date(event.target.value))
     }
 
-    // Assuming debutMiseDispo and finMiseDispo are state variables managed by useState
     const handleFinMiseDispoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let returnedDate = new Date(event.target.value);
-        console.log(debutMiseDispo);
-        setDebutMiseDispo(debutMiseDispo);
-        console.log("date de fin");
         const newFinMiseDispo = new Date(event.target.value).toISOString().split('T')[0];
-        console.log(newFinMiseDispo);
-        console.log("valeur date de début");
         const debut = debutMiseDispo.toISOString().split('T')[0]
-        console.log(debut);
         if (newFinMiseDispo < debut) {
-            console.log("La date de fin ne peut pas être antérieure à la date de début.");
             returnedDate = debutMiseDispo;
-            console.log(returnedDate);
             setFinMiseDispo(returnedDate);
         } else {
-            console.log("la pizza");
             setFinMiseDispo(returnedDate);
         }
     };
@@ -259,6 +255,8 @@ function DonsPage() {
 
     const generateFields = useCallback(
         (
+            debutMiseDispo: Date,
+            finMiseDispo: Date,
             selectedTypeDon: string,
             selectedTypeMarchandise: string,
             commentaires: string,
@@ -312,7 +310,7 @@ function DonsPage() {
                     type: 'date',
                     value: finMiseDispo.toISOString().split('T')[0],
                     onInputChange: handleFinMiseDispoChange,
-                }, //depend de si date_debut_mise_disposition (pas avant stp)
+                },
                 {
                     id: 'commentaires',
                     type: 'input',
@@ -400,6 +398,18 @@ function DonsPage() {
                 { id: 'cerfa', type: 'file', value: null }, //type blob ?
             ]
 
+            if (debutMiseDispo !== new Date()) {
+                setLastDebutMiseDispo(debutMiseDispo)
+                if (debutMiseDispo > finMiseDispo) {
+                    setFinMiseDispo(debutMiseDispo)
+                }
+            }
+
+            if (finMiseDispo !== new Date()) {
+                setLastFinMiseDispo(finMiseDispo)
+            }
+
+
             if (selectedTypeDon === 'SIP') {
                 setLastSelectedTypeDon(selectedTypeDon)
                 fields.push({
@@ -479,6 +489,8 @@ function DonsPage() {
             selectedTypeDon,
             selectedTypeMarchandise,
             statutAcceptationDon,
+            debutMiseDispo,
+            finMiseDispo,
             cerfaFait,
         ],
     )
@@ -499,6 +511,8 @@ function DonsPage() {
             setTotalItems(total) // set the total items
             setFields(
                 generateFields(
+                    debutMiseDispo,
+                    finMiseDispo,
                     selectedTypeDon,
                     selectedTypeMarchandise,
                     commentaires,
@@ -514,8 +528,7 @@ function DonsPage() {
         selectedTypeDon,
         selectedTypeMarchandise,
         statutAcceptationDon,
-        finMiseDispo.toISOString().split('T')[0],
-        debutMiseDispo.toISOString().split('T')[0],
+        debutMiseDispo,
         generateFields,
     ])
 
