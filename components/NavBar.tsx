@@ -19,6 +19,9 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                         height={80}
                     />
                 </Link>
+                <Link href='/' className={styles.links}>
+                    Menu
+                </Link>
                 <Link href='/dons' className={styles.links}>
                     Dons
                 </Link>
