@@ -98,17 +98,27 @@ function SitesPage() {
                                     id: 'designation_longue',
                                     type: 'input',
                                     value: null,
+                                    required: true,
+                                    placeholder: 'Siège social de la société',
                                 },
                                 {
                                     id: 'designation_courte',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Siège',
                                 },
-                                { id: 'adresse', type: 'input', value: null },
+                                {
+                                    id: 'adresse',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    placeholder: 'Exemple: 1 rue de Paris',
+                                },
                                 {
                                     id: 'code_type_site',
                                     type: 'select',
-                                    value: null,
+                                    value: 'AD',
+                                    required: true,
                                     url: '../api/sites/type-site-types',
                                 },
                                 {
@@ -120,21 +130,24 @@ function SitesPage() {
                                     id: 'date_fermeture',
                                     type: 'date',
                                     value: null,
-                                },
+                                }, // pas avant date ouverture
                                 {
                                     id: 'numero_telephone',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: 0658905910',
                                 },
                                 {
                                     id: 'adresse_mail',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Siege.social@gmail.com',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Siège social de la société',
                                 },
                             ]}
                         />

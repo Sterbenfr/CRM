@@ -61,11 +61,13 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                             id: 'code_type_utilisateur',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />

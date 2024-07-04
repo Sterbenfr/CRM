@@ -105,43 +105,51 @@ function PrestatairesPage() {
                                 {
                                     id: 'code_type_de_Prestataire',
                                     type: 'select',
-                                    value: null,
-                                    url: '../api/select/prestataire',
+                                    value: 'TRA',
+                                    required: true,
+                                    url: '../api/prestataire/type-prestataires',
                                 },
                                 {
                                     id: 'raison_sociale',
-                                    type: 'input',
-                                    value: null,
-                                },
+                                    type: 'select',
+                                    value: 'Société Alpha',
+                                    required: true,
+                                    url: '../api/select/prestataire',
+                                }, //pouvoir en ajouter une
                                 {
                                     id: 'nom_commercial',
                                     type: 'input',
                                     value: null,
-                                },
+                                },// a voir si search
                                 {
                                     id: 'Siren',
                                     type: 'number',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: 453684259',
+                                }, // if number !== 9 = pas de validation
                                 {
                                     id: 'Siret',
                                     type: 'number',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: 15269783246918',
+                                }, // if number !== 14 = pas de validation
                                 {
                                     id: 'telephone',
                                     type: 'number',
+                                    placeholder: 'Exemple: 0658905910',
                                     value: null,
                                 },
                                 {
                                     id: 'mail',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
                                 },
                                 {
                                     id: 'adresse',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: 12 rue de la paix',
                                 },
                                 {
                                     id: 'civilite_contact_prestataire',
@@ -153,26 +161,31 @@ function PrestatairesPage() {
                                     id: 'nom_contact_prestataire',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Delacroix',
                                 },
                                 {
                                     id: 'prenom_contact_prestataire',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: David',
                                 },
                                 {
                                     id: 'telephone_contact_prestataire',
                                     type: 'number',
                                     value: null,
+                                    placeholder: 'Exemple: 0658905910',
                                 },
                                 {
                                     id: 'mail_contact_prestataire',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: David.delacroix@gmail.com',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Prestataire très sérieux',
                                 },
                                 {
                                     id: 'date_arret_activite_du_prestataire',

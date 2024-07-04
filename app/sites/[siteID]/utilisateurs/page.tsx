@@ -97,43 +97,50 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 {
                                     id: 'civilite',
                                     type: 'select',
-                                    value: null,
+                                    value: 'Madame',
                                     url: `../../../../../api/select/genre`,
+                                    required: true,
                                 },
                                 {
                                     id: 'nom',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Dupont',
                                 },
                                 {
                                     id: 'prenom',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Jean',
                                 },
                                 {
                                     id: 'tel_perso',
                                     type: 'number',
                                     value: null,
+                                    placeholder: 'Exemple: 0601020304',
                                 },
                                 {
                                     id: 'mail_restos_du_coeur',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Jean.dupont@gmail.com',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Manutentionnaire de Dunkerque',
                                 },
                                 {
                                     id: 'password',
                                     type: 'password',
                                     value: null,
+                                    placeholder: 'Exemple: France2024!',
                                 },
                                 {
                                     id: 'code_type_utilisateur',
                                     type: 'select',
-                                    value: null,
+                                    value: 'AD',
                                     url: `../../../../../api/select/utilisateurs`,
                                 },
                             ]}

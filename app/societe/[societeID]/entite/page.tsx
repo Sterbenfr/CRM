@@ -117,97 +117,112 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                             fields={[
                                 {
                                     id: 'raison_sociale',
-                                    type: 'input',
+                                    type: 'search',
                                     value: null,
-                                },
+                                    url: '../../api/select/societe/entite',
+                                    required: true,
+                                }, // pourvoir add
                                 {
                                     id: 'nom_commercial',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Alpha Corp',
                                 },
                                 {
                                     id: 'logo',
                                     type: 'file',
                                     value: null,
-                                },
+                                }, // type blob
                                 {
                                     id: 'Siret',
                                     type: 'number',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: 15269783246918',
+                                    required: true,
+                                }, // if number !== 14 = pas de validation
                                 {
                                     id: 'code_ape',
                                     type: 'input',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: 1234A',
+                                }, // 4 chiffres et 1 lettre
                                 {
                                     id: 'code_rna',
                                     type: 'input',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: W123456789',
+                                }, // W + 9 chiffres
                                 {
                                     id: 'code_cee',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: 123456789',
                                 },
                                 {
                                     id: 'code_societe_appartenance',
-                                    type: 'number',
+                                    type: 'search',
                                     value: null,
+                                    url: '../../api/select/societe',
                                 },
                                 {
                                     id: 'adresse',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: 12 rue de la paix',
                                 },
                                 {
                                     id: 'telephone',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: 0123456789',
                                 },
                                 {
                                     id: 'mail',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Alpha.corp@gmail.com',
                                 },
                                 {
                                     id: 'site_internet',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: http://www.alpha.com/',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Societe de service informatique',
                                 },
                                 {
                                     id: 'code_type_entite',
                                     type: 'select',
                                     value: null,
                                     url: `../../api/societe/${params.societeID}/entite/type-entites`,
-                                },
+                                }, // a voir les conditions
                                 {
                                     id: 'code_type_don',
                                     type: 'select',
                                     value: null,
                                     url: `../../api/dons/type-don`,
-                                },
+                                },// a voir les conditions
                                 {
                                     id: 'code_type_produit',
                                     type: 'select',
                                     value: null,
                                     url: `../../api/dons/type-produits`,
-                                },
+                                },// a voir les conditions
                                 {
                                     id: 'code_type_competence',
                                     type: 'select',
                                     value: null,
                                     url: `../../api/dons/type-competences`,
-                                },
+                                },// a voir les conditions
                                 {
                                     id: 'commentaires_logistique',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Societe de service informatique',
                                 },
                                 {
                                     id: 'presence_quai',
@@ -218,11 +233,12 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                     id: 'pieces_associees',
                                     type: 'file',
                                     value: null,
-                                },
+                                }, // typz blob
                                 {
                                     id: 'mail_contact_prestataire',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: prestataire.alphacorp@gmail.com',
                                 },
                                 {
                                     id: 'cerfa',
@@ -232,7 +248,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                 {
                                     id: 'code_frequence_cerfa',
                                     type: 'select',
-                                    value: null,
+                                    value: 'ANN',
                                     url: `../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
                                 },
                                 {

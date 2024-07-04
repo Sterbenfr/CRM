@@ -63,7 +63,7 @@ function SocietesPage() {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Société</h1>
+                <h1 className={style.lg}>Entreprise</h1>
                 <List
                     items={Societes.map(Societe => ({
                         value1: Societe.code_Societe.toString(),
@@ -102,46 +102,53 @@ function SocietesPage() {
                             fields={[
                                 {
                                     id: 'raison_sociale',
-                                    type: 'input',
+                                    type: 'search',
                                     value: null,
+                                    url: '../api/select/societe/entite',
+                                    required: true,
                                 },
                                 {
                                     id: 'nom_commercial',
                                     type: 'input',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: Nom commercial',
+                                }, // a voir si utile
                                 {
                                     id: 'Logo',
                                     type: 'file',
                                     value: null,
-                                },
+                                }, // type blob
                                 {
                                     id: 'site_Web',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: http://www.alpha.com/',
                                 },
                                 {
                                     id: 'Siren',
-                                    type: 'input',
+                                    type: 'number',
                                     value: null,
-                                },
+                                    placeholder: 'Exemple: 453684259',
+                                    required: true,
+                                }, // if number !== 9 = pas de validation
                                 {
                                     id: 'code_type_activite_Societe',
                                     type: 'select',
-                                    value: null,
+                                    value: 'ADM',
                                     url: '../api/societe/type-activite-societe',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Societe de service informatique',
                                 },
                                 {
                                     id: 'code_Groupe_appartenance',
                                     type: 'search',
                                     value: null,
                                     url: '../api/select/societe/groupe',
-                                },
+                                }, // pouvoir ajouter un new groupe
                                 {
                                     id: 'date_arret_activite_Societe',
                                     type: 'date',

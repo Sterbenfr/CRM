@@ -64,11 +64,13 @@ function InteractionsPage({
                             id: 'code_type_interaction',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />
