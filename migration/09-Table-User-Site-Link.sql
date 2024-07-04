@@ -7,7 +7,7 @@ CREATE TABLE SitesRattachement (
     FOREIGN KEY (code_utilisateur) REFERENCES Utilisateurs(code_utilisateur),
     FOREIGN KEY (code_site) REFERENCES Sites(code_site),
     FOREIGN KEY (code_type_utilisateur) REFERENCES TypesUtilisateurs(code_type_utilisateur)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO SitesRattachement (
     code_utilisateur,
     code_site,

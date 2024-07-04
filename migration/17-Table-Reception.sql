@@ -14,7 +14,7 @@ CREATE TABLE Reception (
     pieces_associees BLOB,
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don),
     FOREIGN KEY (numero_livraison) REFERENCES ModalitesLivraison(numero_livraison)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Reception (
     numero_reception,
     code_Don,

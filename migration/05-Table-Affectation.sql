@@ -7,7 +7,7 @@ CREATE TABLE AffectationDonateursProspecteurs (
     PRIMARY KEY (code_Utilisateur_Prospecteur, code_Entite),
     FOREIGN KEY (code_Utilisateur_Prospecteur) REFERENCES Utilisateurs(code_utilisateur),
     FOREIGN KEY (code_Entite) REFERENCES Entite(code_Entite)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO AffectationDonateursProspecteurs (
     code_Utilisateur_Prospecteur,
     code_Entite,
