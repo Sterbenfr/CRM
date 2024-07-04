@@ -278,6 +278,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                             key={input.id}
                                             url={input.url as string}
                                             required={input.required}
+                                            placeholder={input.placeholder}
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
@@ -293,7 +294,6 @@ const PopUp: React.FC<PopUpProps> = ({
                                             key={input.id}
                                             type='checkbox'
                                             required={input.required}
-                                            checked={input.value === true}
                                             className={style.checkboxF}
                                             onChange={e =>
                                                 handleInputChange(

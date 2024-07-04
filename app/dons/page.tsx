@@ -281,6 +281,7 @@ function DonsPage() {
                     value: EntiteDonatrice,
                     url: '../api/select/societe/entite',
                     required: true,
+                    placeholder: 'Exemple: Entreprise Alpha',
                     onInputChange: handleEntiteDonatriceChange,
                 },
                 {
@@ -323,7 +324,10 @@ function DonsPage() {
                     placeholder: 'Exemple: Don de chocolat',
                     onInputChange: handleCommentairesChange,
                 },
-                { id: 'pieces_associees', type: 'file', value: null }, //type blob ?
+                { id: 'pieces_associees',
+                    type: 'file',
+                    value: null
+                }, //type blob ?
                 {
                     id: 'code_Utilisateur_saisie_don',
                     type: 'search',
@@ -344,6 +348,7 @@ function DonsPage() {
                     type: 'search',
                     value: codeUtilisateurAccepteRefuseDon,
                     url: '../api/select/sites/utilisateurs/donsAccepteRefuse',
+                    placeholder: 'Exemple: Marie Dujardin',
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
                 }, //default : login
                 {
@@ -351,6 +356,7 @@ function DonsPage() {
                     type: 'search',
                     url: '../api/select/sites',
                     value: siteBeneficiaireDon,
+                    placeholder: 'Exemple: Entrepôt Principal',
                     onInputChange: handleSiteBeneficiaireDonChange,
                 },
                 {
@@ -400,13 +406,17 @@ function DonsPage() {
                     value: cerfaFait ? 'O' : 'N',
                     onInputChange: handleCerfaFait,
                 },
-                { id: 'cerfa', type: 'file', value: null }, //type blob ?
+                {
+                    id: 'cerfa',
+                    type: 'file',
+                    value: null
+                }, //type blob ?
             ]
 
             if (debutMiseDispo !== new Date()) {
                 setLastDebutMiseDispo(debutMiseDispo)
                 if (debutMiseDispo > finMiseDispo) {
-                    setFinMiseDispo(debutMiseDispo)
+                    setLastFinMiseDispo(debutMiseDispo)
                 }
             }
 
