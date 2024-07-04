@@ -462,7 +462,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         (session?.user.role === 'AD' ||
                             session?.user.role === 'RR') ? (
                             <SearchComponent
-                                url='/api/sites'
+                                url='../../api/select/sites'
                                 onChange={e => handleSiteChange(e)}
                                 onInputChange={e => handleSiteChange(e)}
                             />
