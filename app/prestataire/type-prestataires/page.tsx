@@ -60,11 +60,13 @@ function PrestatairesPage() {
                             id: 'code_type_de_Prestataire',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />

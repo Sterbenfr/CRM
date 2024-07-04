@@ -59,11 +59,13 @@ function SiteTypesPage() {
                             id: 'code_type_site',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />
