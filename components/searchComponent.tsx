@@ -3,6 +3,7 @@ import style from '../styles/components.module.css'
 
 interface SelectComponentProps {
     url: string
+    createURL?: string
     required?: boolean
     placeholder?: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>
@@ -16,6 +17,7 @@ interface Option {
 
 export default function SearchComponent({
     url,
+    createURL,
     required,
     placeholder,
     onChange,
@@ -48,6 +50,9 @@ export default function SearchComponent({
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
+        if (e.target.value === "Création d'un nouveau..." && createURL) {
+            window.location.href = createURL
+        }
         const matchingOption = options.find(
             option =>
                 option.label.toLowerCase() === e.target.value.toLowerCase(),
@@ -57,7 +62,7 @@ export default function SearchComponent({
             if (onChange) {
                 onChange(e)
                 if (onInputChange) {
-                    onInputChange(e);
+                    onInputChange(e)
                 }
                 e.target.value = matchingOption.label // Call the onChange prop with the id
             }
@@ -100,6 +105,17 @@ export default function SearchComponent({
                             {option.label}
                         </option>
                     ))}
+                {createURL ? (
+                    <option
+                        className={style.selectF}
+                        key={createURL}
+                        value="Création d'un nouveau..."
+                    >
+                        Création d&apos;un nouveau...
+                    </option>
+                ) : (
+                    ''
+                )}
             </datalist>
         </>
     )
