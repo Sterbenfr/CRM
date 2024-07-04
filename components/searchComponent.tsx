@@ -4,6 +4,7 @@ import style from '../styles/components.module.css'
 interface SelectComponentProps {
     url: string
     required?: boolean
+    placeholder?: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     onInputChange?: React.ChangeEventHandler<HTMLInputElement>
 }
@@ -15,6 +16,8 @@ interface Option {
 
 export default function SearchComponent({
     url,
+    required,
+    placeholder,
     onChange,
     onInputChange,
 }: SelectComponentProps) {
@@ -78,6 +81,8 @@ export default function SearchComponent({
             <input
                 key='search'
                 type='input'
+                placeholder={placeholder}
+                required={required}
                 value={inputValue}
                 onChange={handleInputChange}
                 list={url}
