@@ -108,7 +108,7 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
-    width: 80%;
+    width: 95%;
     margin-top: 1rem;
     border-top: 2px solid #e5007d;
     padding-top: 1rem;
@@ -127,7 +127,7 @@
 }
 
 .checkbox {
-    width: 7rem;
+    width: 1rem;
     margin-right: 2rem;
 }
 
@@ -140,9 +140,39 @@
 }
 
 .Ztext {
-    width: 16rem;
-    text-align: start;
-    padding-left: 2rem;
+    width: 14rem;
+    text-align: center;
+    margin-left: 3rem;
+}
+
+.red {
+    border: 2px solid red;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.green {
+    border: 2px solid green;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orange {
+    border: 2px solid orange;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* PAGINATION */

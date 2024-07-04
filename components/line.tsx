@@ -8,6 +8,7 @@ export interface LineProps {
     param4?: string
     param5?: string
     param6?: string
+    paramColor?: string
 }
 
 const Line: React.FC<LineProps> = ({
@@ -18,6 +19,7 @@ const Line: React.FC<LineProps> = ({
     param4,
     param5,
     param6,
+    paramColor,
 }) => {
     // Click handler function
     const handleClick = (key: string) => {
@@ -34,7 +36,7 @@ const Line: React.FC<LineProps> = ({
             deleteFunction(param1 || '')
         }
     }
-
+    console.log(paramColor)
     return (
         <div className={style.body}>
             <div className={style.line}>
@@ -58,7 +60,17 @@ const Line: React.FC<LineProps> = ({
 
                         <div className={style.Ztext}>{param4}</div>
 
-                        <div className={style.Ztext}>{param5}</div>
+                        <div
+                            className={`${style.Ztext} ${
+                                paramColor === 'R'
+                                    ? style.red
+                                    : paramColor === 'A'
+                                      ? style.orange
+                                      : style.green
+                            }`}
+                        >
+                            {param5}
+                        </div>
 
                         <div className={style.Ztext}>{param6}</div>
                     </div>

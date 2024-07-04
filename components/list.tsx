@@ -10,6 +10,7 @@ interface ListProps {
     value4?: string
     value5?: string
     value6?: string
+    value7?: string
 }
 
 interface FunctionProps {
@@ -52,6 +53,7 @@ const List: React.FC<{ items: ListProps[]; functions: FunctionProps }> = ({
                             param4={item.value4 == null ? '' : item.value4}
                             param5={item.value5 == null ? '' : item.value5}
                             param6={item.value6 == null ? '' : item.value6}
+                            paramColor={item.value7 == null ? '' : item.value7}
                         />
                     </div>
                 ))}

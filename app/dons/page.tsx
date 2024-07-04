@@ -562,7 +562,7 @@ function DonsPage() {
         setItemsPerPage(newItemsPerPage)
         setPage(1)
     }
-
+    console.log(Dons)
     return (
         <>
             <div className={style.page}>
@@ -578,6 +578,9 @@ function DonsPage() {
                             .split('T')[0],
                         value4: Don.commentaires ? Don.commentaires : '',
                         value5: Don.statut_acceptation_don
+                            ? Don.statut_acceptation_don
+                            : '',
+                        value7: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '',
                     }))}

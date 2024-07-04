@@ -92,9 +92,7 @@ export default function SocietePage({
                             {Societe[0].Siren == null ? '/' : Societe[0].Siren}
                         </p>
                     </div>
-                </div>
 
-                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>Site web :</p>
                         <p>
@@ -114,7 +112,9 @@ export default function SocietePage({
                                 : Societe[0].code_type_activite_Societe}
                         </p>
                     </div>
+                </div>
 
+                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>
                             Code de la societe d appartenance :
