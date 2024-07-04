@@ -101,12 +101,18 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                         id: 'nom_du_groupe',
                                         type: 'input',
                                         value: null,
+                                        placeholder: 'Exemple: Groupe Alpha',
                                     },
-                                    { id: 'Logo', type: 'file', value: null },
+                                    { 
+                                        id: 'Logo',
+                                        type: 'file',
+                                        value: null,
+                                    }, // type blob
                                     {
                                         id: 'site_Web',
                                         type: 'input',
                                         value: null,
+                                        placeholder: 'Exemple: http://www.groupealpha.com',
                                     },
                                     {
                                         id: 'date_fermeture',
@@ -117,6 +123,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                         id: 'commentaires',
                                         type: 'input',
                                         value: null,
+                                        placeholder: 'Exemple: Groupe actif en dons alimentaires',
                                     },
                                     {
                                         id: 'date_arret_activite_du_Groupe',

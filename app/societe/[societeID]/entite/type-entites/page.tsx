@@ -60,11 +60,13 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                 id: 'code_type_entite',
                                 type: 'input',
                                 value: null,
+                                required: true,
                             },
                             {
                                 id: 'libelle',
                                 type: 'input',
                                 value: null,
+                                required: true,
                             },
                         ]}
                     />

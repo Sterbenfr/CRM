@@ -53,13 +53,13 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             type: FieldType
             value: string | null
             placeholder?: string
+            required?: boolean
             url?: string
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[]
     >([])
 
-    const [numeroLivraison, setNumeroLivraison] = useState('')
     const [codeDon, setCodeDon] = useState('')
     const [codeTypeLivraison, setCodeTypeLivraison] = useState('')
     const [datePrevueLivraison, setDatePrevueLivraison] = useState(new Date())
@@ -92,11 +92,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     const [commentaires, setCommentaires] = useState('')
     const [piecesAssociees, setPiecesAssociees] = useState('')
 
-    const handleNumeroLivraison = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setNumeroLivraison(event.target.value)
-    }
     const handleCodeDon = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCodeDon(event.target.value)
     }
@@ -237,21 +232,17 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             type: FieldType
             value: string | null
             placeholder?: string
+            required?: boolean
             url?: string
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
             {
-                id: 'numero_livraison',
-                type: 'number',
-                value: numeroLivraison,
-                onInputChange: handleNumeroLivraison,
-            },
-            {
                 id: 'code_Don',
                 type: 'search',
                 value: codeDon,
                 url: '../../api/select/dons/select-dons',
+                required: true,
                 onInputChange: handleCodeDon,
             },
             {
@@ -259,6 +250,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'select',
                 value: codeTypeLivraison,
                 url: `../../api/dons/${params.donsID}/modalites-livraison/type-livraison`,
+                required: true,
                 onChange: handleCodeTypeLivraison,
             },
             {
@@ -266,16 +258,19 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'date',
                 value: datePrevueLivraison.toISOString().split('T')[0],
                 onInputChange: handleDatePrevueLivraison,
+                required: true,
             },
             {
                 id: 'heure_prevue_livraison',
                 type: 'input',
                 value: heurePrevueLivraison,
                 onInputChange: handleHeurePrevueLivraison,
+                placeholder: 'Exemple: 14:00',
             },
             {
                 id: 'adresse_enlevement',
                 type: 'input',
+                placeholder: 'Exemple: 1 rue de la Paix, 75000 Paris',
                 value: adresseEnlevement,
                 onInputChange: handleAdresseEnlevement,
             },
@@ -290,30 +285,35 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 id: 'nom_contact_enlevement',
                 type: 'input',
                 value: nomContactEnlevement,
+                placeholder: 'Exemple: Dupont',
                 onInputChange: handleNomContactEnlevement,
-            },
+            }, // a voir si select
             {
                 id: 'prenom_contact_enlevement',
                 type: 'input',
                 value: prenomContactEnlevement,
+                placeholder: 'Exemple: Jean',
                 onInputChange: handlePrenomContactEnlevement,
             },
             {
                 id: 'telephone_contact_enlevement',
                 type: 'input',
                 value: telephoneContactEnlevement,
+                placeholder: 'Exemple: 0123456789',
                 onInputChange: handleTelephoneContactEnlevement,
             },
             {
                 id: 'mail_contact_enlevement',
                 type: 'input',
                 value: mailContactEnlevement,
+                placeholder: 'Exemple: Jean.dupont@gmail.com',
                 onInputChange: handleMailContactEnlevement,
             },
             {
                 id: 'adresse_livraison',
-                type: 'input',
+                type: 'search',
                 value: adresseLivraison,
+                url: '../../api/select/sites',
                 onInputChange: handleAdresseLivraison,
             },
             {
@@ -327,60 +327,70 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 id: 'nom_contact_livraison',
                 type: 'input',
                 value: nomContactLivraison,
+                placeholder: 'Exemple: Petit',
                 onInputChange: handleNomContactLivraison,
             },
             {
                 id: 'prenom_contact_livraison',
                 type: 'input',
                 value: prenomContactLivraison,
+                placeholder: 'Exemple: Michel',
                 onInputChange: handlePrenomContactLivraison,
             },
             {
                 id: 'telephone_contact_livraison',
                 type: 'input',
                 value: telephoneContactLivraison,
+                placeholder: 'Exemple: 0123456789',
                 onInputChange: handleTelephoneContactLivraison,
             },
             {
                 id: 'mail_contact_livraison',
                 type: 'input',
                 value: mailContactLivraison,
+                placeholder: 'Exemple: Michel.petit@gmail.com',
                 onInputChange: handleMailContactLivraison,
             },
             {
                 id: 'nombre_palettes_prevu',
                 type: 'number',
                 value: nombrePalettesPrevu,
+                placeholder: 'Exemple: 10',
                 onInputChange: handleNombrePalettesPrevu,
             },
             {
                 id: 'nombre_palettes_consignees_prevu',
                 type: 'number',
                 value: nombrePalettesConsigneesPrevu,
+                placeholder: 'Exemple: 7',
                 onInputChange: handleNombrePalettesConsigneesPrevu,
             },
             {
                 id: 'nombre_cartons_prevu',
                 type: 'number',
                 value: nombreCartonsPrevu,
+                placeholder: 'Exemple: 34',
                 onInputChange: handleNombreCartonsPrevu,
             },
             {
                 id: 'poids_prevu_kg',
                 type: 'number',
                 value: poidsPrevuKg,
+                placeholder: 'Exemple: 580',
                 onInputChange: handlePoidsPrevuKg,
-            },
+            }, //pas negatif
             {
                 id: 'produits_sur_palettes',
                 type: 'input',
                 value: produitsSurPalettes,
+                placeholder: 'Exemple: produits alimentaires divers',
                 onInputChange: handleProduitsSurPalettes,
             },
             {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
+                placeholder: 'Exemple: Livraison de produits Auchan',
                 onInputChange: handleCommentaires,
             },
             {
@@ -422,6 +432,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 fields.push({
                     id: 'temperature_conserv_produits',
                     type: 'number',
+                    placeholder: 'Exemple: 27',
                     value: temperatureConservProduits,
                     onInputChange: handleTemperatureConservProduits,
                 })
@@ -432,7 +443,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         params.donsID,
-        numeroLivraison,
         codeDon,
         codeTypeLivraison,
         datePrevueLivraison,

@@ -111,57 +111,65 @@ function ContactsPage({
                                 id: 'code_entite',
                                 type: 'number',
                                 value: null,
-                            },
+                            }, // search sur les entites
                             {
                                 id: 'civilite',
                                 type: 'select',
-                                value: null,
+                                value: 'Madame',
                                 url: `../.././../../../../api/select/genre`,
                             },
                             {
                                 id: 'nom',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: Dupont',
                             },
                             {
                                 id: 'prenom',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: Corrine',
                             },
                             {
                                 id: 'photo',
                                 type: 'file',
                                 value: null,
-                            },
+                            }, //type blob
                             {
                                 id: 'fonction',
                                 type: 'input',
                                 value: null,
-                            },
+                                placeholder: 'Exemple: Assistante',
+                            }, // a voir si select
                             {
                                 id: 'service',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: Ressources Humaines',
                             },
                             {
                                 id: 'numero_fixe',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: 0634167452',
                             },
                             {
                                 id: 'numero_portable',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: 0634164183',
                             },
                             {
                                 id: 'adresse_mail',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: Corrine.dupont@gmail.com',
                             },
                             {
                                 id: 'commentaires',
                                 type: 'input',
                                 value: null,
+                                placeholder: 'Exemple: Corrine Dupont habite dunkerque',
                             },
                             {
                                 id: 'date_arret_contact',

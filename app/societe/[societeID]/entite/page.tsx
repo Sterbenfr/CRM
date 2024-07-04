@@ -247,12 +247,14 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'input',
                 value: raisonSociale,
                 onInputChange: handleRaisonSocialeChange,
+                required: true,
             },
             {
                 id: 'nom_commercial',
                 type: 'input',
                 value: nomCommercial,
                 onInputChange: handleNomCommercialChange,
+                placeholder: 'Exemple: Alpha Corp',
             },
             {
                 id: 'logo',
@@ -265,24 +267,29 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'number',
                 value: siret,
                 onInputChange: handleSiretChange,
-            },
+                placeholder: 'Exemple: 15269783246918',
+                required: true,
+            }, // if number !== 14 = pas de validation
             {
                 id: 'code_ape',
                 type: 'input',
                 value: codeApe,
                 onInputChange: handleCodeApeChange,
-            },
+                placeholder: 'Exemple: 1234A',
+            }, // 4 chiffres et 1 lettre
             {
                 id: 'code_rna',
                 type: 'input',
                 value: codeRna,
                 onInputChange: handleCodeRnaChange,
-            },
+                placeholder: 'Exemple: W123456789',
+            }, // W + 9 chiffres
             {
                 id: 'code_cee',
                 type: 'input',
                 value: codeCee,
                 onInputChange: handleCodeCeeChange,
+                placeholder: 'Exemple: 123456789',
             },
             {
                 id: 'code_societe_appartenance',
@@ -295,30 +302,35 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'input',
                 value: adresse,
                 onInputChange: handleAdresseChange,
+                placeholder: 'Exemple: 12 rue de la paix',
             },
             {
                 id: 'telephone',
                 type: 'input',
                 value: telephone,
                 onInputChange: handleTelephoneChange,
+                placeholder: 'Exemple: 0123456789',
             },
             {
                 id: 'mail',
                 type: 'input',
                 value: mail,
                 onInputChange: handleMailChange,
+                placeholder: 'Exemple: Alpha.corp@gmail.com',
             },
             {
                 id: 'site_internet',
                 type: 'input',
                 value: siteInternet,
                 onInputChange: handleSiteInternetChange,
+                placeholder: 'Exemple: http://www.alpha.com/',
             },
             {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
                 onInputChange: handleCommentairesChange,
+                placeholder: 'Exemple: Societe de service informatique',
             },
             {
                 id: 'code_type_entite',
@@ -339,6 +351,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'input',
                 value: commentairesLogistique,
                 onInputChange: handleCommentairesLogistiqueChange,
+                placeholder: 'Exemple: Societe de service informatique',
             },
             {
                 id: 'presence_quai',
@@ -356,6 +369,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'mail_contact_prestataire',
                 type: 'input',
                 value: mailContactPrestataire,
+                placeholder: 'Exemple: prestataire.alphacorp@gmail.com',
                 onInputChange: handleMailContactPrestataireChange,
             },
             {

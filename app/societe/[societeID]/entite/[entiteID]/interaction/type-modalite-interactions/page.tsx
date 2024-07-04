@@ -66,11 +66,13 @@ function Modalites_InteractionsPage({
                             id: 'code_modalite_interaction',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />

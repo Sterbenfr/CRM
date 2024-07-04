@@ -112,28 +112,31 @@ function InteractionsPage({
                                     type: 'search',
                                     value: null,
                                     url: '../../../../../api/select/sites/utilisateurs',
+                                    required: true,
                                 },
                                 {
                                     id: 'code_Entite_Prospectee',
                                     type: 'search',
                                     value: null,
                                     url: '../../../../../api/select/societe/entite',
-                                },
+                                    required: true,
+                                }, // a voir remplissage auto
                                 {
                                     id: 'date_interaction',
                                     type: 'date',
                                     value: null,
-                                },
+                                    required: true,
+                                }, // mettre date du jour par defaut
                                 {
                                     id: 'code_type_interaction',
                                     type: 'select',
-                                    value: null,
+                                    value: 'PRE',
                                     url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
                                 },
                                 {
                                     id: 'code_modalite_interaction',
                                     type: 'select',
-                                    value: null,
+                                    value: 'MAI',
                                     url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
                                 },
                                 {
@@ -147,17 +150,18 @@ function InteractionsPage({
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: Relance pour aide a Dunkerque',
                                 },
                                 {
                                     id: 'pieces_associees',
                                     type: 'file',
                                     value: null,
-                                },
+                                }, // type blob
                                 {
                                     id: 'date_relance',
                                     type: 'date',
                                     value: null,
-                                },
+                                }, // a voir si utile car date interraction existe deja
                             ]}
                         />
                     </div>

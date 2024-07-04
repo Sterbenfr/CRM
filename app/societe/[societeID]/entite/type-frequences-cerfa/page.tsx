@@ -63,11 +63,13 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                             id: 'code_type_frequences_cerfa',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
+                            required: true,
                         },
                     ]}
                 />
