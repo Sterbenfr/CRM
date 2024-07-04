@@ -29,7 +29,7 @@ CREATE TABLE ModalitesLivraison (
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_type_livraison) REFERENCES TypeLivraison(code_type_livraison) ON UPDATE CASCADE,
     FOREIGN KEY (code_Prestataire_transporteur) REFERENCES Prestataires(code_Prestataire) ON UPDATE CASCADE ON DELETE SET NULL
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO ModalitesLivraison (
     numero_livraison,
     code_Don,

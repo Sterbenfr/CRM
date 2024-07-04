@@ -30,7 +30,7 @@ CREATE TABLE Entite (
     FOREIGN KEY (code_type_competence) REFERENCES TypesCompetences(code_type_competence) ON UPDATE CASCADE,
     FOREIGN KEY (code_frequence_cerfa) REFERENCES FrequencesCerfa(code_frequence_cerfa) ON UPDATE CASCADE,
     FOREIGN KEY (code_societe_appartenance) REFERENCES Entreprise(code_Societe) ON UPDATE CASCADE ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Entite (
     raison_sociale,
     nom_commercial,

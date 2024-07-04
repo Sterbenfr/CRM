@@ -14,7 +14,7 @@ CREATE TABLE Contacts (
     date_arret_contact DATE,
     PRIMARY KEY (code_contact,code_entite),
     FOREIGN KEY (code_entite) REFERENCES Entite(code_entite) ON UPDATE CASCADE ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Contacts (
     code_entite,
     civilite,

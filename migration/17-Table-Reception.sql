@@ -15,7 +15,7 @@ CREATE TABLE Reception (
     PRIMARY KEY (numero_reception),
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (numero_livraison) REFERENCES ModalitesLivraison(numero_livraison) ON UPDATE CASCADE ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Reception (
     numero_reception,
     code_Don,

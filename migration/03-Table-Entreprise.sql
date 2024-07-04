@@ -10,7 +10,7 @@ CREATE TABLE Entreprise (
     code_Groupe_appartenance INT,
     date_arret_activite_Societe DATE,
     FOREIGN KEY (code_type_activite_Societe) REFERENCES TypeActiviteSociete(code) ON UPDATE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Entreprise (
     raison_sociale,

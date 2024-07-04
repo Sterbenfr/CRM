@@ -8,7 +8,7 @@ CREATE TABLE ContactEntite (
     FOREIGN KEY (code_type_site) REFERENCES SiteTypes(code_type_site) ON UPDATE CASCADE,
     FOREIGN KEY (code_site_suivi) REFERENCES Sites(code_site) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_utilisateur_suivant) REFERENCES Utilisateurs(code_utilisateur) ON UPDATE CASCADE ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO ContactEntite (
     code_entite,
     code_type_site,

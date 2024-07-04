@@ -182,6 +182,7 @@ type Field = {
         | 'password'
     value: string | boolean | null
     placeholder?: string
+    createURL?: string
     url?: string
     required?: boolean
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
@@ -277,7 +278,11 @@ const PopUp: React.FC<PopUpProps> = ({
                                         <SearchComponent
                                             key={input.id}
                                             url={input.url as string}
+                                            createURL={
+                                                input.createURL as string
+                                            }
                                             required={input.required}
+                                            placeholder={input.placeholder}
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
@@ -293,7 +298,6 @@ const PopUp: React.FC<PopUpProps> = ({
                                             key={input.id}
                                             type='checkbox'
                                             required={input.required}
-                                            checked={input.value === true}
                                             className={style.checkboxF}
                                             onChange={e =>
                                                 handleInputChange(
