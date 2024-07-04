@@ -28,7 +28,7 @@ CREATE TABLE ModalitesLivraison (
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don),
     FOREIGN KEY (code_type_livraison) REFERENCES TypeLivraison(code_type_livraison),
     FOREIGN KEY (code_Prestataire_transporteur) REFERENCES Prestataires(code_Prestataire)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO ModalitesLivraison (
     numero_livraison,
     code_Don,

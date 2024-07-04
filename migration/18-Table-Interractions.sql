@@ -15,7 +15,7 @@ CREATE TABLE Interactions (
     FOREIGN KEY (code_type_interaction) REFERENCES TypeInteractions(code_type_interaction),
     FOREIGN KEY (code_modalite_interaction) REFERENCES ModaliteInteractions(code_modalite_interaction),
     FOREIGN KEY (code_contact_entite) REFERENCES ContactEntite(code_utilisateur_suivant)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Interactions (
     code_Utilisateur_Prospecteur,
     code_Entite_Prospectee,

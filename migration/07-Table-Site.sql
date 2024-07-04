@@ -11,7 +11,7 @@ CREATE TABLE Sites (
     commentaires VARCHAR(200),
     PRIMARY KEY (code_site),
     FOREIGN KEY (code_type_site) REFERENCES SiteTypes(code_type_site)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Sites (
     designation_longue,
     designation_courte,

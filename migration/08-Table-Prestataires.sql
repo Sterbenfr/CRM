@@ -16,7 +16,7 @@ CREATE TABLE Prestataires (
     commentaires VARCHAR(200),
     date_arret_activite_du_prestataire DATE,
     FOREIGN KEY (code_type_de_Prestataire) REFERENCES TypePrestataires(code_type_de_Prestataire)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Prestataires (
     code_type_de_Prestataire,
     raison_sociale,

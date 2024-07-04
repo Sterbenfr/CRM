@@ -5,7 +5,7 @@ CREATE TABLE Groupe (
     site_Web VARCHAR(255),
     commentaires VARCHAR(200),
     date_arret_activite_du_Groupe DATE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Groupe (
     nom_du_Groupe,
     Logo,

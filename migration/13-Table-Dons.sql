@@ -35,7 +35,7 @@ CREATE TABLE Dons (
     FOREIGN KEY (code_Utilisateur_saisie_don) REFERENCES Utilisateurs(code_utilisateur),
     FOREIGN KEY (code_Utilisateur_accepte_refuse_don) REFERENCES Utilisateurs(code_utilisateur),
     FOREIGN KEY (code_site_beneficiaire_don) REFERENCES Sites(code_site)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Dons (
     code_Entite_donatrice,
     date_proposition_don,

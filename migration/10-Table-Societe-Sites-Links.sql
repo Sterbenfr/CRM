@@ -8,7 +8,7 @@ CREATE TABLE SuiviSociete (
     FOREIGN KEY (code_type_de_Site) REFERENCES SiteTypes(code_type_Site),
     FOREIGN KEY (code_site_suivi) REFERENCES Sites(code_site),
     FOREIGN KEY (code_utilisateur_suivant) REFERENCES Utilisateurs(code_utilisateur)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO SuiviSociete (
     code_Societe,
     code_type_de_Site,
