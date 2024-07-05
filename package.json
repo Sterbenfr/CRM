@@ -12,6 +12,10 @@
         "prettier": "prettier --write ."
     },
     "dependencies": {
+        "@fullcalendar/daygrid": "^6.1.14",
+        "@fullcalendar/interaction": "^6.1.14",
+        "@fullcalendar/react": "^6.1.14",
+        "@fullcalendar/timegrid": "^6.1.14",
         "@typescript-eslint/eslint-plugin": "^6.13.2",
         "bcrypt": "^5.1.1",
         "dotenv": "^16.4.5",
