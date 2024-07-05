@@ -1,5 +1,5 @@
 CREATE TABLE Dons (
-    code_Don INT PRIMARY KEY AUTO_INCREMENT,
+    code_Don INT AUTO_INCREMENT,
     code_Entite_donatrice INT(7),
     date_proposition_don DATE NOT NULL,
     code_contact_Entite_donatrice INT,
@@ -11,7 +11,7 @@ CREATE TABLE Dons (
     date_fin_mise_disposition DATE,
     commentaires VARCHAR(200),
     pieces_associees BLOB,
-    code_Utilisateur_saisie_don INT NOT NULL,
+    code_Utilisateur_saisie_don INT,
     statut_acceptation_don ENUM('V', 'R', 'A'),
     date_acceptation_refus_don DATE,
     code_Utilisateur_accepte_refuse_don INT,
@@ -26,6 +26,7 @@ CREATE TABLE Dons (
     cerfa_fait ENUM('O','N'),
     date_cerfa DATE,
     cerfa BLOB,
+    PRIMARY KEY (code_Don),
     FOREIGN KEY (code_Entite_donatrice) REFERENCES Entite(code_Entite) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (code_contact_Entite_donatrice) REFERENCES ContactEntite(code_utilisateur_suivant) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don) ON UPDATE CASCADE,

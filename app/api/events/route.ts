@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '/root/Stage-test/utils/db'
+import pool from '../../../utils/db'
 
 export async function GET() {
     try {
