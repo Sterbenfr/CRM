@@ -2,7 +2,7 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../app/api/auth/[...nextauth]/route'
 import Head from 'next/head'
-import Calendar from '/root/Stage-test/components/Calendar'
+import Calendar from '../components/Calendar'
 
 export default async function Home() {
     const session = await getServerSession(authOptions)
