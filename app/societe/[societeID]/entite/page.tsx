@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import List from '../../../../components/list'
 import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
@@ -41,9 +41,400 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
+
+    const [raisonSociale, setRaisonSociale] = useState('')
+    const [nomCommercial, setNomCommercial] = useState('')
+    const [logo, setLogo] = useState<Blob>()
+    const [siret, setSiret] = useState('')
+    const [codeApe, setCodeApe] = useState('')
+    const [codeRna, setCodeRna] = useState('')
+    const [codeCee, setCodeCee] = useState('')
+    const [codeSocieteAppartenance, setCodeSocieteAppartenance] = useState('')
+    const [adresse, setAdresse] = useState('')
+    const [telephone, setTelephone] = useState('')
+    const [mail, setMail] = useState('')
+    const [siteInternet, setSiteInternet] = useState('')
+    const [commentaires, setCommentaires] = useState('')
+    const [codeTypeEntite, setCodeTypeEntite] = useState('')
+    const [codeTypeDon, setCodeTypeDon] = useState('')
+    const [codeTypeProduit, setCodeTypeProduit] = useState('')
+    const [codeTypeCompetence, setCodeTypeCompetence] = useState('')
+    const [commentairesLogistique, setCommentairesLogistique] = useState('')
+    const [presenceQuai, setPresenceQuai] = useState('')
+    const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
+    const [mailContactPrestataire, setMailContactPrestataire] = useState('')
+    const [cerfa, setCerfa] = useState('')
+    const [codeFrequenceCerfa, setCodeFrequenceCerfa] = useState('')
+    const [dateArretActivite, setDateArretActivite] = useState('')
+
+    const handleRaisonSocialeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setRaisonSociale(event.target.value)
+    }
+
+    const handleNomCommercialChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomCommercial(event.target.value)
+    }
+
+    const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files) {
+            setLogo(event.target.files[0])
+        }
+    }
+
+    const handleSiretChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSiret(event.target.value)
+    }
+
+    const handleCodeApeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeApe(event.target.value)
+    }
+
+    const handleCodeRnaChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeRna(event.target.value)
+    }
+
+    const handleCodeCeeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeCee(event.target.value)
+    }
+
+    const handleCodeSocieteAppartenanceChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeSocieteAppartenance(event.target.value)
+    }
+
+    const handleAdresseChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setAdresse(event.target.value)
+    }
+
+    const handleTelephoneChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setTelephone(event.target.value)
+    }
+
+    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMail(event.target.value)
+    }
+
+    const handleSiteInternetChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setSiteInternet(event.target.value)
+    }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handleCodeTypeEntiteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeEntite(event.target.value)
+    }
+
+    const handleCodeTypeDonChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeDon(event.target.value)
+    }
+
+    const handleCodeTypeProduitChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeProduit(event.target.value)
+    }
+
+    const handleCodeTypeCompetenceChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeCompetence(event.target.value)
+    }
+
+    const handleCommentairesLogistiqueChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentairesLogistique(event.target.value)
+    }
+
+    const handlePresenceQuaiChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setPresenceQuai(event.target.value)
+    }
+
+    const handlePiecesAssocieesChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        if (event.target.files) {
+            setPiecesAssociees(event.target.files[0])
+        }
+    }
+
+    const handleMailContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setMailContactPrestataire(event.target.value)
+    }
+
+    const handleCerfaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCerfa(event.target.value)
+    }
+
+    const handleCodeFrequenceCerfaChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeFrequenceCerfa(event.target.value)
+    }
+
+    const handleDateArretActiviteChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateArretActivite(event.target.value)
+    }
+
     const handleClose = () => {
         setIsPopUpOpen(false)
     }
+
+    type FieldType =
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
+
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'raison_sociale',
+                type: 'input',
+                value: raisonSociale,
+                onInputChange: handleRaisonSocialeChange,
+                required: true,
+            },
+            {
+                id: 'nom_commercial',
+                type: 'input',
+                value: nomCommercial,
+                onInputChange: handleNomCommercialChange,
+                placeholder: 'Exemple: Alpha Corp',
+            },
+            {
+                id: 'logo',
+                type: 'file',
+                value: null,
+                onInputChange: handleLogoChange,
+            },
+            {
+                id: 'Siret',
+                type: 'number',
+                value: siret,
+                onInputChange: handleSiretChange,
+                placeholder: 'Exemple: 15269783246918',
+                required: true,
+            }, // if number !== 14 = pas de validation
+            {
+                id: 'code_ape',
+                type: 'input',
+                value: codeApe,
+                onInputChange: handleCodeApeChange,
+                placeholder: 'Exemple: 1234A',
+            }, // 4 chiffres et 1 lettre
+            {
+                id: 'code_rna',
+                type: 'input',
+                value: codeRna,
+                onInputChange: handleCodeRnaChange,
+                placeholder: 'Exemple: W123456789',
+            }, // W + 9 chiffres
+            {
+                id: 'code_cee',
+                type: 'input',
+                value: codeCee,
+                onInputChange: handleCodeCeeChange,
+                placeholder: 'Exemple: 123456789',
+            },
+            {
+                id: 'code_societe_appartenance',
+                type: 'number',
+                value: codeSocieteAppartenance.toString(),
+                onInputChange: handleCodeSocieteAppartenanceChange,
+            },
+            {
+                id: 'adresse',
+                type: 'input',
+                value: adresse,
+                onInputChange: handleAdresseChange,
+                placeholder: 'Exemple: 12 rue de la paix',
+            },
+            {
+                id: 'telephone',
+                type: 'input',
+                value: telephone,
+                onInputChange: handleTelephoneChange,
+                placeholder: 'Exemple: 0123456789',
+            },
+            {
+                id: 'mail',
+                type: 'input',
+                value: mail,
+                onInputChange: handleMailChange,
+                placeholder: 'Exemple: Alpha.corp@gmail.com',
+            },
+            {
+                id: 'site_internet',
+                type: 'input',
+                value: siteInternet,
+                onInputChange: handleSiteInternetChange,
+                placeholder: 'Exemple: http://www.alpha.com/',
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                onInputChange: handleCommentairesChange,
+                placeholder: 'Exemple: Societe de service informatique',
+            },
+            {
+                id: 'code_type_entite',
+                type: 'select',
+                value: codeTypeEntite,
+                url: `../../api/societe/${params.societeID}/entite/type-entites`,
+                onChange: handleCodeTypeEntiteChange,
+            },
+            {
+                id: 'code_type_don',
+                type: 'select',
+                value: codeTypeDon,
+                url: `../../api/dons/type-don`,
+                onChange: handleCodeTypeDonChange,
+            },
+            {
+                id: 'commentaires_logistique',
+                type: 'input',
+                value: commentairesLogistique,
+                onInputChange: handleCommentairesLogistiqueChange,
+                placeholder: 'Exemple: Societe de service informatique',
+            },
+            {
+                id: 'presence_quai',
+                type: 'input',
+                value: presenceQuai,
+                onInputChange: handlePresenceQuaiChange,
+            },
+            {
+                id: 'pieces_associees',
+                type: 'file',
+                value: null,
+                onInputChange: handlePiecesAssocieesChange,
+            },
+            {
+                id: 'mail_contact_prestataire',
+                type: 'input',
+                value: mailContactPrestataire,
+                placeholder: 'Exemple: prestataire.alphacorp@gmail.com',
+                onInputChange: handleMailContactPrestataireChange,
+            },
+            {
+                id: 'cerfa',
+                type: 'input',
+                value: cerfa,
+                onInputChange: handleCerfaChange,
+            },
+            {
+                id: 'code_frequence_cerfa',
+                type: 'select',
+                value: codeFrequenceCerfa,
+                url: `../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
+                onChange: handleCodeFrequenceCerfaChange,
+            },
+            {
+                id: 'date_arret_activite',
+                type: 'date',
+                value: dateArretActivite,
+                onInputChange: handleDateArretActiviteChange,
+            },
+        ]
+        if (codeTypeDon === 'MAR') {
+            fields.push({
+                id: 'code_type_produit',
+                type: 'select',
+                value: codeTypeProduit,
+                url: `../../api/dons/type-produits`,
+                onChange: handleCodeTypeProduitChange,
+            })
+        } else if (codeTypeDon === 'SIP') {
+            fields.push({
+                id: 'code_type_competence',
+                type: 'select',
+                value: codeTypeCompetence,
+                url: `../../api/dons/type-competences`,
+                onChange: handleCodeTypeCompetenceChange,
+            })
+        }
+        return fields
+    }, [
+        params,
+        raisonSociale,
+        nomCommercial,
+        siret,
+        codeApe,
+        codeRna,
+        codeCee,
+        codeSocieteAppartenance,
+        adresse,
+        telephone,
+        mail,
+        siteInternet,
+        commentaires,
+        codeTypeEntite,
+        codeTypeDon,
+        codeTypeProduit,
+        codeTypeCompetence,
+        commentairesLogistique,
+        presenceQuai,
+        mailContactPrestataire,
+        cerfa,
+        codeFrequenceCerfa,
+        dateArretActivite,
+    ])
 
     useEffect(() => {
         const fetchEntite = async () => {
@@ -59,10 +450,11 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 await res.json()
             setEntite(data)
             setTotalItems(total) // set the total items
+            setFields(generateFields())
         }
 
         fetchEntite()
-    }, [params.societeID, page, itemsPerPage])
+    }, [params.societeID, page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -114,149 +506,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         <PopUp
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite`}
-                            fields={[
-                                {
-                                    id: 'raison_sociale',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../api/select/societe/entite',
-                                    required: true,
-                                }, // pourvoir add
-                                {
-                                    id: 'nom_commercial',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Alpha Corp',
-                                },
-                                {
-                                    id: 'logo',
-                                    type: 'file',
-                                    value: null,
-                                }, // type blob
-                                {
-                                    id: 'Siret',
-                                    type: 'number',
-                                    value: null,
-                                    placeholder: 'Exemple: 15269783246918',
-                                    required: true,
-                                }, // if number !== 14 = pas de validation
-                                {
-                                    id: 'code_ape',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 1234A',
-                                }, // 4 chiffres et 1 lettre
-                                {
-                                    id: 'code_rna',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: W123456789',
-                                }, // W + 9 chiffres
-                                {
-                                    id: 'code_cee',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 123456789',
-                                },
-                                {
-                                    id: 'code_societe_appartenance',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../api/select/societe',
-                                },
-                                {
-                                    id: 'adresse',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 12 rue de la paix',
-                                },
-                                {
-                                    id: 'telephone',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 0123456789',
-                                },
-                                {
-                                    id: 'mail',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Alpha.corp@gmail.com',
-                                },
-                                {
-                                    id: 'site_internet',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: http://www.alpha.com/',
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Societe de service informatique',
-                                },
-                                {
-                                    id: 'code_type_entite',
-                                    type: 'select',
-                                    value: null,
-                                    url: `../../api/societe/${params.societeID}/entite/type-entites`,
-                                }, // a voir les conditions
-                                {
-                                    id: 'code_type_don',
-                                    type: 'select',
-                                    value: null,
-                                    url: `../../api/dons/type-don`,
-                                },// a voir les conditions
-                                {
-                                    id: 'code_type_produit',
-                                    type: 'select',
-                                    value: null,
-                                    url: `../../api/dons/type-produits`,
-                                },// a voir les conditions
-                                {
-                                    id: 'code_type_competence',
-                                    type: 'select',
-                                    value: null,
-                                    url: `../../api/dons/type-competences`,
-                                },// a voir les conditions
-                                {
-                                    id: 'commentaires_logistique',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Societe de service informatique',
-                                },
-                                {
-                                    id: 'presence_quai',
-                                    type: 'checkbox',
-                                    value: false,
-                                },
-                                {
-                                    id: 'pieces_associees',
-                                    type: 'file',
-                                    value: null,
-                                }, // typz blob
-                                {
-                                    id: 'mail_contact_prestataire',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: prestataire.alphacorp@gmail.com',
-                                },
-                                {
-                                    id: 'cerfa',
-                                    type: 'checkbox',
-                                    value: false,
-                                },
-                                {
-                                    id: 'code_frequence_cerfa',
-                                    type: 'select',
-                                    value: 'ANN',
-                                    url: `../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
-                                },
-                                {
-                                    id: 'date_arret_activite',
-                                    type: 'date',
-                                    value: null,
-                                },
-                            ]}
+                            fields={fields}
                         />
                     </div>
                 )}

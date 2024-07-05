@@ -24,12 +24,12 @@ CREATE TABLE Entite (
     code_frequence_cerfa CHAR(4),
     date_arret_activite DATE,
     PRIMARY KEY (code_entite),
-    FOREIGN KEY (code_type_entite) REFERENCES TypesEntites(code_type_entite),
-    FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don),
-    FOREIGN KEY (code_type_produit) REFERENCES TypesProduits(code_type_produits),
-    FOREIGN KEY (code_type_competence) REFERENCES TypesCompetences(code_type_competence),
-    FOREIGN KEY (code_frequence_cerfa) REFERENCES FrequencesCerfa(code_frequence_cerfa),
-    FOREIGN KEY (code_societe_appartenance) REFERENCES Entreprise(code_Societe)
+    FOREIGN KEY (code_type_entite) REFERENCES TypesEntites(code_type_entite) ON UPDATE CASCADE,
+    FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don) ON UPDATE CASCADE,
+    FOREIGN KEY (code_type_produit) REFERENCES TypesProduits(code_type_produits) ON UPDATE CASCADE,
+    FOREIGN KEY (code_type_competence) REFERENCES TypesCompetences(code_type_competence) ON UPDATE CASCADE,
+    FOREIGN KEY (code_frequence_cerfa) REFERENCES FrequencesCerfa(code_frequence_cerfa) ON UPDATE CASCADE,
+    FOREIGN KEY (code_societe_appartenance) REFERENCES Entreprise(code_Societe) ON UPDATE CASCADE ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Entite (
     raison_sociale,

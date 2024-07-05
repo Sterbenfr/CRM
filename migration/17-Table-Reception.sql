@@ -1,5 +1,5 @@
 CREATE TABLE Reception (
-    numero_reception INT PRIMARY KEY,
+    numero_reception INT AUTO_INCREMENT,
     code_Don INT,
     numero_livraison INT,
     date_reception DATE,
@@ -12,8 +12,9 @@ CREATE TABLE Reception (
     produits_sur_palettes VARCHAR(1),
     commentaires VARCHAR(200),
     pieces_associees BLOB,
-    FOREIGN KEY (code_Don) REFERENCES Dons(code_Don),
-    FOREIGN KEY (numero_livraison) REFERENCES ModalitesLivraison(numero_livraison)
+    PRIMARY KEY (numero_reception),
+    FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (numero_livraison) REFERENCES ModalitesLivraison(numero_livraison) ON UPDATE CASCADE ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Reception (
     numero_reception,

@@ -26,15 +26,15 @@ CREATE TABLE Dons (
     cerfa_fait ENUM('O','N'),
     date_cerfa DATE,
     cerfa BLOB,
-    FOREIGN KEY (code_Entite_donatrice) REFERENCES Entite(code_Entite),
-    FOREIGN KEY (code_contact_Entite_donatrice) REFERENCES ContactEntite(code_utilisateur_suivant),
-    FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don),
-    FOREIGN KEY (code_type_competences) REFERENCES TypesCompetences(code_type_competence),
-    FOREIGN KEY (code_type_produits) REFERENCES TypesProduits(code_type_produits),
-    FOREIGN KEY (code_mode_conservation_produits) REFERENCES ModeConservationProduits(code_mode_conservation_produits),
-    FOREIGN KEY (code_Utilisateur_saisie_don) REFERENCES Utilisateurs(code_utilisateur),
-    FOREIGN KEY (code_Utilisateur_accepte_refuse_don) REFERENCES Utilisateurs(code_utilisateur),
-    FOREIGN KEY (code_site_beneficiaire_don) REFERENCES Sites(code_site)
+    FOREIGN KEY (code_Entite_donatrice) REFERENCES Entite(code_Entite) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (code_contact_Entite_donatrice) REFERENCES ContactEntite(code_utilisateur_suivant) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don) ON UPDATE CASCADE,
+    FOREIGN KEY (code_type_competences) REFERENCES TypesCompetences(code_type_competence) ON UPDATE CASCADE,
+    FOREIGN KEY (code_type_produits) REFERENCES TypesProduits(code_type_produits) ON UPDATE CASCADE,
+    FOREIGN KEY (code_mode_conservation_produits) REFERENCES ModeConservationProduits(code_mode_conservation_produits) ON UPDATE CASCADE,
+    FOREIGN KEY (code_Utilisateur_saisie_don) REFERENCES Utilisateurs(code_utilisateur) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (code_Utilisateur_accepte_refuse_don) REFERENCES Utilisateurs(code_utilisateur) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (code_site_beneficiaire_don) REFERENCES Sites(code_site) ON UPDATE CASCADE ON DELETE SET NULL
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Dons (
     code_Entite_donatrice,
