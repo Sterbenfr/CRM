@@ -9,7 +9,7 @@ enum StatutAcceptationDon {
 export async function GET() {
     try {
         const statuts = [
-            { id: 'B', label: StatutAcceptationDon.Attente },
+            { id: 'A', label: StatutAcceptationDon.Attente },
             { id: 'V', label: StatutAcceptationDon.Valide },
             { id: 'R', label: StatutAcceptationDon.Refuse },
         ]

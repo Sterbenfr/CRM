@@ -141,13 +141,15 @@ function SitesPage() {
                                     id: 'adresse_mail',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Siege.social@gmail.com',
+                                    placeholder:
+                                        'Exemple: Siege.social@gmail.com',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Siège social de la société',
+                                    placeholder:
+                                        'Exemple: Siège social de la société',
                                 },
                             ]}
                         />

@@ -145,8 +145,7 @@ export default function Modalites_livraisonPage({
                                 : modalite_livraison[0].mail_contact_enlevement}
                         </p>
                     </div>
-                </div>
-                <div className={style.col_2}>
+
                     <div className={style.info}>
                         <p className={style.titre}>Adresse enlevement :</p>
                         <p>
@@ -164,7 +163,8 @@ export default function Modalites_livraisonPage({
                                 : modalite_livraison[0].adresse_livraison}
                         </p>
                     </div>
-
+                </div>
+                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>Nombre de palette prevu :</p>
                         <p>
@@ -194,6 +194,53 @@ export default function Modalites_livraisonPage({
                                 ? '/'
                                 : modalite_livraison[0].nombre_cartons_prevu}
                         </p>
+                    </div>
+
+                    <div className={style.info}>
+                        <p className={style.titre}>Poids prevu kg :</p>
+                        <p>
+                            {modalite_livraison[0].poids_prevu_kg == null
+                                ? '/'
+                                : modalite_livraison[0].poids_prevu_kg}
+                        </p>
+                    </div>
+
+                    <div className={style.info}>
+                        <p className={style.titre}>Produits sur palettes :</p>
+                        <p>
+                            {modalite_livraison[0].produits_sur_palettes == null
+                                ? '/'
+                                : modalite_livraison[0].produits_sur_palettes}
+                        </p>
+                    </div>
+
+                    <div className={style.info}>
+                        <p className={style.titre}>
+                            Temperature pour la conservation du produit :
+                        </p>
+                        <p>
+                            {modalite_livraison[0]
+                                .temperature_conserv_produits == null
+                                ? '/'
+                                : modalite_livraison[0]
+                                      .temperature_conserv_produits}
+                        </p>
+                    </div>
+
+                    <div className={style.info}>
+                        <p className={style.titre}>Commentaires :</p>
+                        <p>
+                            {modalite_livraison[0].commentaires == null
+                                ? '/'
+                                : modalite_livraison[0].commentaires}
+                        </p>
+                    </div>
+
+                    {/* A revoir : Type Blob */}
+
+                    <div className={style.info}>
+                        <p className={style.titre}>Nombre de cartons prevu :</p>
+                        <p>{modalite_livraison[0].pieces_associees == null}</p>
                     </div>
                 </div>
             </div>
