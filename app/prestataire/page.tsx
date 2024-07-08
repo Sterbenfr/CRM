@@ -5,6 +5,7 @@ import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
 import style from '../../styles/components.module.css'
+import { useCallback } from 'react'
 
 export interface Prestataire {
     code_Prestataire: number
@@ -30,12 +31,301 @@ function PrestatairesPage() {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [codeTypeDePrestataire, setCodeTypeDePrestataire] = useState('TRA')
+    const [raisonSociale, setRaisonSociale] = useState('')
+    const [nomCommercial, setNomCommercial] = useState('')
+    const [siren, setSiren] = useState('')
+    const [siret, setSiret] = useState('')
+    const [telephone, setTelephone] = useState('')
+    const [mail, setMail] = useState('')
+    const [adresse, setAdresse] = useState('')
+    const [civiliteContactPrestataire, setCiviliteContactPrestataire] =
+        useState('Mme')
+    const [nomContactPrestataire, setNomContactPrestataire] = useState('')
+    const [prenomContactPrestataire, setPrenomContactPrestataire] = useState('')
+    const [telephoneContactPrestataire, setTelephoneContactPrestataire] =
+        useState('')
+    const [mailContactPrestataire, setMailContactPrestataire] = useState('')
+    const [commentaires, setCommentaires] = useState('')
+    const [dateArretActiviteDuPrestataire, setDateArretActiviteDuPrestataire] =
+        useState(new Date())
+
+    const handleCodeTypeDePrestataireChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeDePrestataire(event.target.value)
+    }
+
+    const handleRaisonSocialeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setRaisonSociale(event.target.value)
+    }
+
+    const handleNomCommercialChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomCommercial(event.target.value)
+    }
+
+    const handleSirenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSiren(event.target.value)
+    }
+
+    const handleSiretChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSiret(event.target.value)
+    }
+
+    const handleTelephoneChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setTelephone(event.target.value)
+    }
+
+    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMail(event.target.value)
+    }
+
+    const handleAdresseChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setAdresse(event.target.value)
+    }
+
+    const handleCiviliteContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCiviliteContactPrestataire(event.target.value)
+    }
+
+    const handleNomContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomContactPrestataire(event.target.value)
+    }
+
+    const handlePrenomContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setPrenomContactPrestataire(event.target.value)
+    }
+
+    const handleTelephoneContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setTelephoneContactPrestataire(event.target.value)
+    }
+
+    const handleMailContactPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setMailContactPrestataire(event.target.value)
+    }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handleDateArretActiviteDuPrestataireChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateArretActiviteDuPrestataire(new Date(event.target.value))
+    }
+
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
     const handleClose = () => {
         setIsPopUpOpen(false)
     }
+
+    type FieldType =
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
+
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'code_type_de_Prestataire',
+                type: 'select',
+                value: codeTypeDePrestataire,
+                required: true,
+                url: '../api/prestataire/type-prestataires',
+                onChange: handleCodeTypeDePrestataireChange,
+            },
+            {
+                id: 'raison_sociale',
+                type: 'input',
+                value: raisonSociale,
+                placeholder: 'Exemple: Entreprise Alpha',
+                onInputChange: handleRaisonSocialeChange,
+            },
+            {
+                id: 'nom_commercial',
+                type: 'input',
+                value: nomCommercial,
+                placeholder: 'Exemple: Alpha Corp',
+                onInputChange: handleNomCommercialChange,
+            },
+            {
+                id: 'Siren',
+                type: 'number',
+                value: siren,
+                placeholder: 'Exemple: 453684259',
+                onInputChange: handleSirenChange,
+            },
+            {
+                id: 'Siret',
+                type: 'number',
+                value: siret,
+                placeholder: 'Exemple: 15269783246918',
+                onInputChange: handleSiretChange,
+            },
+            {
+                id: 'telephone',
+                type: 'number',
+                placeholder: 'Exemple: 0658905910',
+                value: telephone,
+                onInputChange: handleTelephoneChange,
+            },
+            {
+                id: 'mail',
+                type: 'input',
+                value: mail,
+                placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
+                onInputChange: handleMailChange,
+            },
+            {
+                id: 'adresse',
+                type: 'input',
+                value: adresse,
+                placeholder: 'Exemple: 12 rue de la paix',
+                onInputChange: handleAdresseChange,
+            },
+            {
+                id: 'civilite_contact_prestataire',
+                type: 'select',
+                value: civiliteContactPrestataire,
+                url: '../api/select/genre',
+                onChange: handleCiviliteContactPrestataireChange,
+            },
+            {
+                id: 'nom_contact_prestataire',
+                type: 'input',
+                value: nomContactPrestataire,
+                placeholder: 'Exemple: Delacroix',
+                onInputChange: handleNomContactPrestataireChange,
+            },
+            {
+                id: 'prenom_contact_prestataire',
+                type: 'input',
+                value: prenomContactPrestataire,
+                placeholder: 'Exemple: David',
+                onInputChange: handlePrenomContactPrestataireChange,
+            },
+            {
+                id: 'telephone_contact_prestataire',
+                type: 'number',
+                value: telephoneContactPrestataire,
+                placeholder: 'Exemple: 0658905910',
+                onInputChange: handleTelephoneContactPrestataireChange,
+            },
+            {
+                id: 'mail_contact_prestataire',
+                type: 'input',
+                value: mailContactPrestataire,
+                placeholder: 'Exemple: David.delacroix@gmail.com',
+                onInputChange: handleMailContactPrestataireChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Prestataire très sérieux',
+                onInputChange: handleCommentairesChange,
+            },
+            {
+                id: 'date_arret_activite_du_prestataire',
+                type: 'date',
+                value: dateArretActiviteDuPrestataire
+                    .toISOString()
+                    .split('T')[0],
+                onInputChange: handleDateArretActiviteDuPrestataireChange,
+            },
+        ]
+        if (siren.length > 9) {
+            setSiren(siren.slice(0, 9))
+            alert('Le Siren doit contenir 9 chiffres')
+        }
+        if (siret.length > 14) {
+            setSiret(siret.slice(0, 14))
+            alert('Le Siret doit contenir 14 chiffres')
+        }
+        if (telephone.length > 12) {
+            setTelephone(telephone.slice(0, 12))
+            alert('Le téléphone doit contenir 12 chiffres')
+        }
+
+        if (commentaires.length > 200) {
+            setCommentaires(commentaires.slice(0, 200))
+            alert('Les commentaires doivent contenir moins de 200 caractères')
+        }
+        if (telephoneContactPrestataire.length > 12) {
+            setTelephoneContactPrestataire(
+                telephoneContactPrestataire.slice(0, 12),
+            )
+            alert('Le téléphone doit contenir 12 chiffres maximum')
+        }
+
+        return fields
+    }, [
+        codeTypeDePrestataire,
+        raisonSociale,
+        nomCommercial,
+        siren,
+        siret,
+        telephone,
+        mail,
+        adresse,
+        civiliteContactPrestataire,
+        nomContactPrestataire,
+        prenomContactPrestataire,
+        telephoneContactPrestataire,
+        mailContactPrestataire,
+        commentaires,
+        dateArretActiviteDuPrestataire,
+    ])
 
     useEffect(() => {
         const fetchDons = async () => {
@@ -51,10 +341,11 @@ function PrestatairesPage() {
                 await res.json()
             setPrestataires(data)
             setTotalItems(total) // set the total items
+            setFields(generateFields())
         }
 
         fetchDons()
-    }, [page, itemsPerPage])
+    }, [page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -101,98 +392,7 @@ function PrestatairesPage() {
                         <PopUp
                             onClose={handleClose}
                             url='http://localhost:3000/api/prestataire'
-                            fields={[
-                                {
-                                    id: 'code_type_de_Prestataire',
-                                    type: 'select',
-                                    value: 'TRA',
-                                    required: true,
-                                    url: '../api/prestataire/type-prestataires',
-                                },
-                                {
-                                    id: 'raison_sociale',
-                                    type: 'select',
-                                    value: 'Société Alpha',
-                                    required: true,
-                                    url: '../api/select/prestataire',
-                                }, //pouvoir en ajouter une
-                                {
-                                    id: 'nom_commercial',
-                                    type: 'input',
-                                    value: null,
-                                },// a voir si search
-                                {
-                                    id: 'Siren',
-                                    type: 'number',
-                                    value: null,
-                                    placeholder: 'Exemple: 453684259',
-                                }, // if number !== 9 = pas de validation
-                                {
-                                    id: 'Siret',
-                                    type: 'number',
-                                    value: null,
-                                    placeholder: 'Exemple: 15269783246918',
-                                }, // if number !== 14 = pas de validation
-                                {
-                                    id: 'telephone',
-                                    type: 'number',
-                                    placeholder: 'Exemple: 0658905910',
-                                    value: null,
-                                },
-                                {
-                                    id: 'mail',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
-                                },
-                                {
-                                    id: 'adresse',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 12 rue de la paix',
-                                },
-                                {
-                                    id: 'civilite_contact_prestataire',
-                                    type: 'select',
-                                    value: null,
-                                    url: '../api/select/genre',
-                                },
-                                {
-                                    id: 'nom_contact_prestataire',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Delacroix',
-                                },
-                                {
-                                    id: 'prenom_contact_prestataire',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: David',
-                                },
-                                {
-                                    id: 'telephone_contact_prestataire',
-                                    type: 'number',
-                                    value: null,
-                                    placeholder: 'Exemple: 0658905910',
-                                },
-                                {
-                                    id: 'mail_contact_prestataire',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: David.delacroix@gmail.com',
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Prestataire très sérieux',
-                                },
-                                {
-                                    id: 'date_arret_activite_du_prestataire',
-                                    type: 'date',
-                                    value: null,
-                                },
-                            ]}
+                            fields={fields} // Use the fields state here
                         />
                     </div>
                 )}

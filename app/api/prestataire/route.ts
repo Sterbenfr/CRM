@@ -45,8 +45,8 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
-        !prestataires.code_type_de_Prestataire ||
-        !prestataires.raison_sociale
+        (console.log(prestataires),
+        !prestataires.code_type_de_Prestataire || !prestataires.raison_sociale)
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
@@ -55,7 +55,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `prestataires` SET ?'
+        const query = 'INSERT INTO `Prestataires` SET ?'
         const [rows] = await pool.query(query, prestataires)
         return NextResponse.json(rows)
     } catch (error) {

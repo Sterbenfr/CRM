@@ -20,7 +20,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                     />
                 </Link>
                 <Link href='/' className={styles.links}>
-                    Menu
+                    Calendrier
                 </Link>
                 <Link href='/dons' className={styles.links}>
                     Dons

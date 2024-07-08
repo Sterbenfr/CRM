@@ -10,8 +10,8 @@ export async function GET() {
     try {
         const statuts = [
             { id: 'Mme', label: StatutGenre.Madame },
-            { id: 'Mr', label: StatutGenre.Monsieur },
-            { id: 'Oth', label: StatutGenre.Autre },
+            { id: 'M.', label: StatutGenre.Monsieur },
+            { id: 'Aut', label: StatutGenre.Autre },
         ]
 
         return NextResponse.json(statuts)

@@ -566,7 +566,7 @@ function DonsPage() {
     return (
         <>
             <div className={style.page}>
-                <h1></h1>
+                <h1 className={style.lg}>Dons</h1>
                 <List
                     items={Dons.map(Don => ({
                         value1: Don.code_Don.toString(),
@@ -580,6 +580,7 @@ function DonsPage() {
                         value5: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '',
+
                         value7: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '',
