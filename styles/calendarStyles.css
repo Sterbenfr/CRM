@@ -1,0 +1,42 @@
+/* calendarStyles.css */
+.fc .fc-toolbar.fc-header-toolbar {
+    background-color: #e5007d; /* couleur de l'entete*/
+    color: white; /* couleur du texte de l'entete */
+}
+
+.fc .fc-button-primary {
+    background-color: #e5007d; /* couleur des boutons de gauche*/
+    border-color: #e5007d; /* couleur des bordures des boutons de gauche*/
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    background-color: #e5007d; /* couleur bouton de droite */
+    border-color: #e5007d; /* couleur bordure bouton de droite */
+}
+
+.fc .fc-daygrid-event {
+    background-color: #008cff00; /* couleur du fond des évenements et couleur atténuée quand on click sur une case */
+    color: black;
+}
+
+.fc .fc-daygrid-event:hover {
+    background-color: #f0629143; /* couleur quand on passe sur un événement */
+}
+
+.fc .fc-daygrid-day-top {
+    background-color: #00000000; /* couleur pour la bande des jours ( joues avec l'alpha pour la transparence ) */
+    color: black;
+}
+
+.fc .fc-day-today {
+    background-color: #e5007edf !important; /* laisses le !important sinon ça ne fonctionne , couleur du fond de case du jour actuelle */
+}
+
+.fc-theme-standard .fc-scrollgrid {
+    border: 1px solid #000000; /*couleur de la bordure général du calendrier */
+}
+
+.fc .fc-daygrid-day.fc-day-other {
+    background-color: #ffffff; /* couleur pour les jours hors mois actuelle choisi */
+}
