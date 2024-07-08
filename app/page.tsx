@@ -1,8 +1,8 @@
 // page.tsx
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../app/api/auth/[...nextauth]/route'
-import Head from 'next/head'
 import Calendar from '../components/Calendar'
+import style from '../styles/components.module.css'
 
 export default async function Home() {
     const session = await getServerSession(authOptions)
@@ -10,26 +10,18 @@ export default async function Home() {
     console.log(session ? session.user : 'No session')
 
     return (
-        <div>
-            <Head>
-                <title>Calendrier</title>
-                <meta name='description' content='Calendrier des dons' />
-            </Head>
-            <main style={{ paddingTop: '10rem' }}>
-                <h1>CALENDRIER</h1>
-                {session && session.user ? (
-                    <>
-                        <p>
-                            Connecté avec l&apos;adresse : {session.user.email}
-                        </p>
-                        <div style={{ width: '50%', margin: '0 auto' }}>
-                            <Calendar />
-                        </div>
-                    </>
-                ) : (
-                    <p>Vous n&apos;êtes pas connecté</p>
-                )}
-            </main>
+        <div className={style.page}>
+            <h1 className={style.lg}>CALENDRIER</h1>
+            {session && session.user ? (
+                <>
+                    <p>Connecté avec l&apos;adresse : {session.user.email}</p>
+                    <div className={style.calendar}>
+                        <Calendar />
+                    </div>
+                </>
+            ) : (
+                <p>Vous n&apos;êtes pas connecté</p>
+            )}
         </div>
     )
 }

@@ -61,13 +61,15 @@ const Line: React.FC<LineProps> = ({
                         <div className={style.Ztext}>{param4}</div>
 
                         <div
-                            className={`${style.Ztext} ${
+                            className={` ${
                                 paramColor === 'R'
                                     ? style.red
                                     : paramColor === 'A'
                                       ? style.orange
-                                      : style.green
-                            }`}
+                                      : paramColor
+                                        ? style.green
+                                        : ''
+                            } " " ${style.Ztext}`}
                         >
                             {param5}
                         </div>
