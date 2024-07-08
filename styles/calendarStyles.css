@@ -1,27 +1,44 @@
 /* calendarStyles.css */
 .fc .fc-toolbar.fc-header-toolbar {
-    background-color: #e5007d; /* couleur de l'entete*/
-    color: white; /* couleur du texte de l'entete */
+    background-color: #ffffff; /* couleur de l'entete*/
+    color: rgb(0, 0, 0); /* couleur du texte de l'entete */
+    border: 2px solid #e5007d;
+    font-weight: bold;
+    padding-right: 4.5rem;
 }
 
-.fc .fc-button-primary {
-    background-color: #e5007d; /* couleur des boutons de gauche*/
-    border-color: #e5007d; /* couleur des bordures des boutons de gauche*/
+.fc .fc-button-primary:not(:disabled),
+.fc .fc-button-primary:not(:disabled):hover,
+.fc .fc-button-primary:not(:disabled):active,
+.fc .fc-button-primary:not(:disabled):focus {
+    background-color: #ffffff; /* couleur bouton de droite */
+    border-color: #ffffff; /* couleur bordure bouton de droite */
+    color: #000000;
+    font: 1.2rem;
+    font-weight: bold;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important; /* Force à ne pas afficher le contour */
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
-.fc .fc-button-primary:not(:disabled):active {
-    background-color: #e5007d; /* couleur bouton de droite */
-    border-color: #e5007d; /* couleur bordure bouton de droite */
+.fc .fc-button-primary:not(:disabled).fc-button-active:active,
+.fc .fc-button-primary:not(:disabled).fc-button-active:hover,
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus {
+    background-color: #ffffff; /* couleur bouton de droite */
+    border-color: #ffffff; /* couleur bordure bouton de droite */
+    color: #000000;
+    font: 1.2rem;
+    font-weight: bold;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important; /* Force à ne pas afficher le contour */
+    display: none;
 }
 
 .fc .fc-daygrid-event {
-    background-color: #008cff00; /* couleur du fond des évenements et couleur atténuée quand on click sur une case */
-    color: black;
-}
-
-.fc .fc-daygrid-event:hover {
-    background-color: #f0629143; /* couleur quand on passe sur un événement */
+    color: rgb(255, 255, 255);
+    text-decoration: none !important;
 }
 
 .fc .fc-daygrid-day-top {
@@ -30,13 +47,27 @@
 }
 
 .fc .fc-day-today {
-    background-color: #e5007edf !important; /* laisses le !important sinon ça ne fonctionne , couleur du fond de case du jour actuelle */
+    background-color: #e5007e73 !important; /* laisses le !important sinon ça ne fonctionne , couleur du fond de case du jour actuelle */
 }
 
 .fc-theme-standard .fc-scrollgrid {
-    border: 1px solid #000000; /*couleur de la bordure général du calendrier */
+    border: 2px solid #e5007d; /*couleur de la bordure général du calendrier */
 }
 
 .fc .fc-daygrid-day.fc-day-other {
-    background-color: #ffffff; /* couleur pour les jours hors mois actuelle choisi */
+    background-color: #f2f2f2; /* couleur pour les jours hors mois actuelle choisi */
+}
+
+.fc .fc-daygrid-event:focus,
+.fc .fc-daygrid-event:active {
+    background-color: white; /* Ou définissez la couleur souhaitée */
+    color: inherit;
+    outline: none; /* Enlève le contour si présent */
+}
+
+.fc .fc-daygrid-day:focus,
+.fc .fc-daygrid-day:active {
+    background-color: #ffffff !important; /* Définissez la couleur de fond souhaitée */
+    color: #000000; /* Définissez la couleur de texte souhaitée */
+    outline: none; /* Enlève le contour si présent */
 }
