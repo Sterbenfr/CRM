@@ -14,7 +14,6 @@ const CalendarPage = () => {
             try {
                 const res = await fetch('/api/events')
                 const data = await res.json()
-                //console.log('Fetched events:', data) // Ajout de log pour vérifier les événements récupérés
                 setEvents(data)
             } catch (error) {
                 console.error('Failed to fetch events:', error)
@@ -24,31 +23,6 @@ const CalendarPage = () => {
         fetchEvents()
     }, [])
 
-    // Fonctions pour ajouter et supprimer des événements
-
-    /*  
-    const handleDateClick = info => {
-        const title = prompt('Enter a title for your event:')
-        if (title) {
-            const newEvent = {
-                id: String(events.length + 1),
-                title,
-                date: info.dateStr,
-            }
-            setEvents([...events, newEvent])
-        }
-    }
-
-    const handleEventClick = info => {
-        if (
-            confirm(
-                `Are you sure you want to delete the event '${info.event.title}'`,
-            )
-        ) {
-            setEvents(events.filter(event => event.id !== info.event.id))
-        }
-    }
-*/
     const renderEventContent = (eventInfo: {
         event: { url: string | undefined; title: React.ReactNode }
     }) => {
@@ -57,6 +31,9 @@ const CalendarPage = () => {
                 href={eventInfo.event.url}
                 target='_blank'
                 rel='noopener noreferrer'
+                style={{
+                    overflow: 'hidden',
+                }}
             >
                 <div>
                     <span>{eventInfo.event.title}</span>
@@ -71,11 +48,8 @@ const CalendarPage = () => {
             initialView='dayGridMonth'
             events={events}
             locale={frLocale}
-            // Appels des fonctions pour ajouter et supprimer des événements
-            //dateClick={handleDateClick}
-            //eventClick={handleEventClick}
-            editable={true}
             selectable={true}
+            aspectRatio={1.5}
             selectMirror={true}
             dayMaxEvents={true}
             eventContent={renderEventContent}
