@@ -9,9 +9,9 @@ enum StatutGenre {
 export async function GET() {
     try {
         const statuts = [
-            { id: 'Madame', label: StatutGenre.Madame },
-            { id: 'Monsieur', label: StatutGenre.Monsieur },
-            { id: 'Autre', label: StatutGenre.Autre },
+            { id: 'Mme', label: StatutGenre.Madame },
+            { id: 'Mr', label: StatutGenre.Monsieur },
+            { id: 'Oth', label: StatutGenre.Autre },
         ]
 
         return NextResponse.json(statuts)

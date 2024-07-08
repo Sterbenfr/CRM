@@ -52,7 +52,7 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-
+    console.log(interactions)
     if (
         !interactions.code_Utilisateur_Prospecteur ||
         !interactions.code_Entite_Prospectee ||
@@ -62,6 +62,7 @@ export async function POST(req: NextApiRequest) {
         !interactions.code_contact_entite ||
         !interactions.date_relance
     ) {
+        console.log('cacahuetes')
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

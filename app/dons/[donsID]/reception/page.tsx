@@ -99,9 +99,17 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                             url={`http://localhost:3000/api/dons/${params.donsID}/reception`}
                             fields={[
                                 {
+                                    id: 'code_Don',
+                                    type: 'search',
+                                    value: '',
+                                    url: `../../api/select/dons/${params.donsID}/select-dons`,
+                                    required: true,
+                                },
+                                {
                                     id: 'numero_livraison',
-                                    type: 'number',
-                                    value: null,
+                                    type: 'search',
+                                    value: '',
+                                    url: `../../api/select/dons/${params.donsID}/modalites-livraison`,
                                     required: true,
                                 },
                                 {
@@ -112,8 +120,8 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                 },
                                 {
                                     id: 'heure_reception',
-                                    type: 'date',
-                                    value: null,
+                                    type: 'input',
+                                    value: '',
                                 },
                                 {
                                     id: 'nombre_palettes_recues',
@@ -142,7 +150,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                 },
                                 {
                                     id: 'produits_sur_palettes',
-                                    type: 'number',
+                                    type: 'input',
                                     value: null,
                                 },
                                 {

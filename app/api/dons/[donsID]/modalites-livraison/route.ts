@@ -59,8 +59,7 @@ export async function POST(req: NextApiRequest) {
         !ModalitesLivraison.nombre_palettes_consignees_prevu ||
         !ModalitesLivraison.nombre_cartons_prevu ||
         !ModalitesLivraison.poids_prevu_kg ||
-        !ModalitesLivraison.produits_sur_palettes ||
-        !ModalitesLivraison.temperature_conserv_produits
+        !ModalitesLivraison.produits_sur_palettes
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },

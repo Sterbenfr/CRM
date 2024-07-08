@@ -8,6 +8,7 @@ import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../../styles/components.module.css'
 
 export interface Interactions {
+    code_interaction: number
     code_Utilisateur_Prospecteur: number
     code_Entite_Prospectee: number
     date_interaction: Date
@@ -28,7 +29,11 @@ function InteractionsPage({
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
-    const [EntiteInteraction, setEntiteInteraction] = useState('2')
+    const [EntiteInteraction, setEntiteInteraction] = useState(params.entiteID)
+    const [codeTypeInteraction, setCodeTypeInteraction] = useState('PRE')
+    const [codeModaliteInteraction, setCodeModaliteInteraction] =
+        useState('MAI')
+    const today = new Date()
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -40,6 +45,18 @@ function InteractionsPage({
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setEntiteInteraction(event.target.value)
+    }
+
+    const handleCodeTypeInteraction = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeInteraction(event.target.value)
+    }
+
+    const handleCodeModaliteInteraction = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeModaliteInteraction(event.target.value)
     }
 
     useEffect(() => {
@@ -74,15 +91,16 @@ function InteractionsPage({
             <div className={style.page}>
                 <List
                     items={Interactions.map(Interactions => ({
-                        value1: Interactions.code_Entite_Prospectee.toString(),
-                        value2: Interactions.date_interaction
+                        value1: Interactions.code_interaction.toString(),
+                        value2: Interactions.code_Entite_Prospectee.toString(),
+                        value3: Interactions.date_interaction
                             .toString()
                             .split('T')[0],
-                        value3: Interactions.code_contact_entite.toString(),
-                        value4: Interactions.date_relance
+                        value4: Interactions.code_contact_entite.toString(),
+                        value5: Interactions.date_relance
                             .toString()
                             .split('T')[0],
-                        value5: Interactions.commentaires,
+                        value6: Interactions.commentaires,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -116,28 +134,30 @@ function InteractionsPage({
                                 },
                                 {
                                     id: 'code_Entite_Prospectee',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../../../../api/select/societe/entite',
+                                    type: 'input',
+                                    value: params.entiteID,
+                                    disabled: true,
                                     required: true,
-                                }, // a voir remplissage auto
+                                },
                                 {
                                     id: 'date_interaction',
                                     type: 'date',
-                                    value: null,
+                                    value: today.toISOString().split('T')[0],
                                     required: true,
-                                }, // mettre date du jour par defaut
+                                },
                                 {
                                     id: 'code_type_interaction',
                                     type: 'select',
-                                    value: 'PRE',
+                                    value: codeTypeInteraction,
                                     url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                                    onChange: handleCodeTypeInteraction,
                                 },
                                 {
                                     id: 'code_modalite_interaction',
                                     type: 'select',
-                                    value: 'MAI',
+                                    value: codeModaliteInteraction,
                                     url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                                    onChange: handleCodeModaliteInteraction,
                                 },
                                 {
                                     id: 'code_contact_entite',
@@ -150,7 +170,8 @@ function InteractionsPage({
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Relance pour aide a Dunkerque',
+                                    placeholder:
+                                        'Exemple: Relance pour aide a Dunkerque',
                                 },
                                 {
                                     id: 'pieces_associees',
@@ -160,8 +181,14 @@ function InteractionsPage({
                                 {
                                     id: 'date_relance',
                                     type: 'date',
-                                    value: null,
-                                }, // a voir si utile car date interraction existe deja
+                                    value: new Date(
+                                        today.getFullYear(),
+                                        today.getMonth(),
+                                        today.getDate() + 15,
+                                    )
+                                        .toISOString()
+                                        .split('T')[0],
+                                },
                             ]}
                         />
                     </div>

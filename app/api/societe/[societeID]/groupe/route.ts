@@ -25,7 +25,7 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await pool.query(
-            'SELECT code_Groupe, nom_du_groupe, groupe.logo, groupe.site_web, groupe.commentaires, date_arret_activite_du_Groupe FROM `groupe` LEFT JOIN entreprise ON Groupe.code_Groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ? LIMIT ?, ?',
+            'SELECT code_Groupe, nom_du_groupe, groupe.logo, groupe.site_Web, groupe.commentaires, date_arret_activite_du_Groupe FROM `groupe` LEFT JOIN entreprise ON Groupe.code_Groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ? LIMIT ?, ?',
             [societeID, offset, limitNumber],
         )
 
@@ -53,8 +53,7 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-
-    if (!groupe.nom_du_Groupe || !groupe.site_web) {
+    if (!groupe.nom_du_Groupe || !groupe.site_Web) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

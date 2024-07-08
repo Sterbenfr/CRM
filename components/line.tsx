@@ -36,7 +36,7 @@ const Line: React.FC<LineProps> = ({
             deleteFunction(param1 || '')
         }
     }
-    console.log(paramColor)
+
     return (
         <div className={style.body}>
             <div className={style.line}>

@@ -4,7 +4,7 @@ import pool from '../../../../../utils/db'
 export async function GET() {
     try {
         const [rows] = await pool.query(
-            'SELECT code_groupe as id, raison_sociale as label FROM groupe;',
+            'SELECT code_groupe as id, nom_du_Groupe as label FROM groupe;',
         )
         return NextResponse.json(rows)
     } catch (err) {
