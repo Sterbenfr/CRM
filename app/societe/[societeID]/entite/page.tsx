@@ -55,12 +55,14 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
 
     const [raisonSociale, setRaisonSociale] = useState('')
     const [nomCommercial, setNomCommercial] = useState('')
-    const [logo, setLogo] = useState<Blob>()
+    //const [logo, setLogo] = useState<Blob>()
     const [siret, setSiret] = useState('')
     const [codeApe, setCodeApe] = useState('')
     const [codeRna, setCodeRna] = useState('')
     const [codeCee, setCodeCee] = useState('')
-    const [codeSocieteAppartenance, setCodeSocieteAppartenance] = useState('')
+    const [codeSocieteAppartenance, setCodeSocieteAppartenance] = useState(
+        params.societeID,
+    )
     const [adresse, setAdresse] = useState('')
     const [telephone, setTelephone] = useState('')
     const [mail, setMail] = useState('')
@@ -72,11 +74,10 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [codeTypeCompetence, setCodeTypeCompetence] = useState('')
     const [commentairesLogistique, setCommentairesLogistique] = useState('')
     const [presenceQuai, setPresenceQuai] = useState('')
-    const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
-    const [mailContactPrestataire, setMailContactPrestataire] = useState('')
+    //const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
     const [cerfa, setCerfa] = useState('')
     const [codeFrequenceCerfa, setCodeFrequenceCerfa] = useState('')
-    const [dateArretActivite, setDateArretActivite] = useState('')
+    const [dateArretActivite, setDateArretActivite] = useState(new Date())
 
     const handleRaisonSocialeChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -90,11 +91,11 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setNomCommercial(event.target.value)
     }
 
-    const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    /*const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             setLogo(event.target.files[0])
         }
-    }
+    }*/
 
     const handleSiretChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSiret(event.target.value)
@@ -188,19 +189,13 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setPresenceQuai(event.target.value)
     }
 
-    const handlePiecesAssocieesChange = (
+    /*const handlePiecesAssocieesChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         if (event.target.files) {
             setPiecesAssociees(event.target.files[0])
         }
-    }
-
-    const handleMailContactPrestataireChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setMailContactPrestataire(event.target.value)
-    }
+    }*/
 
     const handleCerfaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCerfa(event.target.value)
@@ -215,7 +210,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const handleDateArretActiviteChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setDateArretActivite(event.target.value)
+        setDateArretActivite(new Date(event.target.value))
     }
 
     const handleClose = () => {
@@ -239,6 +234,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             value: string | null
             placeholder?: string
             url?: string
+            required?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
@@ -246,6 +242,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'raison_sociale',
                 type: 'input',
                 value: raisonSociale,
+                placeholder: 'Exemple: Alpha',
                 onInputChange: handleRaisonSocialeChange,
                 required: true,
             },
@@ -260,7 +257,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'logo',
                 type: 'file',
                 value: null,
-                onInputChange: handleLogoChange,
+                //onInputChange: handleLogoChange,
             },
             {
                 id: 'Siret',
@@ -293,8 +290,9 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
             {
                 id: 'code_societe_appartenance',
-                type: 'number',
-                value: codeSocieteAppartenance.toString(),
+                type: 'search',
+                value: codeSocieteAppartenance,
+                url: `../../api/select/societe`,
                 onInputChange: handleCodeSocieteAppartenanceChange,
             },
             {
@@ -357,25 +355,20 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'presence_quai',
                 type: 'input',
                 value: presenceQuai,
+                placeholder: 'Exemple: O / N',
                 onInputChange: handlePresenceQuaiChange,
             },
             {
                 id: 'pieces_associees',
                 type: 'file',
                 value: null,
-                onInputChange: handlePiecesAssocieesChange,
-            },
-            {
-                id: 'mail_contact_prestataire',
-                type: 'input',
-                value: mailContactPrestataire,
-                placeholder: 'Exemple: prestataire.alphacorp@gmail.com',
-                onInputChange: handleMailContactPrestataireChange,
+                //onInputChange: handlePiecesAssocieesChange,
             },
             {
                 id: 'cerfa',
                 type: 'input',
                 value: cerfa,
+                placeholder: 'Exemple: O / N',
                 onInputChange: handleCerfaChange,
             },
             {
@@ -388,7 +381,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             {
                 id: 'date_arret_activite',
                 type: 'date',
-                value: dateArretActivite,
+                value: dateArretActivite.toISOString().split('T')[0],
                 onInputChange: handleDateArretActiviteChange,
             },
         ]
@@ -430,7 +423,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         codeTypeCompetence,
         commentairesLogistique,
         presenceQuai,
-        mailContactPrestataire,
         cerfa,
         codeFrequenceCerfa,
         dateArretActivite,

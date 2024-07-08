@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 import pool from '../../../../../../../utils/db'
+import { NextApiRequest } from 'next'
+import { streamToString } from '../../../../../../../utils/streamUtils'
+import type { Contact } from '@/app/societe/[societeID]/entite/[entiteID]/contact/page'
 
 type CountResult = { count: number }[]
 
@@ -38,6 +41,34 @@ export async function GET(
         console.error(err)
         return NextResponse.json(
             { error: 'Internal Server Error' },
+            { status: 500 },
+        )
+    }
+}
+
+export async function POST(req: NextApiRequest) {
+    let contact: Contact
+    try {
+        contact = JSON.parse(await streamToString(req.body))
+    } catch (error) {
+        return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+    console.log(contact)
+    if (!contact) {
+        console.log('cacahuetes')
+        return NextResponse.json(
+            { error: 'Missing product data' },
+            { status: 400 },
+        )
+    }
+
+    try {
+        const query = 'INSERT INTO `contacts` SET ?'
+        const [rows] = await pool.query(query, contact)
+        return NextResponse.json(rows)
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
             { status: 500 },
         )
     }

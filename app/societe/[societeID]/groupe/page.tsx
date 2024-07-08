@@ -10,7 +10,7 @@ export interface Groupe {
     code_Groupe: number
     nom_du_Groupe: string
     Logo: Blob
-    site_web: string
+    site_Web: string
     commentaires: string
     date_arret_activite_du_groupe: Date
 }
@@ -54,7 +54,6 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
         setItemsPerPage(newItemsPerPage)
         setPage(1) // reset page to 1 when items per page changes
     }
-    console.log(groupes[0])
 
     return (
         <div>
@@ -65,7 +64,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                         items={groupes.map(groupe => ({
                             value1: groupe.code_Groupe.toString(),
                             value2: groupe.nom_du_Groupe,
-                            value3: groupe.site_web,
+                            value3: groupe.site_Web,
                             value4: groupe.commentaires,
                             value5:
                                 groupe.date_arret_activite_du_groupe == null
@@ -98,32 +97,29 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                 url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
                                 fields={[
                                     {
-                                        id: 'nom_du_groupe',
+                                        id: 'nom_du_Groupe',
                                         type: 'input',
                                         value: null,
                                         placeholder: 'Exemple: Groupe Alpha',
                                     },
-                                    { 
+                                    {
                                         id: 'Logo',
                                         type: 'file',
                                         value: null,
-                                    }, // type blob
+                                    },
                                     {
                                         id: 'site_Web',
                                         type: 'input',
                                         value: null,
-                                        placeholder: 'Exemple: http://www.groupealpha.com',
-                                    },
-                                    {
-                                        id: 'date_fermeture',
-                                        type: 'date',
-                                        value: null,
+                                        placeholder:
+                                            'Exemple: http://www.groupealpha.com',
                                     },
                                     {
                                         id: 'commentaires',
                                         type: 'input',
                                         value: null,
-                                        placeholder: 'Exemple: Groupe actif en dons alimentaires',
+                                        placeholder:
+                                            'Exemple: Groupe actif en dons alimentaires',
                                     },
                                     {
                                         id: 'date_arret_activite_du_Groupe',

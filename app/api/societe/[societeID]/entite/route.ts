@@ -46,14 +46,15 @@ export async function GET(
     }
 }
 export async function POST(req: NextApiRequest) {
-    let EntitesPages: Entite
+    let Entite: Entite
     try {
-        EntitesPages = JSON.parse(await streamToString(req.body))
+        Entite = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
+    console.log(Entite)
 
-    if (!EntitesPages.raison_sociale || !EntitesPages.code_type_entite) {
+    if (!Entite.raison_sociale || !Entite.code_type_entite) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -62,7 +63,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `Entite` SET ?'
-        const [rows] = await pool.query(query, EntitesPages)
+        const [rows] = await pool.query(query, Entite)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

@@ -4,6 +4,7 @@ import List from '../../../../../../components/list'
 import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
+import style from '../../../../../../styles/components.module.css'
 
 export interface Contact {
     code_entite: number
@@ -31,10 +32,16 @@ function ContactsPage({
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 
+    const [civilite, setCivilite] = useState('MAD')
+
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
     const handleClose = () => {
         setIsPopUpOpen(false)
+    }
+
+    const handleCivilite = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCivilite(event.target.value)
     }
 
     useEffect(() => {
@@ -68,8 +75,8 @@ function ContactsPage({
 
     return (
         <>
-            <div>
-                <h1>Contacts</h1>
+            <div className={style.page}>
+                <h1 className={style.lg}>Contacts</h1>
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_contact.toString(),
@@ -101,83 +108,91 @@ function ContactsPage({
                     currentPage={page}
                 />
                 {''}
-                <button onClick={() => setIsPopUpOpen(true)}>Open PopUp</button>
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`}
-                        fields={[
-                            {
-                                id: 'code_entite',
-                                type: 'number',
-                                value: null,
-                            }, // search sur les entites
-                            {
-                                id: 'civilite',
-                                type: 'select',
-                                value: 'Madame',
-                                url: `../.././../../../../api/select/genre`,
-                            },
-                            {
-                                id: 'nom',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Dupont',
-                            },
-                            {
-                                id: 'prenom',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Corrine',
-                            },
-                            {
-                                id: 'photo',
-                                type: 'file',
-                                value: null,
-                            }, //type blob
-                            {
-                                id: 'fonction',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Assistante',
-                            }, // a voir si select
-                            {
-                                id: 'service',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Ressources Humaines',
-                            },
-                            {
-                                id: 'numero_fixe',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: 0634167452',
-                            },
-                            {
-                                id: 'numero_portable',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: 0634164183',
-                            },
-                            {
-                                id: 'adresse_mail',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Corrine.dupont@gmail.com',
-                            },
-                            {
-                                id: 'commentaires',
-                                type: 'input',
-                                value: null,
-                                placeholder: 'Exemple: Corrine Dupont habite dunkerque',
-                            },
-                            {
-                                id: 'date_arret_contact',
-                                type: 'date',
-                                value: null,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUp}>
+                        <PopUp
+                            onClose={handleClose}
+                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`}
+                            fields={[
+                                {
+                                    id: 'code_entite',
+                                    type: 'input',
+                                    value: params.entiteID,
+                                    disabled: true,
+                                    required: true,
+                                },
+                                {
+                                    id: 'civilite',
+                                    type: 'select',
+                                    value: civilite,
+                                    url: `../.././../../../../api/select/genre`,
+                                    onChange: handleCivilite,
+                                },
+                                {
+                                    id: 'nom',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: Dupont',
+                                },
+                                {
+                                    id: 'prenom',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: Corrine',
+                                },
+                                {
+                                    id: 'photo',
+                                    type: 'file',
+                                    value: null,
+                                }, //type blob
+                                {
+                                    id: 'fonction',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: Assistante',
+                                }, // a voir si select
+                                {
+                                    id: 'service',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: Ressources Humaines',
+                                },
+                                {
+                                    id: 'numero_fixe',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: 0634167452',
+                                },
+                                {
+                                    id: 'numero_portable',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder: 'Exemple: 0634164183',
+                                },
+                                {
+                                    id: 'adresse_mail',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder:
+                                        'Exemple: Corrine.dupont@gmail.com',
+                                },
+                                {
+                                    id: 'commentaires',
+                                    type: 'input',
+                                    value: null,
+                                    placeholder:
+                                        'Exemple: Corrine Dupont habite dunkerque',
+                                },
+                                {
+                                    id: 'date_arret_contact',
+                                    type: 'date',
+                                    value: new Date()
+                                        .toISOString()
+                                        .split('T')[0],
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>

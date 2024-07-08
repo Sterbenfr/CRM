@@ -27,8 +27,17 @@ function SocietesPage() {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] =
+        useState('ADM')
+
     const handleClose = () => {
         setIsPopUpOpen(false)
+    }
+
+    const handleCodeTypeActiviteSocieteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeActiviteSociete(event.target.value)
     }
 
     useEffect(() => {
@@ -102,9 +111,9 @@ function SocietesPage() {
                             fields={[
                                 {
                                     id: 'raison_sociale',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../api/select/societe/entite',
+                                    type: 'input',
+                                    value: '',
+                                    placeholder: 'Exemple: Alpha',
                                     required: true,
                                 },
                                 {
@@ -122,7 +131,8 @@ function SocietesPage() {
                                     id: 'site_Web',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: http://www.alpha.com/',
+                                    placeholder:
+                                        'Exemple: http://www.alpha.com/',
                                 },
                                 {
                                     id: 'Siren',
@@ -134,21 +144,24 @@ function SocietesPage() {
                                 {
                                     id: 'code_type_activite_Societe',
                                     type: 'select',
-                                    value: 'ADM',
+                                    value: codeTypeActiviteSociete,
                                     url: '../api/societe/type-activite-societe',
+                                    onChange:
+                                        handleCodeTypeActiviteSocieteChange,
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Societe de service informatique',
+                                    placeholder:
+                                        'Exemple: Societe de service informatique',
                                 },
                                 {
                                     id: 'code_Groupe_appartenance',
                                     type: 'search',
                                     value: null,
                                     url: '../api/select/societe/groupe',
-                                }, // pouvoir ajouter un new groupe
+                                },
                                 {
                                     id: 'date_arret_activite_Societe',
                                     type: 'date',

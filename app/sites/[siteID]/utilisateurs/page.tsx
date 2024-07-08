@@ -26,8 +26,23 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [civilite, setCivilite] = useState('MAD')
+    const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('AD')
+
     const handleClose = () => {
         setIsPopUpOpen(false)
+    }
+
+    const handleCiviliteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCivilite(event.target.value)
+    }
+
+    const handleCodeTypeUtilisateurChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeUtilisateur(event.target.value)
     }
 
     useEffect(() => {
@@ -97,9 +112,10 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 {
                                     id: 'civilite',
                                     type: 'select',
-                                    value: 'Madame',
+                                    value: civilite,
                                     url: `../../../../../api/select/genre`,
                                     required: true,
+                                    onChange: handleCiviliteChange,
                                 },
                                 {
                                     id: 'nom',
@@ -123,13 +139,15 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                     id: 'mail_restos_du_coeur',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Jean.dupont@gmail.com',
+                                    placeholder:
+                                        'Exemple: Jean.dupont@gmail.com',
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
-                                    placeholder: 'Exemple: Manutentionnaire de Dunkerque',
+                                    placeholder:
+                                        'Exemple: Manutentionnaire de Dunkerque',
                                 },
                                 {
                                     id: 'password',
@@ -140,8 +158,9 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 {
                                     id: 'code_type_utilisateur',
                                     type: 'select',
-                                    value: 'AD',
+                                    value: codeTypeUtilisateur,
                                     url: `../../../../../api/select/utilisateurs`,
+                                    onChange: handleCodeTypeUtilisateurChange,
                                 },
                             ]}
                         />

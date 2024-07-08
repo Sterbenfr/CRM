@@ -54,14 +54,15 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             value: string | null
             placeholder?: string
             required?: boolean
+            disabled?: boolean
             url?: string
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[]
     >([])
 
-    const [codeDon, setCodeDon] = useState('')
-    const [codeTypeLivraison, setCodeTypeLivraison] = useState('')
+    const [codeDon] = useState(params.donsID)
+    const [codeTypeLivraison, setCodeTypeLivraison] = useState('DON')
     const [datePrevueLivraison, setDatePrevueLivraison] = useState(new Date())
     const [heurePrevueLivraison, setHeurePrevueLivraison] = useState('')
     const [adresseEnlevement, setAdresseEnlevement] = useState('')
@@ -92,9 +93,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     const [commentaires, setCommentaires] = useState('')
     const [piecesAssociees, setPiecesAssociees] = useState('')
 
-    const handleCodeDon = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCodeDon(event.target.value)
-    }
     const handleCodeTypeLivraison = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
@@ -233,17 +231,18 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             value: string | null
             placeholder?: string
             required?: boolean
+            disabled?: boolean
             url?: string
+            createURL?: string
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
             {
                 id: 'code_Don',
-                type: 'search',
+                type: 'input',
                 value: codeDon,
-                url: '../../api/select/dons/select-dons',
                 required: true,
-                onInputChange: handleCodeDon,
+                disabled: true,
             },
             {
                 id: 'code_type_livraison',
@@ -314,6 +313,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'search',
                 value: adresseLivraison,
                 url: '../../api/select/sites',
+                createURL: '/sites',
                 onInputChange: handleAdresseLivraison,
             },
             {
@@ -383,7 +383,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 id: 'produits_sur_palettes',
                 type: 'input',
                 value: produitsSurPalettes,
-                placeholder: 'Exemple: produits alimentaires divers',
+                placeholder: 'Exemple: O (pour oui) ou N (pour non)',
                 onInputChange: handleProduitsSurPalettes,
             },
             {
@@ -407,6 +407,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'search',
                 value: codePrestataireTransporteur,
                 url: '../../../api/select/prestataire',
+                createURL: '/prestataire',
                 onInputChange: handleCodePrestataireTransporteur,
             })
         }

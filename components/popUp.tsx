@@ -97,7 +97,7 @@ const fieldLabels: { [key: string]: string } = {
         "Date d'arrêt d'activité du prestataire",
     //Interactions
     code_Utilisateur_Prospecteur: 'Utilisateur Prospecteur',
-    code_Entite_Prospectee: 'Entité Prospecteur',
+    code_Entite_Prospectee: 'Entité Prospectée',
     date_interaction: "Date d'interaction",
     code_type_interaction: "Type d'interaction",
     code_modalite_interaction: "Modalité d'interaction",
@@ -185,6 +185,7 @@ type Field = {
     createURL?: string
     url?: string
     required?: boolean
+    disabled?: boolean
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
     onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -328,6 +329,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                                 )
                                             }
                                             onInput={input.onInputChange}
+                                            disabled={input.disabled}
                                         />
                                     )
                             }
