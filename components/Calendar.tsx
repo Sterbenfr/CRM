@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import frLocale from '@fullcalendar/core/locales/fr'
+import '../styles/calendarStyles.css'
 
 const CalendarPage = () => {
     const [events, setEvents] = useState([])
