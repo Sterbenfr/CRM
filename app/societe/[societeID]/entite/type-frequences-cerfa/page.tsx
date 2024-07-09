@@ -64,12 +64,14 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                             type: 'input',
                             value: null,
                             required: true,
+                            maxLength: 4,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
                             required: true,
+                            maxLength: 50,
                         },
                     ]}
                 />
