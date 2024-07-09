@@ -254,10 +254,43 @@ const PopUp: React.FC<PopUpProps> = ({
         onClose()
     }
 
+    const [popupTitle, setPopupTitle] = useState('') // Nouveau const pour titre du popup
+
+    const getTableNameFromFieldId = (fieldId: string): string => {
+        const tableNameMapping: { [key: string]: string } = {
+            code_contact_Entite_donatrice: 'Don',
+            date_reception: 'Réception',
+            date_prevue_livraison: 'Livraison',
+            Logo: 'Entreprise',
+            site_Web: 'Groupe',
+            logo: 'Entité',
+            nom: 'Contact',
+            adresse: 'Site',
+            prenom: 'Utilisateur',
+            nom_commercial: 'Prestataire',
+            date_interaction: 'Interaction',
+        }
+
+        return tableNameMapping[fieldId] || 'Entrée' // SI pas d'id donne entrée comme titre
+    }
+
+    useEffect(() => {
+        if (fields.length > 0) {
+            const firstFieldId = fields[2].id
+            const tableName = getTableNameFromFieldId(firstFieldId)
+            setPopupTitle(`Ajouter un(e) ${tableName}`) // MAJ le titre du popup en fonction du nom de la table
+        }
+    }, [fields])
+
     return (
         <div className={'popup-container'}>
             <div className={style.page1}>
-                <h2 className={style.lg}>Ajouter une nouvelle entrée</h2>
+                <h2 className={style.lg}>{popupTitle}</h2>
+                <div className={style.BTNdiv}>
+                    <button className={style.BTNsub} onClick={onClose}>
+                        Annuler
+                    </button>
+                </div>
                 {inputs.map(input => (
                     <div className={style.rowPop} key={input.id}>
                         <label className={style.label}>
@@ -338,7 +371,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 ))}
                 <div className={style.BTNdiv}>
                     <button className={style.BTNsub} onClick={onClose}>
-                        Exit
+                        Annuler
                     </button>
 
                     <button className={style.BTNsub} onClick={handleSubmit}>
