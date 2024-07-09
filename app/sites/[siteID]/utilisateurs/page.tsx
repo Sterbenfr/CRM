@@ -116,9 +116,16 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
             url?: string
             createURL?: string
             required?: boolean
+            disabled?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
+            {
+                id: 'code_site',
+                type: 'input',
+                value: params.siteID,
+                disabled: true,
+            },
             {
                 id: 'civilite',
                 type: 'select',
@@ -212,6 +219,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         commentaires,
         password,
         codeTypeUtilisateur,
+        params.siteID,
     ])
 
     useEffect(() => {
