@@ -122,6 +122,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                     id: 'heure_reception',
                                     type: 'input',
                                     value: '',
+                                    placeholder: 'Exemple: 14:00:00',
                                 },
                                 {
                                     id: 'nombre_palettes_recues',
@@ -152,11 +153,14 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                     id: 'produits_sur_palettes',
                                     type: 'input',
                                     value: null,
+                                    placeholder: 'Exemple: O / N',
+                                    maxLength: 1,
                                 },
                                 {
                                     id: 'commentaires',
                                     type: 'input',
                                     value: null,
+                                    maxLength: 200,
                                 },
                                 {
                                     id: 'pieces_associees',

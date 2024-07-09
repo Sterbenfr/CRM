@@ -48,7 +48,7 @@ function PrestatairesPage() {
     const [mailContactPrestataire, setMailContactPrestataire] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [dateArretActiviteDuPrestataire, setDateArretActiviteDuPrestataire] =
-        useState(new Date())
+        useState<Date>()
 
     const handleCodeTypeDePrestataireChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
@@ -173,6 +173,7 @@ function PrestatairesPage() {
             url?: string
             createURL?: string
             required?: boolean
+            maxLength?: number
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
@@ -189,6 +190,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: raisonSociale,
                 placeholder: 'Exemple: Entreprise Alpha',
+                maxLength: 30,
                 onInputChange: handleRaisonSocialeChange,
             },
             {
@@ -196,6 +198,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: nomCommercial,
                 placeholder: 'Exemple: Alpha Corp',
+                maxLength: 30,
                 onInputChange: handleNomCommercialChange,
             },
             {
@@ -203,6 +206,7 @@ function PrestatairesPage() {
                 type: 'number',
                 value: siren,
                 placeholder: 'Exemple: 453684259',
+                maxLength: 9,
                 onInputChange: handleSirenChange,
             },
             {
@@ -210,6 +214,7 @@ function PrestatairesPage() {
                 type: 'number',
                 value: siret,
                 placeholder: 'Exemple: 15269783246918',
+                maxLength: 14,
                 onInputChange: handleSiretChange,
             },
             {
@@ -217,6 +222,7 @@ function PrestatairesPage() {
                 type: 'number',
                 placeholder: 'Exemple: 0658905910',
                 value: telephone,
+                maxLength: 12,
                 onInputChange: handleTelephoneChange,
             },
             {
@@ -224,6 +230,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: mail,
                 placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
+                maxLength: 255,
                 onInputChange: handleMailChange,
             },
             {
@@ -231,6 +238,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: adresse,
                 placeholder: 'Exemple: 12 rue de la paix',
+                maxLength: 255,
                 onInputChange: handleAdresseChange,
             },
             {
@@ -245,6 +253,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: nomContactPrestataire,
                 placeholder: 'Exemple: Delacroix',
+                maxLength: 20,
                 onInputChange: handleNomContactPrestataireChange,
             },
             {
@@ -252,6 +261,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: prenomContactPrestataire,
                 placeholder: 'Exemple: David',
+                maxLength: 20,
                 onInputChange: handlePrenomContactPrestataireChange,
             },
             {
@@ -259,6 +269,7 @@ function PrestatairesPage() {
                 type: 'number',
                 value: telephoneContactPrestataire,
                 placeholder: 'Exemple: 0658905910',
+                maxLength: 12,
                 onInputChange: handleTelephoneContactPrestataireChange,
             },
             {
@@ -266,6 +277,7 @@ function PrestatairesPage() {
                 type: 'input',
                 value: mailContactPrestataire,
                 placeholder: 'Exemple: David.delacroix@gmail.com',
+                maxLength: 255,
                 onInputChange: handleMailContactPrestataireChange,
             },
             {
@@ -273,14 +285,16 @@ function PrestatairesPage() {
                 type: 'input',
                 value: commentaires,
                 placeholder: 'Exemple: Prestataire très sérieux',
+                maxLength: 200,
                 onInputChange: handleCommentairesChange,
             },
             {
                 id: 'date_arret_activite_du_prestataire',
                 type: 'date',
-                value: dateArretActiviteDuPrestataire
-                    .toISOString()
-                    .split('T')[0],
+                value:
+                    dateArretActiviteDuPrestataire
+                        ?.toISOString()
+                        .split('T')[0] || '',
                 onInputChange: handleDateArretActiviteDuPrestataireChange,
             },
         ]
