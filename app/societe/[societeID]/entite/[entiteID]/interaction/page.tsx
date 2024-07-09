@@ -172,6 +172,7 @@ function InteractionsPage({
                                     value: null,
                                     placeholder:
                                         'Exemple: Relance pour aide a Dunkerque',
+                                    maxLength: 200,
                                 },
                                 {
                                     id: 'pieces_associees',

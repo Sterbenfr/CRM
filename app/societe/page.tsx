@@ -200,27 +200,6 @@ function SocietesPage() {
                 onInputChange: handleDateArretActiviteSocieteChange,
             },
         ]
-
-        if (commentaires.length > 200) {
-            setCommentaires(commentaires.slice(0, 200))
-            alert('Caractères limites dépassés')
-        }
-        if (raisonSociale.length > 30) {
-            setRaisonSociale(raisonSociale.slice(0, 30))
-            alert('Caractères limites dépassés')
-        }
-        if (nomCommercial.length > 30) {
-            setNomCommercial(nomCommercial.slice(0, 30))
-            alert('Caractères limites dépassés')
-        }
-        if (siteWeb.length > 255) {
-            setSiteWeb(siteWeb.slice(0, 255))
-            alert('Caractères limites dépassés')
-        }
-        /*if (Siren.length > 9) {
-            setSiren(Siren.slice(0, 9))
-            alert('Caractères limites dépassés')
-        }*/
         return fields
     }, [
         raisonSociale,

@@ -77,7 +77,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     //const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
     const [cerfa, setCerfa] = useState('')
     const [codeFrequenceCerfa, setCodeFrequenceCerfa] = useState('')
-    const [dateArretActivite, setDateArretActivite] = useState(new Date())
+    const [dateArretActivite, setDateArretActivite] = useState<Date>()
 
     const handleRaisonSocialeChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -235,6 +235,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             placeholder?: string
             url?: string
             required?: boolean
+            maxLength?: number
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
@@ -243,6 +244,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'input',
                 value: raisonSociale,
                 placeholder: 'Exemple: Alpha',
+                maxLength: 30,
                 onInputChange: handleRaisonSocialeChange,
                 required: true,
             },
@@ -250,6 +252,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'nom_commercial',
                 type: 'input',
                 value: nomCommercial,
+                maxLength: 30,
                 onInputChange: handleNomCommercialChange,
                 placeholder: 'Exemple: Alpha Corp',
             },
@@ -263,6 +266,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'Siret',
                 type: 'number',
                 value: siret,
+                maxLength: 14,
                 onInputChange: handleSiretChange,
                 placeholder: 'Exemple: 15269783246918',
                 required: true,
@@ -271,6 +275,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'code_ape',
                 type: 'input',
                 value: codeApe,
+                maxLength: 5,
                 onInputChange: handleCodeApeChange,
                 placeholder: 'Exemple: 1234A',
             }, // 4 chiffres et 1 lettre
@@ -278,6 +283,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'code_rna',
                 type: 'input',
                 value: codeRna,
+                maxLength: 10,
                 onInputChange: handleCodeRnaChange,
                 placeholder: 'Exemple: W123456789',
             }, // W + 9 chiffres
@@ -285,6 +291,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'code_cee',
                 type: 'input',
                 value: codeCee,
+                maxLength: 13,
                 onInputChange: handleCodeCeeChange,
                 placeholder: 'Exemple: 123456789',
             },
@@ -306,6 +313,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'telephone',
                 type: 'input',
                 value: telephone,
+                maxLength: 12,
                 onInputChange: handleTelephoneChange,
                 placeholder: 'Exemple: 0123456789',
             },
@@ -313,6 +321,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'mail',
                 type: 'input',
                 value: mail,
+                maxLength: 50,
                 onInputChange: handleMailChange,
                 placeholder: 'Exemple: Alpha.corp@gmail.com',
             },
@@ -320,6 +329,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'site_internet',
                 type: 'input',
                 value: siteInternet,
+                maxLength: 255,
                 onInputChange: handleSiteInternetChange,
                 placeholder: 'Exemple: http://www.alpha.com/',
             },
@@ -327,6 +337,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
+                maxLength: 200,
                 onInputChange: handleCommentairesChange,
                 placeholder: 'Exemple: Societe de service informatique',
             },
@@ -348,6 +359,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'commentaires_logistique',
                 type: 'input',
                 value: commentairesLogistique,
+                maxLength: 200,
                 onInputChange: handleCommentairesLogistiqueChange,
                 placeholder: 'Exemple: Societe de service informatique',
             },
@@ -355,6 +367,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'presence_quai',
                 type: 'input',
                 value: presenceQuai,
+                maxLength: 1,
                 placeholder: 'Exemple: O / N',
                 onInputChange: handlePresenceQuaiChange,
             },
@@ -368,6 +381,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'cerfa',
                 type: 'input',
                 value: cerfa,
+                maxLength: 1,
                 placeholder: 'Exemple: O / N',
                 onInputChange: handleCerfaChange,
             },
@@ -381,7 +395,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             {
                 id: 'date_arret_activite',
                 type: 'date',
-                value: dateArretActivite.toISOString().split('T')[0],
+                value: dateArretActivite?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateArretActiviteChange,
             },
         ]

@@ -33,7 +33,7 @@ const LoginPage = () => {
             <div className={style.log}>
                 <div className={style.login}>
                     <input
-                        className={style.email}
+                        className={style.input}
                         name='email'
                         type='text'
                         placeholder='Email'
@@ -42,7 +42,7 @@ const LoginPage = () => {
                 </div>
                 <div className={style.login}>
                     <input
-                        className={style.password}
+                        className={style.input}
                         name='password'
                         type='password'
                         placeholder='Mot de passe'

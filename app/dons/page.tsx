@@ -281,6 +281,7 @@ function DonsPage() {
                 url?: string
                 createURL?: string
                 required?: boolean
+                maxLength?: number
                 onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
                 onInputChange?: (
                     event: React.ChangeEvent<HTMLInputElement>,
@@ -333,6 +334,7 @@ function DonsPage() {
                     type: 'input',
                     value: commentaires,
                     placeholder: 'Exemple: Don de chocolat',
+                    maxLength: 200,
                     onInputChange: handleCommentairesChange,
                 },
                 { id: 'pieces_associees', type: 'file', value: null }, //type blob ?
@@ -379,6 +381,7 @@ function DonsPage() {
                     type: 'input',
                     value: nomDestinataireCerfa,
                     placeholder: 'Exemple: Dupont',
+                    maxLength: 50,
                     onInputChange: handleNomDestinataireCerfaChange,
                 },
                 {
@@ -386,6 +389,7 @@ function DonsPage() {
                     type: 'input',
                     value: adresseDestinataireCerfa,
                     placeholder: 'Exemple: 12 rue des lilas',
+                    maxLength: 100,
                     onInputChange: handleadresseDestinataireCerfaChange,
                 },
                 {
@@ -393,6 +397,7 @@ function DonsPage() {
                     type: 'input',
                     value: adresseMailDestinataireCerfa,
                     placeholder: 'Exemple: Exemple@exemple.com',
+                    maxLength: 100,
                     onInputChange: handleAdresseMailDestinataireCerfaChange,
                 },
                 {
@@ -400,6 +405,7 @@ function DonsPage() {
                     type: 'input',
                     value: telephoneDestinataireCerfa,
                     placeholder: 'Exemple: 0601020304',
+                    maxLength: 12,
                     onInputChange: handleTelephoneDestinataireCerfaChange,
                 },
                 {
@@ -407,6 +413,7 @@ function DonsPage() {
                     type: 'number',
                     value: valeurCerfa.toString(),
                     placeholder: 'Exemple: 100',
+                    maxLength: 11,
                     onInputChange: handleValeurCerfaChange,
                 },
                 {

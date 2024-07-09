@@ -234,6 +234,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             disabled?: boolean
             url?: string
             createURL?: string
+            maxLength?: number
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
@@ -271,6 +272,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 placeholder: 'Exemple: 1 rue de la Paix, 75000 Paris',
                 value: adresseEnlevement,
+                maxLength: 255,
                 onInputChange: handleAdresseEnlevement,
             },
             {
@@ -285,6 +287,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: nomContactEnlevement,
                 placeholder: 'Exemple: Dupont',
+                maxLength: 20,
                 onInputChange: handleNomContactEnlevement,
             }, // a voir si select
             {
@@ -292,6 +295,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: prenomContactEnlevement,
                 placeholder: 'Exemple: Jean',
+                maxLength: 20,
                 onInputChange: handlePrenomContactEnlevement,
             },
             {
@@ -299,6 +303,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: telephoneContactEnlevement,
                 placeholder: 'Exemple: 0123456789',
+                maxLength: 12,
                 onInputChange: handleTelephoneContactEnlevement,
             },
             {
@@ -306,6 +311,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: mailContactEnlevement,
                 placeholder: 'Exemple: Jean.dupont@gmail.com',
+                maxLength: 255,
                 onInputChange: handleMailContactEnlevement,
             },
             {
@@ -314,6 +320,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 value: adresseLivraison,
                 url: '../../api/select/sites',
                 createURL: '/sites',
+                maxLength: 255,
                 onInputChange: handleAdresseLivraison,
             },
             {
@@ -328,6 +335,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: nomContactLivraison,
                 placeholder: 'Exemple: Petit',
+                maxLength: 20,
                 onInputChange: handleNomContactLivraison,
             },
             {
@@ -335,6 +343,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: prenomContactLivraison,
                 placeholder: 'Exemple: Michel',
+                maxLength: 20,
                 onInputChange: handlePrenomContactLivraison,
             },
             {
@@ -342,6 +351,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: telephoneContactLivraison,
                 placeholder: 'Exemple: 0123456789',
+                maxLength: 12,
                 onInputChange: handleTelephoneContactLivraison,
             },
             {
@@ -349,6 +359,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: mailContactLivraison,
                 placeholder: 'Exemple: Michel.petit@gmail.com',
+                maxLength: 255,
                 onInputChange: handleMailContactLivraison,
             },
             {
@@ -391,6 +402,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: commentaires,
                 placeholder: 'Exemple: Livraison de produits Auchan',
+                maxLength: 200,
                 onInputChange: handleCommentaires,
             },
             {

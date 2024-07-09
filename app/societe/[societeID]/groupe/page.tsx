@@ -101,6 +101,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                         type: 'input',
                                         value: null,
                                         placeholder: 'Exemple: Groupe Alpha',
+                                        maxLength: 255,
                                     },
                                     {
                                         id: 'Logo',
@@ -113,6 +114,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                         value: null,
                                         placeholder:
                                             'Exemple: http://www.groupealpha.com',
+                                        maxLength: 255,
                                     },
                                     {
                                         id: 'commentaires',
@@ -120,6 +122,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                         value: null,
                                         placeholder:
                                             'Exemple: Groupe actif en dons alimentaires',
+                                        maxLength: 200,
                                     },
                                     {
                                         id: 'date_arret_activite_du_Groupe',

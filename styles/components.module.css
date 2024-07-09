@@ -331,43 +331,49 @@
 }
 
 .log {
-    margin-top: 3rem;
+    margin-top: 2rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 }
 
-.email {
+.input {
     font-size: 1rem;
     padding: 1rem;
-    margin: 2rem;
-    border: 1px solid black;
+    margin: 1.5rem;
+    border: 2px solid black;
     border-radius: 3%;
 }
 
-.password {
-    font-size: 1rem;
-    padding: 1rem;
-    margin: 2rem;
-    border: 1px solid black;
-    border-radius: 3%;
+.input:hover,
+.input:focus {
+    border-radius: 5px;
+    border-color: #e5007d;
+    outline: none;
+}
+
+.input:focus::placeholder {
+    color: black;
 }
 
 .submit {
-    font-size: 1rem;
-    padding: 1rem;
-    margin: 3rem;
+    font-size: 1.1rem;
+    padding: 1.5rem;
+    margin: 2rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     background-color: white;
     border: 2px solid black;
     border-radius: 5%;
     font-family: inherit;
+    font-weight: bold;
+    color: #262a2e;
 }
 
 .submit:hover {
     border: 2px solid #e5007d;
     background-color: #f2f2f2;
+    cursor: pointer;
 }
 
 /* PopUp */

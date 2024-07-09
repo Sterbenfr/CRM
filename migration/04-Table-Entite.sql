@@ -11,7 +11,7 @@ CREATE TABLE Entite (
     adresse TEXT,
     telephone VARCHAR(12),
     mail VARCHAR(50),
-    site_internet VARCHAR(50),
+    site_internet VARCHAR(255),
     commentaires VARCHAR(200),
     code_type_entite CHAR(4) NOT NULL,
     code_type_don CHAR(4),

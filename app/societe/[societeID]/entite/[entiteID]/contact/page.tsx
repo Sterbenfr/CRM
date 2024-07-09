@@ -133,12 +133,14 @@ function ContactsPage({
                                     type: 'input',
                                     value: null,
                                     placeholder: 'Exemple: Dupont',
+                                    maxLength: 20,
                                 },
                                 {
                                     id: 'prenom',
                                     type: 'input',
                                     value: null,
                                     placeholder: 'Exemple: Corrine',
+                                    maxLength: 20,
                                 },
                                 {
                                     id: 'photo',
@@ -150,12 +152,14 @@ function ContactsPage({
                                     type: 'input',
                                     value: null,
                                     placeholder: 'Exemple: Assistante',
+                                    maxLength: 30,
                                 }, // a voir si select
                                 {
                                     id: 'service',
                                     type: 'input',
                                     value: null,
                                     placeholder: 'Exemple: Ressources Humaines',
+                                    maxLength: 30,
                                 },
                                 {
                                     id: 'numero_fixe',
@@ -182,13 +186,12 @@ function ContactsPage({
                                     value: null,
                                     placeholder:
                                         'Exemple: Corrine Dupont habite dunkerque',
+                                    maxLength: 200,
                                 },
                                 {
                                     id: 'date_arret_contact',
                                     type: 'date',
-                                    value: new Date()
-                                        .toISOString()
-                                        .split('T')[0],
+                                    value: '',
                                 },
                             ]}
                         />
