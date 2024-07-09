@@ -25,7 +25,7 @@ const CalendarPage = () => {
     }, [])
 
     const renderEventContent = (eventInfo: {
-        event: { url: string | undefined; title: React.ReactNode }
+        event: { url: string; title: string }
     }) => {
         return (
             <a
@@ -34,7 +34,10 @@ const CalendarPage = () => {
                 rel='noopener noreferrer'
                 style={{
                     overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                 }}
+                title={eventInfo.event.title}
             >
                 <div>
                     <span>{eventInfo.event.title}</span>
