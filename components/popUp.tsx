@@ -186,6 +186,7 @@ type Field = {
     url?: string
     required?: boolean
     disabled?: boolean
+    maxLength?: number
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
     onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -342,6 +343,43 @@ const PopUp: React.FC<PopUpProps> = ({
                                             onInput={input.onInputChange}
                                         />
                                     )
+                                case 'number':
+                                    return (
+                                        <input
+                                            key={input.id}
+                                            type='number'
+                                            required={input.required}
+                                            className={style.selectF}
+                                            value={
+                                                input.value === null
+                                                    ? ''
+                                                    : (input.value as string)
+                                            }
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            onInput={(
+                                                e: React.ChangeEvent<HTMLInputElement>,
+                                            ) => {
+                                                if (
+                                                    input.maxLength &&
+                                                    e.target.value.length >
+                                                        input.maxLength
+                                                ) {
+                                                    e.target.value =
+                                                        e.target.value.slice(
+                                                            0,
+                                                            input.maxLength,
+                                                        )
+                                                }
+                                                input.onInputChange &&
+                                                    input.onInputChange(e)
+                                            }}
+                                        />
+                                    )
                                 default:
                                     return (
                                         <input
@@ -363,6 +401,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                             }
                                             onInput={input.onInputChange}
                                             disabled={input.disabled}
+                                            maxLength={input.maxLength}
                                         />
                                     )
                             }

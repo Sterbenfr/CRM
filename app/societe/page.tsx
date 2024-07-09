@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '../../components/list'
 import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
@@ -27,11 +27,61 @@ function SocietesPage() {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
+
+    const [raisonSociale, setRaisonSociale] = useState('')
+    const [nomCommercial, setNomCommercial] = useState('')
+    //const [Logo, setLogo] = useState<Blob>()
+    const [siteWeb, setSiteWeb] = useState('')
+    const [Siren, setSiren] = useState('')
     const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] =
         useState('ADM')
+    const [commentaires, setCommentaires] = useState('')
+    const [codeGroupeAppartenance, setCodeGroupeAppartenance] = useState('')
+    const [dateArretActiviteSociete, setDateArretActiviteSociete] =
+        useState<Date>()
 
     const handleClose = () => {
         setIsPopUpOpen(false)
+    }
+
+    const handleRaisonSocialeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setRaisonSociale(event.target.value)
+    }
+
+    const handleNomCommercialChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomCommercial(event.target.value)
+    }
+
+    /*const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files) {
+            setLogo(event.target.files[0])
+        }
+    }*/
+
+    const handleSiteWebChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setSiteWeb(event.target.value)
+    }
+
+    const handleSirenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSiren(event.target.value)
     }
 
     const handleCodeTypeActiviteSocieteChange = (
@@ -39,6 +89,149 @@ function SocietesPage() {
     ) => {
         setCodeTypeActiviteSociete(event.target.value)
     }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handleCodeGroupeAppartenanceChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeGroupeAppartenance(event.target.value)
+    }
+
+    const handleDateArretActiviteSocieteChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateArretActiviteSociete(new Date(event.target.value))
+    }
+
+    type FieldType =
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
+
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'raison_sociale',
+                type: 'input',
+                value: raisonSociale,
+                placeholder: 'Exemple: Alpha',
+                required: true,
+                onInputChange: handleRaisonSocialeChange,
+                maxLength: 30,
+            },
+            {
+                id: 'nom_commercial',
+                type: 'input',
+                value: nomCommercial,
+                placeholder: 'Exemple: Nom commercial',
+                onInputChange: handleNomCommercialChange,
+                maxLength: 30,
+            },
+            {
+                id: 'Logo',
+                type: 'file',
+                value: null,
+                //onInputChange: handleLogoChange,
+            },
+            {
+                id: 'site_Web',
+                type: 'input',
+                value: siteWeb,
+                placeholder: 'Exemple: http://www.alpha.com/',
+                onInputChange: handleSiteWebChange,
+                maxLength: 255,
+            },
+            {
+                id: 'Siren',
+                type: 'number',
+                value: Siren,
+                placeholder: 'Exemple: 453684259',
+                required: true,
+                maxLength: 9,
+                onInputChange: handleSirenChange,
+            }, // if number !== 9 = pas de validation
+            {
+                id: 'code_type_activite_Societe',
+                type: 'select',
+                value: codeTypeActiviteSociete,
+                url: '../api/societe/type-activite-societe',
+                onChange: handleCodeTypeActiviteSocieteChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Societe de service informatique',
+                onInputChange: handleCommentairesChange,
+                maxLength: 200,
+            },
+            {
+                id: 'code_Groupe_appartenance',
+                type: 'search',
+                value: codeGroupeAppartenance,
+                url: '../api/select/societe/groupe',
+                onInputChange: handleCodeGroupeAppartenanceChange,
+            },
+            {
+                id: 'date_arret_activite_Societe',
+                type: 'date',
+                value:
+                    dateArretActiviteSociete?.toISOString().split('T')[0] || '',
+                onInputChange: handleDateArretActiviteSocieteChange,
+            },
+        ]
+
+        if (commentaires.length > 200) {
+            setCommentaires(commentaires.slice(0, 200))
+            alert('Caractères limites dépassés')
+        }
+        if (raisonSociale.length > 30) {
+            setRaisonSociale(raisonSociale.slice(0, 30))
+            alert('Caractères limites dépassés')
+        }
+        if (nomCommercial.length > 30) {
+            setNomCommercial(nomCommercial.slice(0, 30))
+            alert('Caractères limites dépassés')
+        }
+        if (siteWeb.length > 255) {
+            setSiteWeb(siteWeb.slice(0, 255))
+            alert('Caractères limites dépassés')
+        }
+        /*if (Siren.length > 9) {
+            setSiren(Siren.slice(0, 9))
+            alert('Caractères limites dépassés')
+        }*/
+        return fields
+    }, [
+        raisonSociale,
+        nomCommercial,
+        siteWeb,
+        Siren,
+        codeTypeActiviteSociete,
+        commentaires,
+        codeGroupeAppartenance,
+        dateArretActiviteSociete,
+    ])
 
     useEffect(() => {
         const fetchSocietes = async () => {
@@ -54,10 +247,11 @@ function SocietesPage() {
                 await res.json()
             setSocietes(data)
             setTotalItems(total) // set the total items
+            setFields(generateFields())
         }
 
         fetchSocietes()
-    }, [page, itemsPerPage])
+    }, [page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -108,66 +302,7 @@ function SocietesPage() {
                         <PopUp
                             onClose={handleClose}
                             url='http://localhost:3000/api/societe'
-                            fields={[
-                                {
-                                    id: 'raison_sociale',
-                                    type: 'input',
-                                    value: '',
-                                    placeholder: 'Exemple: Alpha',
-                                    required: true,
-                                },
-                                {
-                                    id: 'nom_commercial',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: Nom commercial',
-                                }, // a voir si utile
-                                {
-                                    id: 'Logo',
-                                    type: 'file',
-                                    value: null,
-                                }, // type blob
-                                {
-                                    id: 'site_Web',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder:
-                                        'Exemple: http://www.alpha.com/',
-                                },
-                                {
-                                    id: 'Siren',
-                                    type: 'number',
-                                    value: null,
-                                    placeholder: 'Exemple: 453684259',
-                                    required: true,
-                                }, // if number !== 9 = pas de validation
-                                {
-                                    id: 'code_type_activite_Societe',
-                                    type: 'select',
-                                    value: codeTypeActiviteSociete,
-                                    url: '../api/societe/type-activite-societe',
-                                    onChange:
-                                        handleCodeTypeActiviteSocieteChange,
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder:
-                                        'Exemple: Societe de service informatique',
-                                },
-                                {
-                                    id: 'code_Groupe_appartenance',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../api/select/societe/groupe',
-                                },
-                                {
-                                    id: 'date_arret_activite_Societe',
-                                    type: 'date',
-                                    value: null,
-                                },
-                            ]}
+                            fields={fields}
                         />
                     </div>
                 )}
