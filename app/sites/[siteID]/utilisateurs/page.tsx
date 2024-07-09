@@ -36,16 +36,16 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('AD')
 
     const [fields, setFields] = useState<
-    {
-        id: string
-        type: FieldType
-        value: string | null
-        placeholder?: string
-        url?: string
-        createURL?: string
-        required?: boolean
-        onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-        onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[]
     >([])
 
@@ -65,138 +65,154 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         setCodeTypeUtilisateur(event.target.value)
     }
 
-    const handleNomChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-            setNom(event.target.value)
+    const handleNomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNom(event.target.value)
     }
 
-    const handlePrenomChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-            setPrenom(event.target.value)
+    const handlePrenomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPrenom(event.target.value)
     }
 
     const handleTelPersoChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-            setTelPerso(event.target.value)
+        setTelPerso(event.target.value)
     }
 
     const handleMailRestosDuCoeurChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-            setMailRestosDuCoeur(event.target.value)
+        setMailRestosDuCoeur(event.target.value)
     }
 
     const handleCommentairesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-            setCommentaires(event.target.value)
+        setCommentaires(event.target.value)
     }
 
     const handlePasswordChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-            setPassword(event.target.value)
+        setPassword(event.target.value)
     }
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'password'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'password'
 
-    const generateFields = useCallback(
-        () => {
-            const fields: {
-                id: string
-                type: FieldType
-                value: string | null
-                placeholder?: string
-                url?: string
-                createURL?: string
-                required?: boolean
-                onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-                onInputChange?: (
-                    event: React.ChangeEvent<HTMLInputElement>,
-                ) => void
-            }[] = [
-                {
-                    id: 'civilite',
-                    type: 'select',
-                    value: civilite,
-                    url: `../../../../../api/select/genre`,
-                    required: true,
-                    onChange: handleCiviliteChange,
-                },
-                {
-                    id: 'nom',
-                    type: 'input',
-                    value: nom,
-                    placeholder: 'Exemple: Dupont',
-                    onInputChange: handleNomChange,
-                },
-                {
-                    id: 'prenom',
-                    type: 'input',
-                    value: prenom,
-                    placeholder: 'Exemple: Jean',
-                    onInputChange: handlePrenomChange,
-                },
-                {
-                    id: 'tel_perso',
-                    type: 'number',
-                    value: telPerso,
-                    placeholder: 'Exemple: 0601020304',
-                    onInputChange: handleTelPersoChange,
-                },
-                {
-                    id: 'mail_restos_du_coeur',
-                    type: 'input',
-                    value: mailRestosDuCoeur,
-                    placeholder: 'Exemple: Jean.dupont@gmail.com',
-                    onInputChange: handleMailRestosDuCoeurChange,
-                },
-                {
-                    id: 'commentaires',
-                    type: 'input',
-                    value: commentaires,
-                    placeholder: 'Exemple: Manutentionnaire de Dunkerque',
-                    onInputChange: handleCommentairesChange,
-                },
-                {
-                    id: 'password',
-                    type: 'password',
-                    value: password,
-                    placeholder: 'Exemple: France2024!',
-                    onInputChange: handlePasswordChange,
-                },
-                {
-                    id: 'code_type_utilisateur',
-                    type: 'select',
-                    value: codeTypeUtilisateur,
-                    url: `../../../../../api/select/utilisateurs`,
-                    onChange: handleCodeTypeUtilisateurChange,
-                },
-            ]
-            return fields
-        },
-        [
-            civilite,
-            nom,
-            prenom,
-            telPerso,
-            mailRestosDuCoeur,
-            commentaires,
-            password,
-            codeTypeUtilisateur,
-        ],
-    )
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'civilite',
+                type: 'select',
+                value: civilite,
+                url: `../../../../../api/select/genre`,
+                required: true,
+                onChange: handleCiviliteChange,
+            },
+            {
+                id: 'nom',
+                type: 'input',
+                value: nom,
+                placeholder: 'Exemple: Dupont',
+                onInputChange: handleNomChange,
+            },
+            {
+                id: 'prenom',
+                type: 'input',
+                value: prenom,
+                placeholder: 'Exemple: Jean',
+                onInputChange: handlePrenomChange,
+            },
+            {
+                id: 'tel_perso',
+                type: 'number',
+                value: telPerso,
+                placeholder: 'Exemple: 0601020304',
+                onInputChange: handleTelPersoChange,
+            },
+            {
+                id: 'mail_restos_du_coeur',
+                type: 'input',
+                value: mailRestosDuCoeur,
+                placeholder: 'Exemple: Jean.dupont@gmail.com',
+                onInputChange: handleMailRestosDuCoeurChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Manutentionnaire de Dunkerque',
+                onInputChange: handleCommentairesChange,
+            },
+            {
+                id: 'password',
+                type: 'password',
+                value: password,
+                placeholder: 'Exemple: France2024!',
+                onInputChange: handlePasswordChange,
+            },
+            {
+                id: 'code_type_utilisateur',
+                type: 'select',
+                value: codeTypeUtilisateur,
+                url: `../../../../../api/select/utilisateurs`,
+                onChange: handleCodeTypeUtilisateurChange,
+            },
+        ]
+        if (nom.length > 20) {
+            setNom(nom.slice(0, 20))
+            alert('Le Nom doit contenir 9 chiffres')
+        }
+
+        if (prenom.length > 20) {
+            setPrenom(prenom.slice(0, 20))
+            alert('Le Prénom doit contenir 20 chiffres')
+        }
+
+        if (telPerso.length > 12) {
+            setTelPerso(telPerso.slice(0, 12))
+            alert('Le Téléphone doit contenir 12 chiffres')
+        }
+
+        if (mailRestosDuCoeur.length > 50) {
+            setMailRestosDuCoeur(mailRestosDuCoeur.slice(0, 50))
+            alert('Le Mail doit contenir 50 chiffres')
+        }
+
+        if (commentaires.length > 200) {
+            setCommentaires(commentaires.slice(0, 200))
+            alert('Le Commentaire doit contenir 200 chiffres')
+        }
+
+        return fields
+    }, [
+        civilite,
+        nom,
+        prenom,
+        telPerso,
+        mailRestosDuCoeur,
+        commentaires,
+        password,
+        codeTypeUtilisateur,
+    ])
 
     useEffect(() => {
         const fetchUtilisateurs = async () => {
