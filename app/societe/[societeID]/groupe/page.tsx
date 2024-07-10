@@ -21,11 +21,13 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+    const [search, setSearch] = useState<Groupe[]>([])
 
     const [nomDuGroupe, setNomDuGroupe] = useState('')
     const [siteWeb, setSiteWeb] = useState('')
     const [commentaires, setCommentaires] = useState('')
-    const [dateArretActiviteDuGroupe, setDateArretActiviteDuGroupe] = useState<Date>()
+    const [dateArretActiviteDuGroupe, setDateArretActiviteDuGroupe] =
+        useState<Date>()
 
     const handleClose = () => {
         setIsPopUpOpen(false)
@@ -47,14 +49,14 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     >([])
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'enum'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const handleNomDuGroupeChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -63,28 +65,24 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     }
 
     const handleSiteWebChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setSiteWeb(event.target.value)
     }
 
     const handleCommentairesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setCommentaires(event.target.value)
     }
 
     const handleDateArretActiviteDuGroupeChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateArretActiviteDuGroupe(new Date(event.target.value))
     }
 
-
-
-    const generateFields = useCallback((
-        
-    ) => {
+    const generateFields = useCallback(() => {
         const fields: {
             id: string
             type: FieldType
@@ -117,7 +115,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 id: 'site_Web',
                 type: 'input',
                 value: siteWeb,
-                placeholder:'Exemple: http://www.groupealpha.com',
+                placeholder: 'Exemple: http://www.groupealpha.com',
                 maxLength: 255,
                 required: true,
                 onInputChange: handleSiteWebChange,
@@ -126,21 +124,22 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
-                placeholder:'Exemple: Groupe actif en dons alimentaires',
+                placeholder: 'Exemple: Groupe actif en dons alimentaires',
                 maxLength: 200,
                 onInputChange: handleCommentairesChange,
             },
             {
                 id: 'date_arret_activite_du_Groupe',
                 type: 'date',
-                value: dateArretActiviteDuGroupe?.toISOString().split('T')[0] || '',
+                value:
+                    dateArretActiviteDuGroupe?.toISOString().split('T')[0] ||
+                    '',
                 onInputChange: handleDateArretActiviteDuGroupeChange,
             },
         ]
 
         return fields
     }, [commentaires, dateArretActiviteDuGroupe, nomDuGroupe, siteWeb])
-
 
     useEffect(() => {
         const fetchGroupes = async () => {
@@ -159,7 +158,24 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
             setFields(generateFields())
         }
 
+        const fetchSearchGroupe = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/societe/${params.societeID}/groupe?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Groupe[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchGroupes()
+        fetchSearchGroupe()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.societeID, generateFields])
 
     // add a function to handle page changes
@@ -198,6 +214,18 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             },
                             url: `http://localhost:3000/api/societe/${params.societeID}/groupe`,
                         }}
+                        searchItems={search.map(groupe => ({
+                            value1: groupe.code_groupe.toString(),
+                            value2: groupe.nom_du_Groupe,
+                            value3: groupe.site_Web,
+                            value4: groupe.commentaires,
+                            value5:
+                                groupe.date_arret_activite_du_groupe == null
+                                    ? ''
+                                    : groupe.date_arret_activite_du_groupe
+                                          .toString()
+                                          .split('T')[0],
+                        }))}
                     />
                     <Pagination
                         onPageChange={handlePageChange}

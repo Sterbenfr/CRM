@@ -24,6 +24,7 @@ function SocietesPage() {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Societe[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -229,7 +230,24 @@ function SocietesPage() {
             setFields(generateFields())
         }
 
+        const fetchSocieteSearch = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/societe?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Societe[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchSocietes()
+        fetchSocieteSearch()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
@@ -267,6 +285,18 @@ function SocietesPage() {
                         },
                         url: 'http://localhost:3000/api/societe',
                     }}
+                    searchItems={search.map(Societe => ({
+                        value1: Societe.code_Societe.toString(),
+                        value2: Societe.raison_sociale,
+                        value3: Societe.site_Web,
+                        value4: Societe.commentaires,
+                        value5:
+                            Societe.date_arret_activite_Societe == null
+                                ? ''
+                                : Societe.date_arret_activite_Societe
+                                      .toString()
+                                      .split('T')[0],
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

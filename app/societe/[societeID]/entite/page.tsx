@@ -38,6 +38,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Entite[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -459,7 +460,23 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             setFields(generateFields())
         }
 
+        const fetchSearchEntite = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/societe/${params.societeID}/entite?limit=10000`,
+                )
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Entite[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchEntite()
+        fetchSearchEntite()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.societeID, page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
@@ -498,6 +515,19 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite`,
                     }}
+                    searchItems={search.map(entite => ({
+                        value1: entite.code_entite.toString(),
+                        value2: entite.raison_sociale,
+                        value3: entite.telephone,
+                        value4: entite.mail,
+                        value5: entite.adresse,
+                        value6:
+                            entite.date_arret_activite == null
+                                ? ''
+                                : entite.date_arret_activite
+                                      .toString()
+                                      .split('T')[0],
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

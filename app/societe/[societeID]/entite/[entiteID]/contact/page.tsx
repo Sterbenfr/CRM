@@ -31,6 +31,7 @@ function ContactsPage({
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Contact[]>([])
 
     const [civilite, setCivilite] = useState('MAD')
 
@@ -60,7 +61,24 @@ function ContactsPage({
             setTotalItems(total) // set the total items
         }
 
+        const fetchSearchContacts = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Contact[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchContacts()
+        fetchSearchContacts()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.societeID, params.entiteID, page, itemsPerPage])
 
     // add a function to handle page changes
@@ -99,6 +117,19 @@ function ContactsPage({
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`,
                     }}
+                    searchItems={search.map(contact => ({
+                        value1: contact.code_contact.toString(),
+                        value2: contact.nom,
+                        value3: contact.numero_fixe,
+                        value4: contact.numero_portable,
+                        value5: contact.adresse_mail,
+                        value6:
+                            contact.date_arret_contact == null
+                                ? ''
+                                : contact.date_arret_contact
+                                      .toString()
+                                      .split('T')[0],
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
