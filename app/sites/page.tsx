@@ -52,7 +52,6 @@ function SitesPage() {
     const [dateOuverture, setDateOuverture] = useState(new Date())
     const [dateFermeture, setDateFermeture] = useState<Date>()
 
-
     const [numeroTelephone, setNumeroTelephone] = useState('')
     const [adresseMail, setAdresseMail] = useState('')
     const [commentaires, setCommentaires] = useState('')
@@ -73,14 +72,14 @@ function SitesPage() {
     >([])
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'enum'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const handledesignationLongueChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -149,9 +148,7 @@ function SitesPage() {
         setCommentaires(event.target.value)
     }
 
-    const generateFields = useCallback((
-        
-    ) => {
+    const generateFields = useCallback(() => {
         const fields: {
             id: string
             type: FieldType
@@ -231,7 +228,7 @@ function SitesPage() {
                 placeholder: 'Exemple: Siège social de la société',
                 onInputChange: handleCommentairesChange,
                 maxLength: 200,
-            }
+            },
         ]
 
         /*
@@ -298,7 +295,7 @@ function SitesPage() {
         fetchSearchSites()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, generateFields, dateOuverture, dateFermeture])
-        
+
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -329,6 +326,15 @@ function SitesPage() {
                                 : setIsPopUpOpen(true)
                         },
                         url: 'http://localhost:3000/api/sites',
+                    }}
+                    attribut={{
+                        att1: 'Désignation longue',
+                        att2: '',
+                        att3: 'Adresse',
+                        att4: 'Date ouverture',
+                        att5: 'Téléphone',
+                        att6: '',
+                        att7: 'Mail',
                     }}
                     searchItems={search.map(Sites => ({
                         value1: Sites.code_site.toString(),

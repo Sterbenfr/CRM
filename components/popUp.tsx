@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SelectComponent from './select-component'
 import SearchComponent from './searchComponent'
+import Image from 'next/image'
 import style from '../styles/components.module.css'
 
 // Mapping field IDs to column names
@@ -274,137 +275,140 @@ const PopUp: React.FC<PopUpProps> = ({
     return (
         <div className={'popup-container'}>
             <div className={style.page1}>
-                <h2 className={style.lg}>{popupTitle}</h2>
-                <div className={style.BTNdiv}>
-                    <button className={style.BTNsub} onClick={onClose}>
-                        Annuler
+                <div className={style.croix}>
+                    <h2 className={style.lg1}>{popupTitle}</h2>
+                    <button className={style.btnC} onClick={onClose}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/CROIX.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
                     </button>
                 </div>
-                {inputs.map(input => (
-                    <div className={style.rowPop} key={input.id}>
-                        <label className={style.label}>
-                            {fieldLabels[input.id]}
-                        </label>
-                        {(() => {
-                            switch (input.type) {
-                                case 'select':
-                                    return (
-                                        <SelectComponent
-                                            key={input.id}
-                                            url={input.url as string}
-                                            required={input.required}
-                                            onChange={input.onChange}
-                                        />
-                                    )
-                                case 'search':
-                                    return (
-                                        <SearchComponent
-                                            key={input.id}
-                                            url={input.url as string}
-                                            createURL={
-                                                input.createURL as string
+            </div>
+            {inputs.map(input => (
+                <div className={style.rowPop} key={input.id}>
+                    <label className={style.label}>
+                        {fieldLabels[input.id]}
+                    </label>
+                    {(() => {
+                        switch (input.type) {
+                            case 'select':
+                                return (
+                                    <SelectComponent
+                                        key={input.id}
+                                        url={input.url as string}
+                                        required={input.required}
+                                        onChange={input.onChange}
+                                    />
+                                )
+                            case 'search':
+                                return (
+                                    <SearchComponent
+                                        key={input.id}
+                                        url={input.url as string}
+                                        createURL={input.createURL as string}
+                                        required={input.required}
+                                        placeholder={input.placeholder}
+                                        onChange={e =>
+                                            handleInputChange(
+                                                input.id,
+                                                e.target.value,
+                                            )
+                                        }
+                                        onInputChange={input.onInputChange}
+                                    />
+                                )
+                            case 'checkbox':
+                                return (
+                                    <input
+                                        key={input.id}
+                                        type='checkbox'
+                                        required={input.required}
+                                        className={style.checkboxF}
+                                        onChange={e =>
+                                            handleInputChange(
+                                                input.id,
+                                                e.target.checked,
+                                            )
+                                        }
+                                        onInput={input.onInputChange}
+                                    />
+                                )
+                            case 'number':
+                                return (
+                                    <input
+                                        key={input.id}
+                                        type='number'
+                                        required={input.required}
+                                        className={style.selectF}
+                                        value={
+                                            input.value === null
+                                                ? ''
+                                                : (input.value as string)
+                                        }
+                                        onChange={e =>
+                                            handleInputChange(
+                                                input.id,
+                                                e.target.value,
+                                            )
+                                        }
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                        ) => {
+                                            if (
+                                                input.maxLength &&
+                                                e.target.value.length >
+                                                    input.maxLength
+                                            ) {
+                                                e.target.value =
+                                                    e.target.value.slice(
+                                                        0,
+                                                        input.maxLength,
+                                                    )
                                             }
-                                            required={input.required}
-                                            placeholder={input.placeholder}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            onInputChange={input.onInputChange}
-                                        />
-                                    )
-                                case 'checkbox':
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type='checkbox'
-                                            required={input.required}
-                                            className={style.checkboxF}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.checked,
-                                                )
-                                            }
-                                            onInput={input.onInputChange}
-                                        />
-                                    )
-                                case 'number':
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type='number'
-                                            required={input.required}
-                                            className={style.selectF}
-                                            value={
-                                                input.value === null
-                                                    ? ''
-                                                    : (input.value as string)
-                                            }
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            onInput={(
-                                                e: React.ChangeEvent<HTMLInputElement>,
-                                            ) => {
-                                                if (
-                                                    input.maxLength &&
-                                                    e.target.value.length >
-                                                        input.maxLength
-                                                ) {
-                                                    e.target.value =
-                                                        e.target.value.slice(
-                                                            0,
-                                                            input.maxLength,
-                                                        )
-                                                }
-                                                input.onInputChange &&
-                                                    input.onInputChange(e)
-                                            }}
-                                        />
-                                    )
-                                default:
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type={input.type}
-                                            placeholder={input.placeholder}
-                                            required={input.required}
-                                            className={style.selectF}
-                                            value={
-                                                input.value === null
-                                                    ? ''
-                                                    : (input.value as string)
-                                            }
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            onInput={input.onInputChange}
-                                            disabled={input.disabled}
-                                            maxLength={input.maxLength}
-                                        />
-                                    )
-                            }
-                        })()}
-                    </div>
-                ))}
-                <div className={style.BTNdiv}>
-                    <button className={style.BTNsub} onClick={onClose}>
-                        Annuler
-                    </button>
-
-                    <button className={style.BTNsub} onClick={handleSubmit}>
-                        Envoyer
-                    </button>
+                                            input.onInputChange &&
+                                                input.onInputChange(e)
+                                        }}
+                                    />
+                                )
+                            default:
+                                return (
+                                    <input
+                                        key={input.id}
+                                        type={input.type}
+                                        placeholder={input.placeholder}
+                                        required={input.required}
+                                        className={style.selectF}
+                                        value={
+                                            input.value === null
+                                                ? ''
+                                                : (input.value as string)
+                                        }
+                                        onChange={e =>
+                                            handleInputChange(
+                                                input.id,
+                                                e.target.value,
+                                            )
+                                        }
+                                        onInput={input.onInputChange}
+                                        disabled={input.disabled}
+                                        maxLength={input.maxLength}
+                                    />
+                                )
+                        }
+                    })()}
                 </div>
+            ))}
+            <div className={style.BTNdiv}>
+                <button className={style.BTNsub} onClick={onClose}>
+                    Quitter
+                </button>
+                <button className={style.BTNsub} onClick={handleSubmit}>
+                    Envoyer
+                </button>
             </div>
         </div>
     )

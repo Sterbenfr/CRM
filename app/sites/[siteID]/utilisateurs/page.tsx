@@ -260,7 +260,6 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.siteID, generateFields])
 
-
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -291,6 +290,15 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 : setIsPopUpOpen(true)
                         },
                         url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs`,
+                    }}
+                    attribut={{
+                        att1: 'Civilité',
+                        att2: '',
+                        att3: 'Nom',
+                        att4: 'Prénom',
+                        att5: 'Téléphone',
+                        att6: '',
+                        att7: 'Mail',
                     }}
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),

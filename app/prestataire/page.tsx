@@ -411,6 +411,15 @@ function PrestatairesPage() {
                         },
                         url: 'http://localhost:3000/api/prestataire',
                     }}
+                    attribut={{
+                        att1: '',
+                        att2: 'Raison sociale',
+                        att3: 'Téléphone',
+                        att4: '',
+                        att5: 'Mail',
+                        att6: 'Téléphone contact prestataire',
+                        att7: 'Mail contact prestataire',
+                    }}
                     searchItems={search.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),

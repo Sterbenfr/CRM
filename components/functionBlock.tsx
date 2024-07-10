@@ -12,14 +12,21 @@ const FunctionBlock: React.FC<FunctionBlockProps> = ({
     fonc3,
 }) => {
     return (
-        <div className={style.functionBlock}>
-            <button className={style.btnFunctionBlockADD} onClick={fonc1}>
-                Ajouter
-            </button>
-            <button className={style.btnFunctionBlockDEL} onClick={fonc2}>
-                Supprimer
-            </button>
-            <input type='text' onInput={fonc3} />
+        <div className={style.page1}>
+            <div className={style.functionBlock}>
+                <button className={style.btnFunctionBlockADD} onClick={fonc1}>
+                    Ajouter
+                </button>
+                <button className={style.btnFunctionBlockDEL} onClick={fonc2}>
+                    Supprimer
+                </button>
+            </div>
+            <input
+                placeholder='search'
+                className={style.searchLine}
+                type='text'
+                onInput={fonc3}
+            />
         </div>
     )
 }

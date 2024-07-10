@@ -617,6 +617,15 @@ function DonsPage() {
                         },
                         url: 'http://localhost:3000/api/dons',
                     }}
+                    attribut={{
+                        att1: ' ',
+                        att2: 'Entité donatrice',
+                        att3: 'Date proposition don',
+                        att4: 'Commentaires',
+                        att5: 'Statut don',
+                        att6: ' ',
+                        att7: ' ',
+                    }}
                     searchItems={search.map(Don => ({
                         value1: Don.code_Don.toString(),
                         value2: Don.code_Entite_donatrice

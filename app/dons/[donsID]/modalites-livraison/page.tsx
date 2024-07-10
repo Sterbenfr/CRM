@@ -556,6 +556,15 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         },
                         url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison`,
                     }}
+                    attribut={{
+                        att1: ' ',
+                        att2: 'Code don',
+                        att3: 'Date prévue livraison',
+                        att4: 'Téléphone contact enlèvement',
+                        att5: 'Statut don',
+                        att6: ' ',
+                        att7: ' ',
+                    }}
                     searchItems={search.map(ModalitesLivraison => ({
                         value1: ModalitesLivraison.numero_livraison.toString(),
                         value2: ModalitesLivraison.code_Don.toString(),
