@@ -63,12 +63,14 @@ function TypesActiviteSocietesPage() {
                             type: 'input',
                             value: null,
                             required: true,
+                            maxLength: 3,
                         },
                         {
                             id: 'libelle',
                             type: 'input',
                             value: null,
                             required: true,
+                            maxLength: 50,
                         },
                     ]}
                 />

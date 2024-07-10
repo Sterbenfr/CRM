@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import style from '../../../../../styles/components.module.css'
 
 interface GroupeID {
-    code_Groupe: number
+    code_groupe: number
     nom_du_Groupe: string
     Logo: Blob
     site_Web: string
@@ -49,9 +49,9 @@ export default function GroupePage({
                     <div className={style.info}>
                         <p className={style.titre}>Code du groupe :</p>
                         <p>
-                            {Groupe[0].code_Groupe == null
+                            {Groupe[0].code_groupe == null
                                 ? '/'
-                                : Groupe[0].code_Groupe}
+                                : Groupe[0].code_groupe}
                         </p>
                     </div>
 
