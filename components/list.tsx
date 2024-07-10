@@ -68,7 +68,7 @@ const List: React.FC<{
     }
 
     useEffect(() => {
-        if (searchValue === '') {
+        if (searchValue.length < 3) {
             setSelectedItems(items)
         }
     }, [items, searchValue])

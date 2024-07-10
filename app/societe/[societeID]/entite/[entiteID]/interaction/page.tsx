@@ -29,6 +29,8 @@ function InteractionsPage({
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Interactions[]>([])
+
     const [EntiteInteraction, setEntiteInteraction] = useState(params.entiteID)
     const [codeTypeInteraction, setCodeTypeInteraction] = useState('PRE')
     const [codeModaliteInteraction, setCodeModaliteInteraction] =
@@ -74,7 +76,24 @@ function InteractionsPage({
             setTotalItems(total)
         }
 
+        const fetchSearchInteractions = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Interactions[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchInteractions()
+        fetchSearchInteractions()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.societeID, params.entiteID])
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -110,6 +129,18 @@ function InteractionsPage({
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                     }}
+                    searchItems={search.map(Interactions => ({
+                        value1: Interactions.code_interaction.toString(),
+                        value2: Interactions.code_Entite_Prospectee.toString(),
+                        value3: Interactions.date_interaction
+                            .toString()
+                            .split('T')[0],
+                        value4: Interactions.code_contact_entite.toString(),
+                        value5: Interactions.date_relance
+                            .toString()
+                            .split('T')[0],
+                        value6: Interactions.commentaires,
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
