@@ -103,6 +103,7 @@ function DonsPage() {
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+    const [search, setSearch] = useState<Don[]>([])
     const [fields, setFields] = useState<
         {
             id: string
@@ -550,7 +551,23 @@ function DonsPage() {
             )
         }
 
+        const fetchSearchDons = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    'http://localhost:3000/api/dons?limit=10000',
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Don[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchDons()
+        fetchSearchDons()
     }, [
         page,
         itemsPerPage,
@@ -600,6 +617,23 @@ function DonsPage() {
                         },
                         url: 'http://localhost:3000/api/dons',
                     }}
+                    searchItems={search.map(Don => ({
+                        value1: Don.code_Don.toString(),
+                        value2: Don.code_Entite_donatrice
+                            ? Don.code_Entite_donatrice.toString()
+                            : '',
+                        value3: Don.date_proposition_don
+                            .toString()
+                            .split('T')[0],
+                        value4: Don.commentaires ? Don.commentaires : '',
+                        value5: Don.statut_acceptation_don
+                            ? Don.statut_acceptation_don
+                            : '',
+
+                        value7: Don.statut_acceptation_don
+                            ? Don.statut_acceptation_don
+                            : '',
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

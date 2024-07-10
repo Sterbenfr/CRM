@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Line from './line'
 import FunctionBlock from './functionBlock'
 import style from '../styles/components.module.css'
@@ -18,11 +18,15 @@ interface FunctionProps {
     url?: string
 }
 
-const List: React.FC<{ items: ListProps[]; functions: FunctionProps }> = ({
-    items,
-    functions,
-}) => {
+const List: React.FC<{
+    items: ListProps[]
+    functions: FunctionProps
+    searchItems?: ListProps[]
+}> = ({ items, functions, searchItems }) => {
+    const [selectedItems, setSelectedItems] = useState<ListProps[]>()
     const [lineCheckbox, setLineCheckbox] = useState<number[]>([])
+    const [searchValue, setSearchValue] = useState('')
+
     const handleLineCheckboxChange = (param: string) => {
         const value = parseInt(param)
         if (!lineCheckbox.includes(value)) {
@@ -31,6 +35,7 @@ const List: React.FC<{ items: ListProps[]; functions: FunctionProps }> = ({
             setLineCheckbox(lineCheckbox.filter(item => item !== value))
         }
     }
+
     const deleteFunction = () => {
         lineCheckbox.map(async item => {
             await fetch(`${functions.url}/${item}`, {
@@ -38,25 +43,103 @@ const List: React.FC<{ items: ListProps[]; functions: FunctionProps }> = ({
             })
         })
     }
+
+    const searchFunction = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const target = e.target as typeof e.target & {
+            value: string
+        }
+        const search = target.value
+        setSearchValue(search)
+        if (searchItems && search.length >= 3) {
+            const searchedItems = searchItems.filter(item => {
+                return (
+                    item.value1?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value2?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value3?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value4?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value5?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value6?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.value7?.toLowerCase().includes(search.toLowerCase())
+                )
+            })
+            setSelectedItems(searchedItems)
+        }
+    }
+
+    useEffect(() => {
+        if (searchValue === '') {
+            setSelectedItems(items)
+        }
+    }, [items, searchValue])
+
     return (
         <>
-            <FunctionBlock fonc1={functions.fonc1} fonc2={deleteFunction} />
+            <FunctionBlock
+                fonc1={functions.fonc1}
+                fonc2={deleteFunction}
+                fonc3={searchFunction}
+            />
             <div className={style.list_line}>
-                {items.map(item => (
-                    // Wrap Line component with a div and add onClick event
-                    <div key={item.value1}>
-                        <Line
-                            deleteFunction={handleLineCheckboxChange}
-                            param1={item.value1 == null ? '' : item.value1}
-                            param2={item.value2 == null ? '' : item.value2}
-                            param3={item.value3 == null ? '' : item.value3}
-                            param4={item.value4 == null ? '' : item.value4}
-                            param5={item.value5 == null ? '' : item.value5}
-                            param6={item.value6 == null ? '' : item.value6}
-                            paramColor={item.value7 == null ? '' : item.value7}
-                        />
-                    </div>
-                ))}
+                {selectedItems
+                    ? selectedItems.map(item => (
+                          // Wrap Line component with a div and add onClick event
+                          <div key={item.value1}>
+                              <Line
+                                  deleteFunction={handleLineCheckboxChange}
+                                  param1={
+                                      item.value1 == null ? '' : item.value1
+                                  }
+                                  param2={
+                                      item.value2 == null ? '' : item.value2
+                                  }
+                                  param3={
+                                      item.value3 == null ? '' : item.value3
+                                  }
+                                  param4={
+                                      item.value4 == null ? '' : item.value4
+                                  }
+                                  param5={
+                                      item.value5 == null ? '' : item.value5
+                                  }
+                                  param6={
+                                      item.value6 == null ? '' : item.value6
+                                  }
+                                  paramColor={
+                                      item.value7 == null ? '' : item.value7
+                                  }
+                              />
+                          </div>
+                      ))
+                    : items.map(item => (
+                          // Wrap Line component with a div and add onClick event
+                          <div key={item.value1}>
+                              <Line
+                                  deleteFunction={handleLineCheckboxChange}
+                                  param1={
+                                      item.value1 == null ? '' : item.value1
+                                  }
+                                  param2={
+                                      item.value2 == null ? '' : item.value2
+                                  }
+                                  param3={
+                                      item.value3 == null ? '' : item.value3
+                                  }
+                                  param4={
+                                      item.value4 == null ? '' : item.value4
+                                  }
+                                  param5={
+                                      item.value5 == null ? '' : item.value5
+                                  }
+                                  param6={
+                                      item.value6 == null ? '' : item.value6
+                                  }
+                                  paramColor={
+                                      item.value7 == null ? '' : item.value7
+                                  }
+                              />
+                          </div>
+                      ))}
             </div>
         </>
     )

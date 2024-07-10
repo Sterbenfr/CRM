@@ -31,6 +31,8 @@ function PrestatairesPage() {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Prestataire[]>([])
+
     const [codeTypeDePrestataire, setCodeTypeDePrestataire] = useState('TRA')
     const [raisonSociale, setRaisonSociale] = useState('')
     const [nomCommercial, setNomCommercial] = useState('')
@@ -358,7 +360,24 @@ function PrestatairesPage() {
             setFields(generateFields())
         }
 
+        const fetchSearchDons = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    'http://localhost:3000/api/prestataire?limit=10000',
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Prestataire[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchDons()
+        fetchSearchDons()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
@@ -392,6 +411,14 @@ function PrestatairesPage() {
                         },
                         url: 'http://localhost:3000/api/prestataire',
                     }}
+                    searchItems={search.map(Prestataire => ({
+                        value1: Prestataire.code_Prestataire.toString(),
+                        value2: Prestataire.raison_sociale.toString(),
+                        value3: Prestataire.telephone.toString(),
+                        value4: Prestataire.mail.toString(),
+                        value5: Prestataire.telephone_contact_prestataire.toString(),
+                        value6: Prestataire.mail_contact_prestataire.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

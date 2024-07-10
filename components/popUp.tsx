@@ -111,7 +111,6 @@ const fieldLabels: { [key: string]: string } = {
     nom: 'Nom',
     prenom: 'Prénom',
     tel_perso: 'Téléphone personnel',
-    mail_restos_du_coeur: 'Mail Restos du Coeur',
     password: 'Mot de passe',
     //Societe
     code_Societe: 'Société',

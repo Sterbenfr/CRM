@@ -25,6 +25,7 @@ function SitesPage() {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Sites[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -278,8 +279,26 @@ function SitesPage() {
             setFields(generateFields())
         }
 
+        const fetchSearchSites = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    'http://localhost:3000/api/sites?limit=10000',
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Sites[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchSites()
+        fetchSearchSites()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, generateFields, dateOuverture, dateFermeture])
+        
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -311,6 +330,14 @@ function SitesPage() {
                         },
                         url: 'http://localhost:3000/api/sites',
                     }}
+                    searchItems={search.map(Sites => ({
+                        value1: Sites.code_site.toString(),
+                        value2: Sites.designation_longue.toString(),
+                        value3: Sites.adresse.toString(),
+                        value4: Sites.date_ouverture.toString().split('T')[0],
+                        value5: Sites.numero_telephone.toString(),
+                        value6: Sites.adresse_mail.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
