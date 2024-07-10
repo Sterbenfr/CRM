@@ -19,12 +19,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await pool.query(
-            'SELECT * FROM `SuiviGroupe` WHERE code_Groupe = ? LIMIT ?, ?',
+            'SELECT * FROM `SuiviGroupe` WHERE code_groupe = ? LIMIT ?, ?',
             [params.groupeID, offset, limitNumber],
         )
 
         const [totalResult] = await pool.query(
-            'SELECT COUNT(*) as count FROM `SuiviGroupe` WHERE code_Groupe = ?',
+            'SELECT COUNT(*) as count FROM `SuiviGroupe` WHERE code_groupe = ?',
             [params.groupeID],
         )
 
@@ -48,11 +48,15 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
-        !contact.code_Groupe ||
+        !contact.code_groupe ||
         !contact.code_type_de_Site ||
         !contact.code_site_suivi ||
         !contact.code_utilisateur_suivant
     ) {
+        console.log(contact.code_groupe)
+        console.log(contact.code_type_de_Site)
+        console.log(contact.code_site_suivi)
+        console.log(contact.code_utilisateur_suivant)
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -60,6 +64,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log(contact)
         const query = 'INSERT INTO `SuiviGroupe` SET ?'
         const [rows] = await pool.query(query, contact)
         return NextResponse.json(rows)

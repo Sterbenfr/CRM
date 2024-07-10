@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
 import { Pagination } from '../../components/pagination'
 import PopUp from '@/components/popUp'
@@ -32,6 +33,235 @@ function SitesPage() {
         setIsPopUpOpen(false)
     }
 
+    const [designationLongue, setDesignationLongue] = useState('')
+    const [designationCourte, setDesignationCourte] = useState('')
+    const [Adresse, setAdresse] = useState('')
+    const [codeTypeSite, setCodeTypeSite] = useState('AD')
+
+    /*
+    const [lastDateOuverture, setLastDateOuverture] = useState(new Date())
+    const [dateOuverture, setDateOuverture] = useState(
+        lastDateOuverture !== new Date() ? lastDateOuverture : new Date())
+
+        
+    const [lastDateFermeture, setLastDateFermeture] = useState<Date>()
+    const [dateFermeture, setDateFermeture] = useState(
+        lastDateFermeture !== new Date() ? lastDateFermeture : new Date())
+    */
+
+    const [dateOuverture, setDateOuverture] = useState(new Date())
+    const [dateFermeture, setDateFermeture] = useState<Date>()
+
+
+    const [numeroTelephone, setNumeroTelephone] = useState('')
+    const [adresseMail, setAdresseMail] = useState('')
+    const [commentaires, setCommentaires] = useState('')
+
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
+
+    type FieldType =
+    | 'number'
+    | 'search'
+    | 'date'
+    | 'select'
+    | 'input'
+    | 'file'
+    | 'checkbox'
+    | 'enum'
+
+    const handledesignationLongueChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDesignationLongue(event.target.value)
+    }
+
+    const handledesignationCourteChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDesignationCourte(event.target.value)
+    }
+
+    const handleAdresseChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setAdresse(event.target.value)
+    }
+
+    const handleCodeTypeSiteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeSite(event.target.value)
+    }
+
+    const handleDateOuvertureChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateOuverture(new Date(event.target.value))
+    }
+
+    const handleDateFermetureChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateFermeture(new Date(event.target.value))
+        /*  
+        let returnedDate = new Date(event.target.value)
+        const newFinMiseDispo = new Date(event.target.value)
+            .toISOString()
+            .split('T')[0]
+        const debut = dateOuverture.toISOString().split('T')[0]
+        if (newFinMiseDispo < debut) {
+            returnedDate = dateOuverture
+            setDateFermeture(returnedDate)
+        } else {
+            setDateFermeture(returnedDate)
+        }
+        */
+    }
+
+    const handleNumeroTelephoneChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNumeroTelephone(event.target.value)
+    }
+
+    const handleAdresseMailChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setAdresseMail(event.target.value)
+    }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const generateFields = useCallback((
+        
+    ) => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'designation_longue',
+                type: 'input',
+                value: designationLongue,
+                required: true,
+                placeholder: 'Siège social de la société',
+                onInputChange: handledesignationLongueChange,
+                maxLength: 40,
+            },
+            {
+                id: 'designation_courte',
+                type: 'input',
+                value: designationCourte,
+                placeholder: 'Siège',
+                onInputChange: handledesignationCourteChange,
+                maxLength: 15,
+            },
+            {
+                id: 'adresse',
+                type: 'input',
+                value: Adresse,
+                required: true,
+                placeholder: 'Exemple: 1 rue de Paris',
+                onInputChange: handleAdresseChange,
+            },
+            {
+                id: 'code_type_site',
+                type: 'select',
+                value: codeTypeSite,
+                required: true,
+                url: '../api/sites/type-site-types',
+                onChange: handleCodeTypeSiteChange,
+            },
+            {
+                id: 'date_ouverture',
+                type: 'date',
+                value: dateOuverture.toISOString().split('T')[0],
+                onInputChange: handleDateOuvertureChange,
+            },
+            {
+                id: 'date_fermeture',
+                type: 'date',
+                value: dateFermeture?.toISOString().split('T')[0] || '',
+                onInputChange: handleDateFermetureChange,
+            }, // pas avant date ouverture
+            {
+                id: 'numero_telephone',
+                type: 'input',
+                value: numeroTelephone,
+                placeholder: 'Exemple: 0658905910',
+                onInputChange: handleNumeroTelephoneChange,
+                maxLength: 12,
+            },
+            {
+                id: 'adresse_mail',
+                type: 'input',
+                value: adresseMail,
+                placeholder: 'Exemple: Siege.social@gmail.com',
+                onInputChange: handleAdresseMailChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Siège social de la société',
+                onInputChange: handleCommentairesChange,
+                maxLength: 200,
+            }
+        ]
+
+        /*
+        if (dateOuverture !== new Date()) {
+            console.log('date ouverture !== new Date()')
+            setLastDateOuverture(dateOuverture)
+            setDateOuverture(dateOuverture)
+            if (dateFermeture !== undefined && dateOuverture > dateFermeture) {
+                console.log('date ouverture > date fermeture')
+                setLastDateFermeture(dateOuverture)
+            }
+        }
+
+        if (dateFermeture !== new Date() && dateFermeture !== undefined) {
+            console.log('date fermeture !== new Date()')
+            setLastDateFermeture(dateFermeture)
+        }
+        */
+
+        return fields
+    }, [
+        designationLongue,
+        designationCourte,
+        Adresse,
+        codeTypeSite,
+        numeroTelephone,
+        adresseMail,
+        commentaires,
+    ])
+
     useEffect(() => {
         const fetchSites = async () => {
             const res = await fetch(
@@ -46,6 +276,7 @@ function SitesPage() {
                 await res.json()
             setSites(data)
             setTotalItems(total) // set the total items
+            setFields(generateFields())
         }
 
         const fetchSearchSites = async () => {
@@ -66,7 +297,8 @@ function SitesPage() {
         fetchSites()
         fetchSearchSites()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage])
+    }, [page, itemsPerPage, generateFields, dateOuverture, dateFermeture])
+        
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -119,65 +351,7 @@ function SitesPage() {
                         <PopUp
                             onClose={handleClose}
                             url='http://localhost:3000/api/sites'
-                            fields={[
-                                {
-                                    id: 'designation_longue',
-                                    type: 'input',
-                                    value: null,
-                                    required: true,
-                                    placeholder: 'Siège social de la société',
-                                },
-                                {
-                                    id: 'designation_courte',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Siège',
-                                },
-                                {
-                                    id: 'adresse',
-                                    type: 'input',
-                                    value: null,
-                                    required: true,
-                                    placeholder: 'Exemple: 1 rue de Paris',
-                                },
-                                {
-                                    id: 'code_type_site',
-                                    type: 'select',
-                                    value: 'AD',
-                                    required: true,
-                                    url: '../api/sites/type-site-types',
-                                },
-                                {
-                                    id: 'date_ouverture',
-                                    type: 'date',
-                                    value: null,
-                                },
-                                {
-                                    id: 'date_fermeture',
-                                    type: 'date',
-                                    value: null,
-                                }, // pas avant date ouverture
-                                {
-                                    id: 'numero_telephone',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 0658905910',
-                                },
-                                {
-                                    id: 'adresse_mail',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder:
-                                        'Exemple: Siege.social@gmail.com',
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder:
-                                        'Exemple: Siège social de la société',
-                                },
-                            ]}
+                            fields={fields}
                         />
                     </div>
                 )}

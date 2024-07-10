@@ -9,7 +9,7 @@ export async function GET(
     const groupeID = params.groupeID
     try {
         const [rows] = await pool.query(
-            'SELECT * FROM Groupe WHERE code_Groupe = ?;',
+            'SELECT * FROM Groupe WHERE code_groupe = ?;',
             [groupeID],
         )
         return NextResponse.json(rows)
@@ -31,7 +31,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `groupe` WHERE `code_Groupe` = ?'
+        const query = 'DELETE FROM `groupe` WHERE `code_groupe` = ?'
         const [rows] = await pool.query(query, groupeID)
         return NextResponse.json(rows)
     } catch (error) {

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
 import { Pagination } from '../../../../components/pagination'
 import PopUp from '@/components/popUp'
@@ -7,7 +7,7 @@ import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
 
 export interface Groupe {
-    code_Groupe: number
+    code_groupe: number
     nom_du_Groupe: string
     Logo: Blob
     site_Web: string
@@ -22,9 +22,125 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [nomDuGroupe, setNomDuGroupe] = useState('')
+    const [siteWeb, setSiteWeb] = useState('')
+    const [commentaires, setCommentaires] = useState('')
+    const [dateArretActiviteDuGroupe, setDateArretActiviteDuGroupe] = useState<Date>()
+
     const handleClose = () => {
         setIsPopUpOpen(false)
     }
+
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
+
+    type FieldType =
+    | 'number'
+    | 'search'
+    | 'date'
+    | 'select'
+    | 'input'
+    | 'file'
+    | 'checkbox'
+    | 'enum'
+
+    const handleNomDuGroupeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setNomDuGroupe(event.target.value)
+    }
+
+    const handleSiteWebChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSiteWeb(event.target.value)
+    }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handleDateArretActiviteDuGroupeChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setDateArretActiviteDuGroupe(new Date(event.target.value))
+    }
+
+
+
+    const generateFields = useCallback((
+        
+    ) => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'nom_du_Groupe',
+                type: 'input',
+                value: nomDuGroupe,
+                placeholder: 'Exemple: Groupe Alpha',
+                maxLength: 50,
+                required: true,
+                onInputChange: handleNomDuGroupeChange,
+            },
+            /*
+            {
+                id: 'Logo',
+                type: 'file',
+                value: null,
+            },
+            */
+            {
+                id: 'site_Web',
+                type: 'input',
+                value: siteWeb,
+                placeholder:'Exemple: http://www.groupealpha.com',
+                maxLength: 255,
+                required: true,
+                onInputChange: handleSiteWebChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder:'Exemple: Groupe actif en dons alimentaires',
+                maxLength: 200,
+                onInputChange: handleCommentairesChange,
+            },
+            {
+                id: 'date_arret_activite_du_Groupe',
+                type: 'date',
+                value: dateArretActiviteDuGroupe?.toISOString().split('T')[0] || '',
+                onInputChange: handleDateArretActiviteDuGroupeChange,
+            },
+        ]
+
+        return fields
+    }, [commentaires, dateArretActiviteDuGroupe, nomDuGroupe, siteWeb])
+
 
     useEffect(() => {
         const fetchGroupes = async () => {
@@ -40,10 +156,11 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 await res.json()
             setGroupes(data)
             setTotalItems(total) // set the total items
+            setFields(generateFields())
         }
 
         fetchGroupes()
-    }, [page, itemsPerPage, params.societeID])
+    }, [page, itemsPerPage, params.societeID, generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -62,7 +179,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                     <h1 className={style.lg}>Groupe</h1>
                     <List
                         items={groupes.map(groupe => ({
-                            value1: groupe.code_Groupe.toString(),
+                            value1: groupe.code_groupe.toString(),
                             value2: groupe.nom_du_Groupe,
                             value3: groupe.site_Web,
                             value4: groupe.commentaires,
@@ -95,41 +212,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             <PopUp
                                 onClose={handleClose}
                                 url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
-                                fields={[
-                                    {
-                                        id: 'nom_du_Groupe',
-                                        type: 'input',
-                                        value: null,
-                                        placeholder: 'Exemple: Groupe Alpha',
-                                        maxLength: 255,
-                                    },
-                                    {
-                                        id: 'Logo',
-                                        type: 'file',
-                                        value: null,
-                                    },
-                                    {
-                                        id: 'site_Web',
-                                        type: 'input',
-                                        value: null,
-                                        placeholder:
-                                            'Exemple: http://www.groupealpha.com',
-                                        maxLength: 255,
-                                    },
-                                    {
-                                        id: 'commentaires',
-                                        type: 'input',
-                                        value: null,
-                                        placeholder:
-                                            'Exemple: Groupe actif en dons alimentaires',
-                                        maxLength: 200,
-                                    },
-                                    {
-                                        id: 'date_arret_activite_du_Groupe',
-                                        type: 'date',
-                                        value: null,
-                                    },
-                                ]}
+                                fields={fields}
                             />
                         </div>
                     )}

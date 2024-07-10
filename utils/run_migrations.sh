@@ -1,7 +1,7 @@
 DATABASE_NAME=${DATABASE_NAME:-stage}
 USERNAME=${USERNAME:-root}
 PASSWORD=${PASSWORD:-welcome1}
-HOST=${HOST:-172.22.240.1}
+HOST=${HOST:-172.26.96.1}
 
 # Drop the existing database
 mysql --host=$HOST --user=$USERNAME --password=$PASSWORD --default-character-set=utf8mb4 -e "DROP DATABASE IF EXISTS $DATABASE_NAME;"

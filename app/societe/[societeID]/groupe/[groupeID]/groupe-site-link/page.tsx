@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
 import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
@@ -8,7 +8,7 @@ import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../../styles/components.module.css'
 
 export interface SuiviGroupes {
-    code_Groupe: number
+    code_groupe: number
     code_type_de_Site: string
     code_site_suivi: number
     code_utilisateur_suivant: number
@@ -26,9 +26,118 @@ function SuiviGroupePage({
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [codeGroupe, setCodeGroupe] = useState('')
+    const [codeTypeDeSite, setCodeTypeDeSite] = useState('AD')
+    const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
+    const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
+
     const handleClose = () => {
         setIsPopUpOpen(false)
     }
+
+    const [fields, setFields] = useState<
+    {
+        id: string
+        type: FieldType
+        value: string | null
+        placeholder?: string
+        url?: string
+        createURL?: string
+        required?: boolean
+        maxLength?: number
+        onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+        onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    }[]
+    >([])
+
+    type FieldType =
+    | 'number'
+    | 'search'
+    | 'date'
+    | 'select'
+    | 'input'
+    | 'file'
+    | 'checkbox'
+    | 'enum' 
+
+    const handleCodeGroupeChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setCodeGroupe(event.target.value)
+    }
+
+    const handleCodeTypeDeSiteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeTypeDeSite(event.target.value)
+    }
+
+    const handleCodeSiteSuiviChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeSiteSuivi(event.target.value)
+    }
+
+    const handleCodeUtilisateurSuivantChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeUtilisateurSuivant(event.target.value)
+    }
+
+    const generateFields = useCallback((
+        
+    ) => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'code_groupe',
+                type: 'search',
+                value: codeGroupe,
+                placeholder: 'Exemple: Groupe Alpha',
+                required: true,
+                url: '../../../../../api/select/societe/groupe',
+                onInputChange: handleCodeGroupeChange,
+            },
+            {
+                id: 'code_type_de_Site',
+                type: 'select',
+                value: codeTypeDeSite,
+                required: true,
+                url: '../../../../../api/sites/type-site-types',
+                onChange: handleCodeTypeDeSiteChange,
+            },
+            {
+                id: 'code_site_suivi',
+                type: 'search',
+                value: codeSiteSuivi,
+                required: true,
+                url: '../../../../../api/select/sites',
+                placeholder: 'Exemple: Entrepôt Principal',
+                onInputChange: handleCodeSiteSuiviChange,
+            },
+            {
+                id: 'code_utilisateur_suivant',
+                type: 'search',
+                value: codeUtilisateurSuivant,
+                required: true,
+                placeholder: 'Exemple: Marie Martin',
+                url: '../../../../../api/select/sites/utilisateurs',
+                onInputChange: handleCodeUtilisateurSuivantChange,
+            },
+        ]
+
+        return fields
+    }, [codeGroupe, codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant])
 
     useEffect(() => {
         const fetchSuiviGroupe = async () => {
@@ -44,10 +153,11 @@ function SuiviGroupePage({
                 await res.json()
             setSuiviGroupe(data)
             setTotalItems(total)
+            setFields(generateFields())
         }
 
         fetchSuiviGroupe()
-    }, [page, itemsPerPage, params])
+    }, [page, itemsPerPage, params, generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -58,13 +168,14 @@ function SuiviGroupePage({
         setPage(1)
     }
 
+
     return (
         <>
             <div className={style.page}>
                 <List
                     items={SuiviGroupe.map(contact => ({
-                        value1: contact.code_Groupe.toString(),
-                        value2: contact.code_Groupe.toString(),
+                        value1: contact.code_groupe.toString(),
+                        value2: contact.code_groupe.toString(),
                         value3: contact.code_type_de_Site,
                         value4: contact.code_site_suivi.toString(),
                         value5: contact.code_utilisateur_suivant.toString(),
@@ -90,33 +201,8 @@ function SuiviGroupePage({
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.groupeID}/groupe-site-link`}
-                            fields={[
-                                {
-                                    id: 'code_Groupe',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../../../../api/select/societe/groupe',
-                                },
-                                {
-                                    id: 'code_type_de_Site',
-                                    type: 'select',
-                                    value: null,
-                                    url: '../../../../../api/sites/type-site-types',
-                                },
-                                {
-                                    id: 'code_site_suivi',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../../../../api/select/sites',
-                                },
-                                {
-                                    id: 'code_utilisateur_suivant',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../../../../api/select/sites/utilisateurs',
-                                },
-                            ]}
+                            url={`http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}
+                            fields={fields}
                         />
                     </div>
                 )}

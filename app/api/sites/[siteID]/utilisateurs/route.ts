@@ -3,6 +3,7 @@ import pool from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { Utilisateurs } from '@/app/sites/[siteID]/utilisateurs/page'
+import { ResultSetHeader } from 'mysql2'
 
 type CountResult = { count: number }[]
 
@@ -40,8 +41,10 @@ export async function GET(
         )
     }
 }
+
+type extendedUtilisateurs = Utilisateurs & { code_site: string }
 export async function POST(req: NextApiRequest) {
-    let Utilisateur: Utilisateurs
+    let Utilisateur: extendedUtilisateurs
     try {
         Utilisateur = JSON.parse(await streamToString(req.body))
     } catch (error) {
@@ -49,6 +52,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
+        !Utilisateur.code_site ||
         !Utilisateur.civilite ||
         !Utilisateur.nom ||
         !Utilisateur.prenom ||
@@ -60,10 +64,18 @@ export async function POST(req: NextApiRequest) {
             { status: 400 },
         )
     }
+    const { code_site, ...user } = Utilisateur
     try {
         const query = 'INSERT INTO `Utilisateurs` SET ?'
-        const [rows] = await pool.query(query, Utilisateur)
-        return NextResponse.json(rows)
+        const [result] = await pool.query<ResultSetHeader>(query, user)
+        const query2 =
+            'INSERT INTO `SitesRattachement` SET code_utilisateur = ?, code_site = ?, code_type_utilisateur = ?'
+        const [rows2] = await pool.query(query2, [
+            result.insertId,
+            code_site,
+            Utilisateur.code_type_utilisateur,
+        ])
+        return NextResponse.json({ result, rows2 })
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + error },

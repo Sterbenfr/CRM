@@ -67,17 +67,6 @@ const fieldLabels: { [key: string]: string } = {
     nombre_palettes_consignees_rendues: 'Nombre de palettes consignées rendues',
     nombre_cartons_recus: 'Nombre de cartons reçus',
     poids_recu_kg: 'Poids reçu en kg',
-    //Cerfa
-    numero_Cerfa: 'Numéro de Cerfa',
-    montant_HT_Cerfa: 'Montant HT du Cerfa',
-    date_realisation_Cerfa: 'Date de réalisation du Cerfa',
-    date_envoi_Cerfa: 'Date denvoi du Cerfa',
-    addresse_Cerfa: 'Adresse du Cerfa',
-    civilite_destinataire_Cerfa: 'Civilité du destinataire du Cerfa',
-    nom_destinataire_Cerfa: 'Nom du destinataire du Cerfa',
-    prenom_destinataire_Cerfa: 'Prénom du destinataire du Cerfa',
-    telephone_destinataire_Cerfa: 'Téléphone du destinataire du Cerfa',
-    mail_destinataire_Cerfa: 'Mail du destinataire du Cerfa',
     //Prestataires
     code_Prestataire: 'Prestataire',
     code_type_de_Prestataire: 'Type de Prestataire',
@@ -135,7 +124,7 @@ const fieldLabels: { [key: string]: string } = {
     code_site_suivi: 'Suivi de site',
     code_utilisateur_suivant: 'Utilisateur suivant',
     //Groupe
-    code_Groupe: 'Groupe',
+    code_groupe: 'Groupe',
     nom_du_Groupe: 'Nom du Groupe',
     date_arret_activite_du_Groupe: "Date d'arrêt d'activité du Groupe",
     //SuiviGroupe
