@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
@@ -22,7 +21,7 @@ export interface Sites {
 
 function SitesPage() {
     const [Sites, setSites] = useState<Sites[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Sites[]>([])
@@ -38,20 +37,8 @@ function SitesPage() {
     const [Adresse, setAdresse] = useState('')
     const [codeTypeSite, setCodeTypeSite] = useState('AD')
 
-    /*
-    const [lastDateOuverture, setLastDateOuverture] = useState(new Date())
-    const [dateOuverture, setDateOuverture] = useState(
-        lastDateOuverture !== new Date() ? lastDateOuverture : new Date())
-
-        
-    const [lastDateFermeture, setLastDateFermeture] = useState<Date>()
-    const [dateFermeture, setDateFermeture] = useState(
-        lastDateFermeture !== new Date() ? lastDateFermeture : new Date())
-    */
-
     const [dateOuverture, setDateOuverture] = useState(new Date())
     const [dateFermeture, setDateFermeture] = useState<Date>()
-
 
     const [numeroTelephone, setNumeroTelephone] = useState('')
     const [adresseMail, setAdresseMail] = useState('')
@@ -73,14 +60,14 @@ function SitesPage() {
     >([])
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'enum'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const handledesignationLongueChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -116,19 +103,6 @@ function SitesPage() {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateFermeture(new Date(event.target.value))
-        /*  
-        let returnedDate = new Date(event.target.value)
-        const newFinMiseDispo = new Date(event.target.value)
-            .toISOString()
-            .split('T')[0]
-        const debut = dateOuverture.toISOString().split('T')[0]
-        if (newFinMiseDispo < debut) {
-            returnedDate = dateOuverture
-            setDateFermeture(returnedDate)
-        } else {
-            setDateFermeture(returnedDate)
-        }
-        */
     }
 
     const handleNumeroTelephoneChange = (
@@ -149,9 +123,7 @@ function SitesPage() {
         setCommentaires(event.target.value)
     }
 
-    const generateFields = useCallback((
-        
-    ) => {
+    const generateFields = useCallback(() => {
         const fields: {
             id: string
             type: FieldType
@@ -208,7 +180,7 @@ function SitesPage() {
                 type: 'date',
                 value: dateFermeture?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateFermetureChange,
-            }, // pas avant date ouverture
+            },
             {
                 id: 'numero_telephone',
                 type: 'input',
@@ -231,28 +203,17 @@ function SitesPage() {
                 placeholder: 'Exemple: Siège social de la société',
                 onInputChange: handleCommentairesChange,
                 maxLength: 200,
-            }
+            },
         ]
 
-        /*
-        if (dateOuverture !== new Date()) {
-            console.log('date ouverture !== new Date()')
-            setLastDateOuverture(dateOuverture)
-            setDateOuverture(dateOuverture)
-            if (dateFermeture !== undefined && dateOuverture > dateFermeture) {
-                console.log('date ouverture > date fermeture')
-                setLastDateFermeture(dateOuverture)
-            }
+        if (dateFermeture !== undefined && dateOuverture > dateFermeture) {
+            setDateFermeture(dateOuverture)
         }
-
-        if (dateFermeture !== new Date() && dateFermeture !== undefined) {
-            console.log('date fermeture !== new Date()')
-            setLastDateFermeture(dateFermeture)
-        }
-        */
 
         return fields
     }, [
+        dateFermeture,
+        dateOuverture,
         designationLongue,
         designationCourte,
         Adresse,
@@ -275,7 +236,7 @@ function SitesPage() {
             const { data, total }: { data: Sites[]; total: number } =
                 await res.json()
             setSites(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total)
             setFields(generateFields())
         }
 
@@ -296,17 +257,22 @@ function SitesPage() {
 
         fetchSites()
         fetchSearchSites()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, generateFields, dateOuverture, dateFermeture])
-        
-    // add a function to handle page changes
+    }, [
+        page,
+        itemsPerPage,
+        generateFields,
+        dateOuverture,
+        dateFermeture,
+        search,
+    ])
+
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1)
     }
 
     return (
@@ -341,8 +307,8 @@ function SitesPage() {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />{' '}
