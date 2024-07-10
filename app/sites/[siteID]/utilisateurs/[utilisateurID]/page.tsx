@@ -8,7 +8,7 @@ interface UtilisateurID {
     nom: string
     prenom: string
     tel_perso: string
-    mail_restos_du_coeur: string
+    mail: string
     commentaires: string
 }
 
@@ -98,11 +98,11 @@ export default function UtilisateurPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Mail du restos du coeur :</p>
+                        <p className={style.titre}>Mail :</p>
                         <p>
-                            {Utilisateur[0].mail_restos_du_coeur == null
+                            {Utilisateur[0].mail == null
                                 ? '/'
-                                : Utilisateur[0].mail_restos_du_coeur}
+                                : Utilisateur[0].mail}
                         </p>
                     </div>
 

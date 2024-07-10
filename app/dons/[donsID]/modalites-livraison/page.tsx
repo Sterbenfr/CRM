@@ -46,6 +46,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+    const [search, setSearch] = useState<ModalitesLivraison[]>([])
 
     const [fields, setFields] = useState<
         {
@@ -502,7 +503,25 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             setFields(generateFields())
         }
 
+        const fetchSearchModalitesLivraisons = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: ModalitesLivraison[] } =
+                    await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchModalitesLivraisons()
+        fetchSearchModalitesLivraisons()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.donsID, generateFields])
 
     const handlePageChange = (newPage: number) => {
@@ -537,6 +556,15 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         },
                         url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison`,
                     }}
+                    searchItems={search.map(ModalitesLivraison => ({
+                        value1: ModalitesLivraison.numero_livraison.toString(),
+                        value2: ModalitesLivraison.code_Don.toString(),
+                        value3: ModalitesLivraison.date_prevue_livraison
+                            .toString()
+                            .split('T')[0],
+                        value4: ModalitesLivraison.telephone_contact_enlevement.toString(),
+                        value5: ModalitesLivraison.mail_contact_enlevement.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

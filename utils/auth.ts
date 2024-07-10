@@ -14,7 +14,7 @@ interface User {
 export async function findUser(email: string): Promise<User | null> {
     try {
         const [rows] = await pool.execute<mysql.RowDataPacket[]>(
-            'SELECT code_utilisateur AS id, mail_restos_du_coeur AS email, password, code_type_utilisateur AS role, nom AS name FROM Utilisateurs WHERE mail_restos_du_coeur = ?',
+            'SELECT code_utilisateur AS id, mail AS email, password, code_type_utilisateur AS role, nom AS name FROM Utilisateurs WHERE mail = ?',
             [email],
         )
 

@@ -27,6 +27,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Reception[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -48,7 +49,25 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
             setReceptions(data)
             setTotalItems(total) // set the total items
         }
+
+        const fetchSearchDons = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/dons/${params.donsID}/reception?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Reception[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchDons()
+        fetchSearchDons()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.donsID])
 
     // add a function to handle page changes
@@ -83,6 +102,15 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         },
                         url: `http://localhost:3000/api/dons/${params.donsID}/reception`,
                     }}
+                    searchItems={search.map(Reception => ({
+                        value1: Reception.code_Don.toString(),
+                        value2: Reception.numero_livraison.toString(),
+                        value3: Reception.date_reception
+                            .toString()
+                            .split('T')[0],
+                        value4: Reception.nombre_palettes_recues.toString(),
+                        value5: Reception.poids_recu_kg.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

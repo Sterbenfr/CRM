@@ -12,7 +12,7 @@ export interface Utilisateurs {
     nom: string
     prenom: string
     tel_perso: string
-    mail_restos_du_coeur: string
+    mail: string
     commentaires: string
     password: string
     code_type_utilisateur: number
@@ -23,6 +23,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<Utilisateurs[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -61,7 +62,24 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
             setTotalItems(total) // set the total items
         }
 
+        const fetchSearchUtilisateurs = async () => {
+            if (search.length === 0) {
+                const res = await fetch(
+                    `http://localhost:3000/api/sites/${params.siteID}/utilisateurs?limit=10000`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const { data }: { data: Utilisateurs[] } = await res.json()
+                setSearch(data)
+            }
+        }
+
         fetchUtilisateurs()
+        fetchSearchUtilisateurs()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.siteID])
 
     // add a function to handle page changes
@@ -85,7 +103,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso,
-                        value6: user.mail_restos_du_coeur,
+                        value6: user.mail,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -95,6 +113,14 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         },
                         url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs`,
                     }}
+                    searchItems={search.map(user => ({
+                        value1: user.code_utilisateur.toString(),
+                        value2: user.civilite,
+                        value3: user.nom,
+                        value4: user.prenom,
+                        value5: user.tel_perso,
+                        value6: user.mail,
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
@@ -136,7 +162,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                     placeholder: 'Exemple: 0601020304',
                                 },
                                 {
-                                    id: 'mail_restos_du_coeur',
+                                    id: 'mail',
                                     type: 'input',
                                     value: null,
                                     placeholder:

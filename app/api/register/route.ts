@@ -25,7 +25,7 @@ export async function POST(req: NextApiRequest) {
                     nom,
                     prenom,
                     tel_perso,
-                    mail_restos_du_coeur,
+                    mail,
                     commentaires,
                     password,
                     code_type_utilisateur
@@ -35,7 +35,7 @@ export async function POST(req: NextApiRequest) {
                 user.nom,
                 user.prenom,
                 user.tel_perso,
-                user.mail_restos_du_coeur,
+                user.mail,
                 user.commentaires,
                 hashedPassword,
                 user.code_type_utilisateur,
