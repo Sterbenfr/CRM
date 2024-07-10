@@ -42,33 +42,15 @@ export interface Don {
 function DonsPage() {
     const [EntiteDonatrice, setEntiteDonatrice] = useState('')
     const [datePropositionDon, setDatePropositionDon] = useState(new Date())
+    const [selectedTypeCompetence, setSelectedTypeCompetence] = useState('')
     const [selectedTypeMarchandise, setSelectedTypeMarchandise] =
         useState('ALI')
-    const [lastSelectedTypeDon, setLastSelectedTypeDon] = useState('')
-    const [selectedTypeDon, setSelectedTypeDon] = useState(
-        lastSelectedTypeDon !== '' ? lastSelectedTypeDon : 'FIN',
-    )
+    const [selectedTypeDon, setSelectedTypeDon] = useState('FIN')
     const [commentaires, setCommentaires] = useState('')
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
-
-    const [laststatutAcceptationDon, setLastStatutAcceptationDon] =
-        useState('B')
-    const [statutAcceptationDon, setStatutAcceptationDon] = useState(
-        laststatutAcceptationDon !== '' ? laststatutAcceptationDon : 'B',
-    )
-
-    const [lastindicateurRemerciement, setLastIndicateurRemerciement] =
-        useState(false)
-    const [indicateurRemerciement, setindicateurRemerciement] = useState(
-        lastindicateurRemerciement !== false
-            ? lastindicateurRemerciement
-            : false,
-    )
-
-    const [lastcerfaFait, setLastcerfaFait] = useState(false)
-    const [cerfaFait, setCerfaFait] = useState(
-        lastcerfaFait !== false ? lastcerfaFait : false,
-    )
+    const [statutAcceptationDon, setStatutAcceptationDon] = useState('B')
+    const [indicateurRemerciement, setindicateurRemerciement] = useState(false)
+    const [cerfaFait, setCerfaFait] = useState(false)
 
     const [lastdebutMiseDispo, setLastDebutMiseDispo] = useState(new Date())
     const [debutMiseDispo, setDebutMiseDispo] = useState(
@@ -165,6 +147,12 @@ function DonsPage() {
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         setSelectedTypeDon(event.target.value)
+    }
+
+    const handleTypeCompetenceChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setSelectedTypeCompetence(event.target.value)
     }
 
     const handleDebutMiseDispoChange = (
@@ -442,28 +430,26 @@ function DonsPage() {
             }
 
             if (selectedTypeDon === 'SIP') {
-                setLastSelectedTypeDon(selectedTypeDon)
                 fields.push({
                     id: 'code_type_competences',
                     type: 'select',
-                    value: '',
+                    value: selectedTypeCompetence,
                     url: '../api/dons/type-competences',
+                    onChange: handleTypeCompetenceChange,
                 })
             }
 
             if (selectedTypeDon === 'MAR') {
-                setLastSelectedTypeDon(selectedTypeDon)
                 fields.push({
                     id: 'code_type_produits',
                     type: 'select',
-                    value: '',
+                    value: selectedTypeMarchandise,
                     url: '../api/dons/type-produits',
                     onChange: handleMarchandiseChange,
                 })
             }
 
             if (statutAcceptationDon !== 'B') {
-                setLastStatutAcceptationDon(statutAcceptationDon)
                 fields.push({
                     id: 'date_acceptation_refus_don',
                     type: 'date',
@@ -473,7 +459,6 @@ function DonsPage() {
             }
 
             if (cerfaFait !== false) {
-                setLastcerfaFait(cerfaFait)
                 fields.push({
                     id: 'date_cerfa',
                     type: 'date',
@@ -483,7 +468,6 @@ function DonsPage() {
             }
 
             if (indicateurRemerciement !== false) {
-                setLastIndicateurRemerciement(indicateurRemerciement)
                 fields.push({
                     id: 'date_remerciement',
                     type: 'date',

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import List from '@/components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../../../../../styles/components.module.css'
 
 export interface Modalite_Interactions {
     id: string
@@ -43,42 +44,48 @@ function Modalites_InteractionsPage({
     }, [params.societeID, params.entiteID])
     return (
         <>
-            <List
-                items={Modalites_Interactions.map(ModalitesInteraction => ({
-                    value1: ModalitesInteraction.id.toString(),
-                    value2: ModalitesInteraction.id.toString(),
-                    value3: ModalitesInteraction.label,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
-                    fields={[
-                        {
-                            id: 'code_modalite_interaction',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 4,
+            <div className={style.page}>
+                <h1 className={style.lg}>
+                    Types de modalités d&apos;interactions
+                </h1>
+                <List
+                    items={Modalites_Interactions.map(ModalitesInteraction => ({
+                        value1: ModalitesInteraction.id.toString(),
+                        value2: ModalitesInteraction.id.toString(),
+                        value3: ModalitesInteraction.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 50,
-                        },
-                    ]}
+                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
+                        fields={[
+                            {
+                                id: 'code_modalite_interaction',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 4,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 50,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }

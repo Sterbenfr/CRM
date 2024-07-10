@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import List from '../../../../../components/list'
+import style from '../../../../../styles/components.module.css'
 
 export interface type_utilisateur {
     id: string
@@ -38,42 +39,46 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
 
     return (
         <>
-            <List
-                items={Utilisateurs.map(utilisateur => ({
-                    value1: utilisateur.id.toString(),
-                    value2: utilisateur.id.toString(),
-                    value3: utilisateur.label,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url={`http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`}
-                    fields={[
-                        {
-                            id: 'code_type_utilisateur',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 4,
+            <div className={style.page}>
+                <h1 className={style.lg}>Types d&apos;utilisateurs</h1>
+                <List
+                    items={Utilisateurs.map(utilisateur => ({
+                        value1: utilisateur.id.toString(),
+                        value2: utilisateur.id.toString(),
+                        value3: utilisateur.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 50,
-                        },
-                    ]}
+                        url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url={`http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`}
+                        fields={[
+                            {
+                                id: 'code_type_utilisateur',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 4,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 50,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }
