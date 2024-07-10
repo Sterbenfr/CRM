@@ -45,7 +45,7 @@ export default function SocietePage({
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Societes</h1>
+                <h1 className={style.titre_global}>Détails de la societe</h1>
             </div>
 
             <div className={style.info_id}>

@@ -8,13 +8,17 @@ export default function Footer() {
                 <li>
                     Aurelien Schmieder{' '}
                     <a href='https://github.com/Aurelienschmi' target='_blank'>
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/aurelien-schmieder-0017391ab/'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
                 <li>
@@ -23,61 +27,81 @@ export default function Footer() {
                         href='https://github.com/Alexis-aka-Yazm'
                         target='_blank'
                     >
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/alexis-hazebrouck-3b7a7a296'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
                 <li>
                     Hugo Matyla{' '}
                     <a href='https://github.com/Fenerz07' target='_blank'>
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/hugo-matyla/'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
                 <li>
-                    Mathys Dacacio{' '}
+                    Mathis Dacacio{' '}
                     <a href='https://github.com/MathisDacacio' target='_blank'>
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/mathis-dacacio-298a25293/'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
                 <li>
                     Maxime Labbe{' '}
                     <a href='https://github.com/Maxime-Labbe' target='_blank'>
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/maxime-labbe-626012293/'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
                 <li>
                     Pierre Caudreliez{' '}
                     <a href='https://github.com/Sterbenfr' target='_blank'>
-                        <img src='/IMG/github.svg' alt='GitHub' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/github.svg' alt='GitHub' />
+                        </div>
                     </a>
                     <a
                         href='https://www.linkedin.com/in/pierre-caudreliez/'
                         target='_blank'
                     >
-                        <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        <div className={styles.pop}>
+                            <img src='/IMG/linkedin.svg' alt='LinkedIn' />
+                        </div>
                     </a>
                 </li>
             </ul>

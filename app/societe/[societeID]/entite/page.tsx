@@ -515,6 +515,15 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite`,
                     }}
+                    attribut={{
+                        att1: '',
+                        att2: 'Raison Sociale',
+                        att3: 'Téléphone',
+                        att4: 'Mail',
+                        att5: 'Adresse',
+                        att6: '',
+                        att7: '',
+                    }}
                     searchItems={search.map(entite => ({
                         value1: entite.code_entite.toString(),
                         value2: entite.raison_sociale,
