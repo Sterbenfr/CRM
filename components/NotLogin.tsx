@@ -18,7 +18,7 @@ export default function NotLogin() {
     console.log(session ? session.user : 'No session')
 
     return (
-        <div className={style.page}>
+        <div className={style.connect}>
             {session && session.user ? (
                 <>
                     <p>Connecté avec l&apos;adresse : {session.user.email}</p>

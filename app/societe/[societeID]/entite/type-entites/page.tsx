@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 import List from '@/components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../../../styles/components.module.css'
 
 export interface Entite {
-    code_type_entite: string
-    libelle: string
+    id: string
+    label: string
 }
 
 function EntitesPage({ params }: { params: { societeID: string } }) {
@@ -36,12 +37,14 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     }, [params.societeID])
 
     return (
-        <div>
-            <>
+        <>
+            <div className={style.page}>
+                <h1 className={style.lg}>Types d&apos;entités</h1>
                 <List
                     items={Entites.map(TypesEntites => ({
-                        value1: TypesEntites.code_type_entite.toString(),
-                        value2: TypesEntites.libelle.toString(),
+                        value1: TypesEntites.id,
+                        value2: TypesEntites.id,
+                        value3: TypesEntites.label,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -49,6 +52,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
+                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`,
                     }}
                 />
                 {isPopUpOpen && (
@@ -73,8 +77,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         ]}
                     />
                 )}
-            </>
-        </div>
+            </div>
+        </>
     )
 }
 export default withAuthorization(EntitesPage, ['AD', 'PR'])
