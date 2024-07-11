@@ -19,7 +19,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
         <html lang='en'>
             <body className={inter.className}>
                 <SessionProvider session={session}>
-                    <NavBar>{children}</NavBar>
+                    <NavBar session={session}>{children}</NavBar>
                     <NotLogin></NotLogin>
                     <Footer />
                 </SessionProvider>
