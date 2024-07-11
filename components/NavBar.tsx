@@ -2,12 +2,17 @@ import React from 'react'
 import Link from 'next/link'
 import styles from '../styles/components.module.css'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 interface NavBarProps {
     children?: React.ReactNode
+    session: Session | null
 }
 
 const NavBar: React.FC<NavBarProps> = ({ children }) => {
+    const { data: session } = useSession()
+
     return (
         <div>
             <nav className={styles.navbar}>
@@ -34,9 +39,17 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                 <Link href='/prestataire' className={styles.links}>
                     Prestataires
                 </Link>
-                <Link href='/login' className={styles.links}>
-                    Connexion
-                </Link>
+                {session ? (
+                    <>
+                        <Link href='/login' className={styles.links}>
+                            Compte
+                        </Link>
+                    </>
+                ) : (
+                    <Link href='/login' className={styles.links}>
+                        Connexion
+                    </Link>
+                )}
             </nav>
             {children}
         </div>
