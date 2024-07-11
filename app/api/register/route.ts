@@ -1,9 +1,9 @@
 import { NextApiRequest } from 'next'
-import bcrypt from 'bcrypt'
 import pool from '../../../utils/db'
 import { NextResponse } from 'next/server'
 import { Utilisateurs } from '@/app/sites/[siteID]/utilisateurs/page'
 import { streamToString } from '@/utils/streamUtils'
+const bcrypt = require('bcryptjs')
 
 export async function POST(req: NextApiRequest) {
     const saltRounds = 10

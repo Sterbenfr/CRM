@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise'
-import bcrypt from 'bcrypt'
 import pool from './db'
+const bcrypt = require('bcryptjs')
 
 interface User {
     id: string
