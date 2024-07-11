@@ -157,6 +157,7 @@ const fieldLabels: { [key: string]: string } = {
     date_arret_contact: 'Date arrêt contact',
 }
 
+
 type Field = {
     id: string
     type:
@@ -194,6 +195,8 @@ const PopUp: React.FC<PopUpProps> = ({
     onFieldChange,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
+    
+    const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
 
     useEffect(() => {
         setInputs(fields)
@@ -212,8 +215,20 @@ const PopUp: React.FC<PopUpProps> = ({
         }
     }
 
-    const handleSubmit = async () => {
-        const endpoint = url
+    const validateInputs = () => {
+        const errors: { [key: string]: string } = {}
+        inputs.forEach(input => {
+            if (input.required && !input.value) {
+                errors[input.id] = `${fieldLabels[input.id]} is required`
+            }
+        })
+        setValidationErrors(errors)
+        return Object.keys(errors).length === 0
+    }
+    
+    const handleAction = async () => {
+        if (validateInputs()) {
+            const endpoint = url
 
         const inputsData = inputs.reduce<{
             [key: string]: string | boolean | null
@@ -242,6 +257,7 @@ const PopUp: React.FC<PopUpProps> = ({
             console.error('Network error:', error)
         }
         onClose()
+        }
     }
 
     const [popupTitle, setPopupTitle] = useState('') // Nouveau const pour titre du popup
@@ -400,13 +416,18 @@ const PopUp: React.FC<PopUpProps> = ({
                                 )
                         }
                     })()}
+                    {validationErrors[input.id] && (
+                    <span className={style.error}>
+                        {validationErrors[input.id]}
+                    </span>
+                )}
                 </div>
             ))}
             <div className={style.BTNdiv}>
                 <button className={style.BTNsub} onClick={onClose}>
                     Quitter
                 </button>
-                <button className={style.BTNsub} onClick={handleSubmit}>
+                <button className={style.BTNsub} onClick={handleAction}>
                     Envoyer
                 </button>
             </div>

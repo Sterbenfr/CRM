@@ -303,12 +303,10 @@ function SitesPage() {
                     }}
                     attribut={{
                         att1: 'Désignation longue',
-                        att2: '',
-                        att3: 'Adresse',
-                        att4: 'Date ouverture',
-                        att5: 'Téléphone',
-                        att6: '',
-                        att7: 'Mail',
+                        att2: 'Adresse',
+                        att3: 'Date ouverture',
+                        att4: 'Téléphone',
+                        att5: 'Mail',
                     }}
                     searchItems={search.map(Sites => ({
                         value1: Sites.code_site.toString(),
@@ -335,6 +333,14 @@ function SitesPage() {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        {
+                            label: 'Types de Sites',
+                            url: 'type-site-types',
+                        },
+                    ]}
+                />
             </div>
         </>
     )
