@@ -415,6 +415,7 @@
     font-family: inherit;
     font-weight: bold;
     color: #262a2e;
+    text-decoration: none;
 }
 
 .submit:hover {
@@ -663,4 +664,23 @@
     width: 500px;
     text-align: center;
     padding-top: 2rem;
+}
+
+.typeButtons {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.md {
+    font-size: 1.7rem;
+    border-bottom: 3px solid #e5007d;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
 }
