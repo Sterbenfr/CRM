@@ -109,21 +109,37 @@
 /* LINE */
 
 .colName {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     margin-top: 1rem;
     padding-top: 1rem;
     padding-right: 2rem;
-    padding-left: 2rem;
+    padding-left: 12rem;
     margin-left: 3rem;
-    width: 90%;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.padding0 {
+    padding-left: 7rem;
+}
+
+.padding1 {
+    padding-left: 9rem;
+}
+
+.padding2 {
+    padding-left: 11rem;
+}
+
+.padding3 {
+    padding-left: 12rem;
 }
 
 .nameR {
     font-weight: bold;
     text-align: center;
-    margin-left: 1rem;
+    width: 17rem;
+    overflow: hidden;
 }
 
 .body {
@@ -151,7 +167,7 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
-    padding-right: 2rem;
+    padding-right: 5rem;
     padding-left: 2rem;
 }
 
@@ -172,6 +188,7 @@
     width: 14rem;
     text-align: center;
     margin-left: 3rem;
+    overflow: hidden;
 }
 
 .red {

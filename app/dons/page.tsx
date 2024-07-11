@@ -602,13 +602,10 @@ function DonsPage() {
                         url: 'http://localhost:3000/api/dons',
                     }}
                     attribut={{
-                        att1: ' ',
-                        att2: 'Entité donatrice',
-                        att3: 'Date proposition don',
-                        att4: 'Commentaires',
-                        att5: 'Statut don',
-                        att6: ' ',
-                        att7: ' ',
+                        att1: 'Entité donatrice',
+                        att2: 'Date proposition don',
+                        att3: 'Commentaires',
+                        att4: 'Statut don',
                     }}
                     searchItems={search.map(Don => ({
                         value1: Don.code_Don.toString(),

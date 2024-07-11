@@ -42,8 +42,8 @@ function PrestatairesPage() {
                 <h1 className={style.lg}>Types de prestataires</h1>
                 <List
                     items={Prestataires.map(typePrestataire => ({
-                        value1: typePrestataire.id.toString(),
-                        value2: typePrestataire.id.toString(),
+                        value1: typePrestataire.id,
+                        value2: typePrestataire.id,
                         value3: typePrestataire.label,
                     }))}
                     functions={{
@@ -53,6 +53,10 @@ function PrestatairesPage() {
                                 : setIsPopUpOpen(true)
                         },
                         url: 'http://localhost:3000/api/prestataire/type-prestataires',
+                    }}
+                    attribut={{
+                        att2: 'Code',
+                        att3: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (

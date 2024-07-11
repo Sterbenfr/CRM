@@ -59,7 +59,7 @@ export default function EntitePage({
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Details des entites</h1>
+                <h1 className={style.titre_global}>Details de l&apos;entite</h1>
             </div>
 
             <div className={style.info_id}>

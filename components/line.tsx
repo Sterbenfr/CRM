@@ -53,29 +53,27 @@ const Line: React.FC<LineProps> = ({
                     style={{ cursor: 'pointer' }}
                     className={style.lineContainer}
                 >
-                    <div className={style.lineContainer}>
-                        <div className={style.Ztext}>{param2}</div>
+                    <div className={param2 ? style.Ztext : ''}>{param2}</div>
 
-                        <div className={style.Ztext}>{param3}</div>
+                    <div className={param3 ? style.Ztext : ''}>{param3}</div>
 
-                        <div className={style.Ztext}>{param4}</div>
+                    <div className={param4 ? style.Ztext : ''}>{param4}</div>
 
-                        <div
-                            className={` ${
-                                paramColor === 'R'
-                                    ? style.red
-                                    : paramColor === 'A'
-                                      ? style.orange
-                                      : paramColor
-                                        ? style.green
-                                        : ''
-                            } " " ${style.Ztext}`}
-                        >
-                            {param5}
-                        </div>
-
-                        <div className={style.Ztext}>{param6}</div>
+                    <div
+                        className={` ${
+                            paramColor === 'R'
+                                ? style.red
+                                : paramColor === 'A'
+                                  ? style.orange
+                                  : paramColor
+                                    ? style.green
+                                    : ''
+                        } " " ${param5 ? style.Ztext : ''}`}
+                    >
+                        {param5}
                     </div>
+
+                    <div className={param6 ? style.Ztext : ''}>{param6}</div>
                 </div>
             </div>
         </div>
