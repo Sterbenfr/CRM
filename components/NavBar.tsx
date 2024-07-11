@@ -9,7 +9,7 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ children }) => {
     return (
-        <main>
+        <div>
             <nav className={styles.navbar}>
                 <Link href='/' className={styles.img_nav}>
                     <Image
@@ -39,7 +39,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                 </Link>
             </nav>
             {children}
-        </main>
+        </div>
     )
 }
 

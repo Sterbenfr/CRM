@@ -11,7 +11,8 @@
     background-color: #212529;
     padding-right: 10rem;
     margin-bottom: 2rem;
-    position: fixed;
+    position: fixed; /* Fixed position */
+    top: 0; /* Aligns the navbar to the top */
     z-index: 10000;
 }
 
@@ -285,7 +286,6 @@
 
 .idPage {
     margin-bottom: 4rem;
-    padding-top: 6rem;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -310,9 +310,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-decoration: underline;
+    text-decoration: underline #e5007d;
     text-underline-offset: 0.4rem;
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-bottom: 3rem;
 }
 
@@ -412,7 +412,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 10rem;
+    padding-top: 2rem;
 }
 
 .PopUp {
@@ -645,5 +645,5 @@
     margin-left: auto;
     width: 500px;
     text-align: center;
-    padding-top: 5rem;
+    padding-top: 2rem;
 }
