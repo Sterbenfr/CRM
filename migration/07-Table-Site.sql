@@ -1,7 +1,7 @@
 CREATE TABLE Sites (
     code_site INT(5) NOT NULL AUTO_INCREMENT,
     designation_longue VARCHAR(40) NOT NULL,
-    designation_courte VARCHAR(15) NOT NULL,
+    designation_courte VARCHAR(15),
     adresse TEXT NOT NULL,
     code_type_site CHAR(4) NOT NULL,
     date_ouverture DATE,

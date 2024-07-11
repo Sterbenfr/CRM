@@ -47,7 +47,6 @@ export async function POST(req: NextApiRequest) {
 
     if (
         !sites.designation_longue ||
-        !sites.designation_courte ||
         !sites.adresse ||
         !sites.code_type_site
     ) {

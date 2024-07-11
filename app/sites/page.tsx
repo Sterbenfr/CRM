@@ -210,6 +210,10 @@ function SitesPage() {
             setDateFermeture(dateOuverture)
         }
 
+        if (dateFermeture === undefined) {
+            fields[5].value = null
+        }
+
         return fields
     }, [
         dateFermeture,
