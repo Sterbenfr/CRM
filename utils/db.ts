@@ -12,6 +12,8 @@ const connection = mysql
         port: Number(process.env.DB_PORT),
         timezone: '+00:00',
         charset: 'utf8mb4',
+        connectionLimit: 10,
+        queueLimit: 0,
     })
     .promise()
 
