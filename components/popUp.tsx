@@ -248,17 +248,17 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const getTableNameFromFieldId = (fieldId: string): string => {
         const tableNameMapping: { [key: string]: string } = {
-            code_contact_Entite_donatrice: 'Don',
-            date_reception: 'Réception',
-            date_prevue_livraison: 'Livraison',
-            Logo: 'Entreprise',
-            site_Web: 'Groupe',
-            logo: 'Entité',
-            nom: 'Contact',
-            adresse: 'Site',
-            prenom: 'Utilisateur',
-            nom_commercial: 'Prestataire',
-            date_interaction: 'Interaction',
+            code_contact_Entite_donatrice: 'un don',
+            date_reception: 'une réception',
+            date_prevue_livraison: 'une livraison',
+            Logo: 'une entreprise',
+            site_Web: 'un groupe',
+            logo: 'une entité',
+            nom: 'un contact',
+            adresse: 'un site',
+            prenom: 'un utilisateur',
+            nom_commercial: 'un prestataire',
+            date_interaction: 'une interaction',
         }
 
         return tableNameMapping[fieldId] || 'Entrée' // SI pas d'id donne entrée comme titre
@@ -268,7 +268,7 @@ const PopUp: React.FC<PopUpProps> = ({
         if (fields.length > 0) {
             const firstFieldId = fields[2].id
             const tableName = getTableNameFromFieldId(firstFieldId)
-            setPopupTitle(`Ajouter un(e) ${tableName}`) // MAJ le titre du popup en fonction du nom de la table
+            setPopupTitle(`Ajouter ${tableName}`) // MAJ le titre du popup en fonction du nom de la table
         }
     }, [fields])
 
