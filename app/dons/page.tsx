@@ -430,7 +430,7 @@ function DonsPage() {
             }
 
             if (selectedTypeDon === 'SIP') {
-                fields.push({
+                fields.splice(4, 0, {
                     id: 'code_type_competences',
                     type: 'select',
                     value: selectedTypeCompetence,

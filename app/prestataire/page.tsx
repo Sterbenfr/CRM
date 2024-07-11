@@ -6,6 +6,7 @@ import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
 import style from '../../styles/components.module.css'
 import { useCallback } from 'react'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Prestataire {
     code_Prestataire: number
@@ -444,6 +445,14 @@ function PrestatairesPage() {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        {
+                            label: 'Types de prestataires',
+                            url: 'type-prestataires',
+                        },
+                    ]}
+                />
             </div>
         </>
     )
