@@ -287,12 +287,8 @@ function SocietesPage() {
                     }}
                     attribut={{
                         att1: 'Raison Sociale',
-                        att2: '',
-                        att3: 'Site Web',
-                        att4: 'Commentaires',
-                        att5: '',
-                        att6: '',
-                        att7: '',
+                        att2: 'Site Web',
+                        att3: 'Commentaires',
                     }}
                     searchItems={search.map(Societe => ({
                         value1: Societe.code_Societe.toString(),

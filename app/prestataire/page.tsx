@@ -412,13 +412,11 @@ function PrestatairesPage() {
                         url: 'http://localhost:3000/api/prestataire',
                     }}
                     attribut={{
-                        att1: '',
-                        att2: 'Raison sociale',
-                        att3: 'Téléphone',
-                        att4: '',
-                        att5: 'Mail',
-                        att6: 'Téléphone contact prestataire',
-                        att7: 'Mail contact prestataire',
+                        att1: 'Raison sociale',
+                        att2: 'Téléphone',
+                        att3: 'Mail',
+                        att4: 'Téléphone contact prestataire',
+                        att5: 'Mail contact prestataire',
                     }}
                     searchItems={search.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),

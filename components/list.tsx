@@ -19,8 +19,6 @@ interface Attribut {
     att3?: string
     att4?: string
     att5?: string
-    att6?: string
-    att7?: string
 }
 
 interface FunctionProps {
@@ -83,6 +81,26 @@ const List: React.FC<{
             setSelectedItems(items)
         }
     }, [items, searchValue])
+    const attributeCount = attribut
+        ? Object.keys(attribut).filter(
+              key => attribut[key as keyof Attribut] !== undefined,
+          ).length
+        : 0
+    let padding = ''
+    switch (attributeCount) {
+        case 2:
+            padding = style.padding0
+            break
+        case 3:
+            padding = style.padding1
+            break
+        case 4:
+            padding = style.padding2
+            break
+        case 5:
+            padding = style.padding3
+            break
+    }
 
     return (
         <>
@@ -91,14 +109,44 @@ const List: React.FC<{
                 fonc2={deleteFunction}
                 fonc3={searchFunction}
             />
-            <div className={style.colName}>
-                <h2 className={style.nameR}>{attribut?.att1}</h2>
-                <h2 className={style.nameR}>{attribut?.att2}</h2>
-                <h2 className={style.nameR}>{attribut?.att3}</h2>
-                <h2 className={style.nameR}>{attribut?.att4}</h2>
-                <h2 className={style.nameR}>{attribut?.att5}</h2>
-                <h2 className={style.nameR}>{attribut?.att6}</h2>
-                <h2 className={style.nameR}>{attribut?.att7}</h2>
+            <div className={`${style.colName} ${padding}`}>
+                <div className={style.lineContainer}>
+                    {attribut?.att1 ? (
+                        <div>
+                            <h2 className={style.nameR}>{attribut?.att1}</h2>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {attribut?.att2 ? (
+                        <div>
+                            <h2 className={style.nameR}>{attribut?.att2}</h2>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {attribut?.att3 ? (
+                        <div>
+                            <h2 className={style.nameR}>{attribut?.att3}</h2>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {attribut?.att4 ? (
+                        <div>
+                            <h2 className={style.nameR}>{attribut?.att4}</h2>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {attribut?.att5 ? (
+                        <div>
+                            <h2 className={style.nameR}>{attribut?.att5}</h2>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                </div>
             </div>
             <div className={style.list_line}>
                 {selectedItems
