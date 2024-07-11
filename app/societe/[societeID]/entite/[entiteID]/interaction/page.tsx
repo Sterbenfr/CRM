@@ -108,6 +108,7 @@ function InteractionsPage({
     return (
         <>
             <div className={style.page}>
+                <h1 className={style.lg}>Interactions</h1>
                 <List
                     items={Interactions.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
@@ -128,6 +129,15 @@ function InteractionsPage({
                                 : setIsPopUpOpen(true)
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
+                    }}
+                    attribut={{
+                        att1: '',
+                        att2: 'Code interaction',
+                        att3: 'Date interaction',
+                        att4: 'Code contact entité',
+                        att5: 'Date relance',
+                        att6: '',
+                        att7: 'Commentaires',
                     }}
                     searchItems={search.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),

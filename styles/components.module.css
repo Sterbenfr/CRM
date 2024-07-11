@@ -51,11 +51,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .btnFunctionBlockDEL {
-    border-radius: 1%;
+    border-radius: 10px;
     border: 2px solid black;
     text-align: center;
     padding: 0.5rem;
@@ -63,13 +63,13 @@
     padding-right: 2rem;
     background-color: white;
     font-size: 1.1rem;
-    margin: 0.5rem;
+    margin: 0.2rem;
     width: 10rem;
     font-family: inherit;
 }
 
 .btnFunctionBlockADD {
-    border-radius: 1%;
+    border-radius: 10px;
     border: 2px solid black;
     text-align: center;
     padding: 0.5rem;
@@ -77,8 +77,8 @@
     padding-right: 2rem;
     background-color: white;
     font-size: 1.1rem;
-    margin: 0.5rem;
-    width: 8rem;
+    margin: 0.2rem;
+    width: 10rem;
     font-family: inherit;
 }
 
@@ -94,7 +94,37 @@
     background-color: rgb(245, 245, 245);
 }
 
+.searchLine {
+    border-radius: 5px;
+    border: 2px solid black;
+    padding: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: white;
+    font-size: 1.1rem;
+    width: 30rem;
+    font-family: inherit;
+}
+
 /* LINE */
+
+.colName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    margin-left: 3rem;
+    width: 90%;
+}
+
+.nameR {
+    font-weight: bold;
+    text-align: center;
+    margin-left: 1rem;
+}
 
 .body {
     display: flex;
@@ -195,7 +225,7 @@
     padding: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-radius: 5%;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-family: inherit;
 }
@@ -211,7 +241,7 @@
     padding: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-radius: 5%;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-family: inherit;
 }
@@ -226,7 +256,7 @@
     padding: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-radius: 5%;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-family: inherit;
 }
@@ -241,7 +271,7 @@
     padding: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-radius: 5%;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-family: inherit;
 }
@@ -342,7 +372,7 @@
     padding: 1rem;
     margin: 1.5rem;
     border: 2px solid black;
-    border-radius: 3%;
+    border-radius: 5px;
 }
 
 .input:hover,
@@ -364,7 +394,7 @@
     padding-bottom: 0.5rem;
     background-color: white;
     border: 2px solid black;
-    border-radius: 5%;
+    border-radius: 10px;
     font-family: inherit;
     font-weight: bold;
     color: #262a2e;
@@ -383,12 +413,6 @@
     align-items: center;
     flex-direction: column;
     padding-top: 10rem;
-}
-
-.page1 {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
 }
 
 .PopUp {
@@ -446,7 +470,7 @@
     margin: 1rem;
     margin-top: 2rem;
     border: 2px solid black;
-    border-radius: 0%;
+    border-radius: 5px;
     font-family: inherit;
 }
 
@@ -463,7 +487,7 @@
     margin-right: 13rem;
     margin-top: 2rem;
     border: 2px solid black;
-    border-radius: 0%;
+    border-radius: 5px;
     font-family: inherit;
     width: 25px;
     height: 25px;
@@ -483,26 +507,16 @@
     padding-bottom: 0.5rem;
     margin: 1rem;
     border: 3px solid black;
-    border-radius: 0%;
+    border-radius: 10px;
     background-color: white;
     font-size: 1.1rem;
     font-weight: bold;
-    border-radius: 7%;
     font-family: inherit;
 }
 
 .BTNsub:hover {
     border: 3px solid #e5007d;
     background-color: #f2f2f2;
-}
-
-.BTNdiv {
-    display: flex;
-    justify-content: center;
-    width: 25rem;
-    margin: 1rem;
-    border-radius: 0%;
-    font-family: inherit;
 }
 
 .label {
@@ -524,7 +538,7 @@
 }
 
 .calendar {
-    width: 80%;
+    width: 60%;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
@@ -552,9 +566,84 @@
     padding: 1rem;
     border: 3px solid #000000;
     border-radius: 1rem;
+    font-family: inherit;
+    background-color: white;
 }
 
 .BTN_CNF:hover {
     border: 3px solid #e5007d;
     border-radius: 1rem;
+    background-color: #f2f2f2;
+}
+
+.croix {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.btnC {
+    border: none;
+    background-color: white;
+    font-family: inherit;
+}
+
+.page1 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lg1 {
+    font-size: 2rem;
+    border-bottom: 3px solid #e5007d;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    margin-left: 12rem;
+}
+
+.BTNdiv {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    margin-left: 10rem;
+    border-radius: 0%;
+    font-family: inherit;
+}
+
+.CR {
+    margin-bottom: 2rem;
+    margin-left: 10rem;
+    cursor: pointer;
+}
+
+.btnModif {
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 2px solid #000000;
+    border-radius: 1rem;
+    font-family: inherit;
+    background-color: white;
+}
+
+.btnModif:hover {
+    border: 2px solid #e5007d;
+    border-radius: 1rem;
+    background-color: #f2f2f2;
+}
+
+.connect {
+    margin-right: auto;
+    margin-left: auto;
+    width: 500px;
+    text-align: center;
+    padding-top: 5rem;
 }

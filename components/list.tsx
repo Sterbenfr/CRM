@@ -13,6 +13,16 @@ interface ListProps {
     value7?: string
 }
 
+interface Attribut {
+    att1?: string
+    att2?: string
+    att3?: string
+    att4?: string
+    att5?: string
+    att6?: string
+    att7?: string
+}
+
 interface FunctionProps {
     fonc1?: React.MouseEventHandler<HTMLButtonElement>
     url?: string
@@ -21,8 +31,9 @@ interface FunctionProps {
 const List: React.FC<{
     items: ListProps[]
     functions: FunctionProps
+    attribut?: Attribut
     searchItems?: ListProps[]
-}> = ({ items, functions, searchItems }) => {
+}> = ({ items, functions, attribut, searchItems }) => {
     const [selectedItems, setSelectedItems] = useState<ListProps[]>()
     const [lineCheckbox, setLineCheckbox] = useState<number[]>([])
     const [searchValue, setSearchValue] = useState('')
@@ -80,6 +91,15 @@ const List: React.FC<{
                 fonc2={deleteFunction}
                 fonc3={searchFunction}
             />
+            <div className={style.colName}>
+                <h2 className={style.nameR}>{attribut?.att1}</h2>
+                <h2 className={style.nameR}>{attribut?.att2}</h2>
+                <h2 className={style.nameR}>{attribut?.att3}</h2>
+                <h2 className={style.nameR}>{attribut?.att4}</h2>
+                <h2 className={style.nameR}>{attribut?.att5}</h2>
+                <h2 className={style.nameR}>{attribut?.att6}</h2>
+                <h2 className={style.nameR}>{attribut?.att7}</h2>
+            </div>
             <div className={style.list_line}>
                 {selectedItems
                     ? selectedItems.map(item => (

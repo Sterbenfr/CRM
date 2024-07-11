@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import PopUp from '@/components/popUp'
 import List from '@/components/list'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../../../../../styles/components.module.css'
 
 export interface Interaction {
     id: string
@@ -41,42 +42,46 @@ function InteractionsPage({
 
     return (
         <>
-            <List
-                items={Interactions.map(typeInteraction => ({
-                    value1: typeInteraction.id.toString(),
-                    value2: typeInteraction.id.toString(),
-                    value3: typeInteraction.label,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
-                    fields={[
-                        {
-                            id: 'code_type_interaction',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 4,
+            <div className={style.page}>
+                <h1 className={style.lg}>Types d&apos;interactions</h1>
+                <List
+                    items={Interactions.map(typeInteraction => ({
+                        value1: typeInteraction.id,
+                        value2: typeInteraction.id,
+                        value3: typeInteraction.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 50,
-                        },
-                    ]}
+                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
+                        fields={[
+                            {
+                                id: 'code_type_interaction',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 4,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 50,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }

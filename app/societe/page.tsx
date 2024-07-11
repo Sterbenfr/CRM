@@ -285,6 +285,15 @@ function SocietesPage() {
                         },
                         url: 'http://localhost:3000/api/societe',
                     }}
+                    attribut={{
+                        att1: 'Raison Sociale',
+                        att2: '',
+                        att3: 'Site Web',
+                        att4: 'Commentaires',
+                        att5: '',
+                        att6: '',
+                        att7: '',
+                    }}
                     searchItems={search.map(Societe => ({
                         value1: Societe.code_Societe.toString(),
                         value2: Societe.raison_sociale,

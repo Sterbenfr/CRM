@@ -270,6 +270,7 @@ function SitesPage() {
         search,
     ])
 
+
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
@@ -299,6 +300,15 @@ function SitesPage() {
                                 : setIsPopUpOpen(true)
                         },
                         url: 'http://localhost:3000/api/sites',
+                    }}
+                    attribut={{
+                        att1: 'Désignation longue',
+                        att2: '',
+                        att3: 'Adresse',
+                        att4: 'Date ouverture',
+                        att5: 'Téléphone',
+                        att6: '',
+                        att7: 'Mail',
                     }}
                     searchItems={search.map(Sites => ({
                         value1: Sites.code_site.toString(),

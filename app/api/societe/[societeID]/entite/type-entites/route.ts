@@ -25,7 +25,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!EntitesPages.code_type_entite || !EntitesPages.code_type_entite) {
+    if (!EntitesPages.id || !EntitesPages.label) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

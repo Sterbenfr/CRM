@@ -117,6 +117,15 @@ function ContactsPage({
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`,
                     }}
+                    attribut={{
+                        att1: '',
+                        att2: 'Nom',
+                        att3: 'Numéro fixe',
+                        att4: 'Numéro portable',
+                        att5: 'Adresse mail',
+                        att6: '',
+                        att7: '',
+                    }}
                     searchItems={search.map(contact => ({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,

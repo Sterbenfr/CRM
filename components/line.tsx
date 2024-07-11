@@ -23,7 +23,7 @@ const Line: React.FC<LineProps> = ({
 }) => {
     // Click handler function
     const handleClick = (key: string) => {
-        if (window.location.href.endsWith('/cerfa')) {
+        if (window.location.href.includes('/type')) {
             return
         }
 

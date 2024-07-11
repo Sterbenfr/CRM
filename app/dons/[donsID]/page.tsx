@@ -238,7 +238,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     setModify(true)
                                 }
                             }}
-                            className={style.btn}
+                            className={style.btnModif}
                         >
                             {modify ? 'Submit' : 'Modify'}
                         </button>

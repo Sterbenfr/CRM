@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 import List from '../../../components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../styles/components.module.css'
 
 export interface TypeActiviteSociete {
-    code: string
-    libelle: string
+    id: string
+    label: string
 }
 
 function TypesActiviteSocietesPage() {
@@ -39,42 +40,48 @@ function TypesActiviteSocietesPage() {
 
     return (
         <>
-            <List
-                items={TypesActiviteSociete.map(TypeActiviteSociete => ({
-                    value1: TypeActiviteSociete.code.toString(),
-                    value2: TypeActiviteSociete.libelle,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            <button onClick={() => setIsPopUpOpen(true)}>Open PopUp</button>
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url='http://localhost:3000/api/societe'
-                    fields={[
-                        {
-                            id: 'code',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 3,
+            <div className={style.page}>
+                <h1 className={style.lg}>
+                    Types d&apos;activité de la société
+                </h1>
+                <List
+                    items={TypesActiviteSociete.map(TypeActiviteSociete => ({
+                        value1: TypeActiviteSociete.id,
+                        value2: TypeActiviteSociete.id,
+                        value3: TypeActiviteSociete.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 50,
-                        },
-                    ]}
+                        url: 'http://localhost:3000/api/societe/type-activite-societe',
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url='http://localhost:3000/api/societe'
+                        fields={[
+                            {
+                                id: 'code',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 3,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 50,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }

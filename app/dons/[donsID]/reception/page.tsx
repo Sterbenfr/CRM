@@ -102,6 +102,15 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         },
                         url: `http://localhost:3000/api/dons/${params.donsID}/reception`,
                     }}
+                    attribut={{
+                        att1: '',
+                        att2: 'Numéro de réception',
+                        att3: 'Date de réception',
+                        att4: ' Nombre de palettes reçues',
+                        att5: 'Poids reçu en kg',
+                        att6: '',
+                        att7: '',
+                    }}
                     searchItems={search.map(Reception => ({
                         value1: Reception.code_Don.toString(),
                         value2: Reception.numero_livraison.toString(),

@@ -5,6 +5,7 @@
     border: 2px solid #e5007d;
     font-weight: bold;
     padding-right: 4.5rem;
+    border-radius: 5px;
 }
 
 .fc .fc-button-primary:not(:disabled),
@@ -52,6 +53,7 @@
 
 .fc-theme-standard .fc-scrollgrid {
     border: 2px solid #e5007d; /*couleur de la bordure général du calendrier */
+    border-radius: 5px;
 }
 
 .fc .fc-daygrid-day.fc-day-other {

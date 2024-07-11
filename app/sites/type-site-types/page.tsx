@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import List from '../../../components/list'
+import style from '../../../styles/components.module.css'
 
 export interface siteType {
     id: string
@@ -36,42 +37,46 @@ function SiteTypesPage() {
 
     return (
         <>
-            <List
-                items={SiteTypes.map(sitetype => ({
-                    value1: sitetype.id.toString(),
-                    value2: sitetype.id.toString(),
-                    value3: sitetype.label,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url='http://localhost:3000/api/sites/type-site-types'
-                    fields={[
-                        {
-                            id: 'code_type_site',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 4,
+            <div className={style.page}>
+                <h1 className={style.lg}>Types de sites</h1>
+                <List
+                    items={SiteTypes.map(sitetype => ({
+                        value1: sitetype.id.toString(),
+                        value2: sitetype.id.toString(),
+                        value3: sitetype.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                            maxLength: 50,
-                        },
-                    ]}
+                        url: 'http://localhost:3000/api/sites/type-site-types',
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url='http://localhost:3000/api/sites/type-site-types'
+                        fields={[
+                            {
+                                id: 'code_type_site',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 4,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                                maxLength: 50,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }

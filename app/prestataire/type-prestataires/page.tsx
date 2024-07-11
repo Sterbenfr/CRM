@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import List from '@/components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
+import style from '../../../styles/components.module.css'
 
 export interface Prestataire {
     id: string
@@ -37,40 +38,44 @@ function PrestatairesPage() {
 
     return (
         <>
-            <List
-                items={Prestataires.map(typePrestataire => ({
-                    value1: typePrestataire.id.toString(),
-                    value2: typePrestataire.id.toString(),
-                    value3: typePrestataire.label,
-                }))}
-                functions={{
-                    fonc1: () => {
-                        isPopUpOpen
-                            ? setIsPopUpOpen(false)
-                            : setIsPopUpOpen(true)
-                    },
-                }}
-            />
-            {isPopUpOpen && (
-                <PopUp
-                    onClose={handleClose}
-                    url='http://localhost:3000/api/prestataire/type-prestataires'
-                    fields={[
-                        {
-                            id: 'code_type_de_Prestataire',
-                            type: 'input',
-                            value: null,
-                            required: true,
+            <div className={style.page}>
+                <h1 className={style.lg}>Types de prestataires</h1>
+                <List
+                    items={Prestataires.map(typePrestataire => ({
+                        value1: typePrestataire.id.toString(),
+                        value2: typePrestataire.id.toString(),
+                        value3: typePrestataire.label,
+                    }))}
+                    functions={{
+                        fonc1: () => {
+                            isPopUpOpen
+                                ? setIsPopUpOpen(false)
+                                : setIsPopUpOpen(true)
                         },
-                        {
-                            id: 'libelle',
-                            type: 'input',
-                            value: null,
-                            required: true,
-                        },
-                    ]}
+                        url: 'http://localhost:3000/api/prestataire/type-prestataires',
+                    }}
                 />
-            )}
+                {isPopUpOpen && (
+                    <PopUp
+                        onClose={handleClose}
+                        url='http://localhost:3000/api/prestataire/type-prestataires'
+                        fields={[
+                            {
+                                id: 'code_type_de_Prestataire',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                            },
+                            {
+                                id: 'libelle',
+                                type: 'input',
+                                value: null,
+                                required: true,
+                            },
+                        ]}
+                    />
+                )}
+            </div>
         </>
     )
 }
