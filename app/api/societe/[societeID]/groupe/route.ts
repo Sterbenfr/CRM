@@ -25,7 +25,7 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await pool.query(
-            'SELECT code_groupe, nom_du_groupe, groupe.logo, groupe.site_Web, groupe.commentaires, date_arret_activite_du_Groupe FROM `groupe` LEFT JOIN entreprise ON Groupe.code_groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ? LIMIT ?, ?',
+            'SELECT code_groupe, nom_du_Groupe, groupe.logo, groupe.site_Web, groupe.commentaires, date_arret_activite_du_Groupe FROM `groupe` LEFT JOIN entreprise ON Groupe.code_groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ? LIMIT ?, ?',
             [societeID, offset, limitNumber],
         )
 

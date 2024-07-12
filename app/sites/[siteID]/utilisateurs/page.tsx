@@ -5,6 +5,7 @@ import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Utilisateurs {
     code_utilisateur: number
@@ -31,7 +32,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
     const [telPerso, setTelPerso] = useState('')
-    const [mailRestosDuCoeur, setMailRestosDuCoeur] = useState('')
+    const [mail, setMail] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [password, setPassword] = useState('')
     const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('AD')
@@ -80,10 +81,10 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         setTelPerso(event.target.value)
     }
 
-    const handleMailRestosDuCoeurChange = (
+    const handleMailChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setMailRestosDuCoeur(event.target.value)
+        setMail(event.target.value)
     }
 
     const handleCommentairesChange = (
@@ -117,6 +118,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
             url?: string
             createURL?: string
             required?: boolean
+            maxLength?: number
             disabled?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -126,6 +128,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 type: 'input',
                 value: params.siteID,
                 disabled: true,
+                required: true,
             },
             {
                 id: 'civilite',
@@ -139,76 +142,62 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 id: 'nom',
                 type: 'input',
                 value: nom,
+                maxLength: 20,
+                required: true,
                 placeholder: 'Exemple: Dupont',
                 onInputChange: handleNomChange,
             },
             {
                 id: 'prenom',
                 type: 'input',
+                maxLength: 20,
                 value: prenom,
+                required: true,
                 placeholder: 'Exemple: Jean',
                 onInputChange: handlePrenomChange,
             },
             {
-                id: 'tel_perso',
-                type: 'number',
-                value: telPerso,
-                placeholder: 'Exemple: 0601020304',
-                onInputChange: handleTelPersoChange,
-            },
-            {
-                id: 'mail_restos_du_coeur',
-                type: 'input',
-                value: mailRestosDuCoeur,
-                placeholder: 'Exemple: Jean.dupont@gmail.com',
-                onInputChange: handleMailRestosDuCoeurChange,
-            },
-            {
-                id: 'commentaires',
-                type: 'input',
-                value: commentaires,
-                placeholder: 'Exemple: Manutentionnaire de Dunkerque',
-                onInputChange: handleCommentairesChange,
-            },
-            {
                 id: 'password',
                 type: 'password',
+                maxLength: 150,
                 value: password,
+                required: true,
                 placeholder: 'Exemple: France2024!',
                 onInputChange: handlePasswordChange,
             },
             {
                 id: 'code_type_utilisateur',
                 type: 'select',
+                required: true,
                 value: codeTypeUtilisateur,
                 url: `../../../../../api/select/utilisateurs`,
                 onChange: handleCodeTypeUtilisateurChange,
             },
+            {
+                id: 'tel_perso',
+                type: 'number',
+                value: telPerso,
+                maxLength: 12,
+                placeholder: 'Exemple: 0601020304',
+                onInputChange: handleTelPersoChange,
+            }, // soit le tel soit le mail pas rien
+            {
+                id: 'mail',
+                type: 'input',
+                value: mail,
+                maxLength: 50,
+                placeholder: 'Exemple: Jean.dupont@gmail.com',
+                onInputChange: handleMailChange,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                maxLength: 200,
+                value: commentaires,
+                placeholder: 'Exemple: Manutentionnaire de Dunkerque',
+                onInputChange: handleCommentairesChange,
+            },
         ]
-        if (nom.length > 20) {
-            setNom(nom.slice(0, 20))
-            alert('Le Nom doit contenir 9 chiffres')
-        }
-
-        if (prenom.length > 20) {
-            setPrenom(prenom.slice(0, 20))
-            alert('Le Prénom doit contenir 20 chiffres')
-        }
-
-        if (telPerso.length > 12) {
-            setTelPerso(telPerso.slice(0, 12))
-            alert('Le Téléphone doit contenir 12 chiffres')
-        }
-
-        if (mailRestosDuCoeur.length > 50) {
-            setMailRestosDuCoeur(mailRestosDuCoeur.slice(0, 50))
-            alert('Le Mail doit contenir 50 chiffres')
-        }
-
-        if (commentaires.length > 200) {
-            setCommentaires(commentaires.slice(0, 200))
-            alert('Le Commentaire doit contenir 200 chiffres')
-        }
 
         return fields
     }, [
@@ -216,7 +205,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         nom,
         prenom,
         telPerso,
-        mailRestosDuCoeur,
+        mail,
         commentaires,
         password,
         codeTypeUtilisateur,
@@ -293,12 +282,10 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     }}
                     attribut={{
                         att1: 'Civilité',
-                        att2: '',
-                        att3: 'Nom',
-                        att4: 'Prénom',
-                        att5: 'Téléphone',
-                        att6: '',
-                        att7: 'Mail',
+                        att2: 'Nom',
+                        att3: 'Prénom',
+                        att4: 'Téléphone',
+                        att5: 'Mail',
                     }}
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),
@@ -325,6 +312,14 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        {
+                            label: `Types d'utilisateurs`,
+                            url: 'type-utilisateurs',
+                        },
+                    ]}
+                />
             </div>
         </>
     )

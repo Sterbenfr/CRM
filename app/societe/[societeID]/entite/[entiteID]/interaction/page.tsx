@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
 import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Interactions {
     code_interaction: number
@@ -31,13 +32,21 @@ function InteractionsPage({
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Interactions[]>([])
 
-    const [EntiteInteraction, setEntiteInteraction] = useState(params.entiteID)
+    const [codeUtilisateurProspecteur, setCodeUtilisateurProspecteur] = useState('')
+    const [dateInteraction, setDateInteraction] = useState(new Date())
     const [codeTypeInteraction, setCodeTypeInteraction] = useState('PRE')
-    const [codeModaliteInteraction, setCodeModaliteInteraction] =
-        useState('MAI')
+    const [codeModaliteInteraction, setCodeModaliteInteraction] = useState('MAI')
+    const [EntiteInteraction, setEntiteInteraction] = useState(params.entiteID)
+    const [commentaires, setCommentaires] = useState('')
     const today = new Date()
+    const [dateRelance, setDateRelance] = useState(new Date(today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 15,))
+
+
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+
 
     const handleClose = () => {
         setIsPopUpOpen(false)
@@ -60,6 +69,145 @@ function InteractionsPage({
     ) => {
         setCodeModaliteInteraction(event.target.value)
     }
+    
+    const handleCodeUtilisateurProspecteur = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeUtilisateurProspecteur(event.target.value)
+    }
+
+    const handleDateInteraction = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setDateInteraction(new Date(event.target.value))
+    }
+
+    const handleCommentaires = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handleDateRelance = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setDateRelance(new Date(event.target.value))
+    }
+
+    const [fields, setFields] = useState<{
+    id: string
+    type: FieldType
+    value: string | null
+    placeholder?: string
+    url?: string
+    createURL?: string
+    required?: boolean
+    maxLength?: number
+    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+}[]
+>([])
+
+type FieldType =
+| 'number'
+| 'search'
+| 'date'
+| 'select'
+| 'input'
+| 'file'
+| 'checkbox'
+| 'enum'
+
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            disabled?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'code_Entite_Prospectee',
+                type: 'input',
+                value: params.entiteID,
+                disabled: true,
+                required: true,
+            },
+            {
+                id: 'code_Utilisateur_Prospecteur',
+                type: 'search',
+                value: codeUtilisateurProspecteur,
+                url: '../../../../../api/select/sites/utilisateurs',
+                required: true,
+                onInputChange: handleCodeUtilisateurProspecteur,
+            },
+            {
+                id: 'date_interaction',
+                type: 'date',
+                value: dateInteraction.toISOString().split('T')[0],
+                required: true,
+                onInputChange: handleDateInteraction,
+            },
+            {
+                id: 'code_type_interaction',
+                type: 'select',
+                value: codeTypeInteraction,
+                url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                onChange: handleCodeTypeInteraction,
+            },
+            {
+                id: 'code_modalite_interaction',
+                type: 'select',
+                value: codeModaliteInteraction,
+                url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                onChange: handleCodeModaliteInteraction,
+            },
+            {
+                id: 'code_contact_entite',
+                type: 'search',
+                value: null,
+                url: `../../../../../api/select/societe/entite/${EntiteInteraction}/contact`,
+                onInputChange: handleEntiteInteraction,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Relance pour aide a Dunkerque',
+                maxLength: 200,
+                onInputChange: handleCommentaires,
+            },
+            {
+                id: 'pieces_associees',
+                type: 'file',
+                value: null,
+            }, // type blob
+            {
+                id: 'date_relance',
+                type: 'date',
+                value: dateRelance.toISOString().split('T')[0],
+                onInputChange: handleDateRelance,
+            },
+        ]
+
+        return fields
+    }, [
+        codeUtilisateurProspecteur,
+        codeModaliteInteraction,
+        codeTypeInteraction,
+        EntiteInteraction,
+        commentaires,
+        dateInteraction,
+        dateRelance,
+        params.entiteID,
+        params.societeID,
+    ])
 
     useEffect(() => {
         const fetchInteractions = async () => {
@@ -74,6 +222,7 @@ function InteractionsPage({
                 await res.json()
             setInteractions(data)
             setTotalItems(total)
+            setFields(generateFields())
         }
 
         const fetchSearchInteractions = async () => {
@@ -93,8 +242,8 @@ function InteractionsPage({
 
         fetchInteractions()
         fetchSearchInteractions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.societeID, params.entiteID])
+
+    }, [page, itemsPerPage, params.societeID, params.entiteID, search, generateFields])
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -131,13 +280,11 @@ function InteractionsPage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                     }}
                     attribut={{
-                        att1: '',
-                        att2: 'Code interaction',
-                        att3: 'Date interaction',
-                        att4: 'Code contact entité',
-                        att5: 'Date relance',
-                        att6: '',
-                        att7: 'Commentaires',
+                        att1: 'Code interaction',
+                        att2: 'Date interaction',
+                        att3: 'Code contact entité',
+                        att4: 'Date relance',
+                        att5: 'Commentaire',
                     }}
                     searchItems={search.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
@@ -165,76 +312,22 @@ function InteractionsPage({
                         <PopUp
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`}
-                            fields={[
-                                {
-                                    id: 'code_Utilisateur_Prospecteur',
-                                    type: 'search',
-                                    value: null,
-                                    url: '../../../../../api/select/sites/utilisateurs',
-                                    required: true,
-                                },
-                                {
-                                    id: 'code_Entite_Prospectee',
-                                    type: 'input',
-                                    value: params.entiteID,
-                                    disabled: true,
-                                    required: true,
-                                },
-                                {
-                                    id: 'date_interaction',
-                                    type: 'date',
-                                    value: today.toISOString().split('T')[0],
-                                    required: true,
-                                },
-                                {
-                                    id: 'code_type_interaction',
-                                    type: 'select',
-                                    value: codeTypeInteraction,
-                                    url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
-                                    onChange: handleCodeTypeInteraction,
-                                },
-                                {
-                                    id: 'code_modalite_interaction',
-                                    type: 'select',
-                                    value: codeModaliteInteraction,
-                                    url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
-                                    onChange: handleCodeModaliteInteraction,
-                                },
-                                {
-                                    id: 'code_contact_entite',
-                                    type: 'search',
-                                    value: null,
-                                    url: `../../../../../api/select/societe/entite/${EntiteInteraction}/contact`,
-                                    onInputChange: handleEntiteInteraction,
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder:
-                                        'Exemple: Relance pour aide a Dunkerque',
-                                    maxLength: 200,
-                                },
-                                {
-                                    id: 'pieces_associees',
-                                    type: 'file',
-                                    value: null,
-                                }, // type blob
-                                {
-                                    id: 'date_relance',
-                                    type: 'date',
-                                    value: new Date(
-                                        today.getFullYear(),
-                                        today.getMonth(),
-                                        today.getDate() + 15,
-                                    )
-                                        .toISOString()
-                                        .split('T')[0],
-                                },
-                            ]}
+                            fields={fields}
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        {
+                            label: `Types d'intéractions`,
+                            url: 'type-interactions',
+                        },
+                        {
+                            label: `Types de modalités d'intéractions`,
+                            url: 'type-modalite-interactions',
+                        },
+                    ]}
+                />
             </div>
         </>
     )

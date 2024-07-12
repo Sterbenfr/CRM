@@ -55,6 +55,10 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         },
                         url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
                     }}
+                    attribut={{
+                        att1: 'Code type utilisateur',
+                        att2: 'Définition',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp
