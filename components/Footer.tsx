@@ -3,7 +3,7 @@ import styles from '../styles/Footer.module.css'
 export default function Footer() {
     return (
         <footer className={styles.footer}>
-            <p>--- Made by students from ENIGMA ---</p>
+            <p>--- Fait par ENIGMA ---</p>
             <ul>
                 <li>
                     Aurelien Schmieder{' '}

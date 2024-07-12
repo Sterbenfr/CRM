@@ -25,7 +25,7 @@ const TypesButtons: React.FC<{ items: TypesButtonsProps[] }> = ({ items }) => {
                     <Link
                         key={item.label}
                         href={`${currentUrl}/${item.url}`}
-                        className={style.submit}
+                        className={style.BTN_Type}
                     >
                         {item.label}
                     </Link>
