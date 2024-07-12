@@ -57,24 +57,26 @@ function TypeDonsPage() {
                     }}
                 />
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url='http://localhost:3000/api/dons/type-don'
-                        fields={[
-                            {
-                                id: 'id',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                            {
-                                id: 'label',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUpType}>
+                        <PopUp
+                            onClose={handleClose}
+                            url='http://localhost:3000/api/dons/type-don'
+                            fields={[
+                                {
+                                    id: 'id',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                },
+                                {
+                                    id: 'label',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>
