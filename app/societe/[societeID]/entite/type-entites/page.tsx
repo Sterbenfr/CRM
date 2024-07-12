@@ -54,6 +54,10 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`,
                     }}
+                    attribut={{
+                        att1: 'Code type entite',
+                        att2: 'Définition',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp

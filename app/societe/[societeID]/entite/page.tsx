@@ -5,6 +5,7 @@ import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
 import style from '../../../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Entite {
     code_entite: number
@@ -258,6 +259,38 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 placeholder: 'Exemple: Alpha Corp',
             },
             {
+                id: 'code_type_entite',
+                type: 'select',
+                required: true,
+                value: codeTypeEntite,
+                url: `../../api/societe/${params.societeID}/entite/type-entites`,
+                onChange: handleCodeTypeEntiteChange,
+            },
+            {
+                id: 'adresse',
+                type: 'input',
+                value: adresse,
+                required: true,
+                onInputChange: handleAdresseChange,
+                placeholder: 'Exemple: 12 rue de la paix',
+            },
+            {
+                id: 'telephone',
+                type: 'input',
+                value: telephone,
+                maxLength: 12,
+                onInputChange: handleTelephoneChange,
+                placeholder: 'Exemple: 0123456789',
+            }, // tel ou mail obligée
+            {
+                id: 'mail',
+                type: 'input',
+                value: mail,
+                maxLength: 50,
+                onInputChange: handleMailChange,
+                placeholder: 'Exemple: Alpha.corp@gmail.com',
+            },
+            {
                 id: 'logo',
                 type: 'file',
                 value: null,
@@ -270,7 +303,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 14,
                 onInputChange: handleSiretChange,
                 placeholder: 'Exemple: 15269783246918',
-                required: true,
             }, // if number !== 14 = pas de validation
             {
                 id: 'code_ape',
@@ -304,29 +336,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 onInputChange: handleCodeSocieteAppartenanceChange,
             },
             {
-                id: 'adresse',
-                type: 'input',
-                value: adresse,
-                onInputChange: handleAdresseChange,
-                placeholder: 'Exemple: 12 rue de la paix',
-            },
-            {
-                id: 'telephone',
-                type: 'input',
-                value: telephone,
-                maxLength: 12,
-                onInputChange: handleTelephoneChange,
-                placeholder: 'Exemple: 0123456789',
-            },
-            {
-                id: 'mail',
-                type: 'input',
-                value: mail,
-                maxLength: 50,
-                onInputChange: handleMailChange,
-                placeholder: 'Exemple: Alpha.corp@gmail.com',
-            },
-            {
                 id: 'site_internet',
                 type: 'input',
                 value: siteInternet,
@@ -341,13 +350,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 200,
                 onInputChange: handleCommentairesChange,
                 placeholder: 'Exemple: Societe de service informatique',
-            },
-            {
-                id: 'code_type_entite',
-                type: 'select',
-                value: codeTypeEntite,
-                url: `../../api/societe/${params.societeID}/entite/type-entites`,
-                onChange: handleCodeTypeEntiteChange,
             },
             {
                 id: 'code_type_don',
@@ -371,7 +373,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 1,
                 placeholder: 'Exemple: O / N',
                 onInputChange: handlePresenceQuaiChange,
-            },
+            }, // checkbox + dans la table
             {
                 id: 'pieces_associees',
                 type: 'file',
@@ -385,7 +387,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 1,
                 placeholder: 'Exemple: O / N',
                 onInputChange: handleCerfaChange,
-            },
+            }, // checkbox + dans la table
             {
                 id: 'code_frequence_cerfa',
                 type: 'select',
@@ -401,15 +403,15 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
         ]
         if (codeTypeDon === 'MAR') {
-            fields.push({
+            fields.splice(15, 0, {
                 id: 'code_type_produit',
                 type: 'select',
                 value: codeTypeProduit,
                 url: `../../api/dons/type-produits`,
                 onChange: handleCodeTypeProduitChange,
-            })
+            });
         } else if (codeTypeDon === 'SIP') {
-            fields.push({
+            fields.splice(15, 0, {
                 id: 'code_type_competence',
                 type: 'select',
                 value: codeTypeCompetence,
@@ -516,13 +518,10 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite`,
                     }}
                     attribut={{
-                        att1: '',
-                        att2: 'Raison Sociale',
-                        att3: 'Téléphone',
-                        att4: 'Mail',
-                        att5: 'Adresse',
-                        att6: '',
-                        att7: '',
+                        att1: 'Raison Sociale',
+                        att2: 'Téléphone',
+                        att3: 'Mail',
+                        att4: 'Adresse',
                     }}
                     searchItems={search.map(entite => ({
                         value1: entite.code_entite.toString(),
@@ -555,6 +554,18 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        {
+                            label: 'Types de entité',
+                            url: 'type-entites',
+                        },
+                        {
+                            label: 'Types de fréquence cerfa',
+                            url: 'type-frequences-cerfa',
+                        },
+                    ]}
+                />
             </div>
         </>
     )

@@ -215,13 +215,9 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             url: `http://localhost:3000/api/societe/${params.societeID}/groupe`,
                         }}
                         attribut={{
-                            att1: '',
-                            att2: '',
-                            att3: 'Site Web',
-                            att4: 'Commentaires',
-                            att5: '',
-                            att6: '',
-                            att7: '',
+                            att1: 'Nom du groupe',
+                            att2: 'Site web',
+                            att3: 'Commentaire',
                         }}
                         searchItems={search.map(groupe => ({
                             value1: groupe.code_groupe.toString(),

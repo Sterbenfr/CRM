@@ -8,7 +8,7 @@ CREATE TABLE Entite (
     code_rna CHAR(10),
     code_cee CHAR(13),
     code_societe_appartenance INT(6),
-    adresse TEXT,
+    adresse TEXT NOT NULL,
     telephone VARCHAR(12),
     mail VARCHAR(50),
     site_internet VARCHAR(255),

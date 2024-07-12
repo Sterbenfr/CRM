@@ -125,6 +125,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                 id: 'code_utilisateur_suivant',
                 type: 'search',
                 value: codeUtilisateurSuivant,
+                required: true,
                 url: '../../../../../api/select/sites/utilisateurs',
                 placeholder: 'Exemple: Jean Dupont',
                 onInputChange: handleCodeUtilisateurSuivantChange,
@@ -165,6 +166,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     return (
         <>
             <div className={style.page}>
+            <h1 className={style.lg}>Societe-site-link</h1>
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_Societe.toString(),
@@ -181,6 +183,19 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/societe-site-link`,
                     }}
+                    attribut={{
+                        att1: 'Code societe',
+                        att2: 'Code type de site',
+                        att3: 'Code site suivi',
+                        att4: 'Code utilisateur suivant',
+                    }}
+                    searchItems={contacts.map(contact => ({
+                        value1: contact.code_Societe.toString(),
+                        value2: contact.code_Societe.toString(),
+                        value3: contact.code_type_de_Site,
+                        value4: contact.code_site_suivi.toString(),
+                        value5: contact.code_utilisateur_suivant.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

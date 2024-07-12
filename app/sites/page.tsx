@@ -5,6 +5,7 @@ import { Pagination } from '../../components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Sites {
     code_site: number
@@ -336,7 +337,7 @@ function SitesPage() {
                 <TypesButtons
                     items={[
                         {
-                            label: 'Types de Sites',
+                            label: 'Types de sites',
                             url: 'type-site-types',
                         },
                     ]}

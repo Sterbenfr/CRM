@@ -172,6 +172,7 @@ function SuiviGroupePage({
     return (
         <>
             <div className={style.page}>
+            <h1 className={style.lg}>Groupe-site-link</h1>
                 <List
                     items={SuiviGroupe.map(contact => ({
                         value1: contact.code_groupe.toString(),
@@ -188,6 +189,19 @@ function SuiviGroupePage({
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`,
                     }}
+                    attribut={{
+                        att1: 'Code groupe',
+                        att2: 'Code type de site',
+                        att3: 'Code site suivi',
+                        att4: 'Code utilisateur suivant',
+                    }}
+                    searchItems={SuiviGroupe.map(contact => ({
+                        value1: contact.code_groupe.toString(),
+                        value2: contact.code_groupe.toString(),
+                        value3: contact.code_type_de_Site,
+                        value4: contact.code_site_suivi.toString(),
+                        value5: contact.code_utilisateur_suivant.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

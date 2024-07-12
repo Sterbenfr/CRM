@@ -169,6 +169,7 @@ function ContactEntitePage({
     return (
         <>
             <div className={style.page}>
+            <h1 className={style.lg}>Societe-site-link</h1>
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_entite.toString(),
@@ -185,6 +186,19 @@ function ContactEntitePage({
                         },
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`,
                     }}
+                    attribut={{
+                        att1: 'Code entite',
+                        att2: 'Code type de site',
+                        att3: 'Code site suivi',
+                        att4: 'Code utilisateur suivant',
+                    }}
+                    searchItems={contacts.map(contact => ({
+                        value1: contact.code_entite.toString(),
+                        value2: contact.code_entite.toString(),
+                        value3: contact.code_type_site,
+                        value4: contact.code_site_suivi.toString(),
+                        value5: contact.code_utilisateur_suivant.toString(),
+                    }))}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
