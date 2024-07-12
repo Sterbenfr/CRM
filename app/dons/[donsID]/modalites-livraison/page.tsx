@@ -267,7 +267,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: heurePrevueLivraison,
                 onInputChange: handleHeurePrevueLivraison,
-                placeholder: 'Exemple: 14:00',
+                placeholder: 'Exemple: 14:00:00',
             },
             {
                 id: 'adresse_enlevement',
@@ -275,6 +275,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 placeholder: 'Exemple: 1 rue de la Paix, 75000 Paris',
                 value: adresseEnlevement,
                 maxLength: 255,
+                required: true,
                 onInputChange: handleAdresseEnlevement,
             },
             {
@@ -323,6 +324,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 url: '../../api/select/sites',
                 createURL: '/sites',
                 maxLength: 255,
+                required: true,
                 onInputChange: handleAdresseLivraison,
             },
             {
@@ -369,6 +371,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombrePalettesPrevu,
                 placeholder: 'Exemple: 10',
+                required: true,
                 onInputChange: handleNombrePalettesPrevu,
             },
             {
@@ -376,6 +379,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombrePalettesConsigneesPrevu,
                 placeholder: 'Exemple: 7',
+                required: true,
                 onInputChange: handleNombrePalettesConsigneesPrevu,
             },
             {
@@ -383,6 +387,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombreCartonsPrevu,
                 placeholder: 'Exemple: 34',
+                required: true,
                 onInputChange: handleNombreCartonsPrevu,
             },
             {
@@ -390,6 +395,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: poidsPrevuKg,
                 placeholder: 'Exemple: 580',
+                required: true,
                 onInputChange: handlePoidsPrevuKg,
             }, //pas negatif
             {
@@ -397,6 +403,8 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'input',
                 value: produitsSurPalettes,
                 placeholder: 'Exemple: O (pour oui) ou N (pour non)',
+                required: true,
+                maxLength: 1,
                 onInputChange: handleProduitsSurPalettes,
             },
             {
@@ -444,6 +452,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 } = (await res.json())[0]
                 setTypeDonData(data)
             }
+
             if (
                 typeDonData !== undefined &&
                 typeDonData.code_type_don === 'MAR' &&

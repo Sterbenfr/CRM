@@ -51,6 +51,9 @@ const List: React.FC<{
                 method: 'DELETE',
             })
         })
+        setTimeout(() => {
+            window.location.reload()
+        }, 100)
     }
 
     const searchFunction = (e: React.FormEvent<HTMLInputElement>) => {

@@ -57,8 +57,8 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`,
                     }}
                     attribut={{
-                        att1: 'Code type frequence cerfa',
-                        att2: 'Définition',
+                        att1: 'Code',
+                        att2: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (

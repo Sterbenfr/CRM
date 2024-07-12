@@ -294,8 +294,8 @@ const PopUp: React.FC<PopUpProps> = ({
                     // Handle error (e.g., show an error message)
                 }
             }
-            inputs[7].value = filePath
-            inputs[19].value = file2Path
+            /*inputs[7].value = filePath
+            inputs[19].value = file2Path*/
             const inputsData = inputs.reduce<{
                 [key: string]: string | boolean | null
             }>((acc, input) => {
@@ -438,6 +438,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                         key={input.id}
                                         type='number'
                                         required={input.required}
+                                        placeholder={input.placeholder}
                                         className={style.selectF}
                                         value={
                                             input.value === null
