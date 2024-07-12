@@ -43,13 +43,15 @@ export interface Don {
 function DonsPage() {
     const [EntiteDonatrice, setEntiteDonatrice] = useState('')
     const [datePropositionDon, setDatePropositionDon] = useState(new Date())
+    const [codeContactEntiteDonatrice, setCodeContactEntiteDonatrice] =
+        useState('')
     const [selectedTypeCompetence, setSelectedTypeCompetence] = useState('')
     const [selectedTypeMarchandise, setSelectedTypeMarchandise] =
         useState('ALI')
-    const [selectedTypeDon, setSelectedTypeDon] = useState('FIN')
+    const [selectedTypeDon, setSelectedTypeDon] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
-    const [statutAcceptationDon, setStatutAcceptationDon] = useState('A')
+    const [statutAcceptationDon, setStatutAcceptationDon] = useState('')
     const [indicateurRemerciement, setindicateurRemerciement] = useState(false)
     const [cerfaFait, setCerfaFait] = useState(false)
 
@@ -110,6 +112,12 @@ function DonsPage() {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setEntiteDonatrice(event.target.value)
+    }
+
+    const handleCodeContactEntiteDonatriceChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeContactEntiteDonatrice(event.target.value)
     }
 
     const handleSiteBeneficiaireDonChange = (
@@ -296,8 +304,10 @@ function DonsPage() {
                 {
                     id: 'code_contact_Entite_donatrice',
                     type: 'select',
-                    value: null,
+                    value: codeContactEntiteDonatrice,
                     url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
+                    required: true,
+                    onChange: handleCodeContactEntiteDonatriceChange,
                 }, //si c'est un nouveau contact ?
                 {
                     id: 'code_type_don',
@@ -335,6 +345,7 @@ function DonsPage() {
                     placeholder: 'Exemple: Jean Dupont',
                     value: codeUtilisateurSaisieDon,
                     url: '../api/select/sites/utilisateurs',
+                    required: true,
                     onInputChange: handleCodeUtilisateurSaisieDonChange,
                 }, //default : login
                 {

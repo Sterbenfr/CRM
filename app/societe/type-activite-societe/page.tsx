@@ -59,8 +59,8 @@ function TypesActiviteSocietesPage() {
                         url: 'http://localhost:3000/api/societe/type-activite-societe',
                     }}
                     attribut={{
-                        att1: 'Code type activite societe',
-                        att2: 'Définition',
+                        att1: 'Code',
+                        att2: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (

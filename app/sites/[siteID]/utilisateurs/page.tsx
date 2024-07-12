@@ -81,9 +81,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         setTelPerso(event.target.value)
     }
 
-    const handleMailChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
+    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMail(event.target.value)
     }
 
@@ -179,6 +177,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 value: telPerso,
                 maxLength: 12,
                 placeholder: 'Exemple: 0601020304',
+                required: true,
                 onInputChange: handleTelPersoChange,
             }, // soit le tel soit le mail pas rien
             {
@@ -187,6 +186,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 value: mail,
                 maxLength: 50,
                 placeholder: 'Exemple: Jean.dupont@gmail.com',
+                required: true,
                 onInputChange: handleMailChange,
             },
             {
@@ -198,6 +198,12 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 onInputChange: handleCommentairesChange,
             },
         ]
+
+        if (fields[6].value !== '') {
+            fields[7].required = false
+        } else if (fields[7].value !== '') {
+            fields[6].required = false
+        }
 
         return fields
     }, [

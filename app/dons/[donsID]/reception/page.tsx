@@ -86,7 +86,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                 <h1 className={style.lg}>Réception</h1>
                 <List
                     items={Receptions.map(Reception => ({
-                        value1: Reception.code_Don.toString(),
+                        value1: Reception.numero_reception.toString(),
                         value2: Reception.numero_livraison.toString(),
                         value3: Reception.date_reception
                             .toString()
@@ -103,13 +103,13 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         url: `http://localhost:3000/api/dons/${params.donsID}/reception`,
                     }}
                     attribut={{
-                        att1: 'Numéro de réception',
+                        att1: 'Numéro de livraison',
                         att2: 'Date de réception',
                         att3: 'Nombre de palettes reçues',
                         att4: 'Poids reçu en kg',
                     }}
                     searchItems={search.map(Reception => ({
-                        value1: Reception.code_Don.toString(),
+                        value1: Reception.numero_reception.toString(),
                         value2: Reception.numero_livraison.toString(),
                         value3: Reception.date_reception
                             .toString()
@@ -134,10 +134,10 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                             fields={[
                                 {
                                     id: 'code_Don',
-                                    type: 'search',
-                                    value: '',
-                                    url: `../../api/select/dons/${params.donsID}/select-dons`,
+                                    type: 'input',
+                                    value: params.donsID,
                                     required: true,
+                                    disabled: true,
                                 },
                                 {
                                     id: 'numero_livraison',
@@ -155,8 +155,9 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                 {
                                     id: 'heure_reception',
                                     type: 'input',
-                                    value: '',
+                                    value: null,
                                     placeholder: 'Exemple: 14:00:00',
+                                    maxLength: 8,
                                 },
                                 {
                                     id: 'nombre_palettes_recues',

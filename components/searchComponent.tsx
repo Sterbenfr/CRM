@@ -73,7 +73,7 @@ export default function SearchComponent({
             if (
                 option.label
                     .toLowerCase()
-                    .startsWith(e.target.value.toLowerCase())
+                    .includes(e.target.value.toLowerCase())
             ) {
                 selectedOptions.push(option)
             }

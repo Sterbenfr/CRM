@@ -54,8 +54,8 @@ function SiteTypesPage() {
                         url: 'http://localhost:3000/api/sites/type-site-types',
                     }}
                     attribut={{
-                        att1: 'Code type site',
-                        att2: 'Définition',
+                        att1: 'Code',
+                        att2: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (

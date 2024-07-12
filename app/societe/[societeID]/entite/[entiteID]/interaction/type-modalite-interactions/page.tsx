@@ -63,8 +63,8 @@ function Modalites_InteractionsPage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
                     }}
                     attribut={{
-                        att1: 'Code type modalité interaction',
-                        att2: 'Définition',
+                        att1: 'Code',
+                        att2: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (

@@ -59,8 +59,8 @@ function InteractionsPage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
                     }}
                     attribut={{
-                        att1: 'Code type interaction',
-                        att2: 'Définition',
+                        att1: 'Code',
+                        att2: 'Libellé',
                     }}
                 />
                 {isPopUpOpen && (
