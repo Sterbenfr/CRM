@@ -272,8 +272,10 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
+
         }else{
             scrollToTop()
+
         }
     }
 
@@ -285,7 +287,7 @@ const PopUp: React.FC<PopUpProps> = ({
             date_reception: 'une réception',
             date_prevue_livraison: 'une livraison',
             Logo: 'une entreprise',
-            site_Web: 'un groupe',
+            commentaires: 'un groupe',
             logo: 'une entité',
             nom: 'un contact',
             adresse: 'un site',
@@ -293,15 +295,14 @@ const PopUp: React.FC<PopUpProps> = ({
             nom_commercial: 'un prestataire',
             date_interaction: 'une interaction',
         }
-
-        return tableNameMapping[fieldId] || 'Entrée' // SI pas d'id donne entrée comme titre
+        return tableNameMapping[fieldId] || 'un type'
     }
 
     useEffect(() => {
         if (fields.length > 0) {
-            const firstFieldId = fields[2].id
+            const firstFieldId = fields[2]?.id || fields[0]?.id
             const tableName = getTableNameFromFieldId(firstFieldId)
-            setPopupTitle(`Ajouter ${tableName}`) // MAJ le titre du popup en fonction du nom de la table
+            setPopupTitle(`Ajouter ${tableName}`)
         }
     }, [fields])
 
