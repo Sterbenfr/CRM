@@ -157,7 +157,6 @@ const fieldLabels: { [key: string]: string } = {
     date_arret_contact: 'Date arrêt contact',
 }
 
-
 type Field = {
     id: string
     type:
@@ -195,8 +194,10 @@ const PopUp: React.FC<PopUpProps> = ({
     onFieldChange,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
-    
-    const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
+
+    const [validationErrors, setValidationErrors] = useState<{
+        [key: string]: string
+    }>({})
 
     useEffect(() => {
         setInputs(fields)
@@ -225,38 +226,38 @@ const PopUp: React.FC<PopUpProps> = ({
         setValidationErrors(errors)
         return Object.keys(errors).length === 0
     }
-    
+
     const handleAction = async () => {
         if (validateInputs()) {
             const endpoint = url
 
-        const inputsData = inputs.reduce<{
-            [key: string]: string | boolean | null
-        }>((acc, input) => {
-            acc[input.id] = input.value
-            return acc
-        }, {})
+            const inputsData = inputs.reduce<{
+                [key: string]: string | boolean | null
+            }>((acc, input) => {
+                acc[input.id] = input.value
+                return acc
+            }, {})
 
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(inputsData),
-            })
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(inputsData),
+                })
 
-            if (response.ok) {
-                const jsonResponse = await response.json()
-                console.log('Submission successful', jsonResponse)
-                onClose()
-            } else {
-                console.error('Submission failed', await response.text())
+                if (response.ok) {
+                    const jsonResponse = await response.json()
+                    console.log('Submission successful', jsonResponse)
+                    onClose()
+                } else {
+                    console.error('Submission failed', await response.text())
+                }
+            } catch (error) {
+                console.error('Network error:', error)
             }
-        } catch (error) {
-            console.error('Network error:', error)
-        }
-        onClose()
+            onClose()
         }
     }
 
@@ -268,7 +269,7 @@ const PopUp: React.FC<PopUpProps> = ({
             date_reception: 'une réception',
             date_prevue_livraison: 'une livraison',
             Logo: 'une entreprise',
-            site_Web: 'un groupe',
+            commentaires: 'un groupe',
             logo: 'une entité',
             nom: 'un contact',
             adresse: 'un site',
@@ -276,15 +277,14 @@ const PopUp: React.FC<PopUpProps> = ({
             nom_commercial: 'un prestataire',
             date_interaction: 'une interaction',
         }
-
-        return tableNameMapping[fieldId] || 'Entrée' // SI pas d'id donne entrée comme titre
+        return tableNameMapping[fieldId] || 'un type'
     }
 
     useEffect(() => {
         if (fields.length > 0) {
-            const firstFieldId = fields[2].id
+            const firstFieldId = fields[2]?.id || fields[0]?.id
             const tableName = getTableNameFromFieldId(firstFieldId)
-            setPopupTitle(`Ajouter ${tableName}`) // MAJ le titre du popup en fonction du nom de la table
+            setPopupTitle(`Ajouter ${tableName}`)
         }
     }, [fields])
 
@@ -417,10 +417,10 @@ const PopUp: React.FC<PopUpProps> = ({
                         }
                     })()}
                     {validationErrors[input.id] && (
-                    <span className={style.error}>
-                        {validationErrors[input.id]}
-                    </span>
-                )}
+                        <span className={style.error}>
+                            {validationErrors[input.id]}
+                        </span>
+                    )}
                 </div>
             ))}
             <div className={style.BTNdiv}>
