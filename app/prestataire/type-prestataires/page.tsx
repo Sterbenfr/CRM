@@ -60,24 +60,26 @@ function PrestatairesPage() {
                     }}
                 />
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url='http://localhost:3000/api/prestataire/type-prestataires'
-                        fields={[
-                            {
-                                id: 'code_type_de_Prestataire',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                            {
-                                id: 'libelle',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUpType}>
+                        <PopUp
+                            onClose={handleClose}
+                            url='http://localhost:3000/api/prestataire/type-prestataires'
+                            fields={[
+                                {
+                                    id: 'code_type_de_Prestataire',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                },
+                                {
+                                    id: 'libelle',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>
