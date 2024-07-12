@@ -146,6 +146,7 @@ function PrestatairesPage() {
             url?: string
             createURL?: string
             required?: boolean
+            maxlength?: number
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[]
@@ -192,6 +193,7 @@ function PrestatairesPage() {
                 id: 'raison_sociale',
                 type: 'input',
                 value: raisonSociale,
+                required: true,
                 placeholder: 'Exemple: Entreprise Alpha',
                 maxLength: 30,
                 onInputChange: handleRaisonSocialeChange,
@@ -301,29 +303,17 @@ function PrestatairesPage() {
                 onInputChange: handleDateArretActiviteDuPrestataireChange,
             },
         ]
-        if (siren.length > 9) {
-            setSiren(siren.slice(0, 9))
-            alert('Le Siren doit contenir 9 chiffres')
-        }
-        if (siret.length > 14) {
-            setSiret(siret.slice(0, 14))
-            alert('Le Siret doit contenir 14 chiffres')
-        }
-        if (telephone.length > 12) {
-            setTelephone(telephone.slice(0, 12))
-            alert('Le téléphone doit contenir 12 chiffres')
-        }
 
-        if (commentaires.length > 200) {
-            setCommentaires(commentaires.slice(0, 200))
-            alert('Les commentaires doivent contenir moins de 200 caractères')
+        if (
+            dateArretActiviteDuPrestataire &&
+            dateArretActiviteDuPrestataire?.toISOString().split('T')[0] <
+                new Date()?.toISOString().split('T')[0]
+        ) {
+            setDateArretActiviteDuPrestataire(undefined)
         }
-        if (telephoneContactPrestataire.length > 12) {
-            setTelephoneContactPrestataire(
-                telephoneContactPrestataire.slice(0, 12),
-            )
-            alert('Le téléphone doit contenir 12 chiffres maximum')
-        }
+        
+
+        
 
         return fields
     }, [
@@ -357,7 +347,7 @@ function PrestatairesPage() {
             const { data, total }: { data: Prestataire[]; total: number } =
                 await res.json()
             setPrestataires(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total)
             setFields(generateFields())
         }
 
@@ -378,10 +368,8 @@ function PrestatairesPage() {
 
         fetchDons()
         fetchSearchDons()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, generateFields])
+    }, [page, itemsPerPage, generateFields, search])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
@@ -430,8 +418,8 @@ function PrestatairesPage() {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

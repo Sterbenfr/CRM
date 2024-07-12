@@ -156,6 +156,12 @@ const fieldLabels: { [key: string]: string } = {
     numero_portable: 'Numéro de téléphone portable',
     date_arret_contact: 'Date arrêt contact',
 }
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Pour un défilement doux
+    })
+}
 
 type Field = {
     id: string
@@ -228,6 +234,14 @@ const PopUp: React.FC<PopUpProps> = ({
     }
 
     const handleAction = async () => {
+        const isAnyRequiredInputEmpty = inputs.some(
+            input => input.required && !fieldLabels[input.id],
+        )
+
+        if (isAnyRequiredInputEmpty) {
+            scrollToTop()
+            return
+        }
         if (validateInputs()) {
             const endpoint = url
 
@@ -258,6 +272,10 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
+
+        }else{
+            scrollToTop()
+
         }
     }
 
