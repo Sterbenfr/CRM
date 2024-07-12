@@ -37,7 +37,7 @@ export interface Don {
     valeur_cerfa: number
     cerfa_fait: string
     date_cerfa: Date
-    cerfa: Blob //Faire blob
+    cerfa: string
 }
 
 function DonsPage() {
@@ -78,7 +78,7 @@ function DonsPage() {
         useState('')
     const [telephoneDestinataireCerfa, setTelephoneDestinataireCerfa] =
         useState('')
-    const [valeurCerfa, setValeurCerfa] = useState('')
+    const [valeurCerfa, setValeurCerfa] = useState('0')
     const [dateCerfa, setDateCerfa] = useState(new Date())
 
     const [Dons, setDons] = useState<Don[]>([]) // list of dons
@@ -327,7 +327,8 @@ function DonsPage() {
                     maxLength: 200,
                     onInputChange: handleCommentairesChange,
                 },
-                { id: 'pieces_associees', type: 'file', value: null }, //type blob ?
+                { id: 'pieces_associees', type: 'file', value: null },
+
                 {
                     id: 'code_Utilisateur_saisie_don',
                     type: 'search',
@@ -416,7 +417,7 @@ function DonsPage() {
                     id: 'cerfa',
                     type: 'file',
                     value: null,
-                }, //type blob ?
+                },
             ]
 
             const FindIndex = (id: string) => {
@@ -643,6 +644,8 @@ function DonsPage() {
                             onClose={handleClose}
                             url='http://localhost:3000/api/dons'
                             fields={fields} // Use the fields state here
+                            fileUrl='../api/upload/cerfa'
+                            fileUrl2='../api/upload/piece'
                         />
                     </div>
                 )}
