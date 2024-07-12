@@ -52,16 +52,20 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    console.log(Entite)
-
-    if (!Entite.raison_sociale || !Entite.code_type_entite) {
+    
+    if (!Entite.raison_sociale ||
+        !Entite.code_type_entite || 
+        !Entite.code_societe_appartenance ||
+        !Entite.adresse
+    ) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
         )
     }
-
+    
     try {
+        console.log(Entite)
         const query = 'INSERT INTO `Entite` SET ?'
         const [rows] = await pool.query(query, Entite)
         return NextResponse.json(rows)

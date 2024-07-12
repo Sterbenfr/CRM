@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import List from '../../../../components/list'
@@ -62,9 +63,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [codeApe, setCodeApe] = useState('')
     const [codeRna, setCodeRna] = useState('')
     const [codeCee, setCodeCee] = useState('')
-    const [codeSocieteAppartenance, setCodeSocieteAppartenance] = useState(
-        params.societeID,
-    )
     const [adresse, setAdresse] = useState('')
     const [telephone, setTelephone] = useState('')
     const [mail, setMail] = useState('')
@@ -75,9 +73,9 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [codeTypeProduit, setCodeTypeProduit] = useState('')
     const [codeTypeCompetence, setCodeTypeCompetence] = useState('')
     const [commentairesLogistique, setCommentairesLogistique] = useState('')
-    const [presenceQuai, setPresenceQuai] = useState('')
+    const [presenceQuai, setPresenceQuai] = useState(false)
     //const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
-    const [cerfa, setCerfa] = useState('')
+    const [cerfa, setCerfa] = useState(false)
     const [codeFrequenceCerfa, setCodeFrequenceCerfa] = useState('')
     const [dateArretActivite, setDateArretActivite] = useState<Date>()
 
@@ -119,12 +117,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setCodeCee(event.target.value)
-    }
-
-    const handleCodeSocieteAppartenanceChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setCodeSocieteAppartenance(event.target.value)
     }
 
     const handleAdresseChange = (
@@ -185,10 +177,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setCommentairesLogistique(event.target.value)
     }
 
-    const handlePresenceQuaiChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setPresenceQuai(event.target.value)
+    const handlePresenceQuaiChange = () => {
+        setPresenceQuai(!presenceQuai)
     }
 
     /*const handlePiecesAssocieesChange = (
@@ -199,16 +189,13 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         }
     }*/
 
-    const handleCerfaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCerfa(event.target.value)
-    }
-
-    const handleCodeFrequenceCerfaChange = (
-        event: React.ChangeEvent<HTMLSelectElement>,
+   
+   const handleCodeFrequenceCerfaChange = (
+       event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         setCodeFrequenceCerfa(event.target.value)
     }
-
+    
     const handleDateArretActiviteChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -217,6 +204,12 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
 
     const handleClose = () => {
         setIsPopUpOpen(false)
+        setPresenceQuai(false)
+        setCerfa(false)
+    }
+    
+    const handleCerfaChange = () => {
+        setCerfa(!cerfa)
     }
 
     type FieldType =
@@ -238,9 +231,17 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             url?: string
             required?: boolean
             maxLength?: number
+            disabled?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
+            {
+                id: 'code_societe_appartenance',
+                type: 'input',
+                value: params.societeID,
+                required: true,
+                disabled: true,
+            },
             {
                 id: 'raison_sociale',
                 type: 'input',
@@ -276,11 +277,12 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
             {
                 id: 'telephone',
-                type: 'input',
+                type: 'number',
                 value: telephone,
                 maxLength: 12,
                 onInputChange: handleTelephoneChange,
                 placeholder: 'Exemple: 0123456789',
+                required: true,
             }, // tel ou mail obligée
             {
                 id: 'mail',
@@ -288,6 +290,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 value: mail,
                 maxLength: 50,
                 onInputChange: handleMailChange,
+                required: true,
                 placeholder: 'Exemple: Alpha.corp@gmail.com',
             },
             {
@@ -306,7 +309,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             }, // if number !== 14 = pas de validation
             {
                 id: 'code_ape',
-                type: 'input',
+                type: 'number',
                 value: codeApe,
                 maxLength: 5,
                 onInputChange: handleCodeApeChange,
@@ -314,7 +317,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             }, // 4 chiffres et 1 lettre
             {
                 id: 'code_rna',
-                type: 'input',
+                type: 'number',
                 value: codeRna,
                 maxLength: 10,
                 onInputChange: handleCodeRnaChange,
@@ -322,18 +325,11 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             }, // W + 9 chiffres
             {
                 id: 'code_cee',
-                type: 'input',
+                type: 'number',
                 value: codeCee,
                 maxLength: 13,
                 onInputChange: handleCodeCeeChange,
                 placeholder: 'Exemple: 123456789',
-            },
-            {
-                id: 'code_societe_appartenance',
-                type: 'search',
-                value: codeSocieteAppartenance,
-                url: `../../api/select/societe`,
-                onInputChange: handleCodeSocieteAppartenanceChange,
             },
             {
                 id: 'site_internet',
@@ -368,10 +364,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
             {
                 id: 'presence_quai',
-                type: 'input',
-                value: presenceQuai,
-                maxLength: 1,
-                placeholder: 'Exemple: O / N',
+                type: 'checkbox',
+                value: presenceQuai ? 'O' : 'N',
                 onInputChange: handlePresenceQuaiChange,
             }, // checkbox + dans la table
             {
@@ -382,10 +376,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
             {
                 id: 'cerfa',
-                type: 'input',
-                value: cerfa,
-                maxLength: 1,
-                placeholder: 'Exemple: O / N',
+                type: 'checkbox',
+                value: cerfa ? 'O' : 'N',
                 onInputChange: handleCerfaChange,
             }, // checkbox + dans la table
             {
@@ -402,6 +394,47 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 onInputChange: handleDateArretActiviteChange,
             },
         ]
+
+        const FindIndex = (id: string) => {
+            return fields.findIndex(field => field.id === id)
+        }
+
+        if (dateArretActivite === undefined) {
+            fields[FindIndex('date_arret_activite')].value = null
+        }
+
+        if (siret === '') {
+            fields[FindIndex('Siret')].value = null
+        }
+
+        if(codeApe === '') {
+            fields[FindIndex('code_ape')].value = null
+        }
+
+        if(codeRna === '') {
+            fields[FindIndex('code_rna')].value = null
+        }
+
+        if(codeCee === '') {
+            fields[FindIndex('code_cee')].value = null
+        }
+
+        if(codeTypeDon === '') {
+            fields[FindIndex('code_type_don')].value = null
+        }
+
+        if(codeTypeCompetence === '' && codeTypeDon === 'SIP') {
+            fields[FindIndex('code_type_competence')].value = null
+        }
+
+        if (codeTypeProduit === '' && codeTypeDon === 'MAR') {
+            fields[FindIndex('code_type_produit')].value = null
+        }
+
+        if (codeFrequenceCerfa === '') {
+            fields[FindIndex('code_frequence_cerfa')].value = null
+        }
+        
         if (codeTypeDon === 'MAR') {
             fields.splice(15, 0, {
                 id: 'code_type_produit',
@@ -419,30 +452,35 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 onChange: handleCodeTypeCompetenceChange,
             })
         }
+
+        if (fields[5].value !== '') {
+            fields[6].required = false
+        } else if (fields[6].value !== '') {
+            fields[5].required = false
+        }
         return fields
     }, [
-        params,
         raisonSociale,
         nomCommercial,
+        codeTypeEntite,
+        adresse,
+        telephone,
+        mail,
         siret,
         codeApe,
         codeRna,
         codeCee,
-        codeSocieteAppartenance,
-        adresse,
-        telephone,
-        mail,
         siteInternet,
         commentaires,
-        codeTypeEntite,
         codeTypeDon,
-        codeTypeProduit,
-        codeTypeCompetence,
         commentairesLogistique,
         presenceQuai,
         cerfa,
         codeFrequenceCerfa,
         dateArretActivite,
+        codeTypeProduit,
+        codeTypeCompetence,
+        params.societeID,
     ])
 
     useEffect(() => {
@@ -499,12 +537,12 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                     items={Entites.map(entite => ({
                         value1: entite.code_entite.toString(),
                         value2: entite.raison_sociale,
-                        value3: entite.telephone,
-                        value4: entite.mail,
+                        value3: entite.telephone === '' ? '/' : entite.telephone,
+                        value4: entite.mail === '' ? '/' : entite.mail,
                         value5: entite.adresse,
                         value6:
                             entite.date_arret_activite == null
-                                ? ''
+                                ? '/'
                                 : entite.date_arret_activite
                                       .toString()
                                       .split('T')[0],
@@ -522,16 +560,17 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         att2: 'Téléphone',
                         att3: 'Mail',
                         att4: 'Adresse',
+                        att5: 'Date d\'arrêt d\'activité',
                     }}
                     searchItems={search.map(entite => ({
                         value1: entite.code_entite.toString(),
                         value2: entite.raison_sociale,
-                        value3: entite.telephone,
-                        value4: entite.mail,
+                        value3: entite.telephone === '' ? '/' : entite.telephone,
+                        value4: entite.mail === '' ? '/' : entite.mail,
                         value5: entite.adresse,
                         value6:
                             entite.date_arret_activite == null
-                                ? ''
+                                ? '/'
                                 : entite.date_arret_activite
                                       .toString()
                                       .split('T')[0],

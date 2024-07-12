@@ -29,8 +29,8 @@ INSERT INTO Contacts (
     commentaires,
     date_arret_contact
 ) VALUES 
-(1, 'M.', 'Dupont', 'Jean', NULL, 'Directeur', 'Administration', '01 23 45 67 89', '06 12 34 56 78', 'jean.dupont@example.com', 'Premier contact', NULL),
-(2, 'Mme', 'Martin', 'Sophie', NULL, 'Responsable', 'Comptabilité', '01 23 45 67 90', '06 12 34 56 79', 'sophie.martin@example.com', 'Deuxième contact', NULL),
-(3, 'M.', 'Durand', 'Pierre', NULL, 'Technicien', 'Informatique', '01 23 45 67 91', '06 12 34 56 80', 'pierre.durand@example.com', 'Troisième contact', NULL),
-(4, 'Mme', 'Leroy', 'Claire', NULL, 'Assistante', 'Ressources Humaines', '01 23 45 67 92', '06 12 34 56 81', 'claire.leroy@example.com', 'Quatrième contact', NULL),
-(5, 'M.', 'Moreau', 'Louis', NULL, 'Chef de projet', 'Marketing', '01 23 45 67 93', '06 12 34 56 82', 'louis.moreau@example.com', 'Cinquième contact', NULL);
+(1, 'M.', 'Dupont', 'Jean', NULL, 'Directeur', 'Administration', '0123456789', '0612345678', 'jean.dupont@example.com', 'Premier contact', NULL),
+(2, 'Mme', 'Martin', 'Sophie', NULL, 'Responsable', 'Comptabilité', '0123456790', '0612345679', 'sophie.martin@example.com', 'Deuxième contact', NULL),
+(3, 'M.', 'Durand', 'Pierre', NULL, 'Technicien', 'Informatique', '0123456791', '0612345680', 'pierre.durand@example.com', 'Troisième contact', NULL),
+(4, 'Mme', 'Leroy', 'Claire', NULL, 'Assistante', 'Ressources Humaines', '0123456792', '0612345681', 'claire.leroy@example.com', 'Quatrième contact', NULL),
+(5, 'M.', 'Moreau', 'Louis', NULL, 'Chef de projet', 'Marketing', '0123456793', '0612345682', 'louis.moreau@example.com', 'Cinquième contact', NULL);

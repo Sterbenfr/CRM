@@ -21,7 +21,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     const [itemsPerPage, setItemsPerPage] = useState(3)
 
     const [codeSociete, setCodeSociete] = useState('')
-    const [codeTypeDeSite, setCodeTypeDeSite] = useState('AD')
+    const [codeTypeDeSite, setCodeTypeDeSite] = useState('')
     const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
     const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
 
