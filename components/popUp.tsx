@@ -156,7 +156,12 @@ const fieldLabels: { [key: string]: string } = {
     numero_portable: 'Numéro de téléphone portable',
     date_arret_contact: 'Date arrêt contact',
 }
-
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Pour un défilement doux
+    })
+}
 
 type Field = {
     id: string
@@ -195,8 +200,10 @@ const PopUp: React.FC<PopUpProps> = ({
     onFieldChange,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
-    
-    const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
+
+    const [validationErrors, setValidationErrors] = useState<{
+        [key: string]: string
+    }>({})
 
     useEffect(() => {
         setInputs(fields)
@@ -225,38 +232,48 @@ const PopUp: React.FC<PopUpProps> = ({
         setValidationErrors(errors)
         return Object.keys(errors).length === 0
     }
-    
+
     const handleAction = async () => {
+        const isAnyRequiredInputEmpty = inputs.some(
+            input => input.required && !fieldLabels[input.id],
+        )
+
+        if (isAnyRequiredInputEmpty) {
+            scrollToTop()
+            return
+        }
         if (validateInputs()) {
             const endpoint = url
 
-        const inputsData = inputs.reduce<{
-            [key: string]: string | boolean | null
-        }>((acc, input) => {
-            acc[input.id] = input.value
-            return acc
-        }, {})
+            const inputsData = inputs.reduce<{
+                [key: string]: string | boolean | null
+            }>((acc, input) => {
+                acc[input.id] = input.value
+                return acc
+            }, {})
 
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(inputsData),
-            })
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(inputsData),
+                })
 
-            if (response.ok) {
-                const jsonResponse = await response.json()
-                console.log('Submission successful', jsonResponse)
-                onClose()
-            } else {
-                console.error('Submission failed', await response.text())
+                if (response.ok) {
+                    const jsonResponse = await response.json()
+                    console.log('Submission successful', jsonResponse)
+                    onClose()
+                } else {
+                    console.error('Submission failed', await response.text())
+                }
+            } catch (error) {
+                console.error('Network error:', error)
             }
-        } catch (error) {
-            console.error('Network error:', error)
-        }
-        onClose()
+            onClose()
+        }else{
+            scrollToTop()
         }
     }
 
@@ -417,10 +434,10 @@ const PopUp: React.FC<PopUpProps> = ({
                         }
                     })()}
                     {validationErrors[input.id] && (
-                    <span className={style.error}>
-                        {validationErrors[input.id]}
-                    </span>
-                )}
+                        <span className={style.error}>
+                            {validationErrors[input.id]}
+                        </span>
+                    )}
                 </div>
             ))}
             <div className={style.BTNdiv}>
