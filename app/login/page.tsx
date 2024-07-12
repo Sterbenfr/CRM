@@ -79,56 +79,64 @@ const LoginPage = () => {
         <div>
             {session ? (
                 <>
-                    <form
-                        className={style.formu}
-                        onSubmit={handleChangePassword}
-                    >
-                        <h1 className={style.lg}>Se deconnecter :</h1>
-                        <div className={style.login}>
-                            <button
-                                className={style.submit}
-                                onClick={handleSignOut}
+                    <div className={style.pageLog}>
+                        <div>
+                            <form
+                                className={style.formu}
+                                onSubmit={handleChangePassword}
                             >
-                                Déconnexion
-                            </button>
+                                <h1 className={style.lg}>Se deconnecter :</h1>
+                                <div className={style.login}>
+                                    <button
+                                        className={style.submit}
+                                        onClick={handleSignOut}
+                                    >
+                                        Déconnexion
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                    <form
-                        className={style.formu}
-                        onSubmit={handleChangePassword}
-                    >
-                        <h1 className={style.lg}>Changer le mot de passe :</h1>
-                        <div className={style.log}>
-                            <div className={style.login}>
-                                <input
-                                    className={style.input}
-                                    name='oldPassword'
-                                    type='password'
-                                    placeholder='Ancien mot de passe'
-                                    required
-                                />
-                            </div>
-                            <div className={style.login}>
-                                <input
-                                    className={style.input}
-                                    name='newPassword'
-                                    type='password'
-                                    placeholder='Nouveau mot de passe'
-                                    required
-                                />
-                            </div>
+                        <div>
+                            <form
+                                className={style.formu}
+                                onSubmit={handleChangePassword}
+                            >
+                                <h1 className={style.lg}>
+                                    Changer le mot de passe :
+                                </h1>
+                                <div className={style.log}>
+                                    <div className={style.login}>
+                                        <input
+                                            className={style.input}
+                                            name='oldPassword'
+                                            type='password'
+                                            placeholder='Ancien mot de passe'
+                                            required
+                                        />
+                                    </div>
+                                    <div className={style.login}>
+                                        <input
+                                            className={style.input}
+                                            name='newPassword'
+                                            type='password'
+                                            placeholder='Nouveau mot de passe'
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <button className={style.submit} type='submit'>
+                                    Changer le mot de passe
+                                </button>
+                                <p
+                                    style={{
+                                        fontSize: '20px',
+                                        color: '#e5007d',
+                                        font: 'bold',
+                                    }}
+                                ></p>
+                            </form>
                         </div>
-                        <button className={style.submit} type='submit'>
-                            Changer le mot de passe
-                        </button>
-                        <p
-                            style={{
-                                fontSize: '20px',
-                                color: '#e5007d',
-                                font: 'bold',
-                            }}
-                        ></p>
-                    </form>
+                    </div>
                 </>
             ) : (
                 <form className={style.formu} onSubmit={handleSubmit}>
