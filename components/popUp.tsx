@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SelectComponent from './select-component'
 import SearchComponent from './searchComponent'
+import FileUpload from './uploadComponent'
 import Image from 'next/image'
 import style from '../styles/components.module.css'
 
@@ -191,6 +192,8 @@ interface PopUpProps {
     fields: Field[]
     url: string
     onFieldChange?: (id: string, value: string | boolean) => void // New callback function
+    fileUrl?: string
+    fileUrl2?: string
 }
 
 const PopUp: React.FC<PopUpProps> = ({
@@ -198,8 +201,12 @@ const PopUp: React.FC<PopUpProps> = ({
     fields,
     url,
     onFieldChange,
+    fileUrl,
+    fileUrl2,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
+    const [file, setFile] = useState<File | null>(null)
+    const [file2, setFile2] = useState<File | null>(null)
 
     const [validationErrors, setValidationErrors] = useState<{
         [key: string]: string
@@ -244,7 +251,51 @@ const PopUp: React.FC<PopUpProps> = ({
         }
         if (validateInputs()) {
             const endpoint = url
+            let filePath
+            let file2Path
+            if (fileUrl) {
+                const formData = new FormData()
+                formData.append('image', file as Blob)
+                console.log('FormData prepared:', formData)
+                try {
+                    const response = await fetch(fileUrl, {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    if (!response.ok) {
+                        throw new Error('File upload failed')
+                    }
+                    const data = await response.json()
+                    filePath = data.filePath
+                    console.log('File uploaded to fileUrl:', filePath)
+                } catch (error) {
+                    console.error('Error uploading file:', error)
+                    // Handle error (e.g., show an error message)
+                }
+            }
 
+            if (fileUrl2) {
+                const formData = new FormData()
+                formData.append('image', file2 as Blob)
+                console.log('FormData prepared:', formData)
+                try {
+                    const response = await fetch(fileUrl2, {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    if (!response.ok) {
+                        throw new Error('File upload failed')
+                    }
+                    const data = await response.json()
+                    file2Path = data.filePath
+                    console.log('File uploaded to fileUrl2:', file2Path)
+                } catch (error) {
+                    console.error('Error uploading file:', error)
+                    // Handle error (e.g., show an error message)
+                }
+            }
+            inputs[7].value = filePath
+            inputs[19].value = file2Path
             const inputsData = inputs.reduce<{
                 [key: string]: string | boolean | null
             }>((acc, input) => {
@@ -252,6 +303,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 return acc
             }, {})
 
+            console.log('after reduce : ', inputsData)
             try {
                 const response = await fetch(endpoint, {
                     method: 'POST',
@@ -272,10 +324,8 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
-
-        }else{
+        } else {
             scrollToTop()
-
         }
     }
 
@@ -371,6 +421,17 @@ const PopUp: React.FC<PopUpProps> = ({
                                         onInput={input.onInputChange}
                                     />
                                 )
+                            case 'file':
+                                return (
+                                    <FileUpload
+                                        setFile={
+                                            input.id === 'pieces_associees'
+                                                ? setFile
+                                                : setFile2
+                                        }
+                                    />
+                                )
+
                             case 'number':
                                 return (
                                     <input
