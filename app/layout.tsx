@@ -16,14 +16,14 @@ const inter = Mukta({ weight: '500', subsets: ['latin'] })
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
     return (
-        <html lang='en'>
-            <body className={inter.className}>
+        <html className={inter.className} lang='en'>
+            <body>
                 <SessionProvider session={session}>
                     <NavBar session={session}>{children}</NavBar>
                     <NotLogin></NotLogin>
-                    <Footer />
                 </SessionProvider>
             </body>
+            <Footer />
         </html>
     )
 }
