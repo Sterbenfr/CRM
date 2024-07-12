@@ -51,6 +51,10 @@ function TypeDonsPage() {
                         },
                         url: 'http://localhost:3000/api/dons/type-don',
                     }}
+                    attribut={{
+                        att1: 'Code',
+                        att2: 'Libellé',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp

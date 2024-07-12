@@ -5,6 +5,7 @@ import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface ModalitesLivraison {
     numero_livraison: number
@@ -414,8 +415,12 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             },
         ]
 
+        const FindIndex = (id: string) => {
+            return fields.findIndex(field => field.id === id) + 1
+        }
+
         if (codeTypeLivraison === 'TRA') {
-            fields.push({
+            fields.splice(4, 0, {
                 id: 'code_Prestataire_transporteur',
                 type: 'search',
                 value: codePrestataireTransporteur,
@@ -424,6 +429,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 onInputChange: handleCodePrestataireTransporteur,
             })
         }
+
         const typeDon = async () => {
             if (typeDonData === undefined) {
                 const res = await fetch(
@@ -443,7 +449,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 typeDonData.code_type_don === 'MAR' &&
                 typeDonData.code_type_produits === 'ALI'
             ) {
-                fields.push({
+                fields.splice(FindIndex('produits_sur_palettes'), 0, {
                     id: 'temperature_conserv_produits',
                     type: 'number',
                     placeholder: 'Exemple: 27',
@@ -557,13 +563,10 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison`,
                     }}
                     attribut={{
-                        att1: ' ',
-                        att2: 'Code don',
-                        att3: 'Date prévue livraison',
-                        att4: 'Téléphone contact enlèvement',
-                        att5: 'Statut don',
-                        att6: ' ',
-                        att7: ' ',
+                        att1: 'Code don',
+                        att2: 'Date prévue livraison',
+                        att3: "Téléphone du contact de l'enlèvement",
+                        att4: "Mail du contact de l'enlèvement",
                     }}
                     searchItems={search.map(ModalitesLivraison => ({
                         value1: ModalitesLivraison.numero_livraison.toString(),
@@ -592,6 +595,11 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        { label: 'Types de livraison', url: 'type-livraison' },
+                    ]}
+                />
             </div>
         </>
     )

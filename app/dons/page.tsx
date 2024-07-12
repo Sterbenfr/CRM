@@ -7,6 +7,7 @@ import PopUp from '@/components/popUp'
 import { useCallback } from 'react'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../styles/components.module.css'
+import TypesButtons from '@/components/TypesButtons'
 
 export interface Don {
     code_Don: number
@@ -48,7 +49,7 @@ function DonsPage() {
     const [selectedTypeDon, setSelectedTypeDon] = useState('FIN')
     const [commentaires, setCommentaires] = useState('')
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
-    const [statutAcceptationDon, setStatutAcceptationDon] = useState('B')
+    const [statutAcceptationDon, setStatutAcceptationDon] = useState('A')
     const [indicateurRemerciement, setindicateurRemerciement] = useState(false)
     const [cerfaFait, setCerfaFait] = useState(false)
 
@@ -418,6 +419,10 @@ function DonsPage() {
                 }, //type blob ?
             ]
 
+            const FindIndex = (id: string) => {
+                return fields.findIndex(field => field.id === id) + 1
+            }
+
             if (debutMiseDispo !== new Date()) {
                 setLastDebutMiseDispo(debutMiseDispo)
                 if (debutMiseDispo > finMiseDispo) {
@@ -440,7 +445,7 @@ function DonsPage() {
             }
 
             if (selectedTypeDon === 'MAR') {
-                fields.push({
+                fields.splice(4, 0, {
                     id: 'code_type_produits',
                     type: 'select',
                     value: selectedTypeMarchandise,
@@ -449,8 +454,20 @@ function DonsPage() {
                 })
             }
 
-            if (statutAcceptationDon !== 'B') {
-                fields.push({
+            if (
+                selectedTypeDon === 'MAR' &&
+                selectedTypeMarchandise === 'ALI'
+            ) {
+                fields.splice(5, 0, {
+                    id: 'code_mode_conservation_produits',
+                    type: 'select', //que si code_type_produits = alimentaire
+                    value: null,
+                    url: '../api/dons/type-mode-conservations-produits',
+                })
+            }
+
+            if (statutAcceptationDon !== 'A') {
+                fields.splice(FindIndex('statut_acceptation_don'), 0, {
                     id: 'date_acceptation_refus_don',
                     type: 'date',
                     value: dateAcceptationRefusDon.toISOString().split('T')[0],
@@ -458,17 +475,8 @@ function DonsPage() {
                 }) //que si status different de attente)
             }
 
-            if (cerfaFait !== false) {
-                fields.push({
-                    id: 'date_cerfa',
-                    type: 'date',
-                    value: dateCerfa.toISOString().split('T')[0],
-                    onInputChange: handleDateCerfaChange,
-                }) // depend de cerfa_fait
-            }
-
             if (indicateurRemerciement !== false) {
-                fields.push({
+                fields.splice(FindIndex('indicateur_remerciement'), 0, {
                     id: 'date_remerciement',
                     type: 'date',
                     value: dateRemerciement.toISOString().split('T')[0],
@@ -476,24 +484,20 @@ function DonsPage() {
                 }) //depend de indicateur_remerciement
             }
 
-            if (
-                selectedTypeDon === 'MAR' &&
-                selectedTypeMarchandise === 'ALI'
-            ) {
-                fields.push({
-                    id: 'code_mode_conservation_produits',
-                    type: 'select', //que si code_type_produits = alimentaire
-                    value: null,
-                    url: '../api/dons/type-mode-conservations-produits',
-                })
+            if (cerfaFait !== false) {
+                fields.splice(FindIndex('cerfa_fait'), 0, {
+                    id: 'date_cerfa',
+                    type: 'date',
+                    value: dateCerfa.toISOString().split('T')[0],
+                    onInputChange: handleDateCerfaChange,
+                }) // depend de cerfa_fait
             }
+
             if (EntiteDonatrice !== undefined && fields[2] !== undefined) {
                 fields[2].url = `../api/select/societe/entite/${parseInt(
                     EntiteDonatrice,
                 )}/contact`
-                console.log(fields[2].url)
             }
-            console.log(EntiteDonatrice)
             return fields
         },
         [
@@ -642,6 +646,20 @@ function DonsPage() {
                         />
                     </div>
                 )}
+                <TypesButtons
+                    items={[
+                        { label: 'Types de don', url: 'type-don' },
+                        {
+                            label: 'Types de compétence',
+                            url: 'type-competences',
+                        },
+                        { label: 'Types de produit', url: 'type-produits' },
+                        {
+                            label: 'Types de conservation des produits',
+                            url: 'type-mode-conservation-produits',
+                        },
+                    ]}
+                />
             </div>
         </>
     )
