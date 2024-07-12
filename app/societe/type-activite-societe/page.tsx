@@ -63,7 +63,9 @@ function TypesActiviteSocietesPage() {
                         att2: 'Libellé',
                     }}
                 />
+                {''}
                 {isPopUpOpen && (
+                    <div className={style.PopUpType}>
                     <PopUp
                         onClose={handleClose}
                         url='http://localhost:3000/api/societe'
@@ -84,7 +86,9 @@ function TypesActiviteSocietesPage() {
                             },
                         ]}
                     />
+                    </div>
                 )}
+                
             </div>
         </>
     )

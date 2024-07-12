@@ -46,9 +46,9 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
-        !societes.nom_commercial ||
+        !societes.Siren ||
         !societes.code_type_activite_Societe ||
-        !societes.code_Groupe_appartenance
+        !societes.raison_sociale
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
@@ -57,6 +57,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log(societes)
         const query = 'INSERT INTO `entreprise` SET ?'
         const [rows] = await pool.query(query, societes)
         return NextResponse.json(rows)

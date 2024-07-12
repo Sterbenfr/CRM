@@ -48,7 +48,7 @@ function SocietesPage() {
     const [siteWeb, setSiteWeb] = useState('')
     const [Siren, setSiren] = useState('')
     const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] =
-        useState('ADM')
+        useState('')
     const [commentaires, setCommentaires] = useState('')
     const [codeGroupeAppartenance, setCodeGroupeAppartenance] = useState('')
     const [dateArretActiviteSociete, setDateArretActiviteSociete] =
@@ -136,7 +136,7 @@ function SocietesPage() {
                 id: 'raison_sociale',
                 type: 'input',
                 value: raisonSociale,
-                placeholder: 'Exemple: Alpha',
+                placeholder: 'Exemple: Alpha Coproration',
                 required: true,
                 onInputChange: handleRaisonSocialeChange,
                 maxLength: 30,
@@ -145,23 +145,9 @@ function SocietesPage() {
                 id: 'nom_commercial',
                 type: 'input',
                 value: nomCommercial,
-                placeholder: 'Exemple: Nom commercial',
+                placeholder: 'Exemple: Alpha Corp',
                 onInputChange: handleNomCommercialChange,
                 maxLength: 30,
-            },
-            {
-                id: 'Logo',
-                type: 'file',
-                value: null,
-                //onInputChange: handleLogoChange,
-            },
-            {
-                id: 'site_Web',
-                type: 'input',
-                value: siteWeb,
-                placeholder: 'Exemple: http://www.alpha.com/',
-                onInputChange: handleSiteWebChange,
-                maxLength: 255,
             },
             {
                 id: 'Siren',
@@ -177,31 +163,53 @@ function SocietesPage() {
                 type: 'select',
                 value: codeTypeActiviteSociete,
                 url: '../api/societe/type-activite-societe',
+                required: true,
                 onChange: handleCodeTypeActiviteSocieteChange,
+            },
+            {
+                id: 'Logo',
+                type: 'file',
+                value: null,
+                //onInputChange: handleLogoChange,
+            }, // type Blob
+            {
+                id: 'site_Web',
+                type: 'input',
+                value: siteWeb,
+                placeholder: 'Exemple: http://www.alpha.com/',
+                onInputChange: handleSiteWebChange,
+                maxLength: 255,
             },
             {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
                 placeholder: 'Exemple: Societe de service informatique',
-                onInputChange: handleCommentairesChange,
                 maxLength: 200,
+                onInputChange: handleCommentairesChange,
             },
             {
                 id: 'code_Groupe_appartenance',
                 type: 'search',
                 value: codeGroupeAppartenance,
                 url: '../api/select/societe/groupe',
+                placeholder : 'Exemple: Groupe Alpha',
                 onInputChange: handleCodeGroupeAppartenanceChange,
             },
             {
                 id: 'date_arret_activite_Societe',
                 type: 'date',
-                value:
-                    dateArretActiviteSociete?.toISOString().split('T')[0] || '',
+                value: dateArretActiviteSociete?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateArretActiviteSocieteChange,
             },
         ]
+        if (dateArretActiviteSociete === undefined) {
+            fields[8].value = null
+        }
+
+        if (codeGroupeAppartenance === '') {
+            fields[7].value = null
+        }
         return fields
     }, [
         raisonSociale,
@@ -248,8 +256,8 @@ function SocietesPage() {
 
         fetchSocietes()
         fetchSocieteSearch()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, generateFields])
+
+    }, [page, itemsPerPage, generateFields, search])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -269,11 +277,12 @@ function SocietesPage() {
                     items={Societes.map(Societe => ({
                         value1: Societe.code_Societe.toString(),
                         value2: Societe.raison_sociale,
-                        value3: Societe.site_Web,
-                        value4: Societe.commentaires,
-                        value5:
+                        value3: Societe.site_Web == '' ? '/' : Societe.site_Web,
+                        value4: Societe.code_type_activite_Societe,
+                        value5: Societe.commentaires == '' ? '/' : Societe.commentaires,
+                        value6:
                             Societe.date_arret_activite_Societe == null
-                                ? ''
+                                ? '/'
                                 : Societe.date_arret_activite_Societe
                                       .toString()
                                       .split('T')[0],
@@ -289,16 +298,19 @@ function SocietesPage() {
                     attribut={{
                         att1: 'Raison Sociale',
                         att2: 'Site Web',
-                        att3: 'Commentaires',
+                        att3: 'Code type ativite societe',
+                        att4: 'Commentaires',
+                        att5: 'Date Arret Activite',
                     }}
                     searchItems={search.map(Societe => ({
                         value1: Societe.code_Societe.toString(),
                         value2: Societe.raison_sociale,
-                        value3: Societe.site_Web,
-                        value4: Societe.commentaires,
-                        value5:
+                        value3: Societe.site_Web == '' ? '/' : Societe.site_Web,
+                        value4: Societe.code_type_activite_Societe,
+                        value5: Societe.commentaires == '' ? '/' : Societe.commentaires,
+                        value6:
                             Societe.date_arret_activite_Societe == null
-                                ? ''
+                                ? '/'
                                 : Societe.date_arret_activite_Societe
                                       .toString()
                                       .split('T')[0],

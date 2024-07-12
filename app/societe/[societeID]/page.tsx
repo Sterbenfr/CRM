@@ -11,7 +11,7 @@ interface SocieteID {
     Siren: string
     code_type_activite_Societe: string
     commentaires: string
-    code_Societe_appartenance: number
+    code_Groupe_appartenance: number
     date_arret_activite_Societe: Date
 }
 
@@ -120,15 +120,15 @@ export default function SocietePage({
                             Code de la societe d appartenance :
                         </p>
                         <p>
-                            {Societe[0].code_Societe_appartenance == null
+                            {Societe[0].code_Groupe_appartenance== null
                                 ? '/'
-                                : Societe[0].code_Societe_appartenance}
+                                : Societe[0].code_Groupe_appartenance}
                         </p>
                     </div>
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date de l arret de l activite de la societe :
+                            Date de l&apos;arret de l&apos;activite de la societe :
                         </p>
                         <p>
                             {Societe[0].date_arret_activite_Societe == null

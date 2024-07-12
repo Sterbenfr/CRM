@@ -160,7 +160,7 @@ const fieldLabels: { [key: string]: string } = {
 const scrollToTop = () => {
     window.scrollTo({
         top: 0,
-        behavior: 'smooth', // Pour un défilement doux
+        behavior: 'smooth',
     })
 }
 

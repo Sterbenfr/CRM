@@ -90,6 +90,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
             placeholder?: string
             url?: string
             createURL?: string
+            disabled?: boolean
             required?: boolean
             maxLength?: number
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
@@ -104,20 +105,17 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 required: true,
                 onInputChange: handleNomDuGroupeChange,
             },
-            /*
             {
                 id: 'Logo',
                 type: 'file',
                 value: null,
             },
-            */
             {
                 id: 'site_Web',
                 type: 'input',
                 value: siteWeb,
                 placeholder: 'Exemple: http://www.groupealpha.com',
                 maxLength: 255,
-                required: true,
                 onInputChange: handleSiteWebChange,
             },
             {
@@ -137,6 +135,10 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 onInputChange: handleDateArretActiviteDuGroupeChange,
             },
         ]
+
+        if (dateArretActiviteDuGroupe === undefined) {
+            fields[4].value = null
+        }
 
         return fields
     }, [commentaires, dateArretActiviteDuGroupe, nomDuGroupe, siteWeb])
@@ -197,11 +199,11 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                         items={groupes.map(groupe => ({
                             value1: groupe.code_groupe.toString(),
                             value2: groupe.nom_du_Groupe,
-                            value3: groupe.site_Web,
-                            value4: groupe.commentaires,
+                            value3: groupe.site_Web === '' ? '/' : groupe.site_Web,
+                            value4: groupe.commentaires === '' ? '/' : groupe.commentaires,
                             value5:
                                 groupe.date_arret_activite_du_groupe == null
-                                    ? ''
+                                    ? '/'
                                     : groupe.date_arret_activite_du_groupe
                                           .toString()
                                           .split('T')[0],
@@ -218,19 +220,8 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             att1: 'Nom du groupe',
                             att2: 'Site web',
                             att3: 'Commentaire',
+                            att4: 'Date d\'arrêt d\'activité',
                         }}
-                        searchItems={search.map(groupe => ({
-                            value1: groupe.code_groupe.toString(),
-                            value2: groupe.nom_du_Groupe,
-                            value3: groupe.site_Web,
-                            value4: groupe.commentaires,
-                            value5:
-                                groupe.date_arret_activite_du_groupe == null
-                                    ? ''
-                                    : groupe.date_arret_activite_du_groupe
-                                          .toString()
-                                          .split('T')[0],
-                        }))}
                     />
                     <Pagination
                         onPageChange={handlePageChange}

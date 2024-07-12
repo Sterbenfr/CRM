@@ -53,10 +53,6 @@ export async function POST(req: NextApiRequest) {
         !contact.code_site_suivi ||
         !contact.code_utilisateur_suivant
     ) {
-        console.log(contact.code_Societe)
-        console.log(contact.code_type_de_Site)
-        console.log(contact.code_site_suivi)
-        console.log(contact.code_utilisateur_suivant)
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
