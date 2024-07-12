@@ -53,6 +53,10 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
                         },
                         url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`,
                     }}
+                    attribut={{
+                        att1: 'Code',
+                        att2: 'Libellé',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp

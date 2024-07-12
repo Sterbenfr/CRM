@@ -57,6 +57,10 @@ function Mode_Conservations_ProduitsPage() {
                         },
                         url: 'http://localhost:3000/api/dons/type-mode-conservations-produits',
                     }}
+                    attribut={{
+                        att1: 'Code',
+                        att2: 'Libellé',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp

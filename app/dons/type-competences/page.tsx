@@ -53,6 +53,10 @@ function TypeCompetencePage() {
                         },
                         url: 'http://localhost:3000/api/dons/type-competences',
                     }}
+                    attribut={{
+                        att1: 'Code',
+                        att2: 'Libellé',
+                    }}
                 />
                 {isPopUpOpen && (
                     <PopUp
