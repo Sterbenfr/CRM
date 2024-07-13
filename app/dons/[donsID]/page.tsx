@@ -27,7 +27,7 @@ interface DonID {
     date_debut_mise_disposition: Date
     date_fin_mise_disposition: Date
     commentaires: string
-    pieces_associees: Blob
+    pieces_associees: string
     Utilisateur_saisie_don: string
     statut_acceptation_don: string
     date_acceptation_refus_don: Date
@@ -42,7 +42,7 @@ interface DonID {
     valeur_cerfa: number
     cerfa_fait: string
     date_cerfa: Date
-    cerfa: Blob
+    cerfa: string
     code_site_beneficiaire_don: string
     designation_longue: string
 }
@@ -154,7 +154,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         if (event.target.files && event.target.files.length > 0) {
             setModifiedDon({
                 ...modifiedDon,
-                cerfa: event.target.files[0], // Assuming you want to store the first file
+                cerfa: '', // TODO : Add the file to the modifiedDon object
             })
         }
     }
@@ -686,23 +686,41 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     name='cerfa_file'
                                     onChange={handleFileChange}
                                 />
-                            ) : don[0].pieces_associees == null ? (
+                            ) : don[0].cerfa == null ? (
                                 <p>/</p>
-                            ) : typeof don[0].pieces_associees === 'string' ? (
-                                <p>{don[0].pieces_associees}</p>
+                            ) : typeof don[0].cerfa === 'string' ? (
+                                <a href={don[0].cerfa} download='cerfa'>
+                                    Download Cerfa
+                                </a>
                             ) : (
-                                <a
-                                    href={URL.createObjectURL(
-                                        don[0].pieces_associees,
-                                    )}
-                                    download='cerfa'
-                                >
+                                <a href={don[0].cerfa} download='cerfa'>
                                     Download Cerfa
                                 </a>
                             )}
                         </p>
                     </div>
 
+                    <div>
+                        <p className={style.info}>
+                            <p className={style.titre}>Pièce associée :</p>
+                            <p>
+                                {don[0].pieces_associees == null ? (
+                                    '/'
+                                ) : (
+                                    <a
+                                        href={don[0].pieces_associees}
+                                        download={
+                                            'pièce_associée_' +
+                                            don[0].commentaires
+                                        }
+                                    >
+                                        {' '}
+                                        Télécharger la pièce associée
+                                    </a>
+                                )}
+                            </p>
+                        </p>
+                    </div>
                     <div className={style.info}>
                         <a href={`/dons/${params.donsID}/modalites-livraison`}>
                             <p className={style.titre}>
