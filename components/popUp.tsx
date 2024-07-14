@@ -156,6 +156,9 @@ const fieldLabels: { [key: string]: string } = {
     numero_fixe: 'Numéro de téléphone fixe',
     numero_portable: 'Numéro de téléphone portable',
     date_arret_contact: 'Date arrêt contact',
+    //type
+    code: 'Code',
+    libelle: 'Libellé',
 }
 const scrollToTop = () => {
     window.scrollTo({

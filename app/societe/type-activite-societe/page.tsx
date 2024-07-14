@@ -68,7 +68,7 @@ function TypesActiviteSocietesPage() {
                     <div className={style.PopUpType}>
                     <PopUp
                         onClose={handleClose}
-                        url='http://localhost:3000/api/societe'
+                        url='http://localhost:3000/api/societe/type-activite-societe'
                         fields={[
                             {
                                 id: 'code',

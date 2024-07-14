@@ -20,7 +20,6 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 
-    const [codeSociete, setCodeSociete] = useState('')
     const [codeTypeDeSite, setCodeTypeDeSite] = useState('')
     const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
     const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
@@ -56,12 +55,6 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         setIsPopUpOpen(false)
     }
 
-    const handleCodeSocieteChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setCodeSociete(event.target.value)
-    }
-
     const handleCodeTypeDeSiteChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
@@ -92,17 +85,16 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
             createURL?: string
             required?: boolean
             maxLength?: number
+            disabled?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
             {
                 id: 'code_Societe',
-                type: 'search',
-                value: codeSociete,
-                placeholder: 'Exemple: Entreprise Alpha',
-                url: '../../../../../api/select/societe/entite',
+                type: 'input',
+                value: params.societeID,
                 required: true,
-                onInputChange: handleCodeSocieteChange,
+                disabled: true,
             },
             {
                 id: 'code_type_de_Site',
@@ -133,7 +125,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         ]
 
         return fields
-    }, [codeSociete, codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant])
+    }, [codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant, params.societeID])
 
     useEffect(() => {
         const fetchContacts = async () => {
