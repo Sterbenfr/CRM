@@ -53,7 +53,9 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    if (!groupe.nom_du_Groupe || !groupe.site_Web) {
+    if (
+        !groupe.nom_du_Groupe
+    ) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -61,6 +63,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log(groupe)
         const query = 'INSERT INTO `Groupe` SET ?'
         const [rows] = await pool.query(query, groupe)
         return NextResponse.json(rows)

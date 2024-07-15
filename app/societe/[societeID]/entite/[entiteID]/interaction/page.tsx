@@ -155,7 +155,6 @@ function InteractionsPage({
                 type: 'select',
                 value: codeTypeInteraction,
                 url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
-                required: true,
                 onChange: handleCodeTypeInteraction,
             },
             {
@@ -163,7 +162,6 @@ function InteractionsPage({
                 type: 'select',
                 value: codeModaliteInteraction,
                 url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
-                required: true,
                 onChange: handleCodeModaliteInteraction,
             },
             {
@@ -171,7 +169,6 @@ function InteractionsPage({
                 type: 'select',
                 value: codeContactEntiteInteraction,
                 url: `../../../../../api/select/societe/entite/${params.entiteID}/contact`,
-                required: true,
                 onChange: handleCodeContactEntiteInteraction,
             },
             {
@@ -191,7 +188,6 @@ function InteractionsPage({
                 id: 'date_relance',
                 type: 'date',
                 value: dateRelance.toISOString().split('T')[0],
-                required: true,
                 onInputChange: handleDateRelance,
             },
         ]
@@ -286,7 +282,7 @@ function InteractionsPage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                     }}
                     attribut={{
-                        att1: 'Code interaction',
+                        att1: 'Code entité prospectée',
                         att2: 'Date interaction',
                         att3: 'Code contact entité',
                         att4: 'Date relance',

@@ -245,7 +245,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'raison_sociale',
                 type: 'input',
                 value: raisonSociale,
-                placeholder: 'Exemple: Alpha',
+                placeholder: 'Exemple: Alpha Corporation',
                 maxLength: 30,
                 onInputChange: handleRaisonSocialeChange,
                 required: true,
