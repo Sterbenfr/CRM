@@ -457,7 +457,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
 
                 <div className={style.col_2}>
                     <div className={style.info}>
-                        <p className={style.titre}>Site :</p>
+                        <p className={style.titre}>Site de réception :</p>
                         {modify &&
                         (session?.user.role === 'AD' ||
                             session?.user.role === 'RR') ? (
