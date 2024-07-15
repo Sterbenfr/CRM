@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <div className={styles.foot}>
             <footer className={styles.footer}>
-                <p>--- Fait par ENIGMA ---</p>
+                <p>--- FAIT PAR ---</p>
                 <ul>
                     <li>
                         Aurelien Schmieder{' '}
