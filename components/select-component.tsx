@@ -63,7 +63,7 @@ export default function SelectComponent({
 
     // Renvoyer le menu déroulant avec les options
     return (
-        <select className={style.selectF} onChange={onChange}>
+        <select className={style.selectF} onChange={onChange} defaultValue=''>
             <option value='' disabled>
                 Sélectionner une option...{' '}
             </option>

@@ -49,13 +49,11 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    console.log(reception)
     if (
         !reception.date_reception ||
         !reception.code_Don ||
         !reception.numero_livraison
     ) {
-        console.log('aaaaaaaaaaaaaaaa')
         return NextResponse.json(
             { error: 'Missing reception data' },
             { status: 400 },

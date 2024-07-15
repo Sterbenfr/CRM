@@ -44,13 +44,11 @@ export async function GET(
 
 export async function POST(req: NextApiRequest) {
     let ModalitesLivraison: ModalitesLivraison
-    console.log(req.body)
     try {
         ModalitesLivraison = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    console.log(ModalitesLivraison, ModalitesLivraison.poids_prevu_kg)
     if (
         !ModalitesLivraison.code_Don ||
         !ModalitesLivraison.date_prevue_livraison ||

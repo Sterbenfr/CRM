@@ -157,8 +157,8 @@ const fieldLabels: { [key: string]: string } = {
     numero_portable: 'Numéro de téléphone portable',
     date_arret_contact: 'Date arrêt contact',
     //type
-    code: 'Code',
-    libelle: 'Libellé',
+    id: 'Code',
+    label: 'Libellé',
 }
 const scrollToTop = () => {
     window.scrollTo({
@@ -332,6 +332,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
+            window.location.reload()
         } else {
             scrollToTop()
         }

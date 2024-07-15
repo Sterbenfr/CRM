@@ -53,7 +53,7 @@ const List: React.FC<{
         })
         setTimeout(() => {
             window.location.reload()
-        }, 100)
+        }, 400)
     }
 
     const searchFunction = (e: React.FormEvent<HTMLInputElement>) => {
