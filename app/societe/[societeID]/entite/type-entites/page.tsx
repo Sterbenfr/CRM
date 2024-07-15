@@ -60,6 +60,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                     }}
                 />
                 {isPopUpOpen && (
+                    <div className={style.PopUpType}>
                     <PopUp
                         onClose={handleClose}
                         url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`}
@@ -80,6 +81,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                             },
                         ]}
                     />
+                    </div>
                 )}
             </div>
         </>

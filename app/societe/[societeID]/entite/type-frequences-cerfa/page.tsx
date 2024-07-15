@@ -62,6 +62,7 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                     }}
                 />
                 {isPopUpOpen && (
+                    <div className={style.PopUpType}>
                     <PopUp
                         onClose={handleClose}
                         url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`}
@@ -82,6 +83,7 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                             },
                         ]}
                     />
+                    </div>
                 )}
             </div>
         </>

@@ -144,7 +144,7 @@ const fieldLabels: { [key: string]: string } = {
     code_type_produit: 'Type de produit',
     code_type_competence: 'Type de compétence',
     commentaires_logistique: 'Commentaires de logistique',
-    presence_quai: 'Présence en quai',
+    presence_quai: "Présence d'un quai",
     code_frequence_cerfa: 'Fréquence de Cerfa',
     date_arret_activite: "Date d'arrêt d'activité de l'entité",
     //ContactEntite
@@ -163,7 +163,7 @@ const fieldLabels: { [key: string]: string } = {
 const scrollToTop = () => {
     window.scrollTo({
         top: 0,
-        behavior: 'smooth', // Pour un défilement doux
+        behavior: 'smooth',
     })
 }
 
@@ -197,6 +197,8 @@ interface PopUpProps {
     onFieldChange?: (id: string, value: string | boolean) => void // New callback function
     fileUrl?: string
     fileUrl2?: string
+    fileIndex?: number
+    fileIndex2?: number
 }
 
 const PopUp: React.FC<PopUpProps> = ({
@@ -206,6 +208,8 @@ const PopUp: React.FC<PopUpProps> = ({
     onFieldChange,
     fileUrl,
     fileUrl2,
+    fileIndex,
+    fileIndex2,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
     const [file, setFile] = useState<File | null>(null)
@@ -297,8 +301,9 @@ const PopUp: React.FC<PopUpProps> = ({
                     // Handle error (e.g., show an error message)
                 }
             }
-            /*inputs[7].value = filePath
-            inputs[19].value = file2Path*/
+
+            fileIndex ? (inputs[fileIndex].value = filePath) : null
+            fileIndex2 ? (inputs[fileIndex2].value = file2Path) : null
             const inputsData = inputs.reduce<{
                 [key: string]: string | boolean | null
             }>((acc, input) => {

@@ -1,7 +1,7 @@
 CREATE TABLE Groupe (
-    code_groupe INT PRIMARY KEY AUTO_INCREMENT, -- clé primaire
+    code_groupe INT PRIMARY KEY AUTO_INCREMENT,
     nom_du_Groupe VARCHAR(50) NOT NULL,
-    Logo BLOB, -- assuming Logo is an image or binary data
+    Logo BLOB,
     site_Web VARCHAR(255),
     commentaires VARCHAR(200),
     date_arret_activite_du_Groupe DATE
