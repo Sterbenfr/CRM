@@ -65,16 +65,18 @@ function TypeCompetencePage() {
                             url='http://localhost:3000/api/dons/type-competences'
                             fields={[
                                 {
-                                    id: 'id',
+                                    id: 'code_type_competence',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 4,
                                 },
                                 {
-                                    id: 'label',
+                                    id: 'libelle',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 50,
                                 },
                             ]}
                         />

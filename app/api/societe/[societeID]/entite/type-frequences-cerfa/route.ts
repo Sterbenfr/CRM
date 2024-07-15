@@ -26,7 +26,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!typesFrequence_cerfa.id || !typesFrequence_cerfa.label) {
+    if (!typesFrequence_cerfa) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

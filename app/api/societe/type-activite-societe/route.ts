@@ -18,7 +18,6 @@ export async function GET() {
     }
 }
 export async function POST(req: NextApiRequest) {
-    console.log('route')
     let TypeActiviteSocietes: TypeActiviteSociete
     try {
         TypeActiviteSocietes = JSON.parse(await streamToString(req.body))
@@ -26,9 +25,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!TypeActiviteSocietes.id ||
-        !TypeActiviteSocietes.label
-    ) {
+    if (!TypeActiviteSocietes) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -36,7 +33,6 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
-        console.log(TypeActiviteSocietes)
         const query = 'INSERT INTO `TypeActiviteSociete` SET ?'
         const [rows] = await pool.query(query, TypeActiviteSocietes)
         return NextResponse.json(rows)

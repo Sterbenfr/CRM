@@ -189,13 +189,12 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         }
     }*/
 
-   
-   const handleCodeFrequenceCerfaChange = (
-       event: React.ChangeEvent<HTMLSelectElement>,
+    const handleCodeFrequenceCerfaChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         setCodeFrequenceCerfa(event.target.value)
     }
-    
+
     const handleDateArretActiviteChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -207,7 +206,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setPresenceQuai(false)
         setCerfa(false)
     }
-    
+
     const handleCerfaChange = () => {
         setCerfa(!cerfa)
     }
@@ -407,23 +406,23 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             fields[FindIndex('Siret')].value = null
         }
 
-        if(codeApe === '') {
+        if (codeApe === '') {
             fields[FindIndex('code_ape')].value = null
         }
 
-        if(codeRna === '') {
+        if (codeRna === '') {
             fields[FindIndex('code_rna')].value = null
         }
 
-        if(codeCee === '') {
+        if (codeCee === '') {
             fields[FindIndex('code_cee')].value = null
         }
 
-        if(codeTypeDon === '') {
+        if (codeTypeDon === '') {
             fields[FindIndex('code_type_don')].value = null
         }
 
-        if(codeTypeCompetence === '' && codeTypeDon === 'SIP') {
+        if (codeTypeCompetence === '' && codeTypeDon === 'SIP') {
             fields[FindIndex('code_type_competence')].value = null
         }
 
@@ -434,7 +433,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         if (codeFrequenceCerfa === '') {
             fields[FindIndex('code_frequence_cerfa')].value = null
         }
-        
+
         if (codeTypeDon === 'MAR') {
             fields.splice(15, 0, {
                 id: 'code_type_produit',
@@ -442,7 +441,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 value: codeTypeProduit,
                 url: `../../api/dons/type-produits`,
                 onChange: handleCodeTypeProduitChange,
-            });
+            })
         } else if (codeTypeDon === 'SIP') {
             fields.splice(15, 0, {
                 id: 'code_type_competence',
@@ -537,7 +536,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                     items={Entites.map(entite => ({
                         value1: entite.code_entite.toString(),
                         value2: entite.raison_sociale,
-                        value3: entite.telephone === '' ? '/' : entite.telephone,
+                        value3:
+                            entite.telephone === '' ? '/' : entite.telephone,
                         value4: entite.mail === '' ? '/' : entite.mail,
                         value5: entite.adresse,
                         value6:
@@ -560,12 +560,13 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         att2: 'Téléphone',
                         att3: 'Mail',
                         att4: 'Adresse',
-                        att5: 'Date d\'arrêt d\'activité',
+                        att5: "Date d'arrêt d'activité",
                     }}
                     searchItems={search.map(entite => ({
                         value1: entite.code_entite.toString(),
                         value2: entite.raison_sociale,
-                        value3: entite.telephone === '' ? '/' : entite.telephone,
+                        value3:
+                            entite.telephone === '' ? '/' : entite.telephone,
                         value4: entite.mail === '' ? '/' : entite.mail,
                         value5: entite.adresse,
                         value6:
@@ -596,7 +597,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 <TypesButtons
                     items={[
                         {
-                            label: 'Types de entité',
+                            label: "Types d'entité",
                             url: 'type-entites',
                         },
                         {

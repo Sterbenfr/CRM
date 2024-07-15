@@ -592,17 +592,21 @@ function DonsPage() {
                 <h1 className={style.lg}>Dons</h1>
                 <List
                     items={Dons.map(Don => ({
-                        value1: Don.code_Don.toString(),
+                        value1: Don.code_Don.toString()
+                            ? Don.code_Don.toString()
+                            : '/',
                         value2: Don.code_Entite_donatrice
                             ? Don.code_Entite_donatrice.toString()
-                            : '',
+                            : '/',
                         value3: Don.date_proposition_don
                             .toString()
-                            .split('T')[0],
-                        value4: Don.commentaires ? Don.commentaires : '',
+                            .split('T')[0]
+                            ? Don.date_proposition_don.toString().split('T')[0]
+                            : '/',
+                        value4: Don.commentaires ? Don.commentaires : '/',
                         value5: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
-                            : '',
+                            : '/',
 
                         value7: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don

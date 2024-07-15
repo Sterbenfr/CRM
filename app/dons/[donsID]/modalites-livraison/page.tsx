@@ -555,13 +555,25 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
 
                 <List
                     items={ModalitesLivraisons.map(ModalitesLivraison => ({
-                        value1: ModalitesLivraison.numero_livraison.toString(),
-                        value2: ModalitesLivraison.code_Don.toString(),
+                        value1: ModalitesLivraison.numero_livraison.toString()
+                            ? ModalitesLivraison.numero_livraison.toString()
+                            : '/',
+                        value2: ModalitesLivraison.code_Don.toString()
+                            ? ModalitesLivraison.code_Don.toString()
+                            : '/',
                         value3: ModalitesLivraison.date_prevue_livraison
                             .toString()
-                            .split('T')[0],
-                        value4: ModalitesLivraison.telephone_contact_enlevement.toString(),
-                        value5: ModalitesLivraison.mail_contact_enlevement.toString(),
+                            .split('T')[0]
+                            ? ModalitesLivraison.date_prevue_livraison
+                                  .toString()
+                                  .split('T')[0]
+                            : '/',
+                        value4: ModalitesLivraison.telephone_contact_enlevement.toString()
+                            ? ModalitesLivraison.telephone_contact_enlevement.toString()
+                            : '/',
+                        value5: ModalitesLivraison.mail_contact_enlevement.toString()
+                            ? ModalitesLivraison.mail_contact_enlevement.toString()
+                            : '/',
                     }))}
                     functions={{
                         fonc1: () => {

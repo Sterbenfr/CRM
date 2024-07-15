@@ -64,26 +64,28 @@ function InteractionsPage({
                     }}
                 />
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
-                        fields={[
-                            {
-                                id: 'code_type_interaction',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 4,
-                            },
-                            {
-                                id: 'libelle',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 50,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUpType}>
+                        <PopUp
+                            onClose={handleClose}
+                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
+                            fields={[
+                                {
+                                    id: 'code_type_interaction',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 4,
+                                },
+                                {
+                                    id: 'libelle',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 50,
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>

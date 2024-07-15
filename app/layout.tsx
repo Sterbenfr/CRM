@@ -22,8 +22,8 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
                     <NavBar session={session}>{children}</NavBar>
                     <NotLogin></NotLogin>
                 </SessionProvider>
+                <Footer />
             </body>
-            <Footer />
         </html>
     )
 }
