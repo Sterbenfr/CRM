@@ -109,13 +109,23 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         att4: 'Poids reçu en kg',
                     }}
                     searchItems={search.map(Reception => ({
-                        value1: Reception.numero_reception.toString(),
-                        value2: Reception.numero_livraison.toString(),
+                        value1: Reception.numero_reception.toString()
+                            ? Reception.numero_reception.toString()
+                            : '/',
+                        value2: Reception.numero_livraison.toString()
+                            ? Reception.numero_livraison.toString()
+                            : '/',
                         value3: Reception.date_reception
                             .toString()
-                            .split('T')[0],
-                        value4: Reception.nombre_palettes_recues.toString(),
-                        value5: Reception.poids_recu_kg.toString(),
+                            .split('T')[0]
+                            ? Reception.date_reception.toString().split('T')[0]
+                            : '/',
+                        value4: Reception.nombre_palettes_recues.toString()
+                            ? Reception.nombre_palettes_recues.toString()
+                            : '/',
+                        value5: Reception.poids_recu_kg.toString()
+                            ? Reception.poids_recu_kg.toString()
+                            : '/',
                     }))}
                 />
                 <Pagination

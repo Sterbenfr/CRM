@@ -325,11 +325,11 @@ function InteractionsPage({
                 <TypesButtons
                     items={[
                         {
-                            label: `Types d'intéractions`,
+                            label: `Types d'interactions`,
                             url: 'type-interactions',
                         },
                         {
-                            label: `Types de modalités d'intéractions`,
+                            label: `Types de modalités d'interactions`,
                             url: 'type-modalite-interactions',
                         },
                     ]}

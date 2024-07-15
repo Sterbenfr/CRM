@@ -66,19 +66,21 @@ function Mode_Conservations_ProduitsPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons/type-mode-conservation-produits'
+                            url='http://localhost:3000/api/dons/type-mode-conservations-produits'
                             fields={[
                                 {
-                                    id: 'id',
+                                    id: 'code_mode_conservation_produits',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 4,
                                 },
                                 {
-                                    id: 'label',
+                                    id: 'libelle',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 50,
                                 },
                             ]}
                         />

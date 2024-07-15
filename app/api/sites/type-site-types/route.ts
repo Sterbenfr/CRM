@@ -25,7 +25,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!SiteTypes.label) {
+    if (!SiteTypes) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

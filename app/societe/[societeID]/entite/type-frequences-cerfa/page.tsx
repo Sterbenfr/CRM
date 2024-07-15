@@ -63,26 +63,26 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                 />
                 {isPopUpOpen && (
                     <div className={style.PopUpType}>
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`}
-                        fields={[
-                            {
-                                id: 'code_type_frequences_cerfa',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 4,
-                            },
-                            {
-                                id: 'libelle',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 50,
-                            },
-                        ]}
-                    />
+                        <PopUp
+                            onClose={handleClose}
+                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`}
+                            fields={[
+                                {
+                                    id: 'code_frequence_cerfa',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 4,
+                                },
+                                {
+                                    id: 'libelle',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 50,
+                                },
+                            ]}
+                        />
                     </div>
                 )}
             </div>

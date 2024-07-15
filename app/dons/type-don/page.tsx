@@ -63,16 +63,18 @@ function TypeDonsPage() {
                             url='http://localhost:3000/api/dons/type-don'
                             fields={[
                                 {
-                                    id: 'id',
+                                    id: 'code_type_don',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 4,
                                 },
                                 {
-                                    id: 'label',
+                                    id: 'libelle',
                                     type: 'input',
                                     value: null,
                                     required: true,
+                                    maxLength: 50,
                                 },
                             ]}
                         />

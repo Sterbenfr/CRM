@@ -26,7 +26,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!typesLivraison.id || !typesLivraison.label) {
+    if (!typesLivraison) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

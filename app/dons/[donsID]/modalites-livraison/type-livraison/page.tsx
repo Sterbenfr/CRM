@@ -59,24 +59,28 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
                     }}
                 />
                 {isPopUpOpen && (
-                    <PopUp
-                        onClose={handleClose}
-                        url={`http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`}
-                        fields={[
-                            {
-                                id: 'id',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                            {
-                                id: 'label',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                            },
-                        ]}
-                    />
+                    <div className={style.PopUpType}>
+                        <PopUp
+                            onClose={handleClose}
+                            url={`http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`}
+                            fields={[
+                                {
+                                    id: 'code_type_livraison',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 3,
+                                },
+                                {
+                                    id: 'libelle',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 50,
+                                },
+                            ]}
+                        />
+                    </div>
                 )}
             </div>
         </>
