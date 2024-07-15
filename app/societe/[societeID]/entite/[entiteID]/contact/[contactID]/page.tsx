@@ -107,7 +107,9 @@ export default function ContactPage({
                         </p>
                     </div>
                     <div className={style.info}>
-                        <p className={style.titre}>Numéro fixe du contact :</p>
+                        <p className={style.titre}>
+                            Téléphone fixe du contact :
+                        </p>
                         <p>
                             {contact[0].numero_fixe == null
                                 ? '/'
@@ -116,7 +118,7 @@ export default function ContactPage({
                     </div>
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Numéro portable du contact :
+                            Téléphone portable du contact :
                         </p>
                         <p>
                             {contact[0].numero_portable == null

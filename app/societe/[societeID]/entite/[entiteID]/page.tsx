@@ -59,13 +59,13 @@ export default function EntitePage({
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Details de l&apos;entite</h1>
+                <h1 className={style.titre_global}>Details de l&apos;entité</h1>
             </div>
 
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
-                        <p className={style.titre}>Code de l&apos;entite :</p>
+                        <p className={style.titre}>Code de l&apos;entité :</p>
                         <p>
                             {entite[0].code_entite == null
                                 ? '/'
@@ -83,7 +83,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nom du commercial :</p>
+                        <p className={style.titre}>Nom commercial :</p>
                         <p>
                             {entite[0].nom_commercial == null
                                 ? '/'
@@ -124,7 +124,9 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nom de la societe :</p>
+                        <p className={style.titre}>
+                            Nom de l&apos;entreprise :
+                        </p>
                         <p>
                             {entite[0].nom_societe == null
                                 ? '/'
@@ -175,7 +177,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>TE libelle :</p>
+                        <p className={style.titre}>Type d&apos;entité :</p>
                         <p>
                             {entite[0].TE_libelle == null
                                 ? '/'
@@ -184,7 +186,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>TD libelle :</p>
+                        <p className={style.titre}>Type de Don :</p>
                         <p>
                             {entite[0].TD_libelle == null
                                 ? '/'
@@ -193,7 +195,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>TP libelle :</p>
+                        <p className={style.titre}>Type de Prestataire :</p>
                         <p>
                             {entite[0].TP_libelle == null
                                 ? '/'
@@ -202,7 +204,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>TC libelle :</p>
+                        <p className={style.titre}>Type de Compétence(s) :</p>
                         <p>
                             {entite[0].TC_libelle == null
                                 ? '/'
@@ -220,7 +222,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Presence quai :</p>
+                        <p className={style.titre}>Présence en quai :</p>
                         <p>
                             {entite[0].presence_quai == null
                                 ? '/'
@@ -234,7 +236,7 @@ export default function EntitePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>FC libelle :</p>
+                        <p className={style.titre}>Fréquence du Cerfa :</p>
                         <p>
                             {entite[0].FC_libelle == null
                                 ? '/'
@@ -244,7 +246,7 @@ export default function EntitePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date de l&apos;arret de l&apos;activite :
+                            Date d&apos;arret d&apos;activite :
                         </p>
                         <p>
                             {entite[0].date_arret_activite == null

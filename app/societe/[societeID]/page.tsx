@@ -45,13 +45,17 @@ export default function SocietePage({
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Détails de la societe</h1>
+                <h1 className={style.titre_global}>
+                    Détails de l&apos;entreprise
+                </h1>
             </div>
 
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
-                        <p className={style.titre}>code de la societe :</p>
+                        <p className={style.titre}>
+                            Code de l&apos;entreprise :
+                        </p>
                         <p>
                             {Societe[0].code_Societe == null
                                 ? '/'
@@ -104,7 +108,7 @@ export default function SocietePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Code du type activite societe :
+                            Code du type d&apos;activite de l&apos;entreprise :
                         </p>
                         <p>
                             {Societe[0].code_type_activite_Societe == null
@@ -117,10 +121,10 @@ export default function SocietePage({
                 <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Code de la societe d appartenance :
+                            Code de l&apos;entreprise d&apos;appartenance :
                         </p>
                         <p>
-                            {Societe[0].code_Groupe_appartenance== null
+                            {Societe[0].code_Groupe_appartenance == null
                                 ? '/'
                                 : Societe[0].code_Groupe_appartenance}
                         </p>
@@ -128,7 +132,8 @@ export default function SocietePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date de l&apos;arret de l&apos;activite de la societe :
+                            Date d&apos;arrêt d&apos;activité de
+                            l&apos;entreprise :
                         </p>
                         <p>
                             {Societe[0].date_arret_activite_Societe == null

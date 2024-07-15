@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import style from '../../../../../../../styles/components.module.css'
 
 interface interactionID {
+    code_interaction: number
     code_Utilisateur_Prospecteur: number
     code_Entite_Prospectee: number
     date_interaction: Date
@@ -50,6 +51,10 @@ export default function InteractionPage({
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
+                        <p className={style.titre}>Code d&apos;interaction :</p>
+                        <p>{interaction[0].code_interaction}</p>
+                    </div>
+                    <div className={style.info}>
                         <p className={style.titre}>
                             Code utilisateur prospecteur :
                         </p>
@@ -59,7 +64,6 @@ export default function InteractionPage({
                                 : interaction[0].code_Utilisateur_Prospecteur}
                         </p>
                     </div>
-
                     <div className={style.info}>
                         <p className={style.titre}>Code entite prospectee :</p>
                         <p>
@@ -68,7 +72,6 @@ export default function InteractionPage({
                                 : interaction[0].code_Entite_Prospectee}
                         </p>
                     </div>
-
                     <div className={style.info}>
                         <p className={style.titre}>
                             Date de l&apos;interaction :
@@ -81,7 +84,6 @@ export default function InteractionPage({
                                       .split('T')[0]}
                         </p>
                     </div>
-
                     <div className={style.info}>
                         <p className={style.titre}>
                             Code type d&apos;interaction :
