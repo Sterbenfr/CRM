@@ -34,7 +34,7 @@ function PrestatairesPage() {
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Prestataire[]>([])
 
-    const [codeTypeDePrestataire, setCodeTypeDePrestataire] = useState('TRA')
+    const [codeTypeDePrestataire, setCodeTypeDePrestataire] = useState('')
     const [raisonSociale, setRaisonSociale] = useState('')
     const [nomCommercial, setNomCommercial] = useState('')
     const [siren, setSiren] = useState('')
@@ -43,7 +43,7 @@ function PrestatairesPage() {
     const [mail, setMail] = useState('')
     const [adresse, setAdresse] = useState('')
     const [civiliteContactPrestataire, setCiviliteContactPrestataire] =
-        useState('Mme')
+        useState('')
     const [nomContactPrestataire, setNomContactPrestataire] = useState('')
     const [prenomContactPrestataire, setPrenomContactPrestataire] = useState('')
     const [telephoneContactPrestataire, setTelephoneContactPrestataire] =
@@ -207,6 +207,24 @@ function PrestatairesPage() {
                 onInputChange: handleNomCommercialChange,
             },
             {
+                id: 'telephone',
+                type: 'number',
+                placeholder: 'Exemple: 0658905910',
+                value: telephone,
+                maxLength: 12,
+                required: true,
+                onInputChange: handleTelephoneChange,
+            },
+            {
+                id: 'mail',
+                type: 'input',
+                value: mail,
+                required: true,
+                placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
+                maxLength: 255,
+                onInputChange: handleMailChange,
+            },
+            {
                 id: 'Siren',
                 type: 'number',
                 value: siren,
@@ -223,26 +241,10 @@ function PrestatairesPage() {
                 onInputChange: handleSiretChange,
             },
             {
-                id: 'telephone',
-                type: 'number',
-                placeholder: 'Exemple: 0658905910',
-                value: telephone,
-                maxLength: 12,
-                onInputChange: handleTelephoneChange,
-            },
-            {
-                id: 'mail',
-                type: 'input',
-                value: mail,
-                placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
-                maxLength: 255,
-                onInputChange: handleMailChange,
-            },
-            {
                 id: 'adresse',
                 type: 'input',
                 value: adresse,
-                placeholder: 'Exemple: 12 rue de la paix',
+                placeholder: 'Exemple: 12 rue de la paix, 75000 Paris',
                 maxLength: 255,
                 onInputChange: handleAdresseChange,
             },
@@ -303,6 +305,12 @@ function PrestatairesPage() {
                 onInputChange: handleDateArretActiviteDuPrestataireChange,
             },
         ]
+
+        if (fields[3].value !== '') {
+            fields[4].required = false
+        } else if (fields[4].value !== '') {
+            fields[3].required = false
+        }
 
         if (
             dateArretActiviteDuPrestataire &&

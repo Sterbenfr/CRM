@@ -159,7 +159,7 @@ function SitesPage() {
                 type: 'input',
                 value: Adresse,
                 required: true,
-                placeholder: 'Exemple: 1 rue de Paris',
+                placeholder: 'Exemple: 1 rue de Paris, 75000 Paris',
                 onInputChange: handleAdresseChange,
             },
             {
@@ -217,10 +217,10 @@ function SitesPage() {
             fields[7].value = null
         }
 
-        if (fields[5].value !== '') {
-            fields[6].required = false
-        } else if (fields[6].value !== '') {
+        if (fields[4].value !== '') {
             fields[5].required = false
+        } else if (fields[5].value !== '') {
+            fields[4].required = false
         }
 
         return fields

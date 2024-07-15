@@ -167,6 +167,24 @@ function ContactsPage({
                 onInputChange: handlePrenom,
             },
             {
+                id: 'numero_portable',
+                type: 'input',
+                value: numeroPortable,
+                placeholder: 'Exemple: 0634164183',
+                maxLength: 12,
+                required: true,
+                onInputChange: handleNumeroPortable,
+            },
+            {
+                id: 'adresse_mail',
+                type: 'input',
+                value: adresseMail,
+                placeholder: 'Exemple: Corrine.dupont@gmail.com',
+                maxLength: 200,
+                required: true,
+                onInputChange: handleAdresseMail,
+            },
+            {
                 id: 'photo',
                 type: 'file',
                 value: null,
@@ -196,22 +214,6 @@ function ContactsPage({
                 onInputChange: handleNumeroFixe,
             },
             {
-                id: 'numero_portable',
-                type: 'input',
-                value: numeroPortable,
-                placeholder: 'Exemple: 0634164183',
-                maxLength: 12,
-                onInputChange: handleNumeroPortable,
-            },
-            {
-                id: 'adresse_mail',
-                type: 'input',
-                value: adresseMail,
-                placeholder: 'Exemple: Corrine.dupont@gmail.com',
-                maxLength: 200,
-                onInputChange: handleAdresseMail,
-            },
-            {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
@@ -226,6 +228,12 @@ function ContactsPage({
                 onInputChange: handleDateArretContact,
             },
         ]
+
+        if (fields[4].value !== '') {
+            fields[5].required = false
+        } else if (fields[5].value !== '') {
+            fields[4].required = false
+        }
 
         return fields
     }, [
@@ -318,9 +326,9 @@ function ContactsPage({
                     }}
                     attribut={{
                         att1: 'Nom',
-                        att2: 'Prenom',
-                        att3: 'fonction',
-                        att4: 'Numéro portable',
+                        att2: 'Prénom',
+                        att3: 'Fonction',
+                        att4: 'Numéro de portable',
                         att5: 'Adresse mail',
                     }}
                     searchItems={search.map(contact => ({
