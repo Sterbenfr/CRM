@@ -57,17 +57,21 @@ export default function Modalites_livraisonPage({
         fetchModalites_livraison()
     }, [params.modalites_livraisonID, params.donsID])
     if (!modalite_livraison || modalite_livraison.length === 0)
-        return <div>Loading...</div>
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Modalites livraison</h1>
+                <h1 className={style.titre_global}>Modalités de livraison</h1>
             </div>
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
-                        <p className={style.titre}>Numero de la livraison :</p>
+                        <p className={style.titre}>Numéro de la livraison :</p>
                         <p>
                             {modalite_livraison[0].numero_livraison == null
                                 ? '/'
@@ -97,7 +101,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date prevue de la livraison :
+                            Date prévue de la livraison :
                         </p>
                         <p>
                             {
@@ -110,7 +114,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Prenom du contact enlevement :
+                            Prénom du contact d&aposenlévement :
                         </p>
                         <p>
                             {modalite_livraison[0].prenom_contact_enlevement ==
@@ -123,7 +127,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Téléphone du contact enlevement :
+                            Téléphone du contact d&aposenlévement :
                         </p>
                         <p>
                             {modalite_livraison[0]
@@ -136,7 +140,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Mail du contact enlevement :
+                            Mail du contact d&aposenlévement :
                         </p>
                         <p>
                             {modalite_livraison[0].mail_contact_enlevement ==
@@ -147,7 +151,7 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Adresse enlevement :</p>
+                        <p className={style.titre}>Adresse d&aposenlévement :</p>
                         <p>
                             {modalite_livraison[0].adresse_enlevement == null
                                 ? '/'
@@ -166,7 +170,7 @@ export default function Modalites_livraisonPage({
                 </div>
                 <div className={style.col_2}>
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de palette prevu :</p>
+                        <p className={style.titre}>Nombre de palette(s) prévue(s) :</p>
                         <p>
                             {modalite_livraison[0].nombre_palette_prevu == null
                                 ? '/'
@@ -176,7 +180,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Nombre de palettes consignées prevu :
+                            Nombre de palette(s) consignée(s) prévue(s) :
                         </p>
                         <p>
                             {modalite_livraison[0]
@@ -188,7 +192,7 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de cartons prevu :</p>
+                        <p className={style.titre}>Nombre de carton(s) prévu(s) :</p>
                         <p>
                             {modalite_livraison[0].nombre_cartons_prevu == null
                                 ? '/'
@@ -197,7 +201,7 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Poids prevu kg :</p>
+                        <p className={style.titre}>Poids prévu en kg :</p>
                         <p>
                             {modalite_livraison[0].poids_prevu_kg == null
                                 ? '/'
@@ -206,7 +210,7 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Produits sur palettes :</p>
+                        <p className={style.titre}>Produit(s) sur palette(s) ? :</p>
                         <p>
                             {modalite_livraison[0].produits_sur_palettes == null
                                 ? '/'
@@ -216,7 +220,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Temperature pour la conservation du produit :
+                            Température pour la conservation du/des produit(s) :
                         </p>
                         <p>
                             {modalite_livraison[0]
@@ -239,7 +243,7 @@ export default function Modalites_livraisonPage({
                     {/* A revoir : Type Blob */}
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de cartons prevu :</p>
+                        <p className={style.titre}>Pièces associées :</p>
                         <p>{modalite_livraison[0].pieces_associees == null}</p>
                     </div>
                 </div>

@@ -219,7 +219,11 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         don.length === 0 ||
         typeof don[0]?.code_Don === 'undefined'
     )
-        return <div>Loading...</div>
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
     console.log(don[0])
     return (
         <div className={style.idPage}>

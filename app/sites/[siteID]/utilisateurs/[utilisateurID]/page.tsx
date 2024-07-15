@@ -10,6 +10,7 @@ interface UtilisateurID {
     tel_perso: string
     mail: string
     commentaires: string
+    code_type_utilisateur: number
 }
 
 export default function UtilisateurPage({
@@ -38,7 +39,12 @@ export default function UtilisateurPage({
         fetchUtilisateur()
     }, [params.utilisateurID, params.siteID])
     console.log(Utilisateur)
-    if (!Utilisateur || Utilisateur.length === 0) return <div>Loading...</div>
+    if (!Utilisateur || Utilisateur.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
@@ -78,7 +84,7 @@ export default function UtilisateurPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Prenom :</p>
+                        <p className={style.titre}>Prénom :</p>
                         <p>
                             {Utilisateur[0].prenom == null
                                 ? '/'
@@ -112,6 +118,15 @@ export default function UtilisateurPage({
                             {Utilisateur[0].commentaires == null
                                 ? '/'
                                 : Utilisateur[0].commentaires}
+                        </p>
+                    </div>
+
+                    <div className={style.info}>
+                        <p className={style.titre}>Code utilisateur :</p>
+                        <p>
+                            {Utilisateur[0].code_type_utilisateur == null
+                                ? '/'
+                                : Utilisateur[0].code_type_utilisateur}
                         </p>
                     </div>
                 </div>

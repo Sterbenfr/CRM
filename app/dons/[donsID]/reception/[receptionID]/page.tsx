@@ -43,7 +43,12 @@ export default function ReceptionPage({
 
         fetchReception()
     }, [params.receptionID, params.donsID])
-    if (!reception || reception.length === 0) return <div>Loading...</div>
+    if (!reception || reception.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
@@ -53,7 +58,7 @@ export default function ReceptionPage({
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
-                        <p className={style.titre}>Numero de reception :</p>
+                        <p className={style.titre}>Numéro de réception :</p>
                         <p>
                             {reception[0].numero_reception == null
                                 ? '/'
@@ -71,7 +76,7 @@ export default function ReceptionPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Numero BL :</p>
+                        <p className={style.titre}>Numéro BL :</p>
                         <p>
                             {reception[0].numero_BL == null
                                 ? '/'
@@ -80,7 +85,7 @@ export default function ReceptionPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Date de reception :</p>
+                        <p className={style.titre}>Date de réception :</p>
                         <p>
                             {reception[0].date_reception == null
                                 ? '/'
@@ -91,7 +96,7 @@ export default function ReceptionPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Heure de reception :</p>
+                        <p className={style.titre}>Heure de réception :</p>
                         <p>
                             {reception[0].heure_reception == null
                                 ? '/'

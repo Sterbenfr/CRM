@@ -36,12 +36,17 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
 
         fetchSite()
     }, [params.siteID])
-    if (!site || site.length === 0) return <div>Loading...</div>
+    if (!site || site.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
             <div className='Titre_haut'>
-                <h1 className={style.titre_global}>Details des sites :</h1>
+                <h1 className={style.titre_global}>Détails des sites :</h1>
             </div>
 
             <div className={style.info_id}>
@@ -56,7 +61,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Designation longue :</p>
+                        <p className={style.titre}>Désignation longue :</p>
                         <p>
                             {site[0].designation_longue == null
                                 ? '/'
@@ -65,7 +70,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Designation courte :</p>
+                        <p className={style.titre}>Désignation courte :</p>
                         <p>
                             {site[0].designation_courte == null
                                 ? '/'
@@ -84,7 +89,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Date ouverture :</p>
+                        <p className={style.titre}>Date d&apos;ouverture :</p>
                         <p>
                             {site[0].date_ouverture == null
                                 ? '/'
@@ -96,7 +101,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                 </div>
                 <div className={style.col_2}>
                     <div className={style.info}>
-                        <p className={style.titre}>Date fermeture :</p>
+                        <p className={style.titre}>Date de fermeture :</p>
                         <p>
                             {site[0].date_fermeture == null
                                 ? '/'
@@ -107,7 +112,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Numero de telephone :</p>
+                        <p className={style.titre}>Numero de téléphone :</p>
                         <p>
                             {site[0].numero_telephone == null
                                 ? '/'
