@@ -71,7 +71,7 @@ export default function PrestatairePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>TP du libelle :</p>
+                        <p className={style.titre}>Type du prestataire :</p>
                         <p>
                             {prestataire[0].TP_libelle == null
                                 ? '/'
@@ -89,7 +89,7 @@ export default function PrestatairePage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nom du commercial :</p>
+                        <p className={style.titre}>Nom commercial :</p>
                         <p>
                             {prestataire[0].nom_commercial == null
                                 ? '/'
@@ -146,7 +146,7 @@ export default function PrestatairePage({
                 <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Civilite du contact du prestataire :
+                            Civilité du contact du prestataire :
                         </p>
                         <p>
                             {prestataire[0].civilite_contact_prestataire == null
@@ -157,7 +157,7 @@ export default function PrestatairePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            nom du contact prestataire :
+                            Nom du contact du prestataire :
                         </p>
                         <p>
                             {prestataire[0].nom_contact_prestataire == null
@@ -168,7 +168,7 @@ export default function PrestatairePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Prenom du contact prestataire :
+                            Prénom du contact du prestataire :
                         </p>
                         <p>
                             {prestataire[0].prenom_contact_prestataire == null
@@ -179,7 +179,7 @@ export default function PrestatairePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Telephone du contact prestataire :
+                            Téléphone du contact du prestataire :
                         </p>
                         <p>
                             {prestataire[0].telephone_contact_prestataire ==
@@ -191,7 +191,7 @@ export default function PrestatairePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Mail du contact prestataire :
+                            Mail du contact du prestataire :
                         </p>
                         <p>
                             {prestataire[0].mail_contact_prestataire == null
@@ -211,7 +211,7 @@ export default function PrestatairePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date d&apos;arret de l&apos;activite du prestataire
+                            Date d&apos;arrêt de l&apos;activité du prestataire
                             :
                         </p>
                         <p>

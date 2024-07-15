@@ -91,7 +91,7 @@ export default function GroupePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date_arret_activite_du_Groupe :
+                            Date d&apos;arrêt d&apos;activité du groupe :
                         </p>
                         <p>
                             {Groupe[0].date_arret_activite_du_Groupe == null

@@ -199,8 +199,12 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                         items={groupes.map(groupe => ({
                             value1: groupe.code_groupe.toString(),
                             value2: groupe.nom_du_Groupe,
-                            value3: groupe.site_Web === '' ? '/' : groupe.site_Web,
-                            value4: groupe.commentaires === '' ? '/' : groupe.commentaires,
+                            value3:
+                                groupe.site_Web === '' ? '/' : groupe.site_Web,
+                            value4:
+                                groupe.commentaires === ''
+                                    ? '/'
+                                    : groupe.commentaires,
                             value5:
                                 groupe.date_arret_activite_du_groupe == null
                                     ? '/'
@@ -220,7 +224,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             att1: 'Nom du groupe',
                             att2: 'Site web',
                             att3: 'Commentaire',
-                            att4: 'Date d\'arrêt d\'activité',
+                            att4: "Date d'arrêt d'activité",
                         }}
                     />
                     <Pagination
