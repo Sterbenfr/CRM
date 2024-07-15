@@ -46,8 +46,7 @@ function DonsPage() {
     const [codeContactEntiteDonatrice, setCodeContactEntiteDonatrice] =
         useState('')
     const [selectedTypeCompetence, setSelectedTypeCompetence] = useState('')
-    const [selectedTypeMarchandise, setSelectedTypeMarchandise] =
-        useState('ALI')
+    const [selectedTypeMarchandise, setSelectedTypeMarchandise] = useState('')
     const [selectedTypeDon, setSelectedTypeDon] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [codeUtilisateurSaisieDon, setCodeUtilisateurSaisieDon] = useState('')
@@ -655,8 +654,10 @@ function DonsPage() {
                             onClose={handleClose}
                             url='http://localhost:3000/api/dons'
                             fields={fields} // Use the fields state here
-                            fileUrl='../api/upload/cerfa'
-                            fileUrl2='../api/upload/piece'
+                            fileUrl='../api/upload/piece'
+                            fileUrl2='../api/upload/cerfa'
+                            fileIndex={7}
+                            fileIndex2={19}
                         />
                     </div>
                 )}

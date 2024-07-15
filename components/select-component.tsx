@@ -41,6 +41,16 @@ export default function SelectComponent({
                 }),
             )
             setOptions(formattedOptions)
+            if (formattedOptions.length > 0 && onChange) {
+                const event = new Event('change', { bubbles: true })
+                Object.defineProperty(event, 'target', {
+                    writable: false,
+                    value: { value: formattedOptions[0].value },
+                })
+                onChange(
+                    event as unknown as React.ChangeEvent<HTMLSelectElement>,
+                )
+            }
         } catch (error) {
             console.error('Erreur lors de la récupération des données', error)
         }
