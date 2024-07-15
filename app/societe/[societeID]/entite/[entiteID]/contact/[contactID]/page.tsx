@@ -43,7 +43,12 @@ export default function ContactPage({
 
         fetchContact()
     }, [params.contactID, params.societeID, params.entiteID])
-    if (!contact || contact.length === 0) return <div>Loading...</div>
+    if (!contact || contact.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>

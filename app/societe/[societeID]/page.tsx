@@ -40,7 +40,12 @@ export default function SocietePage({
 
         fetchSociete()
     }, [params.societeID])
-    if (!Societe || Societe.length === 0) return <div>Loading...</div>
+    if (!Societe || Societe.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>

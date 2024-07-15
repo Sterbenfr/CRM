@@ -54,7 +54,12 @@ export default function EntitePage({
 
         fetchEntite()
     }, [params.entiteID, params.societeID])
-    if (!entite || entite.length === 0) return <div>Loading...</div>
+    if (!entite || entite.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
@@ -165,8 +170,7 @@ export default function EntitePage({
                                 : entite[0].site_internet}
                         </p>
                     </div>
-                </div>
-                <div className={style.col_2}>
+
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
@@ -184,7 +188,8 @@ export default function EntitePage({
                                 : entite[0].TE_libelle}
                         </p>
                     </div>
-
+                </div>
+                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>Type de Don :</p>
                         <p>
