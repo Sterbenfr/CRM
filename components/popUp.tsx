@@ -247,6 +247,13 @@ const PopUp: React.FC<PopUpProps> = ({
         return Object.keys(errors).length === 0
     }
 
+    const renderRequiredIndicator = (input: Field) => {
+        if (input.required) {
+            return <span className={style.requis}>&nbsp;(Requis)&nbsp;</span>
+        }
+        return null
+    }
+
     const handleAction = async () => {
         const isAnyRequiredInputEmpty = inputs.some(
             input => input.required && !fieldLabels[input.id],
@@ -385,6 +392,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 <div className={style.rowPop} key={input.id}>
                     <label className={style.label}>
                         {fieldLabels[input.id]}
+                        {renderRequiredIndicator(input)}
                     </label>
                     {(() => {
                         switch (input.type) {
