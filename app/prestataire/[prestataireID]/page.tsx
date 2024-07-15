@@ -46,7 +46,12 @@ export default function PrestatairePage({
 
         fetchPrestataire()
     }, [params.prestataireID])
-    if (!prestataire || prestataire.length === 0) return <div>Loading...</div>
+    if (!prestataire || prestataire.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>

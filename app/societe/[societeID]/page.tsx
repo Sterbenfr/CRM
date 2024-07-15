@@ -40,7 +40,12 @@ export default function SocietePage({
 
         fetchSociete()
     }, [params.societeID])
-    if (!Societe || Societe.length === 0) return <div>Loading...</div>
+    if (!Societe || Societe.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
@@ -120,7 +125,7 @@ export default function SocietePage({
                             Code de la societe d appartenance :
                         </p>
                         <p>
-                            {Societe[0].code_Groupe_appartenance== null
+                            {Societe[0].code_Groupe_appartenance == null
                                 ? '/'
                                 : Societe[0].code_Groupe_appartenance}
                         </p>
@@ -128,7 +133,8 @@ export default function SocietePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Date de l&apos;arret de l&apos;activite de la societe :
+                            Date de l&apos;arret de l&apos;activite de la
+                            societe :
                         </p>
                         <p>
                             {Societe[0].date_arret_activite_Societe == null

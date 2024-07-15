@@ -39,7 +39,12 @@ export default function InteractionPage({
 
         fetchInteraction()
     }, [params.interactionID, params.societeID, params.entiteID])
-    if (!interaction || interaction.length === 0) return <div>Loading...</div>
+    if (!interaction || interaction.length === 0)
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>

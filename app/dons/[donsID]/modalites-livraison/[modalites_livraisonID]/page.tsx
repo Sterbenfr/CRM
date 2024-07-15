@@ -57,17 +57,21 @@ export default function Modalites_livraisonPage({
         fetchModalites_livraison()
     }, [params.modalites_livraisonID, params.donsID])
     if (!modalite_livraison || modalite_livraison.length === 0)
-        return <div>Loading...</div>
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
     return (
         <div className={style.idPage}>
             <div>
-                <h1 className={style.titre_global}>Modalites livraison</h1>
+                <h1 className={style.titre_global}>Modalités livraison</h1>
             </div>
             <div className={style.info_id}>
                 <div className={style.col_1}>
                     <div className={style.info}>
-                        <p className={style.titre}>Numero de la livraison :</p>
+                        <p className={style.titre}>Numéro de la livraison :</p>
                         <p>
                             {modalite_livraison[0].numero_livraison == null
                                 ? '/'
@@ -110,7 +114,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Prenom du contact enlevement :
+                            Prénom du contact enlevement :
                         </p>
                         <p>
                             {modalite_livraison[0].prenom_contact_enlevement ==
@@ -216,7 +220,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Temperature pour la conservation du produit :
+                            Température pour la conservation du produit :
                         </p>
                         <p>
                             {modalite_livraison[0]
@@ -239,7 +243,7 @@ export default function Modalites_livraisonPage({
                     {/* A revoir : Type Blob */}
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de cartons prevu :</p>
+                        <p className={style.titre}>Pièces associées :</p>
                         <p>{modalite_livraison[0].pieces_associees == null}</p>
                     </div>
                 </div>

@@ -741,3 +741,16 @@
 .requis {
     color: #e5007d;
 }
+
+.load {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    background-color: white;
+    position: fixed;
+    z-index: 10000;
+    font-size: 4rem;
+    color: black;
+}
