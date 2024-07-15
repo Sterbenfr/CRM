@@ -24,7 +24,6 @@ function ContactEntitePage({
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 
-    const [codeEntite, setCodeEntite] = useState('')
     const [codeTypeDeSite, setCodeTypeDeSite] = useState('AD')
     const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
     const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
@@ -60,11 +59,6 @@ function ContactEntitePage({
     | 'checkbox'
     | 'enum'
     
-    const handleCodeEntiteChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setCodeEntite(event.target.value)
-    }
 
     const handleCodeTypeDeSiteChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
@@ -96,17 +90,16 @@ function ContactEntitePage({
             createURL?: string
             required?: boolean
             maxLength?: number
+            disabled?: boolean
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
             {
                 id: 'code_entite',
-                type: 'search',
-                value: codeEntite,
+                type: 'input',
+                value: params.entiteID,
                 required: true,
-                url: '../../../../../api/select/societe/entite',
-                placeholder: 'Exemple: Entreprise Alpha',
-                onInputChange: handleCodeEntiteChange,
+                disabled: true,
             },
             {
                 id: 'code_type_site',
@@ -136,7 +129,7 @@ function ContactEntitePage({
             },
         ]
         return fields
-    }, [codeEntite, codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant])
+    }, [codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant, params.entiteID])
 
     useEffect(() => {
         const fetchContacts = async () => {

@@ -28,14 +28,14 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
-    const [civilite, setCivilite] = useState('Mme')
+    const [civilite, setCivilite] = useState('')
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
     const [telPerso, setTelPerso] = useState('')
     const [mail, setMail] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [password, setPassword] = useState('')
-    const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('AD')
+    const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('')
 
     const [fields, setFields] = useState<
         {

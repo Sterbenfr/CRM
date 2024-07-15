@@ -36,7 +36,7 @@ function SitesPage() {
     const [designationLongue, setDesignationLongue] = useState('')
     const [designationCourte, setDesignationCourte] = useState('')
     const [Adresse, setAdresse] = useState('')
-    const [codeTypeSite, setCodeTypeSite] = useState('AD')
+    const [codeTypeSite, setCodeTypeSite] = useState('')
 
     const [dateOuverture, setDateOuverture] = useState(new Date())
     const [dateFermeture, setDateFermeture] = useState<Date>()
@@ -171,6 +171,23 @@ function SitesPage() {
                 onChange: handleCodeTypeSiteChange,
             },
             {
+                id: 'numero_telephone',
+                type: 'input',
+                value: numeroTelephone,
+                placeholder: 'Exemple: 0658905910',
+                required: true,
+                onInputChange: handleNumeroTelephoneChange,
+                maxLength: 12,
+            },
+            {
+                id: 'adresse_mail',
+                type: 'input',
+                value: adresseMail,
+                required: true,
+                placeholder: 'Exemple: Siege.social@gmail.com',
+                onInputChange: handleAdresseMailChange,
+            },
+            {
                 id: 'date_ouverture',
                 type: 'date',
                 value: dateOuverture.toISOString().split('T')[0],
@@ -181,21 +198,6 @@ function SitesPage() {
                 type: 'date',
                 value: dateFermeture?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateFermetureChange,
-            },
-            {
-                id: 'numero_telephone',
-                type: 'input',
-                value: numeroTelephone,
-                placeholder: 'Exemple: 0658905910',
-                onInputChange: handleNumeroTelephoneChange,
-                maxLength: 12,
-            },
-            {
-                id: 'adresse_mail',
-                type: 'input',
-                value: adresseMail,
-                placeholder: 'Exemple: Siege.social@gmail.com',
-                onInputChange: handleAdresseMailChange,
             },
             {
                 id: 'commentaires',
@@ -212,7 +214,13 @@ function SitesPage() {
         }
 
         if (dateFermeture === undefined) {
-            fields[5].value = null
+            fields[7].value = null
+        }
+
+        if (fields[5].value !== '') {
+            fields[6].required = false
+        } else if (fields[6].value !== '') {
+            fields[5].required = false
         }
 
         return fields
@@ -290,9 +298,9 @@ function SitesPage() {
                         value1: Sites.code_site.toString(),
                         value2: Sites.designation_longue.toString(),
                         value3: Sites.adresse.toString(),
-                        value4: Sites.date_ouverture.toString().split('T')[0],
-                        value5: Sites.numero_telephone.toString(),
-                        value6: Sites.adresse_mail.toString(),
+                        value4: Sites.date_ouverture.toString().split('T')[0] == null ? '/' : Sites.date_ouverture.toString().split('T')[0],
+                        value5: Sites.numero_telephone.toString() == '' ? '/' : Sites.numero_telephone.toString(),
+                        value6: Sites.adresse_mail.toString() == '' ? '/' : Sites.adresse_mail.toString(),
                     }))}
                     functions={{
                         fonc1: () => {
@@ -313,9 +321,9 @@ function SitesPage() {
                         value1: Sites.code_site.toString(),
                         value2: Sites.designation_longue.toString(),
                         value3: Sites.adresse.toString(),
-                        value4: Sites.date_ouverture.toString().split('T')[0],
-                        value5: Sites.numero_telephone.toString(),
-                        value6: Sites.adresse_mail.toString(),
+                        value4: Sites.date_ouverture.toString().split('T')[0] == null ? '/' : Sites.date_ouverture.toString().split('T')[0],
+                        value5: Sites.numero_telephone.toString() == '' ? '/' : Sites.numero_telephone.toString(),
+                        value6: Sites.adresse_mail.toString() == '' ? '/' : Sites.adresse_mail.toString(),
                     }))}
                 />
                 <Pagination
@@ -324,7 +332,7 @@ function SitesPage() {
                     totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
-                />{' '}
+                />{''}
                 {isPopUpOpen && (
                     <div className={style.PopUp}>
                         <PopUp
