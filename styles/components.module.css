@@ -686,7 +686,8 @@
 
 .CR {
     margin-bottom: 2rem;
-    margin-left: 10rem;
+    margin-left: 5rem;
+    margin-right: 2rem;
     cursor: pointer;
 }
 
@@ -735,4 +736,8 @@
     padding-top: 1.5rem;
     margin-bottom: 2rem;
     font-weight: bold;
+}
+
+.requis {
+    color: #e5007d;
 }

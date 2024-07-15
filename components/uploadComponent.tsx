@@ -1,4 +1,5 @@
 import React from 'react'
+import style from '../styles/components.module.css'
 
 interface FileUploadProps {
     setFile: (value: File | null) => void
@@ -14,7 +15,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setFile }) => {
     }
 
     return (
-        <div>
+        <div className={style.selectF}>
             <input type='file' onChange={handleFileChange} />
         </div>
     )
