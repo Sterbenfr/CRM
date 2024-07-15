@@ -45,8 +45,8 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
-        (console.log(prestataires),
-        !prestataires.code_type_de_Prestataire || !prestataires.raison_sociale)
+        !prestataires.code_type_de_Prestataire ||
+        !prestataires.raison_sociale
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },

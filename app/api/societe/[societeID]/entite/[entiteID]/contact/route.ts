@@ -53,9 +53,7 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    console.log(contact)
     if (!contact) {
-        console.log('cacahuetes')
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

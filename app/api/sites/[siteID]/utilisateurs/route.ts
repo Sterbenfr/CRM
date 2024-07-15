@@ -27,7 +27,8 @@ export async function GET(
         )
 
         const [totalResult] = await pool.query(
-            'SELECT COUNT(*) as count FROM `Utilisateurs`',
+            'SELECT COUNT(*) as count FROM `Utilisateurs` LEFT JOIN SitesRattachement ON Utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur WHERE SitesRattachement.code_site = ?',
+            [siteID],
         )
 
         const total = totalResult as CountResult

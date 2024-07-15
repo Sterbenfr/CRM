@@ -299,7 +299,7 @@ function PrestatairesPage() {
                 value:
                     dateArretActiviteDuPrestataire
                         ?.toISOString()
-                        .split('T')[0] || '',
+                        .split('T')[0] || null,
                 onInputChange: handleDateArretActiviteDuPrestataireChange,
             },
         ]
@@ -311,9 +311,6 @@ function PrestatairesPage() {
         ) {
             setDateArretActiviteDuPrestataire(undefined)
         }
-        
-
-        
 
         return fields
     }, [

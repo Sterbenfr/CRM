@@ -32,30 +32,23 @@ function InteractionsPage({
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Interactions[]>([])
 
-    const [codeUtilisateurProspecteur, setCodeUtilisateurProspecteur] = useState('')
+    const [codeUtilisateurProspecteur, setCodeUtilisateurProspecteur] =
+        useState('')
     const [dateInteraction, setDateInteraction] = useState(new Date())
-    const [codeTypeInteraction, setCodeTypeInteraction] = useState('PRE')
-    const [codeModaliteInteraction, setCodeModaliteInteraction] = useState('MAI')
-    const [EntiteInteraction, setEntiteInteraction] = useState(params.entiteID)
+    const [codeTypeInteraction, setCodeTypeInteraction] = useState('')
+    const [codeModaliteInteraction, setCodeModaliteInteraction] = useState('')
+    const [codeContactEntiteInteraction, setCodeContactEntiteInteraction] =
+        useState('')
     const [commentaires, setCommentaires] = useState('')
     const today = new Date()
-    const [dateRelance, setDateRelance] = useState(new Date(today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + 15,))
-
-
+    const [dateRelance, setDateRelance] = useState(
+        new Date(today.getFullYear(), today.getMonth(), today.getDate() + 15),
+    )
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
-
     const handleClose = () => {
         setIsPopUpOpen(false)
-    }
-
-    const handleEntiteInteraction = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setEntiteInteraction(event.target.value)
     }
 
     const handleCodeTypeInteraction = (
@@ -69,7 +62,13 @@ function InteractionsPage({
     ) => {
         setCodeModaliteInteraction(event.target.value)
     }
-    
+
+    const handleCodeContactEntiteInteraction = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        setCodeContactEntiteInteraction(event.target.value)
+    }
+
     const handleCodeUtilisateurProspecteur = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -77,46 +76,43 @@ function InteractionsPage({
     }
 
     const handleDateInteraction = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateInteraction(new Date(event.target.value))
     }
 
-    const handleCommentaires = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
+    const handleCommentaires = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCommentaires(event.target.value)
     }
 
-    const handleDateRelance = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
+    const handleDateRelance = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDateRelance(new Date(event.target.value))
     }
 
-    const [fields, setFields] = useState<{
-    id: string
-    type: FieldType
-    value: string | null
-    placeholder?: string
-    url?: string
-    createURL?: string
-    required?: boolean
-    maxLength?: number
-    onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-    onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-}[]
->([])
+    const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
 
-type FieldType =
-| 'number'
-| 'search'
-| 'date'
-| 'select'
-| 'input'
-| 'file'
-| 'checkbox'
-| 'enum'
+    type FieldType =
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const generateFields = useCallback(() => {
         const fields: {
@@ -159,6 +155,7 @@ type FieldType =
                 type: 'select',
                 value: codeTypeInteraction,
                 url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                required: true,
                 onChange: handleCodeTypeInteraction,
             },
             {
@@ -166,14 +163,16 @@ type FieldType =
                 type: 'select',
                 value: codeModaliteInteraction,
                 url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                required: true,
                 onChange: handleCodeModaliteInteraction,
             },
             {
                 id: 'code_contact_entite',
-                type: 'search',
-                value: null,
-                url: `../../../../../api/select/societe/entite/${EntiteInteraction}/contact`,
-                onInputChange: handleEntiteInteraction,
+                type: 'select',
+                value: codeContactEntiteInteraction,
+                url: `../../../../../api/select/societe/entite/${params.entiteID}/contact`,
+                required: true,
+                onChange: handleCodeContactEntiteInteraction,
             },
             {
                 id: 'commentaires',
@@ -192,6 +191,7 @@ type FieldType =
                 id: 'date_relance',
                 type: 'date',
                 value: dateRelance.toISOString().split('T')[0],
+                required: true,
                 onInputChange: handleDateRelance,
             },
         ]
@@ -200,8 +200,8 @@ type FieldType =
     }, [
         codeUtilisateurProspecteur,
         codeModaliteInteraction,
+        codeContactEntiteInteraction,
         codeTypeInteraction,
-        EntiteInteraction,
         commentaires,
         dateInteraction,
         dateRelance,
@@ -242,8 +242,14 @@ type FieldType =
 
         fetchInteractions()
         fetchSearchInteractions()
-
-    }, [page, itemsPerPage, params.societeID, params.entiteID, search, generateFields])
+    }, [
+        page,
+        itemsPerPage,
+        params.societeID,
+        params.entiteID,
+        search,
+        generateFields,
+    ])
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

@@ -33,8 +33,7 @@ function ContactsPage({
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Contact[]>([])
 
-
-    const [civilite, setCivilite] = useState('Mme')
+    const [civilite, setCivilite] = useState('')
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
     const [fonction, setFonction] = useState('')
@@ -55,56 +54,42 @@ function ContactsPage({
         setCivilite(event.target.value)
     }
 
-    const handleNom = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleNom = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNom(event.target.value)
     }
 
-    const handlePrenom = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlePrenom = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPrenom(event.target.value)
     }
 
-    const handleFonction = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleFonction = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFonction(event.target.value)
     }
 
-    const handleService = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleService = (event: React.ChangeEvent<HTMLInputElement>) => {
         setService(event.target.value)
     }
 
-    const handleNumeroFixe = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleNumeroFixe = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNumeroFixe(event.target.value)
     }
 
     const handleNumeroPortable = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNumeroPortable(event.target.value)
     }
 
-    const handleAdresseMail = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleAdresseMail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAdresseMail(event.target.value)
     }
 
-    const handleCommentaires = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleCommentaires = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCommentaires(event.target.value)
     }
 
     const handleDateArretContact = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateArretContact(new Date(event.target.value))
     }
@@ -134,128 +119,128 @@ function ContactsPage({
         | 'checkbox'
         | 'enum'
 
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            disabled?: boolean
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'code_entite',
+                type: 'input',
+                value: params.entiteID,
+                disabled: true,
+                required: true,
+            },
+            {
+                id: 'civilite',
+                type: 'select',
+                value: civilite,
+                url: `../.././../../../../api/select/genre`,
+                required: true,
+                onChange: handleCivilite,
+            },
+            {
+                id: 'nom',
+                type: 'input',
+                value: nom,
+                placeholder: 'Exemple: Dupont',
+                maxLength: 20,
+                required: true,
+                onInputChange: handleNom,
+            },
+            {
+                id: 'prenom',
+                type: 'input',
+                value: prenom,
+                placeholder: 'Exemple: Corrine',
+                maxLength: 20,
+                required: true,
+                onInputChange: handlePrenom,
+            },
+            {
+                id: 'photo',
+                type: 'file',
+                value: null,
+            }, //type blob
+            {
+                id: 'fonction',
+                type: 'input',
+                value: fonction,
+                placeholder: 'Exemple: Assistante',
+                maxLength: 30,
+                onInputChange: handleFonction,
+            }, // a voir si select
+            {
+                id: 'service',
+                type: 'input',
+                value: service,
+                placeholder: 'Exemple: Ressources Humaines',
+                maxLength: 30,
+                onInputChange: handleService,
+            },
+            {
+                id: 'numero_fixe',
+                type: 'input',
+                value: numeroFixe,
+                placeholder: 'Exemple: 0634167452',
+                maxLength: 12,
+                onInputChange: handleNumeroFixe,
+            },
+            {
+                id: 'numero_portable',
+                type: 'input',
+                value: numeroPortable,
+                placeholder: 'Exemple: 0634164183',
+                maxLength: 12,
+                onInputChange: handleNumeroPortable,
+            },
+            {
+                id: 'adresse_mail',
+                type: 'input',
+                value: adresseMail,
+                placeholder: 'Exemple: Corrine.dupont@gmail.com',
+                maxLength: 200,
+                onInputChange: handleAdresseMail,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                placeholder: 'Exemple: Corrine Dupont habite dunkerque',
+                maxLength: 200,
+                onInputChange: handleCommentaires,
+            },
+            {
+                id: 'date_arret_contact',
+                type: 'date',
+                value: dateArretContact?.toISOString().split('T')[0] || null,
+                onInputChange: handleDateArretContact,
+            },
+        ]
 
-        const generateFields = useCallback(() => {
-            const fields: {
-                id: string
-                type: FieldType
-                value: string | null
-                placeholder?: string
-                url?: string
-                createURL?: string
-                required?: boolean
-                maxLength?: number
-                disabled?: boolean
-                onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-                onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-            }[] = [
-                {
-                    id: 'code_entite',
-                    type: 'input',
-                    value: params.entiteID,
-                    disabled: true,
-                    required: true,
-                },
-                {
-                    id: 'civilite',
-                    type: 'select',
-                    value: civilite,
-                    url: `../.././../../../../api/select/genre`,
-                    required: true,
-                    onChange: handleCivilite,
-                },
-                {
-                    id: 'nom',
-                    type: 'input',
-                    value: nom,
-                    placeholder: 'Exemple: Dupont',
-                    maxLength: 20,
-                    required: true,
-                    onInputChange: handleNom,
-                },
-                {
-                    id: 'prenom',
-                    type: 'input',
-                    value: prenom,
-                    placeholder: 'Exemple: Corrine',
-                    maxLength: 20,
-                    required: true,
-                    onInputChange: handlePrenom,
-                },
-                {
-                    id: 'photo',
-                    type: 'file',
-                    value: null,
-                }, //type blob
-                {
-                    id: 'fonction',
-                    type: 'input',
-                    value: fonction,
-                    placeholder: 'Exemple: Assistante',
-                    maxLength: 30,
-                    onInputChange: handleFonction,
-                }, // a voir si select
-                {
-                    id: 'service',
-                    type: 'input',
-                    value: service,
-                    placeholder: 'Exemple: Ressources Humaines',
-                    maxLength: 30,
-                    onInputChange: handleService,
-                },
-                {
-                    id: 'numero_fixe',
-                    type: 'input',
-                    value: numeroFixe,
-                    placeholder: 'Exemple: 0634167452',
-                    maxLength: 12,
-                    onInputChange: handleNumeroFixe,
-                },
-                {
-                    id: 'numero_portable',
-                    type: 'input',
-                    value: numeroPortable,
-                    placeholder: 'Exemple: 0634164183',
-                    maxLength: 12,
-                    onInputChange: handleNumeroPortable,
-                },
-                {
-                    id: 'adresse_mail',
-                    type: 'input',
-                    value: adresseMail,
-                    placeholder: 'Exemple: Corrine.dupont@gmail.com',
-                    onInputChange: handleAdresseMail,
-                },
-                {
-                    id: 'commentaires',
-                    type: 'input',
-                    value: commentaires,
-                    placeholder: 'Exemple: Corrine Dupont habite dunkerque',
-                    maxLength: 200,
-                    onInputChange: handleCommentaires,
-                },
-                {
-                    id: 'date_arret_contact',
-                    type: 'date',
-                    value: dateArretContact?.toISOString().split('T')[0] || '',
-                    onInputChange: handleDateArretContact,
-                },
-            ]
-    
-            return fields
-        }, [
-            params.entiteID,
-            civilite,
-            nom,
-            prenom,
-            fonction,
-            service,
-            numeroFixe,
-            numeroPortable,
-            adresseMail,
-            commentaires,
-            dateArretContact,
-        ])
+        return fields
+    }, [
+        params.entiteID,
+        civilite,
+        nom,
+        prenom,
+        fonction,
+        service,
+        numeroFixe,
+        numeroPortable,
+        adresseMail,
+        commentaires,
+        dateArretContact,
+    ])
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -291,7 +276,14 @@ function ContactsPage({
 
         fetchContacts()
         fetchSearchContacts()
-    }, [params.societeID, params.entiteID, page, itemsPerPage, search, generateFields])
+    }, [
+        params.societeID,
+        params.entiteID,
+        page,
+        itemsPerPage,
+        search,
+        generateFields,
+    ])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
