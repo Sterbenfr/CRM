@@ -7,7 +7,7 @@ export default function NotFound() {
             <h2 className={style.NF}>Not Found</h2>
             <p className={style.CNF}>Could not find requested resource</p>
             <a className={style.BTN_CNF} href='/'>
-                Return To Calendar
+                Retour vers calendrier
             </a>
         </div>
     )
