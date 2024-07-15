@@ -240,7 +240,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             }}
                             className={style.btnModif}
                         >
-                            {modify ? 'Submit' : 'Modify'}
+                            {modify ? 'Envoyer' : 'Modifier'}
                         </button>
                     </div>
                 )}

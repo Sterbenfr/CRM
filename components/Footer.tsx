@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <div className={styles.foot}>
             <footer className={styles.footer}>
-                <p>--- Made by students from ENIGMA ---</p>
+                <p>--- Fait par ENIGMA ---</p>
                 <ul>
                     <li>
                         Aurelien Schmieder{' '}
