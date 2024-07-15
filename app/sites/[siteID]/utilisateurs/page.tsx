@@ -275,8 +275,8 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         value2: user.civilite,
                         value3: user.nom,
                         value4: user.prenom,
-                        value5: user.tel_perso,
-                        value6: user.mail,
+                        value5: user.tel_perso == '' ? '/' : user.tel_perso,
+                        value6: user.mail == '' ? '/' : user.mail,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -298,8 +298,8 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         value2: user.civilite,
                         value3: user.nom,
                         value4: user.prenom,
-                        value5: user.tel_perso,
-                        value6: user.mail,
+                        value5: user.tel_perso == '' ? '/' : user.tel_perso,
+                        value6: user.mail == '' ? '/' : user.mail,
                     }))}
                 />
                 <Pagination

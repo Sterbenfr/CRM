@@ -269,13 +269,13 @@ function InteractionsPage({
                         value1: Interactions.code_interaction.toString(),
                         value2: Interactions.code_Entite_Prospectee.toString(),
                         value3: Interactions.date_interaction
-                            .toString()
-                            .split('T')[0],
-                        value4: Interactions.code_contact_entite.toString(),
+                            .toString().split('T')[0] == '' ? '/' : Interactions.date_interaction.toString().split('T')[0],
+                        value4: Interactions.code_contact_entite.toString() == '' ? '/' : Interactions.code_contact_entite.toString(),
                         value5: Interactions.date_relance
                             .toString()
+                            .split('T')[0] == '' ? '/' : Interactions.date_relance.toString()
                             .split('T')[0],
-                        value6: Interactions.commentaires,
+                        value6: Interactions.commentaires == '' ? '/' : Interactions.commentaires,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -297,11 +297,11 @@ function InteractionsPage({
                         value2: Interactions.code_Entite_Prospectee.toString(),
                         value3: Interactions.date_interaction
                             .toString()
-                            .split('T')[0],
-                        value4: Interactions.code_contact_entite.toString(),
+                            .split('T')[0] == '' ? '/' : Interactions.date_interaction.toString().split('T')[0],
+                        value4: Interactions.code_contact_entite.toString() == '' ? '/' : Interactions.code_contact_entite.toString(),
                         value5: Interactions.date_relance
                             .toString()
-                            .split('T')[0],
+                            .split('T')[0] == '' ? '/' : Interactions.date_relance.toString(),
                         value6: Interactions.commentaires,
                     }))}
                 />

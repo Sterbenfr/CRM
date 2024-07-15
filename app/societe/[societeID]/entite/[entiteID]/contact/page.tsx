@@ -303,15 +303,10 @@ function ContactsPage({
                     items={contacts.map(contact => ({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,
-                        value3: contact.numero_fixe,
-                        value4: contact.numero_portable,
-                        value5: contact.adresse_mail,
-                        value6:
-                            contact.date_arret_contact == null
-                                ? ''
-                                : contact.date_arret_contact
-                                      .toString()
-                                      .split('T')[0],
+                        value3: contact.prenom,
+                        value4: contact.fonction == '' ? '/' : contact.fonction,
+                        value5: contact.numero_portable == '' ? '/' : contact.numero_portable,
+                        value6: contact.adresse_mail == '' ? '/' : contact.adresse_mail,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -323,22 +318,18 @@ function ContactsPage({
                     }}
                     attribut={{
                         att1: 'Nom',
-                        att2: 'Numéro fixe',
-                        att3: 'Numéro portable',
-                        att4: 'Adresse mail',
+                        att2: 'Prenom',
+                        att3: 'fonction',
+                        att4: 'Numéro portable',
+                        att5: 'Adresse mail',
                     }}
                     searchItems={search.map(contact => ({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,
-                        value3: contact.numero_fixe,
-                        value4: contact.numero_portable,
-                        value5: contact.adresse_mail,
-                        value6:
-                            contact.date_arret_contact == null
-                                ? ''
-                                : contact.date_arret_contact
-                                      .toString()
-                                      .split('T')[0],
+                        value3: contact.prenom,
+                        value4: contact.fonction == '' ? '/' : contact.fonction,
+                        value5: contact.numero_portable == '' ? '/' : contact.numero_portable,
+                        value6: contact.adresse_mail == '' ? '/' : contact.adresse_mail,
                     }))}
                 />
                 <Pagination

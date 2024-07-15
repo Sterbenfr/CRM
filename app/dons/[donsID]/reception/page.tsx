@@ -163,6 +163,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                     id: 'nombre_palettes_recues',
                                     type: 'number',
                                     value: null,
+                                    required: true,
                                 },
                                 {
                                     id: 'nombre_palettes_consignees_recues',
@@ -183,6 +184,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                     id: 'poids_recu_kg',
                                     type: 'number',
                                     value: null,
+                                    required: true,
                                 },
                                 {
                                     id: 'produits_sur_palettes',

@@ -384,10 +384,10 @@ function PrestatairesPage() {
                     items={Prestataires.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3: Prestataire.telephone.toString(),
-                        value4: Prestataire.mail.toString(),
-                        value5: Prestataire.telephone_contact_prestataire.toString(),
-                        value6: Prestataire.mail_contact_prestataire.toString(),
+                        value3: Prestataire.telephone.toString() == '' ? '/' : Prestataire.telephone.toString(),
+                        value4: Prestataire.mail.toString() == '' ? '/' : Prestataire.mail.toString(),
+                        value5: Prestataire.telephone_contact_prestataire.toString() == '' ? '/' : Prestataire.telephone_contact_prestataire.toString(),
+                        value6: Prestataire.mail_contact_prestataire.toString() == '' ? '/' : Prestataire.mail_contact_prestataire.toString(),
                     }))}
                     functions={{
                         fonc1: () => {
@@ -407,10 +407,10 @@ function PrestatairesPage() {
                     searchItems={search.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3: Prestataire.telephone.toString(),
-                        value4: Prestataire.mail.toString(),
-                        value5: Prestataire.telephone_contact_prestataire.toString(),
-                        value6: Prestataire.mail_contact_prestataire.toString(),
+                        value3: Prestataire.telephone.toString() == '' ? '/' : Prestataire.telephone.toString(),
+                        value4: Prestataire.mail.toString() == '' ? '/' : Prestataire.mail.toString(),
+                        value5: Prestataire.telephone_contact_prestataire.toString() == '' ? '/' : Prestataire.telephone_contact_prestataire.toString(),
+                        value6: Prestataire.mail_contact_prestataire.toString() == '' ? '/' : Prestataire.mail_contact_prestataire.toString(),
                     }))}
                 />
                 <Pagination
