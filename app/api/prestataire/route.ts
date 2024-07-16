@@ -55,6 +55,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log(prestataires)
         const query = 'INSERT INTO `Prestataires` SET ?'
         const [rows] = await pool.query(query, prestataires)
         return NextResponse.json(rows)

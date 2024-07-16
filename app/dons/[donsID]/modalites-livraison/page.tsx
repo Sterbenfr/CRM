@@ -65,7 +65,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     >([])
 
     const [codeDon] = useState(params.donsID)
-    const [codeTypeLivraison, setCodeTypeLivraison] = useState('DON')
+    const [codeTypeLivraison, setCodeTypeLivraison] = useState('')
     const [datePrevueLivraison, setDatePrevueLivraison] = useState(new Date())
     const [heurePrevueLivraison, setHeurePrevueLivraison] = useState('')
     const [adresseEnlevement, setAdresseEnlevement] = useState('')
@@ -90,7 +90,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         useState('')
     const [nombreCartonsPrevu, setNombreCartonsPrevu] = useState('')
     const [poidsPrevuKg, setPoidsPrevuKg] = useState('')
-    const [produitsSurPalettes, setProduitsSurPalettes] = useState('')
+    const [produitsSurPalettes, setProduitsSurPalettes] = useState(false)
     const [temperatureConservProduits, setTemperatureConservProduits] =
         useState('')
     const [commentaires, setCommentaires] = useState('')
@@ -191,14 +191,12 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     ) => {
         setNombreCartonsPrevu(event.target.value)
     }
-    const handlePoidsPrevuKg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePoidsPrevuKg = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setPoidsPrevuKg(event.target.value)
     }
-    const handleProduitsSurPalettes = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setProduitsSurPalettes(event.target.value)
-    }
+
     const handleTemperatureConservProduits = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -213,8 +211,13 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         setPiecesAssociees(event.target.value)
     }
 
+    const handleProduitsSurPalettes = () => {
+        setProduitsSurPalettes(!produitsSurPalettes)
+    }
+
     const handleClose = () => {
         setIsPopUpOpen(false)
+        setProduitsSurPalettes(false)
     }
 
     type FieldType =
@@ -267,6 +270,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 id: 'heure_prevue_livraison',
                 type: 'input',
                 value: heurePrevueLivraison,
+                required: true,
                 onInputChange: handleHeurePrevueLivraison,
                 placeholder: 'Exemple: 14:00:00',
             },
@@ -304,10 +308,11 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             },
             {
                 id: 'telephone_contact_enlevement',
-                type: 'input',
+                type: 'number',
                 value: telephoneContactEnlevement,
                 placeholder: 'Exemple: 0123456789',
                 maxLength: 12,
+                required: true,
                 onInputChange: handleTelephoneContactEnlevement,
             },
             {
@@ -316,6 +321,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 value: mailContactEnlevement,
                 placeholder: 'Exemple: Jean.dupont@gmail.com',
                 maxLength: 255,
+                required: true,
                 onInputChange: handleMailContactEnlevement,
             },
             {
@@ -326,6 +332,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 createURL: '/sites',
                 maxLength: 255,
                 required: true,
+                placeholder: 'Exemple: Siège social',
                 onInputChange: handleAdresseLivraison,
             },
             {
@@ -353,10 +360,11 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             },
             {
                 id: 'telephone_contact_livraison',
-                type: 'input',
+                type: 'number',
                 value: telephoneContactLivraison,
                 placeholder: 'Exemple: 0123456789',
                 maxLength: 12,
+                required: true,
                 onInputChange: handleTelephoneContactLivraison,
             },
             {
@@ -365,6 +373,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 value: mailContactLivraison,
                 placeholder: 'Exemple: Michel.petit@gmail.com',
                 maxLength: 255,
+                required: true,
                 onInputChange: handleMailContactLivraison,
             },
             {
@@ -396,17 +405,19 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: poidsPrevuKg,
                 placeholder: 'Exemple: 580',
-                required: true,
                 onInputChange: handlePoidsPrevuKg,
             }, //pas negatif
             {
                 id: 'produits_sur_palettes',
-                type: 'input',
-                value: produitsSurPalettes,
-                placeholder: 'Exemple: O (pour oui) ou N (pour non)',
-                required: true,
-                maxLength: 1,
+                type: 'checkbox',
+                value: produitsSurPalettes ? 'O' : 'N',
                 onInputChange: handleProduitsSurPalettes,
+            },
+            {
+                id: 'pieces_associees',
+                type: 'file',
+                value: piecesAssociees,
+                onInputChange: handlePiecesAssociees,
             },
             {
                 id: 'commentaires',
@@ -416,25 +427,39 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 maxLength: 200,
                 onInputChange: handleCommentaires,
             },
-            {
-                id: 'pieces_associees',
-                type: 'file',
-                value: piecesAssociees,
-                onInputChange: handlePiecesAssociees,
-            },
         ]
 
         const FindIndex = (id: string) => {
-            return fields.findIndex(field => field.id === id) + 1
+            return fields.findIndex(field => field.id === id)
+        }
+
+        if (fields[FindIndex('poids_prevu_kg')].value === '') {
+            fields[FindIndex('poids_prevu_kg')].value = null
+        }
+        if (fields[FindIndex('telephone_contact_livraison')].value !== '') {
+            fields[FindIndex('mail_contact_livraison')].required = false
+        } else if (fields[FindIndex('mail_contact_livraison')].value !== '') {
+            fields[FindIndex('telephone_contact_livraison')].required = false
+        }
+
+        if (fields[FindIndex('telephone_contact_enlevement')].value !== '') {
+            fields[FindIndex('mail_contact_enlevement')].required = false
+        } else if (fields[FindIndex('mail_contact_enlevement')].value !== '') {
+            fields[FindIndex('telephone_contact_enlevement')].required = false
+        }
+
+        if (fields[FindIndex('pieces_associees')].value === undefined || fields[FindIndex('pieces_associees')].value === '') {
+            fields[FindIndex('pieces_associees')].value = null
         }
 
         if (codeTypeLivraison === 'TRA') {
-            fields.splice(4, 0, {
+            fields.splice(2, 0, {
                 id: 'code_Prestataire_transporteur',
                 type: 'search',
                 value: codePrestataireTransporteur,
                 url: '../../../api/select/prestataire',
                 createURL: '/prestataire',
+                placeholder: 'Exemple: Entreprise alpha',
                 onInputChange: handleCodePrestataireTransporteur,
             })
         }
@@ -459,13 +484,17 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 typeDonData.code_type_don === 'MAR' &&
                 typeDonData.code_type_produits === 'ALI'
             ) {
-                fields.splice(FindIndex('produits_sur_palettes'), 0, {
+                fields.splice(FindIndex('produits_sur_palettes') + 1, 0, {
                     id: 'temperature_conserv_produits',
                     type: 'number',
                     placeholder: 'Exemple: 27',
                     value: temperatureConservProduits,
                     onInputChange: handleTemperatureConservProduits,
                 })
+
+                if (fields[FindIndex('temperature_conserv_produits')].value === '') {
+                    fields[FindIndex('temperature_conserv_produits')].value = null
+                }
             }
         }
         typeDon()

@@ -51,14 +51,13 @@ export async function POST(req: NextApiRequest) {
     }
     if (
         !ModalitesLivraison.code_Don ||
+        !ModalitesLivraison.code_type_livraison ||
         !ModalitesLivraison.date_prevue_livraison ||
         !ModalitesLivraison.adresse_enlevement ||
         !ModalitesLivraison.adresse_livraison ||
-        !ModalitesLivraison.nombre_palettes_prevu ||
         !ModalitesLivraison.nombre_palettes_consignees_prevu ||
-        !ModalitesLivraison.nombre_cartons_prevu ||
-        !ModalitesLivraison.poids_prevu_kg ||
-        !ModalitesLivraison.produits_sur_palettes
+        !ModalitesLivraison.nombre_palettes_prevu ||
+        !ModalitesLivraison.nombre_cartons_prevu
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
@@ -67,6 +66,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
+        console.log(ModalitesLivraison)
         const query = 'INSERT INTO `ModalitesLivraison` SET ?'
         const [rows] = await pool.query(query, ModalitesLivraison)
         return NextResponse.json(rows)

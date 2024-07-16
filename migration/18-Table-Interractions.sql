@@ -1,6 +1,6 @@
 CREATE TABLE Interactions (
     code_interaction INT AUTO_INCREMENT,
-    code_Utilisateur_Prospecteur INT NOT NULL,
+    code_Utilisateur_Prospecteur INT,
     code_Entite_Prospectee INT NOT NULL,
     date_interaction DATE NOT NULL,
     code_type_interaction CHAR(4),
