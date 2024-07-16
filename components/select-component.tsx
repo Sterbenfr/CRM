@@ -59,8 +59,6 @@ export default function SelectComponent({
         }
     }
 
-    console.log(createURL)
-
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === 'Créer une nouvelle option' && createURL) {
             window.open(createURL, '_blank')

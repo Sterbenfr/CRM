@@ -24,7 +24,7 @@ CREATE TABLE ModalitesLivraison (
     produits_sur_palettes ENUM('O', 'N'),
     temperature_conserv_produits INT,
     commentaires VARCHAR(200),
-    pieces_associees BLOB,
+    pieces_associees VARCHAR(200),
     PRIMARY KEY (numero_livraison),
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_type_livraison) REFERENCES TypeLivraison(code_type_livraison) ON UPDATE CASCADE,

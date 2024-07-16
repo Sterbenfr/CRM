@@ -353,13 +353,13 @@ const PopUp: React.FC<PopUpProps> = ({
             code_contact_Entite_donatrice: 'un don',
             date_reception: 'une réception',
             date_prevue_livraison: 'une livraison',
-            Logo: 'une entreprise',
+            Siren: 'une entreprise',
             commentaires: 'un groupe',
-            logo: 'une entité',
+            nom_commercial: 'une entité',
             nom: 'un contact',
             adresse: 'un site',
             prenom: 'un utilisateur',
-            nom_commercial: 'un prestataire',
+            code_type_de_Prestataire: 'un prestataire',
             date_interaction: 'une interaction',
         }
         return tableNameMapping[fieldId] || 'un type'

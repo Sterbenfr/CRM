@@ -7,7 +7,7 @@ CREATE TABLE Interactions (
     code_modalite_interaction CHAR(4),
     code_contact_entite INT,
     commentaires VARCHAR(200),
-    pieces_associees BLOB,
+    pieces_associees VARCHAR(200),
     date_relance DATE,
     PRIMARY KEY (code_interaction),
     FOREIGN KEY (code_Utilisateur_Prospecteur) REFERENCES Utilisateurs(code_utilisateur) ON UPDATE CASCADE ON DELETE SET NULL,

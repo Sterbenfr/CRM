@@ -18,6 +18,7 @@ export interface Societe {
     commentaires: string
     code_Groupe_appartenance: number
     date_arret_activite_Societe: Date
+    libelle?: string
 }
 
 function SocietesPage() {
@@ -47,8 +48,7 @@ function SocietesPage() {
     //const [Logo, setLogo] = useState<Blob>()
     const [siteWeb, setSiteWeb] = useState('')
     const [Siren, setSiren] = useState('')
-    const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] =
-        useState('')
+    const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] = useState('')
     const [commentaires, setCommentaires] = useState('')
     const [codeGroupeAppartenance, setCodeGroupeAppartenance] = useState('')
     const [dateArretActiviteSociete, setDateArretActiviteSociete] =
@@ -171,7 +171,7 @@ function SocietesPage() {
                 type: 'file',
                 value: null,
                 //onInputChange: handleLogoChange,
-            }, // type Blob
+            },
             {
                 id: 'site_Web',
                 type: 'input',
@@ -193,13 +193,14 @@ function SocietesPage() {
                 type: 'search',
                 value: codeGroupeAppartenance,
                 url: '../api/select/societe/groupe',
-                placeholder : 'Exemple: Groupe Alpha',
+                placeholder: 'Exemple: Groupe Alpha',
                 onInputChange: handleCodeGroupeAppartenanceChange,
             },
             {
                 id: 'date_arret_activite_Societe',
                 type: 'date',
-                value: dateArretActiviteSociete?.toISOString().split('T')[0] || '',
+                value:
+                    dateArretActiviteSociete?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateArretActiviteSocieteChange,
             },
         ]
@@ -256,7 +257,6 @@ function SocietesPage() {
 
         fetchSocietes()
         fetchSocieteSearch()
-
     }, [page, itemsPerPage, generateFields, search])
 
     // add a function to handle page changes
@@ -278,8 +278,11 @@ function SocietesPage() {
                         value1: Societe.code_Societe.toString(),
                         value2: Societe.raison_sociale,
                         value3: Societe.site_Web == '' ? '/' : Societe.site_Web,
-                        value4: Societe.code_type_activite_Societe,
-                        value5: Societe.commentaires == '' ? '/' : Societe.commentaires,
+                        value4: Societe.libelle ? Societe.libelle : '/',
+                        value5:
+                            Societe.commentaires == ''
+                                ? '/'
+                                : Societe.commentaires,
                         value6:
                             Societe.date_arret_activite_Societe == null
                                 ? '/'
@@ -298,16 +301,19 @@ function SocietesPage() {
                     attribut={{
                         att1: 'Raison Sociale',
                         att2: 'Site Web',
-                        att3: 'Code type ativite societe',
+                        att3: 'Activité de la société',
                         att4: 'Commentaires',
-                        att5: 'Date Arret Activite',
+                        att5: "Date d'arrêt d'activité",
                     }}
                     searchItems={search.map(Societe => ({
                         value1: Societe.code_Societe.toString(),
                         value2: Societe.raison_sociale,
                         value3: Societe.site_Web == '' ? '/' : Societe.site_Web,
-                        value4: Societe.code_type_activite_Societe,
-                        value5: Societe.commentaires == '' ? '/' : Societe.commentaires,
+                        value4: Societe.libelle ? Societe.libelle : '',
+                        value5:
+                            Societe.commentaires == ''
+                                ? '/'
+                                : Societe.commentaires,
                         value6:
                             Societe.date_arret_activite_Societe == null
                                 ? '/'
@@ -330,6 +336,8 @@ function SocietesPage() {
                             onClose={handleClose}
                             url='http://localhost:3000/api/societe'
                             fields={fields}
+                            fileUrl2='../api/upload/image'
+                            fileIndex2={4}
                         />
                     </div>
                 )}

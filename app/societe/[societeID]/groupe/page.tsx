@@ -257,6 +257,8 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                 onClose={handleClose}
                                 url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
                                 fields={fields}
+                                fileUrl2='../../../api/upload/image'
+                                fileIndex2={1}
                             />
                         </div>
                     )}

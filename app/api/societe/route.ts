@@ -17,7 +17,7 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await pool.query(
-            'SELECT * FROM `entreprise` LIMIT ?, ?',
+            'SELECT entreprise.*,TypeActiviteSociete.libelle FROM `entreprise` LEFT JOIN TypeActiviteSociete ON TypeActiviteSociete.code = entreprise.code_type_activite_Societe LIMIT ?, ?',
             [offset, limitNumber],
         )
 

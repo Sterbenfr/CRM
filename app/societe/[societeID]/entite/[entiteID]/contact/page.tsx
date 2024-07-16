@@ -379,6 +379,8 @@ function ContactsPage({
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`}
                             fields={fields}
+                            fileUrl2='../../../../../api/upload/image'
+                            fileIndex2={6}
                         />
                     </div>
                 )}

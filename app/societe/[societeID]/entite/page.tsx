@@ -42,6 +42,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [search, setSearch] = useState<Entite[]>([])
+    const [fileIndex, setFileIndex] = useState<number>()
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -395,6 +396,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             },
         ]
 
+        let incrementFileIndex = 0
+
         const FindIndex = (id: string) => {
             return fields.findIndex(field => field.id === id)
         }
@@ -443,6 +446,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 url: `../../api/dons/type-produits`,
                 onChange: handleCodeTypeProduitChange,
             })
+            incrementFileIndex++
         } else if (codeTypeDon === 'SIP') {
             fields.splice(15, 0, {
                 id: 'code_type_competence',
@@ -451,6 +455,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 url: `../../api/dons/type-competences`,
                 onChange: handleCodeTypeCompetenceChange,
             })
+            incrementFileIndex++
         }
 
         if (fields[5].value !== '') {
@@ -458,6 +463,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         } else if (fields[6].value !== '') {
             fields[5].required = false
         }
+        setFileIndex(17 + incrementFileIndex)
         return fields
     }, [
         raisonSociale,
@@ -604,6 +610,10 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite`}
                             fields={fields}
+                            fileUrl='../../../api/upload/piece'
+                            fileUrl2='../../../api/upload/image'
+                            fileIndex={fileIndex}
+                            fileIndex2={7}
                         />
                     </div>
                 )}

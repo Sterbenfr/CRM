@@ -11,7 +11,7 @@ CREATE TABLE Reception (
     poids_recu_kg INT,
     produits_sur_palettes ENUM('O', 'N'),
     commentaires VARCHAR(200),
-    pieces_associees BLOB,
+    pieces_associees VARCHAR(200),
     PRIMARY KEY (numero_reception),
     FOREIGN KEY (code_Don) REFERENCES Dons(code_Don) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (numero_livraison) REFERENCES ModalitesLivraison(numero_livraison) ON UPDATE CASCADE ON DELETE CASCADE
