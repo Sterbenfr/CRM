@@ -113,6 +113,7 @@ export default function GroupePage({
                     </div>
                     <div className={style.info}>
                         <a
+                            className={style.linkID}
                             href={`/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}
                         >
                             <p className={style.titre}>

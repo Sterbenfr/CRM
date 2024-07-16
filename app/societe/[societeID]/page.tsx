@@ -56,7 +56,7 @@ export default function SocietePage({
                 </h1>
                 <a href='javascript:history.go(-1)' className={style.btnC}>
                     <Image
-                        className={style.CRid}
+                        className={style.CR}
                         src='/IMG/Return.png'
                         height={30}
                         width={30}
@@ -159,7 +159,10 @@ export default function SocietePage({
                         </p>
                     </div>
                     <div className={style.info}>
-                        <a href={`/societe/${params.societeID}/entite`}>
+                        <a
+                            className={style.linkID}
+                            href={`/societe/${params.societeID}/entite`}
+                        >
                             <p className={style.titre}>
                                 {' '}
                                 Entité(s) appartenant à l&apos;entreprise{' '}
@@ -167,7 +170,10 @@ export default function SocietePage({
                         </a>
                     </div>
                     <div className={style.info}>
-                        <a href={`/societe/${params.societeID}/groupe`}>
+                        <a
+                            className={style.linkID}
+                            href={`/societe/${params.societeID}/groupe`}
+                        >
                             <p className={style.titre}>
                                 {' '}
                                 Groupe d&apos;appartenance de l&apos;entreprise{' '}
@@ -176,6 +182,7 @@ export default function SocietePage({
                     </div>
                     <div className={style.info}>
                         <a
+                            className={style.linkID}
                             href={`/societe/${params.societeID}/societe-site-link`}
                         >
                             <p className={style.titre}>

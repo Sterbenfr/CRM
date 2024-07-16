@@ -775,6 +775,34 @@
     background-color: white;
     position: fixed;
     z-index: 10000;
-    font-size: 4rem;
+    font-size: 2rem;
     color: black;
+}
+
+.PageLay {
+    line-height: 1;
+    min-height: 65vh;
+}
+
+.linkID {
+    text-decoration: none;
+    cursor: pointer;
+    border: 3px solid black;
+    color: black;
+    border-radius: 10px;
+    padding: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.linkID:hover {
+    cursor: pointer;
+    border: 3px solid #e5007d;
+    background-color: #f2f2f2;
+}
+
+.linkID:active {
+    cursor: pointer;
+    border: 3px solid #e5007d;
+    background-color: #f2f2f2;
 }

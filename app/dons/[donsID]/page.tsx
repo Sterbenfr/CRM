@@ -768,6 +768,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         </div>
                         <div className={style.info}>
                             <a
+                                className={style.linkID}
                                 href={`/dons/${params.donsID}/modalites-livraison`}
                             >
                                 <p className={style.titre}>
@@ -777,7 +778,10 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </a>
                         </div>
                         <div className={style.info}>
-                            <a href={`/dons/${params.donsID}/reception`}>
+                            <a
+                                className={style.linkID}
+                                href={`/dons/${params.donsID}/reception`}
+                            >
                                 <p className={style.titre}>
                                     {' '}
                                     Réception de la livraison{' '}
