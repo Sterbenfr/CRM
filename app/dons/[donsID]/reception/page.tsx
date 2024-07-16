@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import List from '../../../../components/list'
 import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
@@ -31,9 +32,251 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
+    const [numeroLivraison, setNumeroLivraison] = useState('')
+    const [dateReception, setDateReception] = useState('')
+    const [heureReception, setHeureReception] = useState('')
+    const [nombrePalettesRecues, setNombrePalettesRecues] = useState('')
+    const [nombrePalettesConsigneesRecues, setNombrePalettesConsigneesRecues] = useState('')
+    const [nombrePalettesConsigneesRendues, setNombrePalettesConsigneesRendues] = useState('')
+    const [nombreCartonsRecus, setNombreCartonsRecus] = useState('')
+    const [poidsRecuKg, setPoidsRecuKg] = useState('')
+    const [produitsSurPalettes, setProduitsSurPalettes] = useState(false)
+    const [commentaires, setCommentaires] = useState('')
+    const [piecesAssociees, setPiecesAssociees] = useState('')
+
     const handleClose = () => {
         setIsPopUpOpen(false)
+        setProduitsSurPalettes(false)
     }
+
+        const [fields, setFields] = useState<
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxlength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
+    >([])
+
+    type FieldType =
+    | 'number'
+    | 'search'
+    | 'date'
+    | 'select'
+    | 'input'
+    | 'file'
+    | 'checkbox'
+    | 'enum'
+
+    const handleNumeroLivraisonChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNumeroLivraison(event.target.value)
+    }
+
+    const handleDateReceptionChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setDateReception(event.target.value)
+    }
+
+    const handleHeureReceptionChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setHeureReception(event.target.value)
+    }
+
+    const handleNombrePalettesRecuesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNombrePalettesRecues(event.target.value)
+    }
+
+    const handleNombrePalettesConsigneesRecuesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNombrePalettesConsigneesRecues(event.target.value)
+    }
+
+    const handleNombrePalettesConsigneesRenduesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNombrePalettesConsigneesRendues(event.target.value)
+    }
+
+    const handleNombreCartonsRecusChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNombreCartonsRecus(event.target.value)
+    }
+
+    const handlePoidsRecuKgChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setPoidsRecuKg(event.target.value)
+    }
+
+    const handleCommentairesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setCommentaires(event.target.value)
+    }
+
+    const handlePiecesAssocieesChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setPiecesAssociees(event.target.value)
+    }
+
+    const handleProduitsSurPalettes = () => {
+        setProduitsSurPalettes(!produitsSurPalettes)
+    }
+
+    const generateFields = useCallback(() => {
+        const fields: {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            disabled?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[] = [
+            {
+                id: 'code_Don',
+                type: 'input',
+                value: params.donsID,
+                required: true,
+                disabled: true,
+            },
+            {
+                id: 'numero_livraison',
+                type: 'search',
+                value: numeroLivraison,
+                placeholder: 'Exemple: Don de compétences techniques - Livraison 1',
+                url: `../../api/select/dons/${params.donsID}/modalites-livraison`,
+                required: true,
+                onInputChange: handleNumeroLivraisonChange
+            },
+            {
+                id: 'date_reception',
+                type: 'date',
+                value: dateReception,
+                required: true,
+                onInputChange: handleDateReceptionChange,
+            },
+            {
+                id: 'heure_reception',
+                type: 'input',
+                value: heureReception,
+                placeholder: 'Exemple: 14:00:00',
+                maxLength: 8,
+                required: true,
+                onInputChange: handleHeureReceptionChange,
+            },
+            {
+                id: 'nombre_palettes_recues',
+                type: 'number',
+                value: nombrePalettesRecues,
+                placeholder: 'Exemple: 10',
+                onInputChange: handleNombrePalettesRecuesChange,
+            },
+            {
+                id: 'nombre_palettes_consignees_recues',
+                type: 'number',
+                value: nombrePalettesConsigneesRecues,
+                placeholder: 'Exemple: 11',
+                onInputChange: handleNombrePalettesConsigneesRecuesChange,
+            },
+            {
+                id: 'nombre_palettes_consignees_rendues',
+                type: 'number',
+                value: nombrePalettesConsigneesRendues,
+                placeholder: 'Exemple: 10',
+                onInputChange: handleNombrePalettesConsigneesRenduesChange,
+            },
+            {
+                id: 'nombre_cartons_recus',
+                type: 'number',
+                value: nombreCartonsRecus,
+                placeholder: 'Exemple: 25',
+                onInputChange: handleNombreCartonsRecusChange,
+            },
+            {
+                id: 'poids_recu_kg',
+                type: 'number',
+                value: poidsRecuKg,
+                placeholder: 'Exemple: 165',
+                onInputChange: handlePoidsRecuKgChange,
+            },
+            {
+                id: 'produits_sur_palettes',
+                type: 'checkbox',
+                value: produitsSurPalettes ? 'O' : 'N',
+                onInputChange: handleProduitsSurPalettes,
+            },
+            {
+                id: 'commentaires',
+                type: 'input',
+                value: commentaires,
+                maxLength: 200,
+                placeholder: 'Exemple: Réception de 10 palettes de vêtements',
+                onInputChange: handleCommentairesChange,
+            },
+            {
+                id: 'pieces_associees',
+                type: 'file',
+                value: piecesAssociees,
+                onInputChange: handlePiecesAssocieesChange,
+            },
+        ]
+
+        if (fields[4].value === '') {
+            fields[4].value = null
+        }
+
+        if (fields[5].value === '') {
+            fields[5].value = null
+        }
+
+        if (fields[6].value === '') {
+            fields[6].value = null
+        }
+
+        if (fields[7].value === '') {
+            fields[7].value = null
+        }
+
+        if (fields[8].value === '') {
+            fields[8].value = null
+        }
+
+        return fields
+    }, [
+        params.donsID,
+        numeroLivraison,
+        dateReception,
+        heureReception,
+        nombrePalettesRecues,
+        nombrePalettesConsigneesRecues,
+        nombrePalettesConsigneesRendues,
+        nombreCartonsRecus,
+        poidsRecuKg,
+        produitsSurPalettes,
+        commentaires,
+        piecesAssociees,
+    ])
+
     useEffect(() => {
         const fetchDons = async () => {
             const res = await fetch(
@@ -47,7 +290,8 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
             const { data, total }: { data: Reception[]; total: number } =
                 await res.json()
             setReceptions(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total)
+            setFields(generateFields())
         }
 
         const fetchSearchDons = async () => {
@@ -67,14 +311,15 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
 
         fetchDons()
         fetchSearchDons()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.donsID])
+        
+    }, [page, itemsPerPage, params.donsID, generateFields, search])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
+    
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
         setPage(1) // reset page to 1 when items per page changes
@@ -91,8 +336,9 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         value3: Reception.date_reception
                             .toString()
                             .split('T')[0],
-                        value4: Reception.nombre_palettes_recues.toString(),
-                        value5: Reception.poids_recu_kg.toString(),
+                        value4: (Reception.nombre_palettes_recues === null || '') ? '/' : Reception.nombre_palettes_recues.toString(),
+                        value5: (Reception.commentaires === '' || null) ? '/' : Reception.commentaires,
+                        value6: Reception.date_reception.toString().split('T')[0],
                     }))}
                     functions={{
                         fonc1: () => {
@@ -106,26 +352,18 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         att1: 'Numéro de livraison',
                         att2: 'Date de réception',
                         att3: 'Nombre de palettes reçues',
-                        att4: 'Poids reçu en kg',
+                        att4: 'Commentaires',
+                        att5: 'Date de réception',
                     }}
                     searchItems={search.map(Reception => ({
-                        value1: Reception.numero_reception.toString()
-                            ? Reception.numero_reception.toString()
-                            : '/',
-                        value2: Reception.numero_livraison.toString()
-                            ? Reception.numero_livraison.toString()
-                            : '/',
+                        value1: Reception.numero_reception.toString(),
+                        value2: Reception.numero_livraison.toString(),
                         value3: Reception.date_reception
                             .toString()
-                            .split('T')[0]
-                            ? Reception.date_reception.toString().split('T')[0]
-                            : '/',
-                        value4: Reception.nombre_palettes_recues.toString()
-                            ? Reception.nombre_palettes_recues.toString()
-                            : '/',
-                        value5: Reception.poids_recu_kg.toString()
-                            ? Reception.poids_recu_kg.toString()
-                            : '/',
+                            .split('T')[0],
+                        value4: (Reception.nombre_palettes_recues === null || '') ? '/' : Reception.nombre_palettes_recues.toString(),
+                        value5: (Reception.commentaires === '' || null) ? '/' : Reception.commentaires,
+                        value6: Reception.date_reception.toString().split('T')[0],
                     }))}
                 />
                 <Pagination
@@ -141,80 +379,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         <PopUp
                             onClose={handleClose}
                             url={`http://localhost:3000/api/dons/${params.donsID}/reception`}
-                            fields={[
-                                {
-                                    id: 'code_Don',
-                                    type: 'input',
-                                    value: params.donsID,
-                                    required: true,
-                                    disabled: true,
-                                },
-                                {
-                                    id: 'numero_livraison',
-                                    type: 'search',
-                                    value: '',
-                                    url: `../../api/select/dons/${params.donsID}/modalites-livraison`,
-                                    required: true,
-                                },
-                                {
-                                    id: 'date_reception',
-                                    type: 'date',
-                                    value: null,
-                                    required: true,
-                                },
-                                {
-                                    id: 'heure_reception',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: 14:00:00',
-                                    maxLength: 8,
-                                },
-                                {
-                                    id: 'nombre_palettes_recues',
-                                    type: 'number',
-                                    value: null,
-                                    required: true,
-                                },
-                                {
-                                    id: 'nombre_palettes_consignees_recues',
-                                    type: 'number',
-                                    value: null,
-                                },
-                                {
-                                    id: 'nombre_palettes_consignees_rendues',
-                                    type: 'number',
-                                    value: null,
-                                },
-                                {
-                                    id: 'nombre_cartons_recus',
-                                    type: 'number',
-                                    value: null,
-                                },
-                                {
-                                    id: 'poids_recu_kg',
-                                    type: 'number',
-                                    value: null,
-                                    required: true,
-                                },
-                                {
-                                    id: 'produits_sur_palettes',
-                                    type: 'input',
-                                    value: null,
-                                    placeholder: 'Exemple: O / N',
-                                    maxLength: 1,
-                                },
-                                {
-                                    id: 'commentaires',
-                                    type: 'input',
-                                    value: null,
-                                    maxLength: 200,
-                                },
-                                {
-                                    id: 'pieces_associees',
-                                    type: 'file',
-                                    value: null,
-                                },
-                            ]}
+                            fields={fields}
                         />
                     </div>
                 )}
