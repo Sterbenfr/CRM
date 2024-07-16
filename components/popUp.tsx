@@ -9,6 +9,7 @@ import style from '../styles/components.module.css'
 const fieldLabels: { [key: string]: string } = {
     //Dons
     code_Entite_donatrice: 'Entité donatrice',
+    titre_don: 'Titre du don',
     date_proposition_don: 'Date de proposition du don',
     code_contact_Entite_donatrice: "Contact de l'entité donatrice",
     code_type_don: 'Type de dons',
@@ -249,7 +250,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const renderRequiredIndicator = (input: Field) => {
         if (input.required) {
-            return <span className={style.requis}>&nbsp;(Requis)&nbsp;</span>
+            return <span className={style.requis}>&nbsp;*&nbsp;</span>
         }
         return null
     }
@@ -400,6 +401,7 @@ const PopUp: React.FC<PopUpProps> = ({
                                 return (
                                     <SelectComponent
                                         key={input.id}
+                                        createURL={input.createURL as string}
                                         url={input.url as string}
                                         required={input.required}
                                         onChange={input.onChange}

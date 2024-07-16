@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface Mode_Conservation_Produits {
     id: string
@@ -40,7 +41,21 @@ function Mode_Conservations_ProduitsPage() {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Types de conservation des produits</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>
+                        Types de conservation des produits
+                    </h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Mode_Conservations_Produits.map(
                         modeConservationProduit => ({

@@ -6,6 +6,7 @@ import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
 import TypesButtons from '@/components/TypesButtons'
+import Image from 'next/image'
 
 export interface ModalitesLivraison {
     numero_livraison: number
@@ -580,7 +581,18 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Modalités livraison</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Modalités livraison</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
 
                 <List
                     items={ModalitesLivraisons.map(ModalitesLivraison => ({

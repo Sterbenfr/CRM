@@ -3,6 +3,7 @@ import style from '../styles/components.module.css'
 
 interface SelectComponentProps {
     url: string
+    createURL?: string
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
     required?: boolean
 }
@@ -17,7 +18,9 @@ interface Option {
 
 export default function SelectComponent({
     url,
+    createURL,
     onChange,
+    required,
 }: SelectComponentProps) {
     const [options, setOptions] = useState<Option[]>([])
 
@@ -56,6 +59,17 @@ export default function SelectComponent({
         }
     }
 
+    console.log(createURL)
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.value === 'Créer une nouvelle option' && createURL) {
+            window.open(createURL, '_blank')
+        }
+        if (onChange) {
+            onChange(e)
+        }
+    }
+
     useEffect(() => {
         fetchOptions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,10 +77,12 @@ export default function SelectComponent({
 
     // Renvoyer le menu déroulant avec les options
     return (
-        <select className={style.selectF} onChange={onChange}>
-            <option value=''>
-                Sélectionner une option...{' '}
-            </option>
+        <select
+            className={style.selectF}
+            onChange={handleChange}
+            required={required}
+        >
+            <option value=''>Sélectionner une option... </option>
             {options.map(option => (
                 <option key={option.value} value={option.value}>
                     {option.label}
@@ -75,6 +91,7 @@ export default function SelectComponent({
                     {option.params3 !== undefined && <> - {option.params3}</>}
                 </option>
             ))}
+            {createURL ? <option>Créer une nouvelle option</option> : ''}
         </select>
     )
 }

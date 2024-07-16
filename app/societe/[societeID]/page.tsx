@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import style from '../../../styles/components.module.css'
+import Image from 'next/image'
 
 interface SocieteID {
     code_Societe: number
@@ -49,10 +50,19 @@ export default function SocietePage({
 
     return (
         <div className={style.idPage}>
-            <div>
+            <div className={style.croixID}>
                 <h1 className={style.titre_global}>
                     Détails de l&apos;entreprise
                 </h1>
+                <a href='javascript:history.go(-1)' className={style.btnC}>
+                    <Image
+                        className={style.CRid}
+                        src='/IMG/Return.png'
+                        height={30}
+                        width={30}
+                        alt='Fermer la fenêtre'
+                    />
+                </a>
             </div>
 
             <div className={style.info_id}>

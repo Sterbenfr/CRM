@@ -7,6 +7,7 @@ import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
 import style from '../../../../styles/components.module.css'
 import TypesButtons from '@/components/TypesButtons'
+import Image from 'next/image'
 
 export interface Entite {
     code_entite: number
@@ -531,7 +532,19 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Entité</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Entité</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Entites.map(entite => ({
                         value1: entite.code_entite.toString(),

@@ -361,6 +361,8 @@
     text-underline-offset: 0.4rem;
     margin-top: 2rem;
     margin-bottom: 3rem;
+    margin-left: 30rem;
+    margin-right: 20rem;
 }
 
 .info_id {
@@ -533,10 +535,10 @@
 }
 
 .selectF {
-    width: 25rem;
+    width: 15rem;
     padding: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
     margin: 1rem;
     margin-top: 2rem;
     border: 2px solid black;
@@ -550,11 +552,11 @@
 
 .checkboxF {
     padding: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
     margin: 1rem;
-    margin-left: 12.5rem;
-    margin-right: 13rem;
+    margin-left: 8rem;
+    margin-right: 9rem;
     margin-top: 2rem;
     border: 2px solid black;
     border-radius: 5px;
@@ -652,6 +654,14 @@
     flex-direction: row;
 }
 
+.croixID {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2rem;
+}
+
 .btnC {
     border: none;
     background-color: white;
@@ -673,6 +683,7 @@
     margin-bottom: 2rem;
     font-weight: bold;
     margin-left: 12rem;
+    margin-right: 2rem;
 }
 
 .BTNdiv {
@@ -686,6 +697,19 @@
 
 .CR {
     margin-bottom: 2rem;
+    margin-left: 5rem;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.CRPag {
+    margin-bottom: 2rem;
+    margin-left: 5rem;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.CRid {
     margin-left: 5rem;
     margin-right: 2rem;
     cursor: pointer;

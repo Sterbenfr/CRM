@@ -51,7 +51,7 @@ export default function SearchComponent({
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
         if (e.target.value === "Création d'un nouveau..." && createURL) {
-            window.location.href = createURL
+            window.open(createURL, '_blank')
         }
         const matchingOption = options.find(
             option =>
