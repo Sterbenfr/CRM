@@ -11,6 +11,7 @@ import TypesButtons from '@/components/TypesButtons'
 
 export interface Don {
     code_Don: number
+    titre_don: string
     code_Entite_donatrice: number
     date_proposition_don: Date
     code_contact_Entite_donatrice: number
@@ -38,10 +39,12 @@ export interface Don {
     cerfa_fait: string
     date_cerfa: Date
     cerfa: string
+    raison_sociale?: string
 }
 
 function DonsPage() {
     const [EntiteDonatrice, setEntiteDonatrice] = useState('')
+    const [titreDon, setTitreDon] = useState('')
     const [datePropositionDon, setDatePropositionDon] = useState(new Date())
     const [codeContactEntiteDonatrice, setCodeContactEntiteDonatrice] =
         useState('')
@@ -88,6 +91,8 @@ function DonsPage() {
     const [itemsPerPage, setItemsPerPage] = useState(3)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
     const [search, setSearch] = useState<Don[]>([])
+    const [fileIndex, setFileIndex] = useState(8)
+    const [fileIndex2, setFileIndex2] = useState(20)
     const [fields, setFields] = useState<
         {
             id: string
@@ -111,6 +116,12 @@ function DonsPage() {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setEntiteDonatrice(event.target.value)
+    }
+
+    const handleTitreDonChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setTitreDon(event.target.value)
     }
 
     const handleCodeContactEntiteDonatriceChange = (
@@ -294,6 +305,15 @@ function DonsPage() {
                     onInputChange: handleEntiteDonatriceChange,
                 },
                 {
+                    id: 'titre_don',
+                    type: 'input',
+                    value: titreDon,
+                    placeholder: 'Exemple: Don de chocolat',
+                    maxLength: 50,
+                    required: true,
+                    onInputChange: handleTitreDonChange,
+                },
+                {
                     id: 'date_proposition_don',
                     type: 'date',
                     value: datePropositionDon.toISOString().split('T')[0],
@@ -313,6 +333,7 @@ function DonsPage() {
                     type: 'select',
                     value: selectedTypeDon,
                     url: '../api/dons/type-don',
+                    createURL: '/dons/type-don',
                     required: true,
                     onChange: handleTypeDonChange,
                 },
@@ -332,7 +353,7 @@ function DonsPage() {
                     id: 'commentaires',
                     type: 'input',
                     value: commentaires,
-                    placeholder: 'Exemple: Don de chocolat',
+                    placeholder: 'Exemple: ...',
                     maxLength: 200,
                     onInputChange: handleCommentairesChange,
                 },
@@ -360,6 +381,7 @@ function DonsPage() {
                     value: codeUtilisateurAccepteRefuseDon,
                     url: '../api/select/sites/utilisateurs/donsAccepteRefuse',
                     placeholder: 'Exemple: Marie Dujardin',
+                    required: true,
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
                 }, //default : login
                 {
@@ -430,6 +452,9 @@ function DonsPage() {
                 },
             ]
 
+            let incrementFileIndex = 0
+            let incrementFileIndex2 = 0
+
             const FindIndex = (id: string) => {
                 return fields.findIndex(field => field.id === id) + 1
             }
@@ -446,35 +471,41 @@ function DonsPage() {
             }
 
             if (selectedTypeDon === 'SIP') {
-                fields.splice(4, 0, {
+                fields.splice(5, 0, {
                     id: 'code_type_competences',
                     type: 'select',
                     value: selectedTypeCompetence,
                     url: '../api/dons/type-competences',
                     onChange: handleTypeCompetenceChange,
                 })
+                incrementFileIndex++
+                incrementFileIndex2++
             }
 
             if (selectedTypeDon === 'MAR') {
-                fields.splice(4, 0, {
+                fields.splice(5, 0, {
                     id: 'code_type_produits',
                     type: 'select',
                     value: selectedTypeMarchandise,
                     url: '../api/dons/type-produits',
                     onChange: handleMarchandiseChange,
                 })
+                incrementFileIndex++
+                incrementFileIndex2++
             }
 
             if (
                 selectedTypeDon === 'MAR' &&
                 selectedTypeMarchandise === 'ALI'
             ) {
-                fields.splice(5, 0, {
+                fields.splice(6, 0, {
                     id: 'code_mode_conservation_produits',
                     type: 'select', //que si code_type_produits = alimentaire
                     value: null,
                     url: '../api/dons/type-mode-conservations-produits',
                 })
+                incrementFileIndex++
+                incrementFileIndex2++
             }
 
             if (statutAcceptationDon !== 'A') {
@@ -484,6 +515,7 @@ function DonsPage() {
                     value: dateAcceptationRefusDon.toISOString().split('T')[0],
                     onInputChange: handleDateAcceptationRefusDonChange,
                 }) //que si status different de attente)
+                incrementFileIndex2++
             }
 
             if (indicateurRemerciement !== false) {
@@ -493,6 +525,7 @@ function DonsPage() {
                     value: dateRemerciement.toISOString().split('T')[0],
                     onInputChange: handleDateRemerciementChange,
                 }) //depend de indicateur_remerciement
+                incrementFileIndex2++
             }
 
             if (cerfaFait !== false) {
@@ -502,6 +535,7 @@ function DonsPage() {
                     value: dateCerfa.toISOString().split('T')[0],
                     onInputChange: handleDateCerfaChange,
                 }) // depend de cerfa_fait
+                incrementFileIndex2++
             }
 
             if (EntiteDonatrice !== undefined && fields[2] !== undefined) {
@@ -509,6 +543,8 @@ function DonsPage() {
                     EntiteDonatrice,
                 )}/contact`
             }
+            setFileIndex(8 + incrementFileIndex)
+            setFileIndex2(20 + incrementFileIndex2)
             return fields
         },
         [
@@ -585,7 +621,20 @@ function DonsPage() {
         setItemsPerPage(newItemsPerPage)
         setPage(1)
     }
-    console.log(Dons)
+
+    const getStatusLabel = (status: string) => {
+        switch (status) {
+            case 'V':
+                return 'Accepté'
+            case 'R':
+                return 'Refusé'
+            case 'A':
+                return 'En attente'
+            default:
+                return ''
+        }
+    }
+
     return (
         <>
             <div className={style.page}>
@@ -595,15 +644,13 @@ function DonsPage() {
                         value1: Don.code_Don.toString()
                             ? Don.code_Don.toString()
                             : '/',
-                        value2: Don.code_Entite_donatrice
-                            ? Don.code_Entite_donatrice.toString()
-                            : '/',
-                        value3: Don.date_proposition_don
+                        value2: Don.raison_sociale ? Don.raison_sociale : '/',
+                        value3: Don.titre_don ? Don.titre_don : '/',
+                        value4: Don.date_proposition_don
                             .toString()
                             .split('T')[0]
                             ? Don.date_proposition_don.toString().split('T')[0]
                             : '/',
-                        value4: Don.commentaires ? Don.commentaires : '/',
                         value5: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '/',
@@ -621,27 +668,22 @@ function DonsPage() {
                         url: 'http://localhost:3000/api/dons',
                     }}
                     attribut={{
-                        att1: 'Entité donatrice',
-                        att2: 'Date proposition don',
-                        att3: 'Commentaires',
-                        att4: 'Statut don',
+                        att1: 'Donateur',
+                        att2: 'Titre du don',
+                        att3: 'Date de proposition du don',
+                        att4: 'Statut du don',
                     }}
                     searchItems={search.map(Don => ({
                         value1: Don.code_Don.toString(),
-                        value2: Don.code_Entite_donatrice
-                            ? Don.code_Entite_donatrice.toString()
-                            : '',
-                        value3: Don.date_proposition_don
+                        value2: Don.raison_sociale ? Don.raison_sociale : '',
+                        value3: Don.titre_don ? Don.titre_don : '',
+                        value4: Don.date_proposition_don
                             .toString()
                             .split('T')[0],
-                        value4: Don.commentaires ? Don.commentaires : '',
                         value5: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '',
-
-                        value7: Don.statut_acceptation_don
-                            ? Don.statut_acceptation_don
-                            : '',
+                        value7: getStatusLabel(Don.statut_acceptation_don),
                     }))}
                 />
                 <Pagination
@@ -660,8 +702,8 @@ function DonsPage() {
                             fields={fields} // Use the fields state here
                             fileUrl='../api/upload/piece'
                             fileUrl2='../api/upload/cerfa'
-                            fileIndex={7}
-                            fileIndex2={19}
+                            fileIndex={fileIndex}
+                            fileIndex2={fileIndex2}
                         />
                     </div>
                 )}
