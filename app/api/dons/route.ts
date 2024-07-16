@@ -16,10 +16,10 @@ export async function GET(request: Request) {
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query('SELECT * FROM `dons` LIMIT ?, ?', [
-            offset,
-            limitNumber,
-        ])
+        const [rows] = await pool.query(
+            'SELECT Dons.*,Entite.raison_sociale FROM Dons LEFT JOIN  Entite ON Dons.code_Entite_donatrice = Entite.code_Entite LIMIT ?, ?',
+            [offset, limitNumber],
+        )
 
         const [totalResult] = await pool.query(
             'SELECT COUNT(*) as count FROM `dons`',
