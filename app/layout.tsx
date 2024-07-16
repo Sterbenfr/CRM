@@ -7,6 +7,7 @@ import NotLogin from '../components/NotLogin'
 import { SessionProvider } from 'next-auth/react'
 import { ReactNode } from 'react'
 import { Session } from 'next-auth'
+import style from '../styles/components.module.css'
 interface RootLayoutProps {
     children: ReactNode
     session: Session
@@ -18,10 +19,12 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
     return (
         <html className={inter.className} lang='en'>
             <body>
-                <SessionProvider session={session}>
-                    <NavBar session={session}>{children}</NavBar>
-                    <NotLogin></NotLogin>
-                </SessionProvider>
+                <div className={style.PageLay}>
+                    <SessionProvider session={session}>
+                        <NavBar session={session}>{children}</NavBar>
+                        <NotLogin></NotLogin>
+                    </SessionProvider>
+                </div>
                 <Footer />
             </body>
         </html>

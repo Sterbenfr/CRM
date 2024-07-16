@@ -273,6 +273,7 @@ export default function EntitePage({
                     </div>
                     <div className={style.info}>
                         <a
+                            className={style.linkID}
                             href={`/societe/${params.societeID}/entite/${params.entiteID}/contact`}
                         >
                             <p className={style.titre}>
@@ -283,6 +284,7 @@ export default function EntitePage({
                     </div>
                     <div className={style.info}>
                         <a
+                            className={style.linkID}
                             href={`/societe/${params.societeID}/entite/${params.entiteID}/interaction`}
                         >
                             <p className={style.titre}>
@@ -293,6 +295,7 @@ export default function EntitePage({
                     </div>
                     <div className={style.info}>
                         <a
+                            className={style.linkID}
                             href={`/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`}
                         >
                             <p className={style.titre}>
