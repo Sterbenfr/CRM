@@ -5,6 +5,7 @@ import { Pagination } from '@/components/pagination'
 import withAuthorization from '@/components/withAuthorization'
 import PopUp from '@/components/popUp'
 import style from '../../../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface Contact {
     code_entite: number
@@ -306,15 +307,33 @@ function ContactsPage({
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Contacts</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Contacts</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,
                         value3: contact.prenom,
                         value4: contact.fonction == '' ? '/' : contact.fonction,
-                        value5: contact.numero_portable == '' ? '/' : contact.numero_portable,
-                        value6: contact.adresse_mail == '' ? '/' : contact.adresse_mail,
+                        value5:
+                            contact.numero_portable == ''
+                                ? '/'
+                                : contact.numero_portable,
+                        value6:
+                            contact.adresse_mail == ''
+                                ? '/'
+                                : contact.adresse_mail,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -336,8 +355,14 @@ function ContactsPage({
                         value2: contact.nom,
                         value3: contact.prenom,
                         value4: contact.fonction == '' ? '/' : contact.fonction,
-                        value5: contact.numero_portable == '' ? '/' : contact.numero_portable,
-                        value6: contact.adresse_mail == '' ? '/' : contact.adresse_mail,
+                        value5:
+                            contact.numero_portable == ''
+                                ? '/'
+                                : contact.numero_portable,
+                        value6:
+                            contact.adresse_mail == ''
+                                ? '/'
+                                : contact.adresse_mail,
                     }))}
                 />
                 <Pagination

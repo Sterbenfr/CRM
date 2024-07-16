@@ -4,6 +4,7 @@ import List from '../../../components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface TypeActiviteSociete {
     id: string
@@ -41,9 +42,21 @@ function TypesActiviteSocietesPage() {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>
-                    Types d&apos;activité de la société
-                </h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>
+                        Types d&apos;activité de la société
+                    </h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={TypesActiviteSociete.map(TypeActiviteSociete => ({
                         value1: TypeActiviteSociete.id,
@@ -66,29 +79,28 @@ function TypesActiviteSocietesPage() {
                 {''}
                 {isPopUpOpen && (
                     <div className={style.PopUpType}>
-                    <PopUp
-                        onClose={handleClose}
-                        url='http://localhost:3000/api/societe/type-activite-societe'
-                        fields={[
-                            {
-                                id: 'code',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 3,
-                            },
-                            {
-                                id: 'libelle',
-                                type: 'input',
-                                value: null,
-                                required: true,
-                                maxLength: 50,
-                            },
-                        ]}
-                    />
+                        <PopUp
+                            onClose={handleClose}
+                            url='http://localhost:3000/api/societe/type-activite-societe'
+                            fields={[
+                                {
+                                    id: 'code',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 3,
+                                },
+                                {
+                                    id: 'libelle',
+                                    type: 'input',
+                                    value: null,
+                                    required: true,
+                                    maxLength: 50,
+                                },
+                            ]}
+                        />
                     </div>
                 )}
-                
             </div>
         </>
     )

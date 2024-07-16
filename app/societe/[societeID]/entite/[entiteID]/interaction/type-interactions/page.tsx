@@ -4,6 +4,7 @@ import PopUp from '@/components/popUp'
 import List from '@/components/list'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface Interaction {
     id: string
@@ -43,7 +44,19 @@ function InteractionsPage({
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Types d&apos;interactions</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Types d&apos;interactions</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Interactions.map(typeInteraction => ({
                         value1: typeInteraction.id,

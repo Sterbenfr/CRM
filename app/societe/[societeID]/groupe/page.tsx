@@ -5,6 +5,7 @@ import { Pagination } from '../../../../components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface Groupe {
     code_groupe: number
@@ -194,7 +195,22 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
         <div>
             <>
                 <div className={style.page}>
-                    <h1 className={style.lg}>Groupe</h1>
+                    <div className={style.croixID}>
+                        <h1 className={style.lg1}>Groupe</h1>
+                        <a
+                            href='javascript:history.go(-1)'
+                            className={style.btnC}
+                        >
+                            <Image
+                                className={style.CR}
+                                src='/IMG/Return.png'
+                                height={30}
+                                width={30}
+                                alt='Fermer la fenêtre'
+                            />
+                        </a>
+                    </div>
+
                     <List
                         items={groupes.map(groupe => ({
                             value1: groupe.code_groupe.toString(),

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import style from '../../../../../styles/components.module.css'
-
+import Image from 'next/image'
 interface modalite_livraisonID {
     numero_livraison: number
     code_Don: number
@@ -65,8 +65,17 @@ export default function Modalites_livraisonPage({
 
     return (
         <div className={style.idPage}>
-            <div>
+            <div className={style.croixID}>
                 <h1 className={style.titre_global}>Modalités de livraison</h1>
+                <a href='javascript:history.go(-1)' className={style.btnC}>
+                    <Image
+                        className={style.CRid}
+                        src='/IMG/Return.png'
+                        height={30}
+                        width={30}
+                        alt='Fermer la fenêtre'
+                    />
+                </a>
             </div>
             <div className={style.info_id}>
                 <div className={style.col_1}>
@@ -114,7 +123,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Prénom du contact d&aposenlévement :
+                            Prénom du contact d&apos;enlévement :
                         </p>
                         <p>
                             {modalite_livraison[0].prenom_contact_enlevement ==
@@ -127,7 +136,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Téléphone du contact d&aposenlévement :
+                            Téléphone du contact d&apos;enlévement :
                         </p>
                         <p>
                             {modalite_livraison[0]
@@ -140,7 +149,7 @@ export default function Modalites_livraisonPage({
 
                     <div className={style.info}>
                         <p className={style.titre}>
-                            Mail du contact d&aposenlévement :
+                            Mail du contact d&apos;enlévement :
                         </p>
                         <p>
                             {modalite_livraison[0].mail_contact_enlevement ==
@@ -151,7 +160,9 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Adresse d&aposenlévement :</p>
+                        <p className={style.titre}>
+                            Adresse d&apos;enlévement :
+                        </p>
                         <p>
                             {modalite_livraison[0].adresse_enlevement == null
                                 ? '/'
@@ -170,7 +181,9 @@ export default function Modalites_livraisonPage({
                 </div>
                 <div className={style.col_2}>
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de palette(s) prévue(s) :</p>
+                        <p className={style.titre}>
+                            Nombre de palette(s) prévue(s) :
+                        </p>
                         <p>
                             {modalite_livraison[0].nombre_palette_prevu == null
                                 ? '/'
@@ -192,7 +205,9 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Nombre de carton(s) prévu(s) :</p>
+                        <p className={style.titre}>
+                            Nombre de carton(s) prévu(s) :
+                        </p>
                         <p>
                             {modalite_livraison[0].nombre_cartons_prevu == null
                                 ? '/'
@@ -210,7 +225,9 @@ export default function Modalites_livraisonPage({
                     </div>
 
                     <div className={style.info}>
-                        <p className={style.titre}>Produit(s) sur palette(s) ? :</p>
+                        <p className={style.titre}>
+                            Produit(s) sur palette(s) ? :
+                        </p>
                         <p>
                             {modalite_livraison[0].produits_sur_palettes == null
                                 ? '/'

@@ -4,6 +4,7 @@ import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import List from '../../../../../components/list'
 import style from '../../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface type_utilisateur {
     id: string
@@ -40,7 +41,19 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Types d&apos;utilisateurs</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Types d&apos;utilisateurs</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Utilisateurs.map(utilisateur => ({
                         value1: utilisateur.id.toString(),

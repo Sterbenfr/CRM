@@ -6,6 +6,7 @@ import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface ContactSociete {
     code_Societe: number
@@ -25,31 +26,31 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
-    
+
     const [fields, setFields] = useState<
-    {
-        id: string
-        type: FieldType
-        value: string | null
-        placeholder?: string
-        url?: string
-        createURL?: string
-        required?: boolean
-        maxLength?: number
-        onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-        onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-    }[]
+        {
+            id: string
+            type: FieldType
+            value: string | null
+            placeholder?: string
+            url?: string
+            createURL?: string
+            required?: boolean
+            maxLength?: number
+            onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+            onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+        }[]
     >([])
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'enum'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const handleClose = () => {
         setIsPopUpOpen(false)
@@ -73,9 +74,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         setCodeUtilisateurSuivant(event.target.value)
     }
 
-    const generateFields = useCallback((
-        
-    ) => {
+    const generateFields = useCallback(() => {
         const fields: {
             id: string
             type: FieldType
@@ -125,7 +124,12 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         ]
 
         return fields
-    }, [codeTypeDeSite, codeSiteSuivi, codeUtilisateurSuivant, params.societeID])
+    }, [
+        codeTypeDeSite,
+        codeSiteSuivi,
+        codeUtilisateurSuivant,
+        params.societeID,
+    ])
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -158,7 +162,19 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     return (
         <>
             <div className={style.page}>
-            <h1 className={style.lg}>Societe-site-link</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Societe-site-link</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_Societe.toString(),

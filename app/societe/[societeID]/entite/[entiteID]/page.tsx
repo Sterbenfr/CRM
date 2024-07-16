@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import style from '../../../../../styles/components.module.css'
+import Image from 'next/image'
 
 interface EntiteID {
     code_entite: number
@@ -63,8 +64,17 @@ export default function EntitePage({
 
     return (
         <div className={style.idPage}>
-            <div>
+            <div className={style.croixID}>
                 <h1 className={style.titre_global}>Details de l&apos;entité</h1>
+                <a href='javascript:history.go(-1)' className={style.btnC}>
+                    <Image
+                        className={style.CRid}
+                        src='/IMG/Return.png'
+                        height={30}
+                        width={30}
+                        alt='Fermer la fenêtre'
+                    />
+                </a>
             </div>
 
             <div className={style.info_id}>
