@@ -4,6 +4,7 @@ import List from '../../../../../components/list'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../styles/components.module.css'
+import Image from 'next/image'
 
 export interface Frequence_cerfa {
     id: string
@@ -41,7 +42,19 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Types de fréquences cerfa</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Types de fréquences cerfa</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Frequences_cerfa.map(TypesFrequences_cerfa => ({
                         value1: TypesFrequences_cerfa.id,

@@ -4,6 +4,7 @@ import style from '../../../styles/components.module.css'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 import SearchComponent from '@/components/searchComponent'
+import Image from 'next/image'
 
 interface ExtendedSession extends Session {
     user: {
@@ -227,8 +228,17 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
     console.log(don[0])
     return (
         <div className={style.idPage}>
-            <div>
+            <div className={style.croixID}>
                 <h1 className={style.titre_global}>Détails du don :</h1>
+                <a href='javascript:history.go(-1)' className={style.btnC}>
+                    <Image
+                        className={style.CRid}
+                        src='/IMG/Return.png'
+                        height={30}
+                        width={30}
+                        alt='Fermer la fenêtre'
+                    />
+                </a>
             </div>
             {session &&
                 session.user &&

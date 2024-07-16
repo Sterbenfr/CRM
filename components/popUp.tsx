@@ -249,7 +249,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const renderRequiredIndicator = (input: Field) => {
         if (input.required) {
-            return <span className={style.requis}>&nbsp;(Requis)&nbsp;</span>
+            return <span className={style.requis}>&nbsp;*&nbsp;</span>
         }
         return null
     }

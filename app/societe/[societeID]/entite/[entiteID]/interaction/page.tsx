@@ -7,6 +7,7 @@ import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../../../styles/components.module.css'
 import TypesButtons from '@/components/TypesButtons'
+import Image from 'next/image'
 
 export interface Interactions {
     code_interaction: number
@@ -259,19 +260,47 @@ function InteractionsPage({
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Interactions</h1>
+                <div className={style.croixID}>
+                    <h1 className={style.lg1}>Interactions</h1>
+                    <a href='javascript:history.go(-1)' className={style.btnC}>
+                        <Image
+                            className={style.CR}
+                            src='/IMG/Return.png'
+                            height={30}
+                            width={30}
+                            alt='Fermer la fenêtre'
+                        />
+                    </a>
+                </div>
+
                 <List
                     items={Interactions.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
                         value2: Interactions.code_Entite_Prospectee.toString(),
-                        value3: Interactions.date_interaction
-                            .toString().split('T')[0] == '' ? '/' : Interactions.date_interaction.toString().split('T')[0],
-                        value4: Interactions.code_contact_entite.toString() == '' ? '/' : Interactions.code_contact_entite.toString(),
-                        value5: Interactions.date_relance
-                            .toString()
-                            .split('T')[0] == '' ? '/' : Interactions.date_relance.toString()
-                            .split('T')[0],
-                        value6: Interactions.commentaires == '' ? '/' : Interactions.commentaires,
+                        value3:
+                            Interactions.date_interaction
+                                .toString()
+                                .split('T')[0] == ''
+                                ? '/'
+                                : Interactions.date_interaction
+                                      .toString()
+                                      .split('T')[0],
+                        value4:
+                            Interactions.code_contact_entite.toString() == ''
+                                ? '/'
+                                : Interactions.code_contact_entite.toString(),
+                        value5:
+                            Interactions.date_relance
+                                .toString()
+                                .split('T')[0] == ''
+                                ? '/'
+                                : Interactions.date_relance
+                                      .toString()
+                                      .split('T')[0],
+                        value6:
+                            Interactions.commentaires == ''
+                                ? '/'
+                                : Interactions.commentaires,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -291,13 +320,24 @@ function InteractionsPage({
                     searchItems={search.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
                         value2: Interactions.code_Entite_Prospectee.toString(),
-                        value3: Interactions.date_interaction
-                            .toString()
-                            .split('T')[0] == '' ? '/' : Interactions.date_interaction.toString().split('T')[0],
-                        value4: Interactions.code_contact_entite.toString() == '' ? '/' : Interactions.code_contact_entite.toString(),
-                        value5: Interactions.date_relance
-                            .toString()
-                            .split('T')[0] == '' ? '/' : Interactions.date_relance.toString(),
+                        value3:
+                            Interactions.date_interaction
+                                .toString()
+                                .split('T')[0] == ''
+                                ? '/'
+                                : Interactions.date_interaction
+                                      .toString()
+                                      .split('T')[0],
+                        value4:
+                            Interactions.code_contact_entite.toString() == ''
+                                ? '/'
+                                : Interactions.code_contact_entite.toString(),
+                        value5:
+                            Interactions.date_relance
+                                .toString()
+                                .split('T')[0] == ''
+                                ? '/'
+                                : Interactions.date_relance.toString(),
                         value6: Interactions.commentaires,
                     }))}
                 />
