@@ -2,7 +2,7 @@ CREATE TABLE Entreprise (
     code_Societe INT NOT NULL AUTO_INCREMENT,
     raison_sociale VARCHAR(30) NOT NULL,
     nom_commercial VARCHAR(30),
-    Logo BLOB,
+    Logo VARCHAR(200),
     site_Web VARCHAR(255),
     Siren CHAR(9) NOT NULL,
     code_type_activite_Societe CHAR(4) NOT NULL,

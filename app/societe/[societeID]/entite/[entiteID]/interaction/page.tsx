@@ -20,6 +20,8 @@ export interface Interactions {
     commentaires: string
     pieces_associees: Blob
     date_relance: Date
+    raison_sociale?: string
+    nom?: string
 }
 
 function InteractionsPage({
@@ -276,7 +278,9 @@ function InteractionsPage({
                 <List
                     items={Interactions.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
-                        value2: Interactions.code_Entite_Prospectee.toString(),
+                        value2: Interactions.raison_sociale
+                            ? Interactions.raison_sociale
+                            : '/',
                         value3:
                             Interactions.date_interaction
                                 .toString()
@@ -285,10 +289,7 @@ function InteractionsPage({
                                 : Interactions.date_interaction
                                       .toString()
                                       .split('T')[0],
-                        value4:
-                            Interactions.code_contact_entite.toString() == ''
-                                ? '/'
-                                : Interactions.code_contact_entite.toString(),
+                        value4: Interactions.nom ? Interactions.nom : '/',
                         value5:
                             Interactions.date_relance
                                 .toString()
@@ -311,15 +312,17 @@ function InteractionsPage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                     }}
                     attribut={{
-                        att1: 'Code entité prospectée',
+                        att1: 'Donateur',
                         att2: 'Date interaction',
-                        att3: 'Code contact entité',
+                        att3: 'Personne contactée',
                         att4: 'Date relance',
                         att5: 'Commentaire',
                     }}
                     searchItems={search.map(Interactions => ({
                         value1: Interactions.code_interaction.toString(),
-                        value2: Interactions.code_Entite_Prospectee.toString(),
+                        value2: Interactions.raison_sociale
+                            ? Interactions.raison_sociale
+                            : '',
                         value3:
                             Interactions.date_interaction
                                 .toString()
@@ -328,10 +331,7 @@ function InteractionsPage({
                                 : Interactions.date_interaction
                                       .toString()
                                       .split('T')[0],
-                        value4:
-                            Interactions.code_contact_entite.toString() == ''
-                                ? '/'
-                                : Interactions.code_contact_entite.toString(),
+                        value4: Interactions.nom ? Interactions.nom : '',
                         value5:
                             Interactions.date_relance
                                 .toString()
@@ -355,6 +355,8 @@ function InteractionsPage({
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`}
                             fields={fields}
+                            fileUrl='../../../../../api/upload/piece'
+                            fileIndex={7}
                         />
                     </div>
                 )}

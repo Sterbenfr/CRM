@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         // Define the file path
         const filePath = path.join(
             process.cwd(),
-            'public/uploads/pieces/',
+            'public/uploads/image/',
             fileName,
         )
         console.log('File path:', filePath)
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
         // Return the file path
         return NextResponse.json(
-            { filePath: `/uploads/pieces/${fileName}` },
+            { filePath: `/uploads/image/${fileName}` },
             { status: 200 },
         )
     } catch (err: any) {

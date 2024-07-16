@@ -4,7 +4,7 @@ CREATE TABLE Contacts (
     civilite CHAR(3) NOT NULL,
     nom VARCHAR(20) NOT NULL,
     prenom VARCHAR(20) NOT NULL,
-    photo BLOB,
+    photo VARCHAR(200),
     fonction VARCHAR(30),
     service VARCHAR(30),
     numero_fixe VARCHAR(12),

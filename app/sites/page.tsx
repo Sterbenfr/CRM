@@ -279,7 +279,6 @@ function SitesPage() {
         search,
     ])
 
-
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
@@ -298,9 +297,19 @@ function SitesPage() {
                         value1: Sites.code_site.toString(),
                         value2: Sites.designation_longue.toString(),
                         value3: Sites.adresse.toString(),
-                        value4: Sites.date_ouverture.toString().split('T')[0] == null ? '/' : Sites.date_ouverture.toString().split('T')[0],
-                        value5: Sites.numero_telephone.toString() == '' ? '/' : Sites.numero_telephone.toString(),
-                        value6: Sites.adresse_mail.toString() == '' ? '/' : Sites.adresse_mail.toString(),
+                        value4:
+                            Sites.date_ouverture.toString().split('T')[0] ==
+                            null
+                                ? '/'
+                                : Sites.date_ouverture.toString().split('T')[0],
+                        value5:
+                            Sites.numero_telephone.toString() == ''
+                                ? '/'
+                                : Sites.numero_telephone.toString(),
+                        value6:
+                            Sites.adresse_mail.toString() == ''
+                                ? '/'
+                                : Sites.adresse_mail.toString(),
                     }))}
                     functions={{
                         fonc1: () => {
@@ -313,7 +322,7 @@ function SitesPage() {
                     attribut={{
                         att1: 'Désignation longue',
                         att2: 'Adresse',
-                        att3: 'Date ouverture',
+                        att3: "Date d'ouverture",
                         att4: 'Téléphone',
                         att5: 'Mail',
                     }}
@@ -321,9 +330,19 @@ function SitesPage() {
                         value1: Sites.code_site.toString(),
                         value2: Sites.designation_longue.toString(),
                         value3: Sites.adresse.toString(),
-                        value4: Sites.date_ouverture.toString().split('T')[0] == null ? '/' : Sites.date_ouverture.toString().split('T')[0],
-                        value5: Sites.numero_telephone.toString() == '' ? '/' : Sites.numero_telephone.toString(),
-                        value6: Sites.adresse_mail.toString() == '' ? '/' : Sites.adresse_mail.toString(),
+                        value4:
+                            Sites.date_ouverture.toString().split('T')[0] ==
+                            null
+                                ? '/'
+                                : Sites.date_ouverture.toString().split('T')[0],
+                        value5:
+                            Sites.numero_telephone.toString() == ''
+                                ? '/'
+                                : Sites.numero_telephone.toString(),
+                        value6:
+                            Sites.adresse_mail.toString() == ''
+                                ? '/'
+                                : Sites.adresse_mail.toString(),
                     }))}
                 />
                 <Pagination
@@ -332,7 +351,8 @@ function SitesPage() {
                     totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
-                />{''}
+                />
+                {''}
                 {isPopUpOpen && (
                     <div className={style.PopUp}>
                         <PopUp

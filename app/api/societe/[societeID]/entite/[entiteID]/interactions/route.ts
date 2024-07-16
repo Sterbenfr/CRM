@@ -25,7 +25,7 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await pool.query(
-            'SELECT * FROM `interactions` WHERE code_Entite_Prospectee = ? LIMIT ?, ?',
+            'SELECT interactions.*, entite.raison_sociale, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as nom FROM `interactions` LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = interactions.code_contact_entite LEFT JOIN entite ON entite.code_entite = interactions.code_entite_prospectee WHERE code_Entite_Prospectee = ? LIMIT ?, ?',
             [entiteID, offset, limitNumber],
         )
 
