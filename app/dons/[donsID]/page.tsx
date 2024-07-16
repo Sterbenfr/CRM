@@ -226,6 +226,17 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             </div>
         )
     console.log(don[0])
+
+    const Print = () => {
+        const printContents = document.getElementById('printablediv')!.innerHTML
+        const originalContents = document.body.innerHTML
+        document.body.innerHTML = printContents
+        document.body.style.paddingTop = '0'
+        window.print()
+        document.body.innerHTML = originalContents
+        window.location.reload()
+    }
+
     return (
         <div className={style.idPage}>
             <div className={style.croixID}>
@@ -243,7 +254,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             {session &&
                 session.user &&
                 session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
-                    <div className={style.bouton}>
+                    <div>
                         <button
                             onClick={() => {
                                 if (modify) {
@@ -256,500 +267,523 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         >
                             {modify ? 'Envoyer' : 'Modifier'}
                         </button>
+                        <button className={style.btnModif} onClick={Print}>
+                            Imprimer
+                        </button>
                     </div>
                 )}
-            <div className={style.info_id}>
-                <div className={style.col_1}>
-                    <div className={style.info}>
-                        <p className={style.titre}>Code du don :</p>
-                        <p>{don[0].code_Don == null ? '/' : don[0].code_Don}</p>
-                    </div>
 
-                    <div className={style.info}>
-                        <p className={style.titre}>Raison sociale :</p>
-                        <p>
-                            {don[0].raison_sociale == null
-                                ? '/'
-                                : don[0].raison_sociale}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Date de proposition du don :
-                        </p>
-                        <p>
-                            {don[0].date_proposition_don == null
-                                ? '/'
-                                : don[0].date_proposition_don
-                                      .toString()
-                                      .split('T')[0]}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Contact de l&apos;entité donatrice :
-                        </p>
-                        <p>
-                            {don[0].contact_entite_donatrice == null
-                                ? '/'
-                                : don[0].contact_entite_donatrice}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>Type de don :</p>
-                        <p>
-                            {don[0].TD_libelle == null
-                                ? '/'
-                                : don[0].TD_libelle}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>Type de compétence :</p>
-                        <p>
-                            {don[0].TC_libelle == null
-                                ? '/'
-                                : don[0].TC_libelle}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>Type de produit :</p>
-                        <p>
-                            {don[0].TP_libelle == null
-                                ? '/'
-                                : don[0].TP_libelle}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>Mode de consomation :</p>
-                        <p>
-                            {don[0].MCP_libelle == null
-                                ? '/'
-                                : don[0].MCP_libelle}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Date du début de mise a disposition :
-                        </p>
-                        <p>
-                            {don[0].date_debut_mise_disposition == null
-                                ? '/'
-                                : don[0].date_debut_mise_disposition
-                                      .toString()
-                                      .split('T')[0]}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Date de la fin de mise a disposition :
-                        </p>
-                        <p>
-                            {don[0].date_fin_mise_disposition == null
-                                ? ''
-                                : don[0].date_fin_mise_disposition
-                                      .toString()
-                                      .split('T')[0]}
-                        </p>
-                    </div>
-                    <div className={style.info}>
-                        <p className={style.titre}>Commentaires :</p>
-                        <p>
-                            {don[0].commentaires == null
-                                ? '/'
-                                : don[0].commentaires}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Utilisateur saisie de don :
-                        </p>
-                        <p>
-                            {don[0].Utilisateur_saisie_don == null
-                                ? '/'
-                                : don[0].Utilisateur_saisie_don}
-                        </p>
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Statut d&apos;acceptation du don :
-                        </p>
-                        {modify && session?.user.role === ('AD' || 'RR') ? (
-                            <input
-                                type='checkbox'
-                                name='statut_acceptation_don'
-                                checked={
-                                    modifiedDon.statut_acceptation_don
-                                        ? modifiedDon.statut_acceptation_don ===
-                                          'V'
-                                        : don[0].statut_acceptation_don === 'V'
-                                }
-                                onChange={handleCheckboxChange}
-                            />
-                        ) : (
+            <div id='printablediv'>
+                <div className={style.info_id}>
+                    <div className={style.col_1}>
+                        <div className={style.info}>
+                            <p className={style.titre}>Code du don :</p>
                             <p>
-                                {don[0].statut_acceptation_don == null
+                                {don[0].code_Don == null
                                     ? '/'
-                                    : don[0].statut_acceptation_don}
+                                    : don[0].code_Don}
                             </p>
-                        )}
-                    </div>
+                        </div>
 
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Date d&apos;acceptation / refus :
-                        </p>
-                        {modify && session?.user.role === ('AD' || 'RR') ? (
-                            <input
-                                type='date'
-                                name='date_acceptation_refus_don'
-                                value={
-                                    modifiedDon.date_acceptation_refus_don
-                                        ? new Date(
-                                              modifiedDon.date_acceptation_refus_don,
-                                          )
-                                              .toISOString()
-                                              .split('T')[0]
+                        <div className={style.info}>
+                            <p className={style.titre}>Raison sociale :</p>
+                            <p>
+                                {don[0].raison_sociale == null
+                                    ? '/'
+                                    : don[0].raison_sociale}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Date de proposition du don :
+                            </p>
+                            <p>
+                                {don[0].date_proposition_don == null
+                                    ? '/'
+                                    : don[0].date_proposition_don
+                                          .toString()
+                                          .split('T')[0]}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Contact de l&apos;entité donatrice :
+                            </p>
+                            <p>
+                                {don[0].contact_entite_donatrice == null
+                                    ? '/'
+                                    : don[0].contact_entite_donatrice}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>Type de don :</p>
+                            <p>
+                                {don[0].TD_libelle == null
+                                    ? '/'
+                                    : don[0].TD_libelle}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>Type de compétence :</p>
+                            <p>
+                                {don[0].TC_libelle == null
+                                    ? '/'
+                                    : don[0].TC_libelle}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>Type de produit :</p>
+                            <p>
+                                {don[0].TP_libelle == null
+                                    ? '/'
+                                    : don[0].TP_libelle}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>Mode de consomation :</p>
+                            <p>
+                                {don[0].MCP_libelle == null
+                                    ? '/'
+                                    : don[0].MCP_libelle}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Date du début de mise a disposition :
+                            </p>
+                            <p>
+                                {don[0].date_debut_mise_disposition == null
+                                    ? '/'
+                                    : don[0].date_debut_mise_disposition
+                                          .toString()
+                                          .split('T')[0]}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Date de la fin de mise a disposition :
+                            </p>
+                            <p>
+                                {don[0].date_fin_mise_disposition == null
+                                    ? ''
+                                    : don[0].date_fin_mise_disposition
+                                          .toString()
+                                          .split('T')[0]}
+                            </p>
+                        </div>
+                        <div className={style.info}>
+                            <p className={style.titre}>Commentaires :</p>
+                            <p>
+                                {don[0].commentaires == null
+                                    ? '/'
+                                    : don[0].commentaires}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Utilisateur saisie de don :
+                            </p>
+                            <p>
+                                {don[0].Utilisateur_saisie_don == null
+                                    ? '/'
+                                    : don[0].Utilisateur_saisie_don}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Statut d&apos;acceptation du don :
+                            </p>
+                            {modify && session?.user.role === ('AD' || 'RR') ? (
+                                <input
+                                    type='checkbox'
+                                    name='statut_acceptation_don'
+                                    checked={
+                                        modifiedDon.statut_acceptation_don
+                                            ? modifiedDon.statut_acceptation_don ===
+                                              'V'
+                                            : don[0].statut_acceptation_don ===
+                                              'V'
+                                    }
+                                    onChange={handleCheckboxChange}
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].statut_acceptation_don == null
+                                        ? '/'
+                                        : don[0].statut_acceptation_don}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>
+                                Date d&apos;acceptation / refus :
+                            </p>
+                            {modify && session?.user.role === ('AD' || 'RR') ? (
+                                <input
+                                    type='date'
+                                    name='date_acceptation_refus_don'
+                                    value={
+                                        modifiedDon.date_acceptation_refus_don
+                                            ? new Date(
+                                                  modifiedDon.date_acceptation_refus_don,
+                                              )
+                                                  .toISOString()
+                                                  .split('T')[0]
+                                            : new Date(
+                                                  don[0].date_acceptation_refus_don,
+                                              )
+                                                  .toISOString()
+                                                  .split('T')[0]
+                                    }
+                                    onChange={handleInputChange}
+                                    disabled
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].date_acceptation_refus_don == null
+                                        ? '/'
                                         : new Date(
                                               don[0].date_acceptation_refus_don,
                                           )
                                               .toISOString()
-                                              .split('T')[0]
-                                }
-                                onChange={handleInputChange}
-                                disabled
-                            />
-                        ) : (
-                            <p>
-                                {don[0].date_acceptation_refus_don == null
-                                    ? '/'
-                                    : new Date(
-                                          don[0].date_acceptation_refus_don,
-                                      )
-                                          .toISOString()
-                                          .split('T')[0]}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            L&apos;utilisateur qui accepte ou refuse le don :
-                        </p>
-                        {modify && session?.user.role === ('AD' || 'RR') ? (
-                            <input
-                                type='text'
-                                name='Utilisateur_accepte_refuse_don'
-                                value={String(
-                                    modifiedDon.Utilisateur_accepte_refuse_don
-                                        ? session.user.name
-                                        : don[0]
-                                              .Utilisateur_accepte_refuse_don ??
-                                              '',
-                                )}
-                                onChange={handleInputChange}
-                                disabled={true}
-                            />
-                        ) : (
-                            <p>
-                                {don[0].Utilisateur_accepte_refuse_don == null
-                                    ? '/'
-                                    : don[0].Utilisateur_accepte_refuse_don}
-                            </p>
-                        )}
-                    </div>
-                </div>
-
-                <div className={style.col_2}>
-                    <div className={style.info}>
-                        <p className={style.titre}>Site de réception :</p>
-                        {modify &&
-                        (session?.user.role === 'AD' ||
-                            session?.user.role === 'RR') ? (
-                            <SearchComponent
-                                url='../../api/select/sites'
-                                onChange={e => handleSiteChange(e)}
-                                onInputChange={e => handleSiteChange(e)}
-                            />
-                        ) : (
-                            <p>
-                                {don[0].designation_longue == null
-                                    ? '/'
-                                    : don[0].designation_longue}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className={style.info}>
-                        <p className={style.titre}>
-                            Indicateur de remerciement :
-                        </p>
-                        {modify && session?.user.role === ('AD' || 'PR') ? (
-                            <input
-                                type='checkbox'
-                                name='indicateur_remerciement'
-                                value={
-                                    modifiedDon.indicateur_remerciement ||
-                                    don[0].indicateur_remerciement
-                                }
-                                checked={
-                                    modifiedDon.indicateur_remerciement
-                                        ? modifiedDon.indicateur_remerciement ===
-                                          'O'
-                                        : don[0].indicateur_remerciement === 'O'
-                                }
-                                onChange={handleRemerciementChange}
-                            />
-                        ) : (
-                            <p>
-                                {don[0].indicateur_remerciement == null
-                                    ? '/'
-                                    : don[0].indicateur_remerciement}
-                            </p>
-                        )}
-                    </div>
-
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>
-                                Date du remerciement :
-                            </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
-                                <input
-                                    type='date'
-                                    name='date_remerciement'
-                                    value={
-                                        modifiedDon.date_remerciement
-                                            ? new Date(
-                                                  modifiedDon.date_remerciement,
-                                              )
-                                                  .toISOString()
-                                                  .split('T')[0]
-                                            : don[0].date_remerciement
-                                              ? new Date(
-                                                    don[0].date_remerciement,
-                                                )
-                                                    .toISOString()
-                                                    .split('T')[0]
-                                              : new Date()
-                                                    .toISOString()
-                                                    .split('T')[0] // Use today's date if don[0].date_remerciement is not set
-                                    }
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <p>
-                                    {don[0].date_remerciement == null
-                                        ? '/'
-                                        : new Date(don[0].date_remerciement)
-                                              .toISOString()
                                               .split('T')[0]}
                                 </p>
                             )}
-                        </p>
-                    </div>
+                        </div>
 
-                    <div>
-                        <p className={style.info}>
+                        <div className={style.info}>
                             <p className={style.titre}>
-                                Nom du destinataire du cerfa :
+                                L&apos;utilisateur qui accepte ou refuse le don
+                                :
                             </p>
-                            <p>
-                                {don[0].nom_destinataire_cerfa == null
-                                    ? '/'
-                                    : don[0].nom_destinataire_cerfa}
-                            </p>
-                        </p>
+                            {modify && session?.user.role === ('AD' || 'RR') ? (
+                                <input
+                                    type='text'
+                                    name='Utilisateur_accepte_refuse_don'
+                                    value={String(
+                                        modifiedDon.Utilisateur_accepte_refuse_don
+                                            ? session.user.name
+                                            : don[0]
+                                                  .Utilisateur_accepte_refuse_don ??
+                                                  '',
+                                    )}
+                                    onChange={handleInputChange}
+                                    disabled={true}
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].Utilisateur_accepte_refuse_don ==
+                                    null
+                                        ? '/'
+                                        : don[0].Utilisateur_accepte_refuse_don}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
-                    <div>
-                        <p className={style.info}>
+                    <div className={style.col_2}>
+                        <div className={style.info}>
+                            <p className={style.titre}>Site de réception :</p>
+                            {modify &&
+                            (session?.user.role === 'AD' ||
+                                session?.user.role === 'RR') ? (
+                                <SearchComponent
+                                    url='../../api/select/sites'
+                                    onChange={e => handleSiteChange(e)}
+                                    onInputChange={e => handleSiteChange(e)}
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].designation_longue == null
+                                        ? '/'
+                                        : don[0].designation_longue}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className={style.info}>
                             <p className={style.titre}>
-                                Adresse du destinataire du cerfa :
+                                Indicateur de remerciement :
                             </p>
-                            <p>
-                                {don[0].adresse_destinataire_cerfa == null
-                                    ? '/'
-                                    : don[0].adresse_destinataire_cerfa}
-                            </p>
-                        </p>
-                    </div>
+                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                                <input
+                                    type='checkbox'
+                                    name='indicateur_remerciement'
+                                    value={
+                                        modifiedDon.indicateur_remerciement ||
+                                        don[0].indicateur_remerciement
+                                    }
+                                    checked={
+                                        modifiedDon.indicateur_remerciement
+                                            ? modifiedDon.indicateur_remerciement ===
+                                              'O'
+                                            : don[0].indicateur_remerciement ===
+                                              'O'
+                                    }
+                                    onChange={handleRemerciementChange}
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].indicateur_remerciement == null
+                                        ? '/'
+                                        : don[0].indicateur_remerciement}
+                                </p>
+                            )}
+                        </div>
 
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>
-                                Adresse mail du destinataire du cerfa :
-                            </p>
-                            <p>
-                                {don[0].adresse_mail_destinataire_cerfa == null
-                                    ? '/'
-                                    : don[0].adresse_mail_destinataire_cerfa}
-                            </p>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>
-                                Téléphone du destinataire du cerfa :
-                            </p>
-                            <p>
-                                {don[0].telephone_destinataire_cerfa == null
-                                    ? '/'
-                                    : don[0].telephone_destinataire_cerfa}
-                            </p>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>Valeur du cerfa :</p>
-                            <p>
-                                {don[0].valeur_cerfa == null
-                                    ? '/'
-                                    : don[0].valeur_cerfa}
-                            </p>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>Cerfa fait :</p>
-                            <p>
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>
+                                    Date du remerciement :
+                                </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
-                                    <input
-                                        type='checkbox'
-                                        name='cerfa_fait'
-                                        value={
-                                            modifiedDon.cerfa_fait ||
-                                            don[0].cerfa_fait
-                                        }
-                                        checked={
-                                            modifiedDon.cerfa_fait
-                                                ? modifiedDon.cerfa_fait === 'O'
-                                                : don[0].cerfa_fait === 'O'
-                                        }
-                                        onChange={handleCerfaChange}
-                                    />
-                                ) : (
-                                    <p>
-                                        {don[0].cerfa_fait == null
-                                            ? '/'
-                                            : don[0].cerfa_fait}
-                                    </p>
-                                )}
-                            </p>
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>Date du cerfa :</p>
-                            <p>
-                                {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role === ('AD' || 'PR') ? (
                                     <input
                                         type='date'
-                                        name='date_cerfa'
+                                        name='date_remerciement'
                                         value={
-                                            modifiedDon.date_cerfa
+                                            modifiedDon.date_remerciement
                                                 ? new Date(
-                                                      modifiedDon.date_cerfa,
+                                                      modifiedDon.date_remerciement,
                                                   )
                                                       .toISOString()
                                                       .split('T')[0]
-                                                : don[0].date_cerfa
-                                                  ? new Date(don[0].date_cerfa)
+                                                : don[0].date_remerciement
+                                                  ? new Date(
+                                                        don[0].date_remerciement,
+                                                    )
                                                         .toISOString()
                                                         .split('T')[0]
                                                   : new Date()
                                                         .toISOString()
-                                                        .split('T')[0]
+                                                        .split('T')[0] // Use today's date if don[0].date_remerciement is not set
                                         }
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {don[0].date_cerfa == null
+                                        {don[0].date_remerciement == null
                                             ? '/'
-                                            : new Date(don[0].date_cerfa)
+                                            : new Date(don[0].date_remerciement)
                                                   .toISOString()
                                                   .split('T')[0]}
                                     </p>
                                 )}
                             </p>
-                        </p>
-                    </div>
+                        </div>
 
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>Cerfa :</p>
-                            {modify && session?.user.role === ('AD' || 'RC') ? (
-                                <input
-                                    type='file'
-                                    name='cerfa_file'
-                                    onChange={handleFileChange}
-                                />
-                            ) : don[0].cerfa == null ? (
-                                <p>/</p>
-                            ) : typeof don[0].cerfa === 'string' ? (
-                                <a href={don[0].cerfa} download='cerfa'>
-                                    Download Cerfa
-                                </a>
-                            ) : (
-                                <a href={don[0].cerfa} download='cerfa'>
-                                    Download Cerfa
-                                </a>
-                            )}
-                        </p>
-                    </div>
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>
+                                    Nom du destinataire du cerfa :
+                                </p>
+                                <p>
+                                    {don[0].nom_destinataire_cerfa == null
+                                        ? '/'
+                                        : don[0].nom_destinataire_cerfa}
+                                </p>
+                            </p>
+                        </div>
 
-                    <div>
-                        <p className={style.info}>
-                            <p className={style.titre}>Pièce associée :</p>
-                            <p>
-                                {don[0].pieces_associees == null ? (
-                                    '/'
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>
+                                    Adresse du destinataire du cerfa :
+                                </p>
+                                <p>
+                                    {don[0].adresse_destinataire_cerfa == null
+                                        ? '/'
+                                        : don[0].adresse_destinataire_cerfa}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>
+                                    Adresse mail du destinataire du cerfa :
+                                </p>
+                                <p>
+                                    {don[0].adresse_mail_destinataire_cerfa ==
+                                    null
+                                        ? '/'
+                                        : don[0]
+                                              .adresse_mail_destinataire_cerfa}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>
+                                    Téléphone du destinataire du cerfa :
+                                </p>
+                                <p>
+                                    {don[0].telephone_destinataire_cerfa == null
+                                        ? '/'
+                                        : don[0].telephone_destinataire_cerfa}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>Valeur du cerfa :</p>
+                                <p>
+                                    {don[0].valeur_cerfa == null
+                                        ? '/'
+                                        : don[0].valeur_cerfa}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>Cerfa fait :</p>
+                                <p>
+                                    {modify &&
+                                    session?.user.role === ('AD' || 'RC') ? (
+                                        <input
+                                            type='checkbox'
+                                            name='cerfa_fait'
+                                            value={
+                                                modifiedDon.cerfa_fait ||
+                                                don[0].cerfa_fait
+                                            }
+                                            checked={
+                                                modifiedDon.cerfa_fait
+                                                    ? modifiedDon.cerfa_fait ===
+                                                      'O'
+                                                    : don[0].cerfa_fait === 'O'
+                                            }
+                                            onChange={handleCerfaChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {don[0].cerfa_fait == null
+                                                ? '/'
+                                                : don[0].cerfa_fait}
+                                        </p>
+                                    )}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>Date du cerfa :</p>
+                                <p>
+                                    {modify &&
+                                    session?.user.role === ('AD' || 'RC') ? (
+                                        <input
+                                            type='date'
+                                            name='date_cerfa'
+                                            value={
+                                                modifiedDon.date_cerfa
+                                                    ? new Date(
+                                                          modifiedDon.date_cerfa,
+                                                      )
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : don[0].date_cerfa
+                                                      ? new Date(
+                                                            don[0].date_cerfa,
+                                                        )
+                                                            .toISOString()
+                                                            .split('T')[0]
+                                                      : new Date()
+                                                            .toISOString()
+                                                            .split('T')[0]
+                                            }
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {don[0].date_cerfa == null
+                                                ? '/'
+                                                : new Date(don[0].date_cerfa)
+                                                      .toISOString()
+                                                      .split('T')[0]}
+                                        </p>
+                                    )}
+                                </p>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>Cerfa :</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        type='file'
+                                        name='cerfa_file'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : don[0].cerfa == null ? (
+                                    <p>/</p>
+                                ) : typeof don[0].cerfa === 'string' ? (
+                                    <a href={don[0].cerfa} download='cerfa'>
+                                        Download Cerfa
+                                    </a>
                                 ) : (
-                                    <a
-                                        href={don[0].pieces_associees}
-                                        download={
-                                            'pièce_associée_' +
-                                            don[0].commentaires
-                                        }
-                                    >
-                                        {' '}
-                                        Télécharger la pièce associée
+                                    <a href={don[0].cerfa} download='cerfa'>
+                                        Download Cerfa
                                     </a>
                                 )}
                             </p>
-                        </p>
-                    </div>
-                    <div className={style.info}>
-                        <a href={`/dons/${params.donsID}/modalites-livraison`}>
-                            <p className={style.titre}>
-                                {' '}
-                                Modalités de la livraison{' '}
+                        </div>
+
+                        <div>
+                            <p className={style.info}>
+                                <p className={style.titre}>Pièce associée :</p>
+                                <p>
+                                    {don[0].pieces_associees == null ? (
+                                        '/'
+                                    ) : (
+                                        <a
+                                            href={don[0].pieces_associees}
+                                            download={
+                                                'pièce_associée_' +
+                                                don[0].commentaires
+                                            }
+                                        >
+                                            {' '}
+                                            Télécharger la pièce associée
+                                        </a>
+                                    )}
+                                </p>
                             </p>
-                        </a>
-                    </div>
-                    <div className={style.info}>
-                        <a href={`/dons/${params.donsID}/reception`}>
-                            <p className={style.titre}>
-                                {' '}
-                                Réception de la livraison{' '}
-                            </p>
-                        </a>
+                        </div>
+                        <div className={style.info}>
+                            <a
+                                href={`/dons/${params.donsID}/modalites-livraison`}
+                            >
+                                <p className={style.titre}>
+                                    {' '}
+                                    Modalités de la livraison{' '}
+                                </p>
+                            </a>
+                        </div>
+                        <div className={style.info}>
+                            <a href={`/dons/${params.donsID}/reception`}>
+                                <p className={style.titre}>
+                                    {' '}
+                                    Réception de la livraison{' '}
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
