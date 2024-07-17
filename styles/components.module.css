@@ -792,6 +792,7 @@
     padding: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    font-family: inherit;
 }
 
 .linkID:hover {
@@ -801,6 +802,35 @@
 }
 
 .linkID:active {
+    cursor: pointer;
+    border: 3px solid #e5007d;
+    background-color: #f2f2f2;
+}
+
+.linkIdMod {
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 3px solid black;
+    color: black;
+    border-radius: 10px;
+    padding: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 1rem;
+    margin-top: 0rem;
+    background-color: white;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.linkIdMod:hover {
+    cursor: pointer;
+    border: 3px solid #e5007d;
+    background-color: #f2f2f2;
+}
+
+.linkIdMod:active {
     cursor: pointer;
     border: 3px solid #e5007d;
     background-color: #f2f2f2;

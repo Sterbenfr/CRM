@@ -20,7 +20,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     const [groupes, setGroupes] = useState<Groupe[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
     const [search, setSearch] = useState<Groupe[]>([])
 

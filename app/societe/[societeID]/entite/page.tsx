@@ -40,7 +40,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [Entites, setEntite] = useState<Entite[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Entite[]>([])
     const [fileIndex, setFileIndex] = useState<number>()
 
