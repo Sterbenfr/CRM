@@ -36,8 +36,12 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [dateReception, setDateReception] = useState('')
     const [heureReception, setHeureReception] = useState('')
     const [nombrePalettesRecues, setNombrePalettesRecues] = useState('')
-    const [nombrePalettesConsigneesRecues, setNombrePalettesConsigneesRecues] = useState('')
-    const [nombrePalettesConsigneesRendues, setNombrePalettesConsigneesRendues] = useState('')
+    const [nombrePalettesConsigneesRecues, setNombrePalettesConsigneesRecues] =
+        useState('')
+    const [
+        nombrePalettesConsigneesRendues,
+        setNombrePalettesConsigneesRendues,
+    ] = useState('')
     const [nombreCartonsRecus, setNombreCartonsRecus] = useState('')
     const [poidsRecuKg, setPoidsRecuKg] = useState('')
     const [produitsSurPalettes, setProduitsSurPalettes] = useState(false)
@@ -49,7 +53,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         setProduitsSurPalettes(false)
     }
 
-        const [fields, setFields] = useState<
+    const [fields, setFields] = useState<
         {
             id: string
             type: FieldType
@@ -65,71 +69,71 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     >([])
 
     type FieldType =
-    | 'number'
-    | 'search'
-    | 'date'
-    | 'select'
-    | 'input'
-    | 'file'
-    | 'checkbox'
-    | 'enum'
+        | 'number'
+        | 'search'
+        | 'date'
+        | 'select'
+        | 'input'
+        | 'file'
+        | 'checkbox'
+        | 'enum'
 
     const handleNumeroLivraisonChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNumeroLivraison(event.target.value)
     }
 
     const handleDateReceptionChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setDateReception(event.target.value)
     }
 
     const handleHeureReceptionChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setHeureReception(event.target.value)
     }
 
     const handleNombrePalettesRecuesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNombrePalettesRecues(event.target.value)
     }
 
     const handleNombrePalettesConsigneesRecuesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNombrePalettesConsigneesRecues(event.target.value)
     }
 
     const handleNombrePalettesConsigneesRenduesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNombrePalettesConsigneesRendues(event.target.value)
     }
 
     const handleNombreCartonsRecusChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setNombreCartonsRecus(event.target.value)
     }
 
     const handlePoidsRecuKgChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setPoidsRecuKg(event.target.value)
     }
 
     const handleCommentairesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setCommentaires(event.target.value)
     }
 
     const handlePiecesAssocieesChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         setPiecesAssociees(event.target.value)
     }
@@ -163,10 +167,11 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                 id: 'numero_livraison',
                 type: 'search',
                 value: numeroLivraison,
-                placeholder: 'Exemple: Don de compétences techniques - Livraison 1',
+                placeholder:
+                    'Exemple: Don de compétences techniques - Livraison 1',
                 url: `../../api/select/dons/${params.donsID}/modalites-livraison`,
                 required: true,
-                onInputChange: handleNumeroLivraisonChange
+                onInputChange: handleNumeroLivraisonChange,
             },
             {
                 id: 'date_reception',
@@ -297,7 +302,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/dons/${params.donsID}/reception?limit=10000`,
+                    `http://localhost:3000/api/dons/${params.donsID}/reception?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -311,7 +316,6 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
 
         fetchDons()
         fetchSearchDons()
-        
     }, [page, itemsPerPage, params.donsID, generateFields, search])
 
     // add a function to handle page changes
@@ -319,7 +323,6 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         setPage(newPage)
     }
 
-    
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
         setPage(1) // reset page to 1 when items per page changes
@@ -348,9 +351,17 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         value3: Reception.date_reception
                             .toString()
                             .split('T')[0],
-                        value4: (Reception.nombre_palettes_recues === null || '') ? '/' : Reception.nombre_palettes_recues.toString(),
-                        value5: (Reception.commentaires === '' || null) ? '/' : Reception.commentaires,
-                        value6: Reception.date_reception.toString().split('T')[0],
+                        value4:
+                            Reception.nombre_palettes_recues === null || ''
+                                ? '/'
+                                : Reception.nombre_palettes_recues.toString(),
+                        value5:
+                            Reception.commentaires === '' || null
+                                ? '/'
+                                : Reception.commentaires,
+                        value6: Reception.date_reception
+                            .toString()
+                            .split('T')[0],
                     }))}
                     functions={{
                         fonc1: () => {
@@ -373,10 +384,24 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         value3: Reception.date_reception
                             .toString()
                             .split('T')[0],
-                        value4: (Reception.nombre_palettes_recues === null || '') ? '/' : Reception.nombre_palettes_recues.toString(),
-                        value5: (Reception.commentaires === '' || null) ? '/' : Reception.commentaires,
-                        value6: Reception.date_reception.toString().split('T')[0],
+                        value4:
+                            Reception.nombre_palettes_recues === null || ''
+                                ? '/'
+                                : Reception.nombre_palettes_recues.toString(),
+                        value5:
+                            Reception.commentaires === '' || null
+                                ? '/'
+                                : Reception.commentaires,
+                        value6: Reception.date_reception
+                            .toString()
+                            .split('T')[0],
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

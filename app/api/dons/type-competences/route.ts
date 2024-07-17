@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../utils/db'
+import connection from '../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../utils/streamUtils'
 import type { Competence } from '@/app/dons/type-competences/page'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_type_competence as id, libelle as label FROM `typescompetences` LIMIT 1000',
         )
         return NextResponse.json(rows)
@@ -35,7 +35,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `TypesCompetences` SET ?'
-        const [rows] = await pool.query(query, typesCompetence)
+        const [rows] = await connection.query(query, typesCompetence)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

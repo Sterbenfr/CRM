@@ -14,6 +14,8 @@ const connection = mysql
         charset: 'utf8mb4',
         connectionLimit: 10,
         queueLimit: 0,
+        waitForConnections: true, // Wait for connections instead of throwing an error
+        idleTimeout: 60000, // Close idle connections after 60 seconds
     })
     .promise()
 

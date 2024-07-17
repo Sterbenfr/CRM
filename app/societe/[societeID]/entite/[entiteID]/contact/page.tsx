@@ -271,7 +271,7 @@ function ContactsPage({
         const fetchSearchContacts = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=10000`,
+                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -364,6 +364,12 @@ function ContactsPage({
                                 ? '/'
                                 : contact.adresse_mail,
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

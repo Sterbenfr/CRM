@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import { NextResponse } from 'next/server'
 import { Utilisateurs } from '@/app/sites/[siteID]/utilisateurs/page'
 import { streamToString } from '@/utils/streamUtils'
@@ -18,7 +18,7 @@ export async function POST(req: NextApiRequest) {
     const hashedPassword = await bcrypt.hash(user.password, saltRounds)
 
     try {
-        await pool.query(
+        await connection.query(
             `
                 INSERT INTO Utilisateurs (
                     civilite,

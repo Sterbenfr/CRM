@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../utils/db'
+import connection from '../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { type_utilisateur } from '@/app/sites/[siteID]/utilisateurs/type-utilisateurs/page'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_type_utilisateur as id, libelle as label FROM `typesutilisateurs` LIMIT 1000',
         )
         return NextResponse.json(rows)
@@ -34,7 +34,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `TypesUtilisateurs` SET ?'
-        const [rows] = await pool.query(query, TypesUtilisateurs)
+        const [rows] = await connection.query(query, TypesUtilisateurs)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

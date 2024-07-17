@@ -227,7 +227,7 @@ function InteractionsPage({
         const fetchSearchInteractions = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=10000`,
+                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -340,6 +340,12 @@ function InteractionsPage({
                                 : Interactions.date_relance.toString(),
                         value6: Interactions.commentaires,
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

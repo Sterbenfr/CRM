@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../utils/db'
+import connection from '../../../../../../utils/db'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             "Select code_utilisateur as id, CONCAT(prenom,' ',nom) as label from Utilisateurs;",
         )
         return NextResponse.json(rows)

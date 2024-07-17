@@ -57,7 +57,6 @@ INSERT INTO TypesDons (code_type_don, libelle)
 VALUES
 ('MAR', 'Marchandises'),
 ('FIN', 'Financiers'),
-('RAM', 'Ramasse'),
 ('SIE', 'Prestations'),
 ('SIP', 'Compétences');
 

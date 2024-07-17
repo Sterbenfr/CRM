@@ -1,30 +1,30 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 
 export async function GET() {
     try {
         // Récupérer les données de don, réception, modalités de livraison et entreprise
-        const [donsD] = await pool.query(
+        const [donsD] = await connection.query(
             'SELECT nom_commercial, code_Don AS id, date_debut_mise_disposition AS date, CONCAT("Début de mise à disposition du don : ", nom_commercial) AS title FROM `dons` LEFT JOIN Entite ON Entite.code_entite = Dons.code_Entite_donatrice',
         )
 
-        const [donsF] = await pool.query(
+        const [donsF] = await connection.query(
             'SELECT nom_commercial, code_Don AS id, date_fin_mise_disposition AS date, CONCAT("Fin de mise à disposition du don : ", nom_commercial) AS title FROM `dons` LEFT JOIN Entite ON Entite.code_entite = Dons.code_Entite_donatrice',
         )
 
-        const [receptions] = await pool.query(
+        const [receptions] = await connection.query(
             'SELECT r.code_Don, r.numero_reception AS id, r.date_reception AS date, CONCAT("Reception du don : ", nom_commercial) AS title, e.nom_commercial AS nom_commercial FROM `reception` r LEFT JOIN `Dons` d ON r.code_Don = d.code_Don LEFT JOIN `Entite` e ON d.code_Entite_donatrice = e.code_entite',
         )
 
-        const [modaliteslivraison] = await pool.query(
+        const [modaliteslivraison] = await connection.query(
             'SELECT ml.code_Don, ml.numero_livraison AS id, ml.date_prevue_livraison AS date, CONCAT("Livraison du don : ", nom_commercial) AS title, e.nom_commercial AS nom_commercial FROM `modaliteslivraison` ml LEFT JOIN `Dons` d ON ml.code_Don = d.code_Don LEFT JOIN `Entite` e ON d.code_Entite_donatrice = e.code_entite',
         )
 
-        const [interactions] = await pool.query(
+        const [interactions] = await connection.query(
             'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_interaction AS date, CONCAT("Interaction du don : ", e.nom_commercial) AS title, e.code_societe_appartenance, e.nom_commercial FROM `interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
 
-        const [interactionsrelance] = await pool.query(
+        const [interactionsrelance] = await connection.query(
             'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_relance AS date, CONCAT("Relance d\'interaction du don : ", i.code_interaction) AS title, e.code_societe_appartenance, e.nom_commercial FROM `interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
 

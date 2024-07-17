@@ -350,6 +350,8 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const getTableNameFromFieldId = (fieldId: string): string => {
         const tableNameMapping: { [key: string]: string } = {
+
+          
             numero_portable: 'un contact',
             Logo: 'une entreprise',
             adresse: 'une entité',
@@ -361,6 +363,7 @@ const PopUp: React.FC<PopUpProps> = ({
             adresse_enlevement: 'une livraison',
             code_modalite_interaction: 'une interaction',
             password: 'un utilisateur',
+
         }
         return tableNameMapping[fieldId] || 'un type'
     }

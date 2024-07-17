@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import bcrypt from 'bcryptjs'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
@@ -19,7 +19,9 @@ export async function POST(req: NextApiRequest) {
         // Decrypte l'ancien MDP
         const querySelect =
             'SELECT password FROM `utilisateurs` WHERE code_utilisateur = ?'
-        const [rows] = await pool.query<RowDataPacket[]>(querySelect, [userId])
+        const [rows] = await connection.query<RowDataPacket[]>(querySelect, [
+            userId,
+        ])
         if (rows.length === 0) {
             return NextResponse.json(
                 { error: 'User not found' },
@@ -48,7 +50,7 @@ export async function POST(req: NextApiRequest) {
         // Met a jour le mdp
         const queryUpdate =
             'UPDATE `utilisateurs` SET password = ? WHERE code_utilisateur = ?'
-        await pool.query(queryUpdate, [newPasswordHash, userId])
+        await connection.query(queryUpdate, [newPasswordHash, userId])
 
         return NextResponse.json({ success: true })
     } catch (error) {
