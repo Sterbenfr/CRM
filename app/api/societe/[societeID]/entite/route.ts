@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../utils/db'
+import connection from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { Entite } from '@/app/societe/[societeID]/entite/page'
@@ -24,12 +24,12 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM `entite` WHERE code_societe_appartenance = ? LIMIT ?, ?',
             [societeID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `entite` WHERE code_societe_appartenance = ?',
             [societeID],
         )
@@ -52,9 +52,10 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    
-    if (!Entite.raison_sociale ||
-        !Entite.code_type_entite || 
+
+    if (
+        !Entite.raison_sociale ||
+        !Entite.code_type_entite ||
         !Entite.code_societe_appartenance ||
         !Entite.adresse
     ) {
@@ -63,11 +64,11 @@ export async function POST(req: NextApiRequest) {
             { status: 400 },
         )
     }
-    
+
     try {
         console.log(Entite)
         const query = 'INSERT INTO `Entite` SET ?'
-        const [rows] = await pool.query(query, Entite)
+        const [rows] = await connection.query(query, Entite)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

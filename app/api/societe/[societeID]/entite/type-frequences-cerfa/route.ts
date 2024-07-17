@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../utils/db'
+import connection from '../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { Frequence_cerfa } from '@/app/societe/[societeID]/entite/type-frequences-cerfa/page'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_frequence_cerfa as id, libelle as label FROM `FrequencesCerfa` LIMIT 1000',
         )
         return NextResponse.json(rows)
@@ -35,7 +35,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `FrequencesCerfa` SET ?'
-        const [rows] = await pool.query(query, typesFrequence_cerfa)
+        const [rows] = await connection.query(query, typesFrequence_cerfa)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

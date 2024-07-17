@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Prestataire } from '@/app/prestataire/page'
@@ -16,12 +16,12 @@ export async function GET(request: Request) {
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM `Prestataires` LIMIT ?, ?',
             [offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `Prestataires`',
         )
 
@@ -57,7 +57,7 @@ export async function POST(req: NextApiRequest) {
     try {
         console.log(prestataires)
         const query = 'INSERT INTO `Prestataires` SET ?'
-        const [rows] = await pool.query(query, prestataires)
+        const [rows] = await connection.query(query, prestataires)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

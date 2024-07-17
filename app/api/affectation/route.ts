@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Affectation } from '@/app/affectation/page'
@@ -16,11 +16,11 @@ export async function GET(request: Request) {
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT CONCAT(Utilisateurs.prenom , " " , Utilisateurs.nom) as code_Utilisateur_Prospecteur, Entite.raison_sociale as code_Entite, AffectationDonateursProspecteurs.commentaires,AffectationDonateursProspecteurs.date_affectation,AffectationDonateursProspecteurs.date_arret_affectation FROM `AffectationDonateursProspecteurs` LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = AffectationDonateursProspecteurs.code_Utilisateur_Prospecteur LEFT JOIN Entite ON Entite.code_entite = AffectationDonateursProspecteurs.code_entite LIMIT ?, ?',
             [offset, limitNumber],
         )
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `AffectationDonateursProspecteurs`',
         )
 
@@ -56,7 +56,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `AffectationDonateursProspecteurs` SET ?'
-        const [rows] = await pool.query(query, affectation)
+        const [rows] = await connection.query(query, affectation)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

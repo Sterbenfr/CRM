@@ -350,7 +350,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const getTableNameFromFieldId = (fieldId: string): string => {
         const tableNameMapping: { [key: string]: string } = {
-            code_contact_Entite_donatrice: 'un don',
+            date_proposition_don: 'un don',
             date_reception: 'une réception',
             date_prevue_livraison: 'une livraison',
             Siren: 'une entreprise',

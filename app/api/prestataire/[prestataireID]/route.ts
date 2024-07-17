@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../utils/db'
+import connection from '../../../../utils/db'
 import { NextApiRequest } from 'next'
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
     const prestataireID = params.prestataireID
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_Prestataire,TypePrestataires.libelle as TP_libelle,raison_sociale,nom_commercial,Siren,Siret,telephone,mail,adresse,civilite_contact_prestataire,nom_contact_prestataire,prenom_contact_prestataire,telephone_contact_prestataire,mail_contact_prestataire,commentaires,date_arret_activite_du_prestataire FROM Prestataires LEFT JOIN TypePrestataires ON Prestataires.code_type_de_Prestataire = TypePrestataires.code_type_de_Prestataire WHERE code_Prestataire = ?;',
             [prestataireID],
         )
@@ -32,7 +32,7 @@ export async function DELETE(
 
     try {
         const query = 'DELETE FROM `prestataires` WHERE `code_prestataire` = ?'
-        const [rows] = await pool.query(query, prestataireID)
+        const [rows] = await connection.query(query, prestataireID)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

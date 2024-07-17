@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../utils/db'
+import connection from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { Groupe } from '@/app/societe/[societeID]/groupe/page'
@@ -24,12 +24,12 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_groupe, nom_du_Groupe, groupe.logo, groupe.site_Web, groupe.commentaires, date_arret_activite_du_Groupe FROM `groupe` LEFT JOIN entreprise ON Groupe.code_groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ? LIMIT ?, ?',
             [societeID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `groupe` LEFT JOIN entreprise ON Groupe.code_groupe = entreprise.code_Groupe_appartenance WHERE entreprise.code_Societe = ?',
             [societeID],
         )
@@ -53,9 +53,7 @@ export async function POST(req: NextApiRequest) {
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
-    if (
-        !groupe.nom_du_Groupe
-    ) {
+    if (!groupe.nom_du_Groupe) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -65,7 +63,7 @@ export async function POST(req: NextApiRequest) {
     try {
         console.log(groupe)
         const query = 'INSERT INTO `Groupe` SET ?'
-        const [rows] = await pool.query(query, groupe)
+        const [rows] = await connection.query(query, groupe)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

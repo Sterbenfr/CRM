@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../utils/db'
+import connection from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { ModalitesLivraison } from '@/app/dons/[donsID]/modalites-livraison/page'
@@ -20,12 +20,12 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM `ModalitesLivraison` WHERE code_Don = ? LIMIT ?, ?',
             [donsID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `ModalitesLivraison` WHERE code_Don = ?',
             [donsID],
         )
@@ -68,7 +68,7 @@ export async function POST(req: NextApiRequest) {
     try {
         console.log(ModalitesLivraison)
         const query = 'INSERT INTO `ModalitesLivraison` SET ?'
-        const [rows] = await pool.query(query, ModalitesLivraison)
+        const [rows] = await connection.query(query, ModalitesLivraison)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

@@ -19,11 +19,13 @@ const Line: React.FC<LineProps> = ({
     param4,
     param5,
     param6,
-    paramColor,
 }) => {
     // Click handler function
     const handleClick = (key: string) => {
-        if (window.location.href.includes('/type') || window.location.href.includes('site-link')) {
+        if (
+            window.location.href.includes('/type') ||
+            window.location.href.includes('site-link')
+        ) {
             return
         }
 
@@ -60,15 +62,8 @@ const Line: React.FC<LineProps> = ({
                     <div className={param4 ? style.Ztext : ''}>{param4}</div>
 
                     <div
-                        className={` ${
-                            paramColor === 'R'
-                                ? style.red
-                                : paramColor === 'A'
-                                  ? style.orange
-                                  : paramColor
-                                    ? style.green
-                                    : ''
-                        } " " ${param5 ? style.Ztext : ''}`}
+                        className={param5 ? style.Ztext : ''}
+                        data-color={param5}
                     >
                         {param5}
                     </div>

@@ -201,22 +201,9 @@
     width: 14rem;
     text-align: center;
     margin-left: 3rem;
-    overflow: hidden;
 }
 
-.red {
-    border: 2px solid red;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 7rem;
-    margin-right: 7rem;
-}
-
-.green {
+.Ztext[data-color='V'] {
     border: 2px solid green;
     border-radius: 50%;
     width: 35px;
@@ -228,7 +215,19 @@
     margin-right: 7rem;
 }
 
-.orange {
+.Ztext[data-color='R'] {
+    border: 2px solid red;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7rem;
+    margin-right: 7rem;
+}
+
+.Ztext[data-color='A'] {
     border: 2px solid orange;
     border-radius: 50%;
     width: 35px;

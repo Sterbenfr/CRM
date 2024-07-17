@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise'
-import pool from './db'
+import connection from './db'
 const bcrypt = require('bcryptjs')
 
 interface User {
