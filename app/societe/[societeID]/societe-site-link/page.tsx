@@ -204,6 +204,12 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                         value4: contact.code_site_suivi.toString(),
                         value5: contact.code_utilisateur_suivant.toString(),
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

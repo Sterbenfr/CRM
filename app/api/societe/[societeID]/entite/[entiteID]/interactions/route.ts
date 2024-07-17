@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../../utils/db'
+import connection from '../../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../../utils/streamUtils'
 import type { Interactions } from '@/app/societe/[societeID]/entite/[entiteID]/interaction/page'
@@ -24,12 +24,12 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT interactions.*, entite.raison_sociale, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as nom FROM `interactions` LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = interactions.code_contact_entite LEFT JOIN entite ON entite.code_entite = interactions.code_entite_prospectee WHERE code_Entite_Prospectee = ? LIMIT ?, ?',
             [entiteID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `interactions` WHERE code_Entite_Prospectee = ?',
             [entiteID],
         )
@@ -70,7 +70,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `interactions` SET ?'
-        const [rows] = await pool.query(query, interactions)
+        const [rows] = await connection.query(query, interactions)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

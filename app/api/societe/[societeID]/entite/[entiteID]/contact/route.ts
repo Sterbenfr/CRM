@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../../utils/db'
+import connection from '../../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../../utils/streamUtils'
 import type { Contact } from '@/app/societe/[societeID]/entite/[entiteID]/contact/page'
@@ -24,12 +24,12 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM `contacts` WHERE code_entite = ? LIMIT ?, ?',
             [entiteID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `contacts` WHERE code_entite = ?',
             [entiteID],
         )
@@ -62,7 +62,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `contacts` SET ?'
-        const [rows] = await pool.query(query, contact)
+        const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

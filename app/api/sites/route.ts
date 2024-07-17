@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Sites } from '@/app/sites/page'
@@ -16,12 +16,12 @@ export async function GET(request: Request) {
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query('SELECT * FROM `sites` LIMIT ?, ?', [
-            offset,
-            limitNumber,
-        ])
+        const [rows] = await connection.query(
+            'SELECT * FROM `sites` LIMIT ?, ?',
+            [offset, limitNumber],
+        )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `sites`',
         )
 
@@ -45,11 +45,7 @@ export async function POST(req: NextApiRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (
-        !sites.designation_longue ||
-        !sites.adresse ||
-        !sites.code_type_site
-    ) {
+    if (!sites.designation_longue || !sites.adresse || !sites.code_type_site) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -59,7 +55,7 @@ export async function POST(req: NextApiRequest) {
     try {
         console.log(sites)
         const query = 'INSERT INTO `sites` SET ?'
-        const [rows] = await pool.query(query, sites)
+        const [rows] = await connection.query(query, sites)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

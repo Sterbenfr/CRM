@@ -239,7 +239,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/sites/${params.siteID}/utilisateurs?limit=10000`,
+                    `http://localhost:3000/api/sites/${params.siteID}/utilisateurs?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -313,6 +313,12 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
                         value6: user.mail == '' ? '/' : user.mail,
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

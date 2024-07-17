@@ -164,7 +164,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
         const fetchSearchGroupe = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/groupe?limit=10000`,
+                    `http://localhost:3000/api/societe/${params.societeID}/groupe?limit=5000`,
                 )
 
                 if (!res.ok) {

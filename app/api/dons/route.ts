@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../utils/db'
+import connection from '../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Don } from '@/app/dons/page'
@@ -16,12 +16,12 @@ export async function GET(request: Request) {
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
 
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT Dons.*,Entite.raison_sociale FROM Dons LEFT JOIN  Entite ON Dons.code_Entite_donatrice = Entite.code_Entite LIMIT ?, ?',
             [offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `dons`',
         )
 
@@ -58,7 +58,7 @@ export async function POST(req: NextApiRequest) {
     try {
         console.log('hamburger')
         const query = 'INSERT INTO `dons` SET ?'
-        const [rows] = await pool.query(query, dons)
+        const [rows] = await connection.query(query, dons)
         console.log('poulets')
         return NextResponse.json(rows)
     } catch (error) {
@@ -84,7 +84,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'DELETE FROM `dons` WHERE `code_Don` = ?'
-        const [rows] = await pool.query(query, dons.code_Don)
+        const [rows] = await connection.query(query, dons.code_Don)
         return NextResponse.json(rows)
     } catch (error) {
         console.log(error)

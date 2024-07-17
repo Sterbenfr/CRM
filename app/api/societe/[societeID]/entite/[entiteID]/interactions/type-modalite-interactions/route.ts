@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../../../utils/db'
+import connection from '../../../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../../../utils/streamUtils'
 import type { Modalite_Interactions } from '@/app/societe/[societeID]/entite/[entiteID]/interaction/type-modalite-interactions/page'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_modalite_interaction as id, libelle as label FROM `ModaliteInteractions` LIMIT 1000',
         )
         return NextResponse.json(rows)
@@ -34,7 +34,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `ModaliteInteractions` SET ?'
-        const [rows] = await pool.query(query, type_modalite_interaction)
+        const [rows] = await connection.query(query, type_modalite_interaction)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

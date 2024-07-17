@@ -359,7 +359,7 @@ function PrestatairesPage() {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    'http://localhost:3000/api/prestataire?limit=10000',
+                    'http://localhost:3000/api/prestataire?limit=5000',
                 )
 
                 if (!res.ok) {
@@ -448,6 +448,12 @@ function PrestatairesPage() {
                                 ? '/'
                                 : Prestataire.mail_contact_prestataire.toString(),
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

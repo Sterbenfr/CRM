@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../utils/db'
+import connection from '../../../../utils/db'
 import { NextApiRequest } from 'next'
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
     const siteID = params.siteID
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_site,designation_longue,designation_courte,adresse,SiteTypes.libelle as st_libelle,date_ouverture,date_fermeture,numero_telephone,adresse_mail,commentaires FROM Sites LEFT JOIN SiteTypes ON Sites.code_type_site = SiteTypes.code_type_site WHERE code_site = ?;',
             [siteID],
         )
@@ -32,7 +32,7 @@ export async function DELETE(
 
     try {
         const query = 'DELETE FROM `sites` WHERE `code_site` = ?'
-        const [rows] = await pool.query(query, siteID)
+        const [rows] = await connection.query(query, siteID)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../utils/db'
+import connection from '../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
     const utilisateurID = params.utilisateurID
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT * FROM Utilisateurs WHERE code_utilisateur = ?;',
             [utilisateurID],
         )
@@ -32,7 +32,7 @@ export async function DELETE(
 
     try {
         const query = 'DELETE FROM `utilisateurs` WHERE `code_utilisateur` = ?'
-        const [rows] = await pool.query(query, utilisateurID)
+        const [rows] = await connection.query(query, utilisateurID)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

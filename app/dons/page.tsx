@@ -589,7 +589,7 @@ function DonsPage() {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    'http://localhost:3000/api/dons?limit=10000',
+                    'http://localhost:3000/api/dons?limit=5000',
                 )
 
                 if (!res.ok) {
@@ -625,7 +625,7 @@ function DonsPage() {
     const getStatusLabel = (status: string) => {
         switch (status) {
             case 'V':
-                return 'Accepté'
+                return 'Validé'
             case 'R':
                 return 'Refusé'
             case 'A':
@@ -654,10 +654,6 @@ function DonsPage() {
                         value5: Don.statut_acceptation_don
                             ? Don.statut_acceptation_don
                             : '/',
-
-                        value7: Don.statut_acceptation_don
-                            ? Don.statut_acceptation_don
-                            : '',
                     }))}
                     functions={{
                         fonc1: () => {
@@ -685,6 +681,12 @@ function DonsPage() {
                             : '',
                         value7: getStatusLabel(Don.statut_acceptation_don),
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
