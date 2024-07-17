@@ -32,7 +32,7 @@ function InteractionsPage({
     const [Interactions, setInteractions] = useState<Interactions[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Interactions[]>([])
 
     const [codeUtilisateurProspecteur, setCodeUtilisateurProspecteur] =

@@ -24,7 +24,7 @@ function SitesPage() {
     const [Sites, setSites] = useState<Sites[]>([])
     const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Sites[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)

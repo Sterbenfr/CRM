@@ -27,7 +27,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [Receptions, setReceptions] = useState<Reception[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Reception[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
