@@ -101,7 +101,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom commercial :</p>
                         <p>
-                            {prestataire[0].nom_commercial === null || ''
+                            {prestataire[0].nom_commercial === (null || '')
                                 ? '/'
                                 : prestataire[0].nom_commercial}
                         </p>
@@ -110,7 +110,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Siren :</p>
                         <p>
-                            {prestataire[0].Siren === null || ''
+                            {prestataire[0].Siren === (null || '') || ''
                                 ? '/'
                                 : prestataire[0].Siren}
                         </p>

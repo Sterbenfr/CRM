@@ -110,7 +110,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         })
     }
 
-    const handleStatutAcceptationDonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleStatutAcceptationDonChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
         if (!don || don.length === 0 || !session) return
         let value = event.target.value
 
@@ -379,7 +381,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         <div className={style.info}>
                             <p className={style.titre}>Commentaires :</p>
                             <p>
-                                {don[0].commentaires == null
+                                {don[0].commentaires == (null || '')
                                     ? '/'
                                     : don[0].commentaires}
                             </p>
@@ -405,7 +407,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 session?.user.role === 'RR') ? (
                                 <SelectComponent
                                     url='../../api/select/dons'
-                                    onChange={e => handleStatutAcceptationDonChange(e)}
+                                    onChange={e =>
+                                        handleStatutAcceptationDonChange(e)
+                                    }
                                 />
                             ) : (
                                 <p>
@@ -493,7 +497,13 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     url='../../api/select/sites'
                                     onChange={e => handleSiteChange(e)}
                                     onInputChange={e => handleSiteChange(e)}
-                                    placeholder={don[0].designation_longue == null || don[0].designation_longue === '' ? 'Exemple: Entrepot Principal' : 'Actuellement: ' + don[0].designation_longue}
+                                    placeholder={
+                                        don[0].designation_longue == null ||
+                                        don[0].designation_longue === ''
+                                            ? 'Exemple: Entrepot Principal'
+                                            : 'Actuellement: ' +
+                                              don[0].designation_longue
+                                    }
                                 />
                             ) : (
                                 <p>
@@ -588,14 +598,22 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                         value={
                                             modifiedDon.nom_destinataire_cerfa
                                         }
-                                        placeholder={don[0].nom_destinataire_cerfa == null || don[0].nom_destinataire_cerfa === '' ? 'Exemple: Durand' : 'Actuellement: ' + don[0].nom_destinataire_cerfa}
+                                        placeholder={
+                                            don[0].nom_destinataire_cerfa ==
+                                                null ||
+                                            don[0].nom_destinataire_cerfa === ''
+                                                ? 'Exemple: Durand'
+                                                : 'Actuellement: ' +
+                                                  don[0].nom_destinataire_cerfa
+                                        }
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                    {don[0].nom_destinataire_cerfa == null
-                                        ? '/'
-                                        : don[0].nom_destinataire_cerfa}
+                                        {don[0].nom_destinataire_cerfa ==
+                                        (null || '')
+                                            ? '/'
+                                            : don[0].nom_destinataire_cerfa}
                                     </p>
                                 )}
                             </p>
@@ -614,15 +632,26 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                         value={
                                             modifiedDon.adresse_destinataire_cerfa
                                         }
-                                        placeholder={don[0].adresse_destinataire_cerfa == null || don[0].adresse_destinataire_cerfa === '' ? 'Exemple: 12 rue de la paix, 75000 Paris' : 'Actuellement: ' + don[0].adresse_destinataire_cerfa}
+                                        placeholder={
+                                            don[0].adresse_destinataire_cerfa ==
+                                                null ||
+                                            don[0]
+                                                .adresse_destinataire_cerfa ===
+                                                ''
+                                                ? 'Exemple: 12 rue de la paix, 75000 Paris'
+                                                : 'Actuellement: ' +
+                                                  don[0]
+                                                      .adresse_destinataire_cerfa
+                                        }
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                    {don[0].adresse_destinataire_cerfa == null
-                                        ? '/'
-                                        : don[0].adresse_destinataire_cerfa}
-                                </p>
+                                        {don[0].adresse_destinataire_cerfa ==
+                                        (null || '')
+                                            ? '/'
+                                            : don[0].adresse_destinataire_cerfa}
+                                    </p>
                                 )}
                             </p>
                         </div>
@@ -640,14 +669,28 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                         value={
                                             modifiedDon.adresse_mail_destinataire_cerfa
                                         }
-                                        placeholder={don[0].adresse_mail_destinataire_cerfa == null || don[0].adresse_mail_destinataire_cerfa === '' ? 'Exemple: Paul.durand@gmail.com' : 'Actuellement: ' + don[0].adresse_mail_destinataire_cerfa}
+                                        placeholder={
+                                            don[0]
+                                                .adresse_mail_destinataire_cerfa ==
+                                                null ||
+                                            don[0]
+                                                .adresse_mail_destinataire_cerfa ===
+                                                ''
+                                                ? 'Exemple: Paul.durand@gmail.com'
+                                                : 'Actuellement: ' +
+                                                  don[0]
+                                                      .adresse_mail_destinataire_cerfa
+                                        }
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                    {don[0].adresse_mail_destinataire_cerfa == null || ''
-                                        ? '/'
-                                        : don[0].adresse_mail_destinataire_cerfa}
+                                        {don[0]
+                                            .adresse_mail_destinataire_cerfa ==
+                                            null || ''
+                                            ? '/'
+                                            : don[0]
+                                                  .adresse_mail_destinataire_cerfa}
                                     </p>
                                 )}
                             </p>
@@ -666,14 +709,27 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                         value={
                                             modifiedDon.telephone_destinataire_cerfa
                                         }
-                                        placeholder={don[0].telephone_destinataire_cerfa == null || don[0].telephone_destinataire_cerfa === '' ? 'Exemple: 0650634818' : 'Actuellement: ' + don[0].telephone_destinataire_cerfa}
+                                        placeholder={
+                                            don[0]
+                                                .telephone_destinataire_cerfa ==
+                                                null ||
+                                            don[0]
+                                                .telephone_destinataire_cerfa ===
+                                                ''
+                                                ? 'Exemple: 0650634818'
+                                                : 'Actuellement: ' +
+                                                  don[0]
+                                                      .telephone_destinataire_cerfa
+                                        }
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                    {don[0].telephone_destinataire_cerfa == null
-                                        ? '/'
-                                        : don[0].telephone_destinataire_cerfa}
+                                        {don[0].telephone_destinataire_cerfa ==
+                                        (null || '')
+                                            ? '/'
+                                            : don[0]
+                                                  .telephone_destinataire_cerfa}
                                     </p>
                                 )}
                             </p>
@@ -687,17 +743,21 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     <input
                                         type='number'
                                         name='valeur_cerfa'
-                                        value={
-                                            modifiedDon.valeur_cerfa
+                                        value={modifiedDon.valeur_cerfa}
+                                        placeholder={
+                                            don[0].valeur_cerfa == null ||
+                                            don[0].valeur_cerfa === 0
+                                                ? 'Exemple: 5500'
+                                                : 'Actuellement: ' +
+                                                  don[0].valeur_cerfa
                                         }
-                                        placeholder={don[0].valeur_cerfa == null || don[0].valeur_cerfa === 0 ? 'Exemple: 5500' : 'Actuellement: ' + don[0].valeur_cerfa}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                    {don[0].valeur_cerfa == null
-                                        ? '/'
-                                        : don[0].valeur_cerfa}
+                                        {don[0].valeur_cerfa == null
+                                            ? '/'
+                                            : don[0].valeur_cerfa}
                                     </p>
                                 )}
                             </p>
@@ -822,28 +882,28 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                         </div>
                         <div className={style.info}>
-                        {!modify && (
-                        <a
-                            className={style.linkID}
-                            href={`/dons/${params.donsID}/modalites-livraison`}
-                        >
-                            <p className={style.titre}>
-                                Modalités de la livraison
-                            </p>
-                        </a>
-                        )}
+                            {!modify && (
+                                <a
+                                    className={style.linkID}
+                                    href={`/dons/${params.donsID}/modalites-livraison`}
+                                >
+                                    <p className={style.titre}>
+                                        Modalités de la livraison
+                                    </p>
+                                </a>
+                            )}
                         </div>
                         <div className={style.info}>
-                        {!modify && (
-                        <a
-                            className={style.linkID}
-                            href={`/dons/${params.donsID}/reception`}
-                        >
-                            <p className={style.titre}>
-                                Réception de la livraison
-                            </p>
-                        </a>
-                        )}
+                            {!modify && (
+                                <a
+                                    className={style.linkID}
+                                    href={`/dons/${params.donsID}/reception`}
+                                >
+                                    <p className={style.titre}>
+                                        Réception de la livraison
+                                    </p>
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
