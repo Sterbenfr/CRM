@@ -13,6 +13,10 @@ export interface SuiviGroupes {
     code_type_de_Site: string
     code_site_suivi: number
     code_utilisateur_suivant: number
+    nom_du_groupe?: string
+    libelle?: string
+    designation_longue?: string
+    name?: string
 }
 
 function SuiviGroupePage({
@@ -171,7 +175,7 @@ function SuiviGroupePage({
         <>
             <div className={style.page}>
                 <div className={style.croixID}>
-                    <h1 className={style.lg1}>Groupe-site-link</h1>
+                    <h1 className={style.lg1}>Lien Site-Groupe</h1>
                     <a href='javascript:history.go(-1)' className={style.btnC}>
                         <Image
                             className={style.CR}
@@ -186,10 +190,14 @@ function SuiviGroupePage({
                 <List
                     items={SuiviGroupe.map(contact => ({
                         value1: contact.code_groupe.toString(),
-                        value2: contact.code_groupe.toString(),
-                        value3: contact.code_type_de_Site,
-                        value4: contact.code_site_suivi.toString(),
-                        value5: contact.code_utilisateur_suivant.toString(),
+                        value2: contact.nom_du_groupe
+                            ? contact.nom_du_groupe
+                            : '/',
+                        value3: contact.libelle ? contact.libelle : '/',
+                        value4: contact.designation_longue
+                            ? contact.designation_longue
+                            : '/',
+                        value5: contact.name ? contact.name : '/',
                     }))}
                     functions={{
                         fonc1: () => {
@@ -200,10 +208,10 @@ function SuiviGroupePage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`,
                     }}
                     attribut={{
-                        att1: 'Code groupe',
-                        att2: 'Code type de site',
-                        att3: 'Code site suivi',
-                        att4: 'Code utilisateur suivant',
+                        att1: 'Groupe',
+                        att2: 'Type du site',
+                        att3: 'Site suivant le groupe',
+                        att4: 'Utilisateur suivant le groupe',
                     }}
                     searchItems={SuiviGroupe.map(contact => ({
                         value1: contact.code_groupe.toString(),
@@ -228,7 +236,7 @@ function SuiviGroupePage({
                 />
                 {''}
                 {isPopUpOpen && (
-                    <div className={style.PopUp}>
+                    <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}

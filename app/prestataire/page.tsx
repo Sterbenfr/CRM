@@ -299,9 +299,12 @@ function PrestatairesPage() {
                 id: 'date_arret_activite_du_prestataire',
                 type: 'date',
                 value:
-                    dateArretActiviteDuPrestataire
-                        ?.toISOString()
-                        .split('T')[0] || null,
+                    dateArretActiviteDuPrestataire &&
+                    !isNaN(dateArretActiviteDuPrestataire?.getTime())
+                        ? dateArretActiviteDuPrestataire
+                              .toISOString()
+                              .split('T')[0]
+                        : null,
                 onInputChange: handleDateArretActiviteDuPrestataireChange,
             },
         ]

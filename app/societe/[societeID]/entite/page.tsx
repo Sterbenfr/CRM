@@ -391,7 +391,10 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             {
                 id: 'date_arret_activite',
                 type: 'date',
-                value: dateArretActivite?.toISOString().split('T')[0] || '',
+                value:
+                    dateArretActivite && !isNaN(dateArretActivite.getTime())
+                        ? dateArretActivite.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateArretActiviteChange,
             },
         ]

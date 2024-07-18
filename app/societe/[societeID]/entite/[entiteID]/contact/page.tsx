@@ -225,7 +225,10 @@ function ContactsPage({
             {
                 id: 'date_arret_contact',
                 type: 'date',
-                value: dateArretContact?.toISOString().split('T')[0] || null,
+                value:
+                    dateArretContact && !isNaN(dateArretContact.getTime())
+                        ? dateArretContact.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateArretContact,
             },
         ]

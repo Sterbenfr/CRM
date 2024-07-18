@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
-import connection from '../../../../../../../utils/db'
+import connection from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
-import { streamToString } from '../../../../../../../utils/streamUtils'
-import { SuiviGroupes } from '@/app/societe/[societeID]/groupe/[groupeID]/groupe-site-link/page'
+import { streamToString } from '../../../../../utils/streamUtils'
+import { Site_Rattachement } from '@/app/sites/[siteID]/user-site-link/page'
 
 type CountResult = { count: number }[]
 
 export async function GET(
     request: Request,
-    { params }: { params: { societeID: string; groupeID: string } },
+    { params }: { params: { siteID: string } },
 ) {
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
@@ -19,13 +19,13 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT SuiviGroupe.*, groupe.nom_du_groupe, SiteTypes.libelle, sites.designation_longue, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as name FROM `SuiviGroupe` LEFT JOIN groupe ON groupe.code_groupe = SuiviGroupe.code_groupe LEFT JOIN SiteTypes ON SiteTypes.code_type_site = SuiviGroupe.code_type_de_Site LEFT JOIN sites ON sites.code_site = SuiviGroupe.code_site_suivi LEFT JOIN utilisateurs ON utilisateurs.code_utilisateur = SuiviGroupe.code_utilisateur_suivant WHERE SuiviGroupe.code_groupe = ? LIMIT ?, ?',
-            [params.groupeID, offset, limitNumber],
+            'SELECT SitesRattachement.*, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as name, sites.designation_longue, TypesUtilisateurs.libelle FROM SitesRattachement LEFT JOIN utilisateurs ON utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur LEFT JOIN sites ON sites.code_site = SitesRattachement.code_site LEFT JOIN TypesUtilisateurs ON TypesUtilisateurs.code_type_utilisateur = SitesRattachement.code_type_utilisateur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
+            [params.siteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `SuiviGroupe` WHERE code_groupe = ?',
-            [params.groupeID],
+            'SELECT COUNT(*) as count FROM `ContactEntite` WHERE code_entite = ?',
+            [params.siteID],
         )
 
         const total = totalResult as CountResult
@@ -40,7 +40,7 @@ export async function GET(
 }
 
 export async function POST(req: NextApiRequest) {
-    let contact: SuiviGroupes
+    let contact: Site_Rattachement
     try {
         contact = JSON.parse(await streamToString(req.body))
     } catch (error) {
@@ -48,15 +48,11 @@ export async function POST(req: NextApiRequest) {
     }
 
     if (
-        !contact.code_groupe ||
-        !contact.code_type_de_Site ||
-        !contact.code_site_suivi ||
-        !contact.code_utilisateur_suivant
+        !contact.code_utilisateur ||
+        !contact.code_site ||
+        !contact.code_type_utilisateur ||
+        !contact.date_fin_activite
     ) {
-        console.log(contact.code_groupe)
-        console.log(contact.code_type_de_Site)
-        console.log(contact.code_site_suivi)
-        console.log(contact.code_utilisateur_suivant)
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -64,8 +60,7 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
-        console.log(contact)
-        const query = 'INSERT INTO `SuiviGroupe` SET ?'
+        const query = 'INSERT INTO `ContactEntite` SET ?'
         const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)
     } catch (error) {

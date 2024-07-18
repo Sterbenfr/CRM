@@ -149,7 +149,9 @@ function InteractionsPage({
             {
                 id: 'date_interaction',
                 type: 'date',
-                value: dateInteraction.toISOString().split('T')[0],
+                value: !isNaN(dateInteraction.getTime())
+                    ? dateInteraction.toISOString().split('T')[0]
+                    : null,
                 required: true,
                 onInputChange: handleDateInteraction,
             },
@@ -190,7 +192,9 @@ function InteractionsPage({
             {
                 id: 'date_relance',
                 type: 'date',
-                value: dateRelance.toISOString().split('T')[0],
+                value: !isNaN(dateRelance.getTime())
+                    ? dateRelance.toISOString().split('T')[0]
+                    : null,
                 onInputChange: handleDateRelance,
             },
         ]

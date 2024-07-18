@@ -260,7 +260,9 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             {
                 id: 'date_prevue_livraison',
                 type: 'date',
-                value: datePrevueLivraison.toISOString().split('T')[0],
+                value: !isNaN(datePrevueLivraison.getTime())
+                    ? datePrevueLivraison.toISOString().split('T')[0]
+                    : null,
                 onInputChange: handleDatePrevueLivraison,
                 required: true,
             },

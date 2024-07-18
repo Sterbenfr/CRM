@@ -33,7 +33,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
     const [numeroLivraison, setNumeroLivraison] = useState('')
-    const [dateReception, setDateReception] = useState('')
+    const [dateReception, setDateReception] = useState(new Date())
     const [heureReception, setHeureReception] = useState('')
     const [nombrePalettesRecues, setNombrePalettesRecues] = useState('')
     const [nombrePalettesConsigneesRecues, setNombrePalettesConsigneesRecues] =
@@ -87,7 +87,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const handleDateReceptionChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setDateReception(event.target.value)
+        setDateReception(new Date(event.target.value))
     }
 
     const handleHeureReceptionChange = (
@@ -176,7 +176,9 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
             {
                 id: 'date_reception',
                 type: 'date',
-                value: dateReception,
+                value: !isNaN(dateReception.getTime())
+                    ? dateReception.toISOString().split('T')[0]
+                    : null,
                 required: true,
                 onInputChange: handleDateReceptionChange,
             },

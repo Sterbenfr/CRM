@@ -13,6 +13,10 @@ export interface ContactEntite {
     code_type_site: string
     code_site_suivi: number
     code_utilisateur_suivant: number
+    raison_sociale?: string
+    libelle?: string
+    designation_longue?: string
+    name?: string
 }
 
 function ContactEntitePage({
@@ -161,7 +165,7 @@ function ContactEntitePage({
         <>
             <div className={style.page}>
                 <div className={style.croixID}>
-                    <h1 className={style.lg1}>Societe-site-link</h1>
+                    <h1 className={style.lg1}>Lien Site-Entité</h1>
                     <a href='javascript:history.go(-1)' className={style.btnC}>
                         <Image
                             className={style.CR}
@@ -176,10 +180,14 @@ function ContactEntitePage({
                 <List
                     items={contacts.map(contact => ({
                         value1: contact.code_entite.toString(),
-                        value2: contact.code_entite.toString(),
-                        value3: contact.code_type_site,
-                        value4: contact.code_site_suivi.toString(),
-                        value5: contact.code_utilisateur_suivant.toString(),
+                        value2: contact.raison_sociale
+                            ? contact.raison_sociale
+                            : '/',
+                        value3: contact.libelle ? contact.libelle : '/',
+                        value4: contact.designation_longue
+                            ? contact.designation_longue
+                            : '/',
+                        value5: contact.name ? contact.name : '/',
                     }))}
                     functions={{
                         fonc1: () => {
@@ -190,17 +198,21 @@ function ContactEntitePage({
                         url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`,
                     }}
                     attribut={{
-                        att1: 'Code entite',
-                        att2: 'Code type de site',
-                        att3: 'Code site suivi',
-                        att4: 'Code utilisateur suivant',
+                        att1: 'Entité',
+                        att2: 'Type du site',
+                        att3: "Site suivant l'entité",
+                        att4: 'Utilisateur suivant l’entité',
                     }}
                     searchItems={contacts.map(contact => ({
                         value1: contact.code_entite.toString(),
-                        value2: contact.code_entite.toString(),
-                        value3: contact.code_type_site,
-                        value4: contact.code_site_suivi.toString(),
-                        value5: contact.code_utilisateur_suivant.toString(),
+                        value2: contact.raison_sociale
+                            ? contact.raison_sociale
+                            : '',
+                        value3: contact.libelle ? contact.libelle : '',
+                        value4: contact.designation_longue
+                            ? contact.designation_longue
+                            : '',
+                        value5: contact.name ? contact.name : '',
                     }))}
                     pageInfos={{
                         page,
@@ -218,7 +230,7 @@ function ContactEntitePage({
                 />
                 {''}
                 {isPopUpOpen && (
-                    <div className={style.PopUp}>
+                    <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
                             url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`}

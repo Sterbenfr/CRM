@@ -12,11 +12,19 @@ const connection = mysql
         port: Number(process.env.DB_PORT),
         timezone: '+00:00',
         charset: 'utf8mb4',
-        connectionLimit: 10,
+        connectionLimit: 50,
         queueLimit: 0,
-        waitForConnections: true, // Wait for connections instead of throwing an error
-        idleTimeout: 60000, // Close idle connections after 60 seconds
+        waitForConnections: true,
+        idleTimeout: 60000,
     })
     .promise()
+
+connection.on('acquire', function (connection) {
+    console.log('Connection %d acquired', connection.threadId)
+})
+
+connection.on('release', function (connection) {
+    console.log('Connection %d released', connection.threadId)
+})
 
 export default connection
