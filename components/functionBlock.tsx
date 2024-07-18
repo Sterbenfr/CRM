@@ -22,7 +22,7 @@ const FunctionBlock: React.FC<FunctionBlockProps> = ({
                 </button>
             </div>
             <input
-                placeholder='Rechercher...'
+                placeholder='Rechercher... (3 caractères minimum)'
                 className={style.searchLine}
                 type='text'
                 onInput={fonc3}

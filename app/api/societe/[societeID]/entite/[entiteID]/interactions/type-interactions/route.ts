@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../../../utils/db'
+import connection from '../../../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../../../../utils/streamUtils'
 import type { Interaction } from '@/app/societe/[societeID]/entite/[entiteID]/interaction/type-interactions/page'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_type_interaction as id, libelle as label FROM `typeinteractions` LIMIT 1000',
         )
         return NextResponse.json(rows)
@@ -35,7 +35,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         const query = 'INSERT INTO `typeinteractions` SET ?'
-        const [rows] = await pool.query(query, code_type_interaction)
+        const [rows] = await connection.query(query, code_type_interaction)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

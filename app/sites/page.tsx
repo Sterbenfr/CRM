@@ -24,7 +24,7 @@ function SitesPage() {
     const [Sites, setSites] = useState<Sites[]>([])
     const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Sites[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -256,7 +256,7 @@ function SitesPage() {
         const fetchSearchSites = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    'http://localhost:3000/api/sites?limit=10000',
+                    'http://localhost:3000/api/sites?limit=5000',
                 )
 
                 if (!res.ok) {
@@ -344,6 +344,12 @@ function SitesPage() {
                                 ? '/'
                                 : Sites.adresse_mail.toString(),
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

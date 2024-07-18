@@ -95,11 +95,10 @@ export const Pagination: React.FC<PaginationProps> = ({
                 value={itemsPerPage}
                 onChange={handleItemsPerPageChange}
             >
-                <option value='20'>Nombre de ligne par page : 20</option>
+                <option value='10'>Nombre de ligne par page : 10</option>
+                <option value='25'>Nombre de ligne par page : 25</option>
                 <option value='50'>Nombre de ligne par page : 50</option>
                 <option value='100'>Nombre de ligne par page : 100</option>
-                <option value='250'>Nombre de ligne par page : 250</option>
-                <option value='1000'>Nombre de ligne par page : 1000</option>
             </select>
         </div>
     )

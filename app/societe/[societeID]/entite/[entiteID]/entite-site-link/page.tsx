@@ -214,6 +214,12 @@ function ContactEntitePage({
                             : '',
                         value5: contact.name ? contact.name : '',
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

@@ -25,7 +25,7 @@ function SocietesPage() {
     const [Societes, setSocietes] = useState<Societe[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Societe[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -246,7 +246,7 @@ function SocietesPage() {
         const fetchSocieteSearch = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe?limit=10000`,
+                    `http://localhost:3000/api/societe?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -324,6 +324,12 @@ function SocietesPage() {
                                       .toString()
                                       .split('T')[0],
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
@@ -347,7 +353,7 @@ function SocietesPage() {
                 <TypesButtons
                     items={[
                         {
-                            label: 'Types activite societe',
+                            label: "Types d'activite d'entreprise'",
                             url: 'type-activite-societe',
                         },
                     ]}

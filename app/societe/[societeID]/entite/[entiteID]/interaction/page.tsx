@@ -32,7 +32,7 @@ function InteractionsPage({
     const [Interactions, setInteractions] = useState<Interactions[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Interactions[]>([])
 
     const [codeUtilisateurProspecteur, setCodeUtilisateurProspecteur] =
@@ -231,7 +231,7 @@ function InteractionsPage({
         const fetchSearchInteractions = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=10000`,
+                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -344,6 +344,12 @@ function InteractionsPage({
                                 : Interactions.date_relance.toString(),
                         value6: Interactions.commentaires,
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

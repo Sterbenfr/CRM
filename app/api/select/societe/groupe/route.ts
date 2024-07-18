@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../utils/db'
+import connection from '../../../../../utils/db'
 
 export async function GET() {
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_groupe as id, nom_du_Groupe as label FROM groupe;',
         )
         return NextResponse.json(rows)

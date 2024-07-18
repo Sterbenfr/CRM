@@ -101,9 +101,7 @@ section {
     display: block;
 }
 body {
-    line-height: 1;
     padding-top: 8rem;
-    min-height: 65vh;
 }
 ol,
 ul {

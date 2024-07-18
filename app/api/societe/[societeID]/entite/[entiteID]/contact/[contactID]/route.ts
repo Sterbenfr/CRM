@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../../../../utils/db'
+import connection from '../../../../../../../../utils/db'
 import { NextApiRequest } from 'next'
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
     const contactID = params.contactID
     try {
-        const [rows] = await pool.query(
+        const [rows] = await connection.query(
             'SELECT code_contact,Entite.raison_sociale,civilite,nom,prenom,photo,fonction,service,numero_fixe,numero_portable,adresse_mail,contacts.commentaires,date_arret_contact FROM Contacts JOIN Entite ON Contacts.code_entite = Entite.code_entite WHERE code_contact = ?;',
             [contactID],
         )
@@ -36,7 +36,7 @@ export async function DELETE(
     try {
         const query =
             'DELETE FROM `Contacts` WHERE `code_entite` = ? and `code_contact` = ?;'
-        const [rows] = await pool.query(query, [entiteID, contactID])
+        const [rows] = await connection.query(query, [entiteID, contactID])
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(

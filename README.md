@@ -1,78 +1,148 @@
-# Next TypeScript Template
+# Documentation du Projet CRM 
 
-This is a complete Next.js project template using TypeScript, linters like
-ESlint and Prettier and the app router. It allows you to skip the tedious
-details for the following:
+**Introduction**   
 
--   Adding and configuring TypeScript support.
--   Enabling TypeScript linting.
--   Automatic linting and checks for Typescript errors on commit.
+Bienvenue dans la documentation de CRM. Ce projet est une application web construite avec Next.js, un framework React pour la production. Cette documentation vous guidera à travers l'installation, l'utilisation, la structure et les contributions au projet.
 
-> [!TIP]  
-> **Note that I am using npm for the following steps but you can do the same
-> with other package manager like yarn**
+**Table des matières**
 
-## Project Creation
+-> Installation
 
-Clone this repo into the directory you want to use for your new project, delete
-the Git history, and then reinit as a fresh Git repo:
+-> Scripts Disponibles
 
-```bash
-$ git clone https://github.com/Sterbenfr/next-typescript-template.git <your project directory>
-$ cd <your project directory>
-$ rm -rf ./.git/
-$ git init
-$ npm install
-$ npx husky install
+-> Structure du Projet
+
+-> Configuration
+
+-> Utilisation
+
+-> Fonctionnalités
+
+-> Contribution
+
+-> Support
+
+-> Licence
+
+
+**Installation**
+
+Pour installer le projet, suivez les étapes ci-dessous :
+
+Clonez le dépôt :
+
+```
+git clone https://github.com/votre-utilisateur/MonProjetNextJS.git
+cd MonProjetNextJS
 ```
 
-> [!IMPORTANT]  
-> You'll also need to install the
-> [Prettier - code formatter ](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode),
-> [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
-> and
-> [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-> extensions in your VSCode
+Installez les dépendances :
 
-## Initial Publish
-
-Some additional steps need to be performed for a new project. Specifically,
-you'll need to:
-
-1. Create your project on GitHub (do not add a README, .gitignore, or license).
-2. Add the initial files to the repo:
-
-```bash
-$ git add .
-$ git remote add origin git@github.com:<your GitHub username>/<your project name>
-$ git push -u origin master
+```
+npm install
+# ou
+yarn install
 ```
 
-## Usage
+**Scripts Disponibles**
 
-I will also recommend my keybinds to be able to lint without saving and I'll
-slip in some that I find usefull :
+Dans le répertoire du projet, vous pouvez exécuter les scripts suivants :
 
-> [!NOTE]  
-> To use these keybinds you need to open the command palette (ctrl + shift + p
-> by default) and search Preferences : Open Keyboard Shortcuts (JSON) and **_Do
-> Not Forget_** to delete the shortcuts.json file after
+npm run dev : Démarre le serveur de développement.
 
-[Recommended Keyboard Shortcuts](./shortcuts.json)
+npm run build : Compile l'application pour la production.
 
-You can then run the server by using :
+npm start : Démarre le serveur en mode production.
 
-```bash
+npm run lint : Exécute des vérifications de linting.
+
+**Structure du Projet**
+
+La structure par défaut du projet est la suivante :
+
+```
+CRM/
+├── app/             # Pages de l'application
+│   ├── api/               # API Routes
+│   │   ├── auth.ts             # API authentification
+│   │   ├── events.ts           # API événements du calendrier
+│   ├── globals.css        # CSS 
+│   ├── layout.tsx         # Layout
+│   ├── not-found.tsx      # Page d'erreur
+│   ├── page.tsx           # Page d'accueil
+├── components/      # Composants réutilisables
+├── migration        # Tables SQL
+├── public/          # Fichiers statiques
+├── styles/          # Fichiers CSS
+├── utils            # Fichiers DB et Auth
+├── .eslintrc.json   # Configuration ESLint
+├── .gitignore       # Fichiers à ignorer par Git
+├── package.json     # Dépendances et scripts du projet
+└── README.md        # Documentation du projet
+```
+
+**Configuration**
+
+Pour configurer le projet, créez un fichier .env à la racine du projet et ajoutez-y vos variables d'environnement. Exemple :
+
+```
+NEXT_PUBLIC_API_URL=https://api.example.com
+```
+
+**Utilisation**
+
+
+Démarrer le Serveur de Développement
+Pour démarrer le serveur de développement, exécutez :
+
+```
 npm run dev
+# ou
+yarn dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) with your browser to
-see the result.
+Ensuite, ouvrez http://localhost:3000 pour voir l'application.
 
-You can start editing the page by modifying `app/page.tsx`. The page
-auto-updates as you edit the file.
+**Construire l'Application**
 
-## Learn More
+Pour créer une version optimisée pour la production :
 
-Official Next.js TypeScript documentation:
-[Next.JS Typescipt Doc](https://nextjs.org/docs/basic-features/typescript)
+```
+npm run build
+# puis
+npm start
+```
+
+L'application sera disponible à l'adresse http://localhost:3000.
+
+**Fonctionnalités**
+
+Routage Automatique : Créez des fichiers dans le dossier pages pour définir des routes.
+
+Rendu Côté Serveur : Next.js supporte le rendu côté serveur par défaut.
+
+Optimisation Automatique : Optimisation des performances et du chargement des pages.
+
+API Routes : Créez des routes API dans le dossier pages/api.
+
+**Contribution**
+
+Nous accueillons les contributions ! Pour contribuer, suivez ces étapes :
+
+Forkez le dépôt.
+
+Créez une branche pour votre fonctionnalité (git checkout -b feature/ma-fonctionnalite).
+
+Commitez vos modifications (git commit -m 'Ajout de ma fonctionnalité').
+
+Poussez à la branche (git push origin feature/ma-fonctionnalite).
+
+Ouvrez une Pull Request.
+
+**Support**
+
+Pour obtenir de l'aide, ouvrez une issue sur le dépôt GitHub.
+
+**Licence**
+
+Ce projet est sous licence .

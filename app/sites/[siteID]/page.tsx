@@ -148,7 +148,10 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                         </p>
                     </div>
                     <div className={style.info}>
-                        <a href={`/sites/${params.siteID}/utilisateurs`}>
+                        <a
+                            className={style.linkID}
+                            href={`/sites/${params.siteID}/utilisateurs`}
+                        >
                             <p className={style.titre}>
                                 {' '}
                                 Utilisateurs du site{' '}

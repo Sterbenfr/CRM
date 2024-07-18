@@ -46,7 +46,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     }>()
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
     const [search, setSearch] = useState<ModalitesLivraison[]>([])
 
@@ -191,9 +191,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     ) => {
         setNombreCartonsPrevu(event.target.value)
     }
-    const handlePoidsPrevuKg = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlePoidsPrevuKg = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPoidsPrevuKg(event.target.value)
     }
 
@@ -450,7 +448,10 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             fields[FindIndex('telephone_contact_enlevement')].required = false
         }
 
-        if (fields[FindIndex('pieces_associees')].value === undefined || fields[FindIndex('pieces_associees')].value === '') {
+        if (
+            fields[FindIndex('pieces_associees')].value === undefined ||
+            fields[FindIndex('pieces_associees')].value === ''
+        ) {
             fields[FindIndex('pieces_associees')].value = null
         }
 
@@ -494,8 +495,12 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                     onInputChange: handleTemperatureConservProduits,
                 })
 
-                if (fields[FindIndex('temperature_conserv_produits')].value === '') {
-                    fields[FindIndex('temperature_conserv_produits')].value = null
+                if (
+                    fields[FindIndex('temperature_conserv_produits')].value ===
+                    ''
+                ) {
+                    fields[FindIndex('temperature_conserv_produits')].value =
+                        null
                 }
             }
         }
@@ -553,7 +558,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         const fetchSearchModalitesLivraisons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison?limit=10000`,
+                    `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -641,6 +646,12 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         value4: ModalitesLivraison.telephone_contact_enlevement.toString(),
                         value5: ModalitesLivraison.mail_contact_enlevement.toString(),
                     }))}
+                    pageInfos={{
+                        page,
+                        itemsPerPage,
+                        totalItems,
+                        setTotal: setTotalItems,
+                    }}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
