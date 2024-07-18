@@ -91,7 +91,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Raison sociale :</p>
                         <p>
-                            {entite[0].raison_sociale == null
+                            {entite[0].raison_sociale == (null || '')
                                 ? '/'
                                 : entite[0].raison_sociale}
                         </p>
@@ -100,7 +100,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom commercial :</p>
                         <p>
-                            {entite[0].nom_commercial == null
+                            {entite[0].nom_commercial == (null || '')
                                 ? '/'
                                 : entite[0].nom_commercial}
                         </p>
@@ -143,7 +143,7 @@ export default function EntitePage({
                             Nom de l&apos;entreprise :
                         </p>
                         <p>
-                            {entite[0].nom_societe == null
+                            {entite[0].nom_societe == (null || '')
                                 ? '/'
                                 : entite[0].nom_societe}
                         </p>
@@ -152,7 +152,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Adresse :</p>
                         <p>
-                            {entite[0].adresse == null
+                            {entite[0].adresse == (null || '')
                                 ? '/'
                                 : entite[0].adresse}
                         </p>
@@ -161,7 +161,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Téléphone :</p>
                         <p>
-                            {entite[0].telephone == null
+                            {entite[0].telephone == (null || '')
                                 ? '/'
                                 : entite[0].telephone}
                         </p>
@@ -169,13 +169,17 @@ export default function EntitePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>Mail :</p>
-                        <p>{entite[0].mail == null ? '/' : entite[0].mail}</p>
+                        <p>
+                            {entite[0].mail == (null || '')
+                                ? '/'
+                                : entite[0].mail}
+                        </p>
                     </div>
 
                     <div className={style.info}>
                         <p className={style.titre}>Site internet :</p>
                         <p>
-                            {entite[0].site_internet == null
+                            {entite[0].site_internet == (null || '')
                                 ? '/'
                                 : entite[0].site_internet}
                         </p>
@@ -184,7 +188,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
-                            {entite[0].commentaires == null
+                            {entite[0].commentaires == (null || '')
                                 ? '/'
                                 : entite[0].commentaires}
                         </p>
@@ -193,7 +197,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Type d&apos;entité :</p>
                         <p>
-                            {entite[0].TE_libelle == null
+                            {entite[0].TE_libelle == (null || '')
                                 ? '/'
                                 : entite[0].TE_libelle}
                         </p>
@@ -203,7 +207,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Type de Don :</p>
                         <p>
-                            {entite[0].TD_libelle == null
+                            {entite[0].TD_libelle == (null || '')
                                 ? '/'
                                 : entite[0].TD_libelle}
                         </p>
@@ -230,7 +234,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires logistique :</p>
                         <p>
-                            {entite[0].commentaires_logistique == null
+                            {entite[0].commentaires_logistique == (null || '')
                                 ? '/'
                                 : entite[0].commentaires_logistique}
                         </p>
@@ -239,7 +243,7 @@ export default function EntitePage({
                     <div className={style.info}>
                         <p className={style.titre}>Présence en quai :</p>
                         <p>
-                            {entite[0].presence_quai == null
+                            {entite[0].presence_quai == (null || '')
                                 ? '/'
                                 : entite[0].presence_quai}
                         </p>
@@ -247,13 +251,17 @@ export default function EntitePage({
 
                     <div className={style.info}>
                         <p className={style.titre}>Cerfa :</p>
-                        <p>{entite[0].cerfa == null ? '/' : entite[0].cerfa}</p>
+                        <p>
+                            {entite[0].cerfa == (null || '')
+                                ? '/'
+                                : entite[0].cerfa}
+                        </p>
                     </div>
 
                     <div className={style.info}>
                         <p className={style.titre}>Fréquence du Cerfa :</p>
                         <p>
-                            {entite[0].FC_libelle == null
+                            {entite[0].FC_libelle == (null || '')
                                 ? '/'
                                 : entite[0].FC_libelle}
                         </p>

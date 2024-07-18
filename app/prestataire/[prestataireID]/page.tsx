@@ -101,7 +101,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom commercial :</p>
                         <p>
-                            {prestataire[0].nom_commercial === null || ''
+                            {prestataire[0].nom_commercial === (null || '')
                                 ? '/'
                                 : prestataire[0].nom_commercial}
                         </p>
@@ -110,7 +110,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Siren :</p>
                         <p>
-                            {prestataire[0].Siren === null || ''
+                            {prestataire[0].Siren === (null || '') || ''
                                 ? '/'
                                 : prestataire[0].Siren}
                         </p>
@@ -119,7 +119,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Siret :</p>
                         <p>
-                            {prestataire[0].Siret == null
+                            {prestataire[0].Siret == (null || '')
                                 ? '/'
                                 : prestataire[0].Siret}
                         </p>
@@ -128,7 +128,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Téléphone :</p>
                         <p>
-                            {prestataire[0].telephone == null
+                            {prestataire[0].telephone == (null || '')
                                 ? '/'
                                 : prestataire[0].telephone}
                         </p>
@@ -137,19 +137,18 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Mail :</p>
                         <p>
-                            {prestataire[0].mail == null
+                            {prestataire[0].mail == (null || '')
                                 ? '/'
                                 : prestataire[0].mail}
                         </p>
                     </div>
-
                 </div>
 
                 <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>Adresse :</p>
                         <p>
-                            {prestataire[0].adresse == null
+                            {prestataire[0].adresse == (null || '')
                                 ? '/'
                                 : prestataire[0].adresse}
                         </p>
@@ -159,9 +158,17 @@ export default function PrestatairePage({
                             Civilité du contact du prestataire :
                         </p>
                         <p>
-                            {prestataire[0].civilite_contact_prestataire == null
+                            {prestataire[0].civilite_contact_prestataire ==
+                            (null || '')
                                 ? '/'
-                                : (prestataire[0].civilite_contact_prestataire === 'M.' ? 'Monsieur' : (prestataire[0].civilite_contact_prestataire === 'Mme' ? 'Madame' : 'Autre'))}
+                                : prestataire[0]
+                                        .civilite_contact_prestataire === 'M.'
+                                  ? 'Monsieur'
+                                  : prestataire[0]
+                                          .civilite_contact_prestataire ===
+                                      'Mme'
+                                    ? 'Madame'
+                                    : 'Autre'}
                         </p>
                     </div>
 
@@ -170,7 +177,8 @@ export default function PrestatairePage({
                             Nom du contact du prestataire :
                         </p>
                         <p>
-                            {prestataire[0].nom_contact_prestataire == null
+                            {prestataire[0].nom_contact_prestataire ==
+                            (null || '')
                                 ? '/'
                                 : prestataire[0].nom_contact_prestataire}
                         </p>
@@ -181,7 +189,8 @@ export default function PrestatairePage({
                             Prénom du contact du prestataire :
                         </p>
                         <p>
-                            {prestataire[0].prenom_contact_prestataire == null
+                            {prestataire[0].prenom_contact_prestataire ==
+                            (null || '')
                                 ? '/'
                                 : prestataire[0].prenom_contact_prestataire}
                         </p>
@@ -193,7 +202,7 @@ export default function PrestatairePage({
                         </p>
                         <p>
                             {prestataire[0].telephone_contact_prestataire ==
-                            null
+                            (null || '')
                                 ? '/'
                                 : prestataire[0].telephone_contact_prestataire}
                         </p>
@@ -204,7 +213,8 @@ export default function PrestatairePage({
                             Mail du contact du prestataire :
                         </p>
                         <p>
-                            {prestataire[0].mail_contact_prestataire == null
+                            {prestataire[0].mail_contact_prestataire ==
+                            (null || '')
                                 ? '/'
                                 : prestataire[0].mail_contact_prestataire}
                         </p>
@@ -213,7 +223,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
-                            {prestataire[0].commentaires == null
+                            {prestataire[0].commentaires == (null || '')
                                 ? '/'
                                 : prestataire[0].commentaires}
                         </p>

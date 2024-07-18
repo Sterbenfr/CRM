@@ -124,8 +124,7 @@ export default function ReceptionPage({
                                 : reception[0].nombre_palettes_recues}
                         </p>
                     </div>
-                </div>
-                <div className={style.col_2}>
+
                     <div className={style.info}>
                         <p className={style.titre}>
                             Nombre palettes consignées recues :
@@ -138,7 +137,8 @@ export default function ReceptionPage({
                                       .nombre_palettes_consignees_recues}
                         </p>
                     </div>
-
+                </div>
+                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>
                             Nombre de palettes consignées rendues :
@@ -183,10 +183,14 @@ export default function ReceptionPage({
                     <div className={style.info}>
                         <p className={style.titre}>commentaires :</p>
                         <p>
-                            {reception[0].commentaires == null
+                            {reception[0].commentaires == (null || '')
                                 ? '/'
                                 : reception[0].commentaires}
                         </p>
+                    </div>
+                    <div className={style.info}>
+                        <p className={style.titre}>Pièces associées :</p>
+                        <p>{reception[0].pieces_associees == null}</p>
                     </div>
                 </div>
             </div>
