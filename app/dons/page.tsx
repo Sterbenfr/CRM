@@ -184,15 +184,18 @@ function DonsPage() {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         let returnedDate = new Date(event.target.value)
-        const newFinMiseDispo = new Date(event.target.value)
-            .toISOString()
-            .split('T')[0]
-        const debut = debutMiseDispo.toISOString().split('T')[0]
-        if (newFinMiseDispo < debut) {
-            returnedDate = debutMiseDispo
-            setFinMiseDispo(returnedDate)
-        } else {
-            setFinMiseDispo(returnedDate)
+        if (event.target.value) {
+            const newFinMiseDispo = new Date(event.target.value)
+                .toISOString()
+                .split('T')[0]
+
+            const debut = debutMiseDispo.toISOString().split('T')[0]
+            if (newFinMiseDispo < debut) {
+                returnedDate = debutMiseDispo
+                setFinMiseDispo(returnedDate)
+            } else {
+                setFinMiseDispo(returnedDate)
+            }
         }
     }
 
@@ -316,7 +319,9 @@ function DonsPage() {
                 {
                     id: 'date_proposition_don',
                     type: 'date',
-                    value: datePropositionDon.toISOString().split('T')[0],
+                    value: !isNaN(datePropositionDon.getTime())
+                        ? datePropositionDon.toISOString().split('T')[0]
+                        : null,
                     required: true,
                     onInputChange: handleDatePropositionDon,
                 },
@@ -340,13 +345,17 @@ function DonsPage() {
                 {
                     id: 'date_debut_mise_disposition',
                     type: 'date',
-                    value: debutMiseDispo.toISOString().split('T')[0],
+                    value: !isNaN(debutMiseDispo.getTime())
+                        ? debutMiseDispo.toISOString().split('T')[0]
+                        : null,
                     onInputChange: handleDebutMiseDispoChange,
                 },
                 {
                     id: 'date_fin_mise_disposition',
                     type: 'date',
-                    value: finMiseDispo.toISOString().split('T')[0],
+                    value: !isNaN(finMiseDispo.getTime())
+                        ? finMiseDispo.toISOString().split('T')[0]
+                        : null,
                     onInputChange: handleFinMiseDispoChange,
                 },
                 {
@@ -390,6 +399,7 @@ function DonsPage() {
                     url: '../api/select/sites',
                     createURL: '/sites',
                     value: siteBeneficiaireDon,
+                    required: true,
                     placeholder: 'Exemple: Entrepôt Principal',
                     onInputChange: handleSiteBeneficiaireDonChange,
                 },

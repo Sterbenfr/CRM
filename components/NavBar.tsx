@@ -17,8 +17,6 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
     const firstSegment = path.split('/')[1] || ''
     const firstPathnameSegment = `/${firstSegment}`
 
-    console.log(path)
-
     return (
         <div>
             <nav className={styles.navbar}>

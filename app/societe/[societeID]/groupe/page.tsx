@@ -131,8 +131,10 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 id: 'date_arret_activite_du_Groupe',
                 type: 'date',
                 value:
-                    dateArretActiviteDuGroupe?.toISOString().split('T')[0] ||
-                    '',
+                    dateArretActiviteDuGroupe &&
+                    !isNaN(dateArretActiviteDuGroupe.getTime())
+                        ? dateArretActiviteDuGroupe.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateArretActiviteDuGroupeChange,
             },
         ]

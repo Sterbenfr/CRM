@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState, useCallback } from 'react'
 import List from '@/components/list'
 import { Pagination } from '@/components/pagination'
@@ -8,28 +7,33 @@ import withAuthorization from '@/components/withAuthorization'
 import style from '../../../../styles/components.module.css'
 import Image from 'next/image'
 
-export interface ContactSociete {
-    code_Societe: number
-    code_type_de_Site: string
-    code_site_suivi: number
-    code_utilisateur_suivant: number
-    raison_sociale?: string
-    libelle?: string
-    designation_longue?: string
+export interface Site_Rattachement {
+    code_utilisateur: number
+    code_site: number
+    code_type_utilisateur: string
+    date_fin_activite: Date
     name?: string
+    designation_longue?: string
+    libelle?: string
 }
 
-function ContactSocietePage({ params }: { params: { societeID: string } }) {
-    const [contacts, setContacts] = useState<ContactSociete[]>([])
+function SitesRattachementPage({ params }: { params: { siteID: string } }) {
+    const [Sites_Rattachement, setSites_Rattachement] = useState<
+        Site_Rattachement[]
+    >([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
 
-    const [codeTypeDeSite, setCodeTypeDeSite] = useState('')
-    const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
-    const [codeUtilisateurSuivant, setCodeUtilisateurSuivant] = useState('')
+    const [codeUtilisateur, setCodeUtilisateur] = useState('')
+    const [codeTypeUtilisateur, setCodeTypeUtilisateur] = useState('')
+    const [dateFinActivite, setDateFinActivite] = useState<Date>()
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+
+    const handleClose = () => {
+        setIsPopUpOpen(false)
+    }
 
     const [fields, setFields] = useState<
         {
@@ -56,26 +60,22 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         | 'checkbox'
         | 'enum'
 
-    const handleClose = () => {
-        setIsPopUpOpen(false)
+    const handleCodeUtilisateurChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCodeUtilisateur(event.target.value)
     }
 
-    const handleCodeTypeDeSiteChange = (
+    const handleCodeTypeUtilisateurChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        setCodeTypeDeSite(event.target.value)
+        setCodeTypeUtilisateur(event.target.value)
     }
 
-    const handleCodeSiteSuiviChange = (
+    const handleDateFinActiviteChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setCodeSiteSuivi(event.target.value)
-    }
-
-    const handleCodeUtilisateurSuivantChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setCodeUtilisateurSuivant(event.target.value)
+        setDateFinActivite(new Date(event.target.value))
     }
 
     const generateFields = useCallback(() => {
@@ -93,65 +93,62 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
             {
-                id: 'code_Societe',
+                id: 'code_utilisateur',
+                type: 'search',
+                value: codeUtilisateur,
+                placeholder: 'Exemple: Marie Martin',
+                required: true,
+                url: '../../../../api/select/sites/utilisateurs',
+                onInputChange: handleCodeUtilisateurChange,
+            },
+            {
+                id: 'code_site',
                 type: 'input',
-                value: params.societeID,
+                value: params.siteID,
                 required: true,
                 disabled: true,
             },
             {
-                id: 'code_type_de_Site',
+                id: 'code_type_utilisateur',
                 type: 'select',
-                value: codeTypeDeSite,
+                value: codeTypeUtilisateur,
                 required: true,
-                url: '../../../../../api/sites/type-site-types',
-                onChange: handleCodeTypeDeSiteChange,
+                url: `../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                onChange: handleCodeTypeUtilisateurChange,
             },
             {
-                id: 'code_site_suivi',
-                type: 'search',
-                value: codeSiteSuivi,
-                required: true,
-                url: '../../../../../api/select/sites',
-                placeholder: 'Exemple: Entrepôt Principal',
-                onInputChange: handleCodeSiteSuiviChange,
-            },
-            {
-                id: 'code_utilisateur_suivant',
-                type: 'search',
-                value: codeUtilisateurSuivant,
-                required: true,
-                url: '../../../../../api/select/sites/utilisateurs',
-                placeholder: 'Exemple: Jean Dupont',
-                onInputChange: handleCodeUtilisateurSuivantChange,
+                id: 'date_fin_activite',
+                type: 'date',
+                value:
+                    dateFinActivite && !isNaN(dateFinActivite.getTime())
+                        ? dateFinActivite.toISOString().split('T')[0]
+                        : null,
+                onInputChange: handleDateFinActiviteChange,
             },
         ]
-
         return fields
-    }, [
-        codeTypeDeSite,
-        codeSiteSuivi,
-        codeUtilisateurSuivant,
-        params.societeID,
-    ])
+    }, [codeUtilisateur, codeTypeUtilisateur, dateFinActivite, params.siteID])
 
     useEffect(() => {
-        const fetchContacts = async () => {
+        const fetchSites_Rattachement = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/societe-site-link?page=${page}&limit=${itemsPerPage}`,
+                `http://localhost:3000/api/sites/${params.siteID}/user-site-link?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
             }
-            const { data, total }: { data: ContactSociete[]; total: number } =
-                await res.json()
-            setContacts(data)
+
+            const {
+                data,
+                total,
+            }: { data: Site_Rattachement[]; total: number } = await res.json()
+            setSites_Rattachement(data)
             setTotalItems(total)
             setFields(generateFields())
         }
 
-        fetchContacts()
+        fetchSites_Rattachement()
     }, [page, itemsPerPage, params, generateFields])
 
     const handlePageChange = (newPage: number) => {
@@ -167,7 +164,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
         <>
             <div className={style.page}>
                 <div className={style.croixID}>
-                    <h1 className={style.lg1}>Lien Site-Entreprise</h1>
+                    <h1 className={style.lg1}>Lien Site-Utilisateur</h1>
                     <a href='javascript:history.go(-1)' className={style.btnC}>
                         <Image
                             className={style.CR}
@@ -178,18 +175,17 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                         />
                     </a>
                 </div>
-
                 <List
-                    items={contacts.map(contact => ({
-                        value1: contact.code_Societe.toString(),
-                        value2: contact.raison_sociale
-                            ? contact.raison_sociale
+                    items={Sites_Rattachement.map(site => ({
+                        value1: site.code_site.toString(),
+                        value2: site.designation_longue
+                            ? site.designation_longue
                             : '/',
-                        value3: contact.libelle ? contact.libelle : '/',
-                        value4: contact.designation_longue
-                            ? contact.designation_longue
+                        value3: site.name ? site.name : '/',
+                        value4: site.libelle ? site.libelle : '/',
+                        value5: site.date_fin_activite
+                            ? site.date_fin_activite.toString()
                             : '/',
-                        value5: contact.name ? contact.name : '/',
                     }))}
                     functions={{
                         fonc1: () => {
@@ -197,24 +193,24 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/societe-site-link`,
+                        url: `http://localhost:3000/api/sites/${params.siteID}/user-site-link`,
                     }}
                     attribut={{
-                        att1: 'Entreprise',
-                        att2: 'Type de site',
-                        att3: "Site suivant l'entreprise",
-                        att4: "Utilisateur suivant l'entreprise",
+                        att1: 'Site',
+                        att2: 'Utilisateurs du site',
+                        att3: 'Type de l’utilisateur',
+                        att4: "Fin d’activité de l'utilisateur",
                     }}
-                    searchItems={contacts.map(contact => ({
-                        value1: contact.code_Societe.toString(),
-                        value2: contact.raison_sociale
-                            ? contact.raison_sociale
+                    searchItems={Sites_Rattachement.map(site => ({
+                        value1: site.code_site.toString(),
+                        value2: site.designation_longue
+                            ? site.designation_longue
                             : '',
-                        value3: contact.libelle ? contact.libelle : '',
-                        value4: contact.designation_longue
-                            ? contact.designation_longue
+                        value3: site.name ? site.name : '',
+                        value4: site.libelle ? site.libelle : '',
+                        value5: site.date_fin_activite
+                            ? site.date_fin_activite.toString()
                             : '',
-                        value5: contact.name ? contact.name : '',
                     }))}
                 />
                 <Pagination
@@ -224,12 +220,11 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />
-                {''}
                 {isPopUpOpen && (
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/societe-site-link`}
+                            url={`http://localhost:3000/api/sites/${params.siteID}/user-site-link`}
                             fields={fields}
                         />
                     </div>
@@ -239,4 +234,4 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     )
 }
 
-export default withAuthorization(ContactSocietePage, ['AD', 'PR'])
+export default withAuthorization(SitesRattachementPage, ['AD', 'PR'])

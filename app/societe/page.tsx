@@ -200,7 +200,10 @@ function SocietesPage() {
                 id: 'date_arret_activite_Societe',
                 type: 'date',
                 value:
-                    dateArretActiviteSociete?.toISOString().split('T')[0] || '',
+                    dateArretActiviteSociete &&
+                    !isNaN(dateArretActiviteSociete?.getTime())
+                        ? dateArretActiviteSociete?.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateArretActiviteSocieteChange,
             },
         ]

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import pool from '../../../../../utils/db'
+import connection from '../../../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../../../utils/streamUtils'
 import { ContactSociete } from '@/app/societe/[societeID]/societe-site-link/page'
@@ -17,17 +17,15 @@ export async function GET(
         const pageNumber = Number(page)
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
-
-        const [rows] = await pool.query(
-            'SELECT * FROM `SuiviSociete` WHERE code_Societe = ? LIMIT ?, ?',
+        const [rows] = await connection.query(
+            'SELECT SuiviSociete.*, entreprise.raison_sociale, SiteTypes.libelle, sites.designation_longue, CONCAT(utilisateurs.nom," ",utilisateurs.prenom) as name FROM `SuiviSociete` LEFT JOIN entreprise ON entreprise.code_societe = SuiviSociete.code_societe LEFT JOIN SiteTypes ON SiteTypes.code_type_Site = SuiviSociete.code_type_de_Site LEFT JOIN Sites ON Sites.code_site = SuiviSociete.code_site_suivi LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = SuiviSociete.code_utilisateur_suivant WHERE SuiviSociete.code_Societe = ? LIMIT ?, ?',
             [params.societeID, offset, limitNumber],
         )
 
-        const [totalResult] = await pool.query(
+        const [totalResult] = await connection.query(
             'SELECT COUNT(*) as count FROM `SuiviSociete` WHERE code_Societe = ?',
             [params.societeID],
         )
-
         const total = totalResult as CountResult
 
         return NextResponse.json({ data: rows, total: total[0].count })
@@ -60,9 +58,8 @@ export async function POST(req: NextApiRequest) {
     }
 
     try {
-        console.log(contact)
         const query = 'INSERT INTO `SuiviSociete` SET ?'
-        const [rows] = await pool.query(query, contact)
+        const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(
