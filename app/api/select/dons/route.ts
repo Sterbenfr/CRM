@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 
 enum StatutAcceptationDon {
-    Valide = 'valide',
-    Refuse = 'refusé',
-    Attente = 'en attente',
+    Valide = 'Valide',
+    Refuse = 'Refusé',
+    Attente = 'En attente',
 }
 
 export async function GET() {

@@ -284,7 +284,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 <List
                     items={Utilisateurs.map(user => ({
                         value1: user.code_utilisateur.toString(),
-                        value2: user.civilite,
+                        value2: user.civilite === 'Mr.' ? 'Monsieur' : (user.civilite === 'Mme.' ? 'Madame' : 'Autre'),
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
@@ -307,7 +307,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     }}
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),
-                        value2: user.civilite,
+                        value2: user.civilite === 'Mr.' ? 'Monsieur' : (user.civilite === 'Mme.' ? 'Madame' : 'Autre'),
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,

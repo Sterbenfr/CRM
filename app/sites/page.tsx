@@ -190,7 +190,7 @@ function SitesPage() {
             {
                 id: 'date_ouverture',
                 type: 'date',
-                value: dateOuverture.toISOString().split('T')[0],
+                value: dateOuverture?.toISOString().split('T')[0] || '',
                 onInputChange: handleDateOuvertureChange,
             },
             {
@@ -215,6 +215,10 @@ function SitesPage() {
 
         if (dateFermeture === undefined) {
             fields[7].value = null
+        }
+
+        if (dateOuverture === undefined) {
+            fields[6].value = null
         }
 
         if (fields[4].value !== '') {
@@ -299,7 +303,7 @@ function SitesPage() {
                         value3: Sites.adresse.toString(),
                         value4:
                             Sites.date_ouverture.toString().split('T')[0] ==
-                            null
+                            null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:
@@ -332,7 +336,7 @@ function SitesPage() {
                         value3: Sites.adresse.toString(),
                         value4:
                             Sites.date_ouverture.toString().split('T')[0] ==
-                            null
+                            null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:
