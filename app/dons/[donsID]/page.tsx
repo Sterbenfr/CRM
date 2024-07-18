@@ -4,6 +4,7 @@ import style from '../../../styles/components.module.css'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 import SearchComponent from '@/components/searchComponent'
+import SelectComponent from '@/components/select-component'
 import Image from 'next/image'
 
 interface ExtendedSession extends Session {
@@ -86,37 +87,15 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         }))
     }
 
-    const handleCheckboxChange = () => {
-        if (!don || don.length === 0 || !session) return
-
-        // Assuming modifiedDon is a state variable and setModifiedDon is its setter
-        const currentStatus =
-            modifiedDon.statut_acceptation_don || don[0].statut_acceptation_don
-
-        // Toggle between 'V' and 'F'
-        const newStatus = currentStatus === 'V' ? 'R' : 'V'
-
-        // Update modifiedDon with the new status
-        setModifiedDon({
-            ...modifiedDon,
-            statut_acceptation_don: newStatus,
-            date_acceptation_refus_don: new Date(),
-            Utilisateur_accepte_refuse_don: session.user.id,
-        })
-    }
-
     const handleRemerciementChange = () => {
         if (!don || don.length === 0 || !session) return
 
-        // Assuming modifiedDon is a state variable and setModifiedDon is its setter
         const currentStatus =
             modifiedDon.indicateur_remerciement ||
             don[0].indicateur_remerciement
 
-        // Toggle between 'V' and 'F'
         const newStatus = currentStatus === 'O' ? 'N' : 'O'
 
-        // Update modifiedDon with the new status
         setModifiedDon({
             ...modifiedDon,
             indicateur_remerciement: newStatus,
@@ -125,10 +104,28 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
     }
 
     const handleSiteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
         setModifiedDon({
             ...modifiedDon,
             code_site_beneficiaire_don: event.target.value,
+        })
+    }
+
+    const handleStatutAcceptationDonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if (!don || don.length === 0 || !session) return
+        let value = event.target.value
+
+        if (don[0].statut_acceptation_don === 'R' && value === 'A') {
+            value = 'R'
+        } else if (don[0].statut_acceptation_don === 'V' && value === 'A') {
+            value = 'V'
+        } else {
+            value = event.target.value
+        }
+        setModifiedDon({
+            ...modifiedDon,
+            statut_acceptation_don: value,
+            date_acceptation_refus_don: new Date(),
+            Utilisateur_accepte_refuse_don: session.user.id,
         })
     }
 
@@ -403,18 +400,12 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Statut d&apos;acceptation du don :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'RR') ? (
-                                <input
-                                    type='checkbox'
-                                    name='statut_acceptation_don'
-                                    checked={
-                                        modifiedDon.statut_acceptation_don
-                                            ? modifiedDon.statut_acceptation_don ===
-                                              'V'
-                                            : don[0].statut_acceptation_don ===
-                                              'V'
-                                    }
-                                    onChange={handleCheckboxChange}
+                            {modify &&
+                            (session?.user.role === 'AD' ||
+                                session?.user.role === 'RR') ? (
+                                <SelectComponent
+                                    url='../../api/select/dons'
+                                    onChange={e => handleStatutAcceptationDonChange(e)}
                                 />
                             ) : (
                                 <p>
@@ -502,6 +493,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     url='../../api/select/sites'
                                     onChange={e => handleSiteChange(e)}
                                     onInputChange={e => handleSiteChange(e)}
+                                    placeholder={don[0].designation_longue == null || don[0].designation_longue === '' ? 'Exemple: Entrepot Principal' : 'Actuellement: ' + don[0].designation_longue}
                                 />
                             ) : (
                                 <p>
@@ -588,11 +580,24 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 <p className={style.titre}>
                                     Nom du destinataire du cerfa :
                                 </p>
-                                <p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='nom_destinataire_cerfa'
+                                        value={
+                                            modifiedDon.nom_destinataire_cerfa
+                                        }
+                                        placeholder={don[0].nom_destinataire_cerfa == null || don[0].nom_destinataire_cerfa === '' ? 'Exemple: Durand' : 'Actuellement: ' + don[0].nom_destinataire_cerfa}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
                                     {don[0].nom_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].nom_destinataire_cerfa}
-                                </p>
+                                    </p>
+                                )}
                             </p>
                         </div>
 
@@ -601,11 +606,24 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 <p className={style.titre}>
                                     Adresse du destinataire du cerfa :
                                 </p>
-                                <p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='adresse_destinataire_cerfa'
+                                        value={
+                                            modifiedDon.adresse_destinataire_cerfa
+                                        }
+                                        placeholder={don[0].adresse_destinataire_cerfa == null || don[0].adresse_destinataire_cerfa === '' ? 'Exemple: 12 rue de la paix, 75000 Paris' : 'Actuellement: ' + don[0].adresse_destinataire_cerfa}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
                                     {don[0].adresse_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].adresse_destinataire_cerfa}
                                 </p>
+                                )}
                             </p>
                         </div>
 
@@ -614,13 +632,24 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 <p className={style.titre}>
                                     Adresse mail du destinataire du cerfa :
                                 </p>
-                                <p>
-                                    {don[0].adresse_mail_destinataire_cerfa ==
-                                    null
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='adresse_mail_destinataire_cerfa'
+                                        value={
+                                            modifiedDon.adresse_mail_destinataire_cerfa
+                                        }
+                                        placeholder={don[0].adresse_mail_destinataire_cerfa == null || don[0].adresse_mail_destinataire_cerfa === '' ? 'Exemple: Paul.durand@gmail.com' : 'Actuellement: ' + don[0].adresse_mail_destinataire_cerfa}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                    {don[0].adresse_mail_destinataire_cerfa == null || ''
                                         ? '/'
-                                        : don[0]
-                                              .adresse_mail_destinataire_cerfa}
-                                </p>
+                                        : don[0].adresse_mail_destinataire_cerfa}
+                                    </p>
+                                )}
                             </p>
                         </div>
 
@@ -629,22 +658,48 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 <p className={style.titre}>
                                     Téléphone du destinataire du cerfa :
                                 </p>
-                                <p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='number'
+                                        name='telephone_destinataire_cerfa'
+                                        value={
+                                            modifiedDon.telephone_destinataire_cerfa
+                                        }
+                                        placeholder={don[0].telephone_destinataire_cerfa == null || don[0].telephone_destinataire_cerfa === '' ? 'Exemple: 0650634818' : 'Actuellement: ' + don[0].telephone_destinataire_cerfa}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
                                     {don[0].telephone_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].telephone_destinataire_cerfa}
-                                </p>
+                                    </p>
+                                )}
                             </p>
                         </div>
 
                         <div>
                             <p className={style.info}>
                                 <p className={style.titre}>Valeur du cerfa :</p>
-                                <p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='number'
+                                        name='valeur_cerfa'
+                                        value={
+                                            modifiedDon.valeur_cerfa
+                                        }
+                                        placeholder={don[0].valeur_cerfa == null || don[0].valeur_cerfa === 0 ? 'Exemple: 5500' : 'Actuellement: ' + don[0].valeur_cerfa}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
                                     {don[0].valeur_cerfa == null
                                         ? '/'
                                         : don[0].valeur_cerfa}
-                                </p>
+                                    </p>
+                                )}
                             </p>
                         </div>
 
@@ -767,26 +822,28 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                         </div>
                         <div className={style.info}>
-                            <a
-                                className={style.linkID}
-                                href={`/dons/${params.donsID}/modalites-livraison`}
-                            >
-                                <p className={style.titre}>
-                                    {' '}
-                                    Modalités de la livraison{' '}
-                                </p>
-                            </a>
+                        {!modify && (
+                        <a
+                            className={style.linkID}
+                            href={`/dons/${params.donsID}/modalites-livraison`}
+                        >
+                            <p className={style.titre}>
+                                Modalités de la livraison
+                            </p>
+                        </a>
+                        )}
                         </div>
                         <div className={style.info}>
-                            <a
-                                className={style.linkID}
-                                href={`/dons/${params.donsID}/reception`}
-                            >
-                                <p className={style.titre}>
-                                    {' '}
-                                    Réception de la livraison{' '}
-                                </p>
-                            </a>
+                        {!modify && (
+                        <a
+                            className={style.linkID}
+                            href={`/dons/${params.donsID}/reception`}
+                        >
+                            <p className={style.titre}>
+                                Réception de la livraison
+                            </p>
+                        </a>
+                        )}
                         </div>
                     </div>
                 </div>

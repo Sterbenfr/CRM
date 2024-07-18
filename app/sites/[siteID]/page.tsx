@@ -8,7 +8,7 @@ interface siteID {
     designation_longue: string
     designation_courte: string
     adresse: string
-    libelle: string
+    code_type_site: string
     date_ouverture: Date
     date_fermeture: Date
     numero_telephone: string
@@ -95,7 +95,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
 
                     <div className={style.info}>
                         <p className={style.titre}>Libelle :</p>
-                        <p>{site[0].libelle == null ? '/' : site[0].libelle}</p>
+                        <p>{site[0].code_type_site == null || '' ? '/' : site[0].code_type_site == null}</p>
                     </div>
 
                     <div className={style.info}>

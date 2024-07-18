@@ -83,7 +83,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Type du prestataire :</p>
                         <p>
-                            {prestataire[0].TP_libelle == null
+                            {prestataire[0].TP_libelle === null || ''
                                 ? '/'
                                 : prestataire[0].TP_libelle}
                         </p>
@@ -92,7 +92,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Raison sociale :</p>
                         <p>
-                            {prestataire[0].raison_sociale == null
+                            {prestataire[0].raison_sociale === null || ''
                                 ? '/'
                                 : prestataire[0].raison_sociale}
                         </p>
@@ -101,7 +101,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom commercial :</p>
                         <p>
-                            {prestataire[0].nom_commercial == null
+                            {prestataire[0].nom_commercial === null || ''
                                 ? '/'
                                 : prestataire[0].nom_commercial}
                         </p>
@@ -110,7 +110,7 @@ export default function PrestatairePage({
                     <div className={style.info}>
                         <p className={style.titre}>Siren :</p>
                         <p>
-                            {prestataire[0].Siren == null
+                            {prestataire[0].Siren === null || ''
                                 ? '/'
                                 : prestataire[0].Siren}
                         </p>
@@ -143,6 +143,9 @@ export default function PrestatairePage({
                         </p>
                     </div>
 
+                </div>
+
+                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>Adresse :</p>
                         <p>
@@ -151,9 +154,6 @@ export default function PrestatairePage({
                                 : prestataire[0].adresse}
                         </p>
                     </div>
-                </div>
-
-                <div className={style.col_2}>
                     <div className={style.info}>
                         <p className={style.titre}>
                             Civilité du contact du prestataire :
@@ -161,7 +161,7 @@ export default function PrestatairePage({
                         <p>
                             {prestataire[0].civilite_contact_prestataire == null
                                 ? '/'
-                                : prestataire[0].civilite_contact_prestataire}
+                                : (prestataire[0].civilite_contact_prestataire === 'M.' ? 'Monsieur' : (prestataire[0].civilite_contact_prestataire === 'Mme' ? 'Madame' : 'Autre'))}
                         </p>
                     </div>
 
