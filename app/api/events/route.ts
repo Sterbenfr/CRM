@@ -4,31 +4,31 @@ import connection from '../../../utils/db'
 export async function GET() {
     try {
         // Récupérer les données de don, réception, modalités de livraison et entreprise
-        const [donsD] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [donsD]: any[] = await connection.query(
             'SELECT nom_commercial, code_Don AS id, date_debut_mise_disposition AS date, CONCAT("Début de mise à disposition du don : ", nom_commercial) AS title FROM `dons` LEFT JOIN Entite ON Entite.code_entite = Dons.code_Entite_donatrice',
         )
-
-        const [donsF] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [donsF]: any[] = await connection.query(
             'SELECT nom_commercial, code_Don AS id, date_fin_mise_disposition AS date, CONCAT("Fin de mise à disposition du don : ", nom_commercial) AS title FROM `dons` LEFT JOIN Entite ON Entite.code_entite = Dons.code_Entite_donatrice',
         )
-
-        const [receptions] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [receptions]: any[] = await connection.query(
             'SELECT r.code_Don, r.numero_reception AS id, r.date_reception AS date, CONCAT("Reception du don : ", nom_commercial) AS title, e.nom_commercial AS nom_commercial FROM `reception` r LEFT JOIN `Dons` d ON r.code_Don = d.code_Don LEFT JOIN `Entite` e ON d.code_Entite_donatrice = e.code_entite',
         )
-
-        const [modaliteslivraison] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [modaliteslivraison]: any[] = await connection.query(
             'SELECT ml.code_Don, ml.numero_livraison AS id, ml.date_prevue_livraison AS date, CONCAT("Livraison du don : ", nom_commercial) AS title, e.nom_commercial AS nom_commercial FROM `modaliteslivraison` ml LEFT JOIN `Dons` d ON ml.code_Don = d.code_Don LEFT JOIN `Entite` e ON d.code_Entite_donatrice = e.code_entite',
         )
-
-        const [interactions] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [interactions]: any[] = await connection.query(
             'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_interaction AS date, CONCAT("Interaction du don : ", e.nom_commercial) AS title, e.code_societe_appartenance, e.nom_commercial FROM `interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
 
-        const [interactionsrelance] = await connection.query(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const [interactionsrelance]: any[] = await connection.query(
             'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_relance AS date, CONCAT("Relance d\'interaction du don : ", i.code_interaction) AS title, e.code_societe_appartenance, e.nom_commercial FROM `interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
-
-        console.log(donsD)
 
         // Ajouter un préfixe aux identifiants pour éviter les conflits
         const formattedDonsD = donsD.map((donsD: { id: number }) => ({

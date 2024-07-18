@@ -555,6 +555,7 @@ function DonsPage() {
             }
             setFileIndex(8 + incrementFileIndex)
             setFileIndex2(20 + incrementFileIndex2)
+            console.log(fields[FindIndex('code_type_don') - 1])
             return fields
         },
         [

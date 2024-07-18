@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { Reception } from '@/app/dons/[donsID]/reception/page'
 
@@ -42,7 +42,7 @@ export async function GET(
     }
 }
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let reception: Reception
     try {
         reception = JSON.parse(await streamToString(req.body))

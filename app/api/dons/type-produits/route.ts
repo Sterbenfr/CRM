@@ -1,7 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import type { Produit } from '@/app/dons/type-produits/page'
 import connection from '../../../../utils/db'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { streamToString } from '../../../../utils/streamUtils'
 
 export async function GET() {
@@ -18,16 +17,19 @@ export async function GET() {
     }
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
     let produit: Produit
     try {
         produit = JSON.parse(await streamToString(req.body))
     } catch (error) {
-        return res.status(400).json({ error: 'Invalid JSON' })
+        return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
     if (!produit) {
-        return res.status(400).json({ error: 'Missing product data' })
+        return NextResponse.json(
+            { error: 'Missing product data' },
+            { status: 400 },
+        )
     }
 
     try {

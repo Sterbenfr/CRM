@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../utils/streamUtils'
 import type { Prestataire } from '@/app/prestataire/page'
 
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
         )
     }
 }
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let prestataires: Prestataire
     try {
         prestataires = JSON.parse(await streamToString(req.body))

@@ -1,6 +1,5 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../utils/db'
-import { NextApiRequest } from 'next'
 
 export async function GET(
     request: Request,
@@ -90,7 +89,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-    req: NextApiRequest,
+    req: NextRequest,
     { params }: { params: { donsID: string } },
 ) {
     const donsID = params.donsID

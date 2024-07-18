@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { Entite } from '@/app/societe/[societeID]/entite/type-entites/page'
 
@@ -17,7 +17,7 @@ export async function GET() {
         )
     }
 }
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let EntitesPages: Entite
     try {
         EntitesPages = JSON.parse(await streamToString(req.body))

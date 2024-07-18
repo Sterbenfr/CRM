@@ -58,7 +58,7 @@ INSERT INTO Entite (
 ) VALUES 
 ('Entreprise Alpha', 'Alpha Corp', NULL, '12345678901234', '12345', 'RNA1234567','', 1, '123 Rue de Paris, 75001 Paris', '0123456789', 'contact@alpha.com', 'http://www.alpha.com', 'Commentaire 1', 'CEN', 'MAR', 'HYG', NULL, 'Logistique Alpha', 'O', NULL, 'O', 'LIV', NULL),
 ('Entreprise Beta', 'Beta Ltd', NULL, '23456789012345', '23456', 'RNA2345678','', 2, '456 Avenue de Lyon, 69000 Lyon', '0234567890', 'contact@beta.com', 'http://www.beta.com', 'Commentaire 2', 'ENT', 'FIN', NULL, NULL, 'Logistique Beta', 'N', NULL, 'N', 'MEN', NULL),
-('Entreprise Gamma', 'Gamma Inc', NULL, '34567890123456', '34567', 'RNA3456789','', 3, '789 Boulevard de Nice, 06000 Nice', '0345678901', 'contact@gamma.com', 'http://www.gamma.com', 'Commentaire 3', 'MAG', 'RAM', NULL, NULL, 'Logistique Gamma', 'O', NULL, 'O', 'ANN', NULL),
+('Entreprise Gamma', 'Gamma Inc', NULL, '34567890123456', '34567', 'RNA3456789','', 3, '789 Boulevard de Nice, 06000 Nice', '0345678901', 'contact@gamma.com', 'http://www.gamma.com', 'Commentaire 3', 'MAG', 'FIN', NULL, NULL, 'Logistique Gamma', 'O', NULL, 'O', 'ANN', NULL),
 ('Entreprise Delta', 'Delta SA', NULL, '45678901234567', '45678', 'RNA4567890','', 4, '101 Rue de Marseille, 13000 Marseille', '0456789012', 'contact@delta.com', 'http://www.delta.com', 'Commentaire 4', 'SIE', 'SIE', NULL, 'DEV', 'Logistique Delta', 'N', NULL, 'N', 'LIV', NULL),
 ('Entreprise Epsilon', 'Epsilon GmbH', NULL, '56789012345678', '56789', 'RNA5678901','', 5, '202 Place de Bordeaux, 33000 Bordeaux', '0567890123', 'contact@epsilon.com', 'http://www.epsilon.com', 'Commentaire 5', 'SIP', 'SIP', NULL, 'BRI', 'Logistique Epsilon', 'O', NULL, 'O', 'MEN', NULL);
 
