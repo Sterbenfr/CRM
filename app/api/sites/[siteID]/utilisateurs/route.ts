@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../../../utils/streamUtils'
 import type { Utilisateurs } from '@/app/sites/[siteID]/utilisateurs/page'
 import { ResultSetHeader } from 'mysql2'
@@ -44,7 +44,7 @@ export async function GET(
 }
 
 type extendedUtilisateurs = Utilisateurs & { code_site: string }
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let Utilisateur: extendedUtilisateurs
     try {
         Utilisateur = JSON.parse(await streamToString(req.body))

@@ -69,6 +69,6 @@ INSERT INTO Dons (
 ) VALUES 
 (1, 'Don de compétences techniques', '2023-01-01', 1, 'MAR', NULL, 'ALI', 'AMB', '2023-02-01', '2023-12-31', '/', NULL, 1, 'V', '2023-01-15', 1, 1, 'N', NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL),
 (2, 'Don de produits alimentaires', '2023-02-01', 2, 'FIN', NULL, 'VET', NULL, '2023-03-01', '2023-11-30', '/', NULL, 2, 'V', '2023-02-15', 2, 2, 'O', '2023-06-25', 'John Doe', '123 Main St', 'john.doe@example.com', '1234567890', 500.00, 'O', '2023-06-26', NULL),
-(3, 'Don de services juridiques', '2023-03-01', 3, 'RAM', NULL, NULL, NULL, '2023-04-01', '2023-10-31', '/', NULL, 3, 'A', '2023-03-15', 3, 3, 'N', NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL),
+(3, 'Don de services juridiques', '2023-03-01', 3, 'FIN', NULL, NULL, NULL, '2023-04-01', '2023-10-31', '/', NULL, 3, 'A', '2023-03-15', 3, 3, 'N', NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL),
 (4, 'Don de matériel informatique', '2023-04-01', 4, 'SIE', NULL, NULL, NULL, '2023-05-01', '2023-09-30', '/', NULL, 4, 'V', '2023-04-15', 4, 4, 'O', '2023-07-08', 'Jane Smith', '456 Elm St', 'jane.smith@example.com', '0987654321', 1000.00, 'O', '2023-07-09', NULL),
 (5, 'Don de vêtements', '2023-05-01', 5, 'SIP', 'MAK', NULL, NULL, '2023-06-01', '2023-08-31', '/', NULL, 5, 'R', '2023-05-15', 5, 5, 'N', NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL);

@@ -48,7 +48,7 @@ export default function SelectComponent({
                 const event = new Event('change', { bubbles: true })
                 Object.defineProperty(event, 'target', {
                     writable: false,
-                    value: { value: formattedOptions[0].value },
+                    value: '',
                 })
                 onChange(
                     event as unknown as React.ChangeEvent<HTMLSelectElement>,

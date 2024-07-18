@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../../utils/streamUtils'
 import type { Mode_Conservation_Produits } from '@/app/dons/type-mode-conservation-produits/page'
 
@@ -18,7 +18,7 @@ export async function GET() {
     }
 }
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let typesModeConservationProduits: Mode_Conservation_Produits
     try {
         typesModeConservationProduits = JSON.parse(

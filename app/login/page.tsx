@@ -52,7 +52,7 @@ const LoginPage = () => {
             body: JSON.stringify({
                 oldPassword,
                 newPassword,
-                userId: session?.user?.id,
+                userId: session?.user?.email,
             }),
         })
 

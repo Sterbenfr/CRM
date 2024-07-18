@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../../../../utils/db'
-import { NextApiRequest } from 'next'
+
 import { streamToString } from '../../../../../../../../utils/streamUtils'
 import type { Interaction } from '@/app/societe/[societeID]/entite/[entiteID]/interaction/type-interactions/page'
 
@@ -18,7 +18,7 @@ export async function GET() {
     }
 }
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let code_type_interaction: Interaction
     try {
         code_type_interaction = JSON.parse(await streamToString(req.body))

@@ -1,23 +1,24 @@
 // app/api/calendar/route.ts
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from 'next/server'
 import { GET as getEventsByDate } from '../events/route'
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse,
-) {
-    const { date } = req.query
+export async function GET(req: NextRequest) {
+    const { searchParams } = new URL(req.url)
+    const date = searchParams.get('date')
 
-    if (!date || Array.isArray(date)) {
-        return res.status(400).json({ message: 'Invalid date' })
+    if (!date) {
+        return NextResponse.json({ message: 'Invalid date' }, { status: 400 })
     }
 
     try {
         const events = await getEventsByDate()
 
-        return res.status(200).json(events)
+        return NextResponse.json(events, { status: 200 })
     } catch (error) {
         console.error('Error retrieving events:', error)
-        return res.status(500).json({ message: 'Error retrieving events' })
+        return NextResponse.json(
+            { message: 'Error retrieving events' },
+            { status: 500 },
+        )
     }
 }

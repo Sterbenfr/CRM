@@ -1,11 +1,10 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../utils/db'
 import bcrypt from 'bcryptjs'
-import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import { RowDataPacket } from 'mysql2'
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
     let data: { oldPassword: string; newPassword: string; userId: string }
     try {
         data = JSON.parse(await streamToString(req.body))
@@ -17,8 +16,7 @@ export async function POST(req: NextApiRequest) {
 
     try {
         // Decrypte l'ancien MDP
-        const querySelect =
-            'SELECT password FROM `utilisateurs` WHERE code_utilisateur = ?'
+        const querySelect = 'SELECT password FROM `utilisateurs` WHERE mail = ?'
         const [rows] = await connection.query<RowDataPacket[]>(querySelect, [
             userId,
         ])
