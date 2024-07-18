@@ -107,7 +107,7 @@ export default function ContactPage({
                     <div className={style.info}>
                         <p className={style.titre}>Fonction du contact :</p>
                         <p>
-                            {contact[0].fonction == null
+                            {contact[0].fonction == (null || '')
                                 ? '/'
                                 : contact[0].fonction}
                         </p>
@@ -117,7 +117,7 @@ export default function ContactPage({
                     <div className={style.info}>
                         <p className={style.titre}>Service du contact :</p>
                         <p>
-                            {contact[0].service == null
+                            {contact[0].service == (null || '')
                                 ? '/'
                                 : contact[0].service}
                         </p>
@@ -127,7 +127,7 @@ export default function ContactPage({
                             Téléphone fixe du contact :
                         </p>
                         <p>
-                            {contact[0].numero_fixe == null
+                            {contact[0].numero_fixe == (null || '')
                                 ? '/'
                                 : contact[0].numero_fixe}
                         </p>
@@ -145,7 +145,7 @@ export default function ContactPage({
                     <div className={style.info}>
                         <p className={style.titre}>Adresse mail du contact :</p>
                         <p>
-                            {contact[0].adresse_mail == null
+                            {contact[0].adresse_mail == (null || '')
                                 ? '/'
                                 : contact[0].adresse_mail}
                         </p>
@@ -153,7 +153,7 @@ export default function ContactPage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires</p>
                         <p>
-                            {contact[0].commentaires == null
+                            {contact[0].commentaires == (null || '')
                                 ? '/'
                                 : contact[0].commentaires}
                         </p>

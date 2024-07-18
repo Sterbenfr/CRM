@@ -78,7 +78,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Civilite :</p>
                         <p>
-                            {Utilisateur[0].civilite == null
+                            {Utilisateur[0].civilite == (null || '')
                                 ? '/'
                                 : Utilisateur[0].civilite}
                         </p>
@@ -87,7 +87,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom :</p>
                         <p>
-                            {Utilisateur[0].nom == null
+                            {Utilisateur[0].nom == (null || '')
                                 ? '/'
                                 : Utilisateur[0].nom}
                         </p>
@@ -96,7 +96,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Prénom :</p>
                         <p>
-                            {Utilisateur[0].prenom == null
+                            {Utilisateur[0].prenom == (null || '')
                                 ? '/'
                                 : Utilisateur[0].prenom}
                         </p>
@@ -107,7 +107,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Téléphone personel :</p>
                         <p>
-                            {Utilisateur[0].tel_perso == null
+                            {Utilisateur[0].tel_perso == (null || '')
                                 ? '/'
                                 : Utilisateur[0].tel_perso}
                         </p>
@@ -116,7 +116,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Mail :</p>
                         <p>
-                            {Utilisateur[0].mail == null
+                            {Utilisateur[0].mail == (null || '')
                                 ? '/'
                                 : Utilisateur[0].mail}
                         </p>
@@ -125,7 +125,7 @@ export default function UtilisateurPage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
-                            {Utilisateur[0].commentaires == null
+                            {Utilisateur[0].commentaires == (null || '')
                                 ? '/'
                                 : Utilisateur[0].commentaires}
                         </p>

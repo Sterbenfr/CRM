@@ -73,7 +73,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     <div className={style.info}>
                         <p className={style.titre}>Désignation longue :</p>
                         <p>
-                            {site[0].designation_longue == null
+                            {site[0].designation_longue == (null || '')
                                 ? '/'
                                 : site[0].designation_longue}
                         </p>
@@ -82,7 +82,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     <div className={style.info}>
                         <p className={style.titre}>Désignation courte :</p>
                         <p>
-                            {site[0].designation_courte == null
+                            {site[0].designation_courte == (null || '')
                                 ? '/'
                                 : site[0].designation_courte}
                         </p>
@@ -90,7 +90,11 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
 
                     <div className={style.info}>
                         <p className={style.titre}>Adresse :</p>
-                        <p>{site[0].adresse == null ? '/' : site[0].adresse}</p>
+                        <p>
+                            {site[0].adresse == (null || '')
+                                ? '/'
+                                : site[0].adresse}
+                        </p>
                     </div>
 
                     <div className={style.info}>
@@ -124,7 +128,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     <div className={style.info}>
                         <p className={style.titre}>Numero de téléphone :</p>
                         <p>
-                            {site[0].numero_telephone == null
+                            {site[0].numero_telephone == (null || '')
                                 ? '/'
                                 : site[0].numero_telephone}
                         </p>
@@ -133,7 +137,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     <div className={style.info}>
                         <p className={style.titre}>Adresse mail :</p>
                         <p>
-                            {site[0].adresse_mail == null
+                            {site[0].adresse_mail == (null || '')
                                 ? '/'
                                 : site[0].adresse_mail}
                         </p>
@@ -142,7 +146,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
-                            {site[0].commentaires == null
+                            {site[0].commentaires == (null || '')
                                 ? '/'
                                 : site[0].commentaires}
                         </p>

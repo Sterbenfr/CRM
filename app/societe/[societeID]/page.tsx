@@ -81,7 +81,7 @@ export default function SocietePage({
                     <div className={style.info}>
                         <p className={style.titre}>Raison sociale :</p>
                         <p>
-                            {Societe[0].raison_sociale == null
+                            {Societe[0].raison_sociale == (null || '')
                                 ? '/'
                                 : Societe[0].raison_sociale}
                         </p>
@@ -90,7 +90,7 @@ export default function SocietePage({
                     <div className={style.info}>
                         <p className={style.titre}>Nom commercial :</p>
                         <p>
-                            {Societe[0].nom_commercial == null
+                            {Societe[0].nom_commercial == (null || '')
                                 ? '/'
                                 : Societe[0].nom_commercial}
                         </p>
@@ -99,7 +99,7 @@ export default function SocietePage({
                     <div className={style.info}>
                         <p className={style.titre}>Commentaires :</p>
                         <p>
-                            {Societe[0].commentaires == null
+                            {Societe[0].commentaires == (null || '')
                                 ? '/'
                                 : Societe[0].commentaires}
                         </p>
@@ -108,14 +108,16 @@ export default function SocietePage({
                     <div className={style.info}>
                         <p className={style.titre}>Siren :</p>
                         <p>
-                            {Societe[0].Siren == null ? '/' : Societe[0].Siren}
+                            {Societe[0].Siren == (null || '')
+                                ? '/'
+                                : Societe[0].Siren}
                         </p>
                     </div>
 
                     <div className={style.info}>
                         <p className={style.titre}>Site web :</p>
                         <p>
-                            {Societe[0].site_Web == null
+                            {Societe[0].site_Web == (null || '')
                                 ? '/'
                                 : Societe[0].site_Web}
                         </p>
@@ -126,7 +128,8 @@ export default function SocietePage({
                             Code du type d&apos;activite de l&apos;entreprise :
                         </p>
                         <p>
-                            {Societe[0].code_type_activite_Societe == null
+                            {Societe[0].code_type_activite_Societe ==
+                            (null || '')
                                 ? '/'
                                 : Societe[0].code_type_activite_Societe}
                         </p>

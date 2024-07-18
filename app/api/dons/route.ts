@@ -3,7 +3,6 @@ import connection from '../../../utils/db'
 import { NextApiRequest } from 'next'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Don } from '@/app/dons/page'
-import connection from '../../../utils/db'
 
 type CountResult = { count: number }[]
 
