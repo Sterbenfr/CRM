@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import SelectComponent from './select-component'
 import SearchComponent from './searchComponent'
-import FileUpload from './uploadComponent'
 import Image from 'next/image'
 import style from '../styles/components.module.css'
 
-// Mapping field IDs to column names
 const fieldLabels: { [key: string]: string } = {
     //Dons
     code_Entite_donatrice: 'Entité donatrice',
@@ -161,6 +159,7 @@ const fieldLabels: { [key: string]: string } = {
     code: 'Code',
     libelle: 'Libellé',
 }
+
 const scrollToTop = () => {
     window.scrollTo({
         top: 0,
@@ -195,7 +194,7 @@ interface PopUpProps {
     onClose: () => void
     fields: Field[]
     url: string
-    onFieldChange?: (id: string, value: string | boolean) => void // New callback function
+    onFieldChange?: (id: string, value: string | boolean) => void
     fileUrl?: string
     fileUrl2?: string
     fileIndex?: number
@@ -213,8 +212,6 @@ const PopUp: React.FC<PopUpProps> = ({
     fileIndex2,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
-    const [file, setFile] = useState<File | null>(null)
-    const [file2, setFile2] = useState<File | null>(null)
 
     const [validationErrors, setValidationErrors] = useState<{
         [key: string]: string
@@ -225,13 +222,11 @@ const PopUp: React.FC<PopUpProps> = ({
     }, [fields])
 
     const handleInputChange = (id: string, value: string | boolean) => {
-        // Invoke the function if provided
         const updatedInputs = inputs.map(input =>
             input.id === id ? { ...input, value } : input,
         )
         setInputs(updatedInputs)
 
-        // Invoke the parent callback after updating the state
         if (onFieldChange) {
             onFieldChange(id, value)
         }
@@ -241,7 +236,7 @@ const PopUp: React.FC<PopUpProps> = ({
         const errors: { [key: string]: string } = {}
         inputs.forEach(input => {
             if (input.required && !input.value) {
-                errors[input.id] = `${fieldLabels[input.id]} is required`
+                errors[input.id] = `${fieldLabels[input.id]} obligatoire`
             }
         })
         setValidationErrors(errors)
@@ -270,7 +265,6 @@ const PopUp: React.FC<PopUpProps> = ({
             let file2Path
             if (fileUrl && fields[fileIndex ? fileIndex : 0].value) {
                 const formData = new FormData()
-                formData.append('image', file as Blob)
                 console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl, {
@@ -285,13 +279,11 @@ const PopUp: React.FC<PopUpProps> = ({
                     console.log('File uploaded to fileUrl:', filePath)
                 } catch (error) {
                     console.error('Error uploading file:', error)
-                    // Handle error (e.g., show an error message)
                 }
             }
 
             if (fileUrl2 && fields[fileIndex2 ? fileIndex2 : 0].value) {
                 const formData = new FormData()
-                formData.append('image', file2 as Blob)
                 console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl2, {
@@ -306,7 +298,6 @@ const PopUp: React.FC<PopUpProps> = ({
                     console.log('File uploaded to fileUrl2:', file2Path)
                 } catch (error) {
                     console.error('Error uploading file:', error)
-                    // Handle error (e.g., show an error message)
                 }
             }
 
@@ -350,8 +341,6 @@ const PopUp: React.FC<PopUpProps> = ({
 
     const getTableNameFromFieldId = (fieldId: string): string => {
         const tableNameMapping: { [key: string]: string } = {
-
-          
             numero_portable: 'un contact',
             Logo: 'une entreprise',
             adresse: 'une entité',
@@ -363,7 +352,6 @@ const PopUp: React.FC<PopUpProps> = ({
             adresse_enlevement: 'une livraison',
             code_modalite_interaction: 'une interaction',
             password: 'un utilisateur',
-
         }
         return tableNameMapping[fieldId] || 'un type'
     }
@@ -392,145 +380,155 @@ const PopUp: React.FC<PopUpProps> = ({
                     </button>
                 </div>
             </div>
-            {inputs.map(input => (
-                <div className={style.rowPop} key={input.id}>
-                    <label className={style.label}>
-                        {fieldLabels[input.id]}
-                        {renderRequiredIndicator(input)}
-                    </label>
-                    {(() => {
-                        switch (input.type) {
-                            case 'select':
-                                return (
-                                    <SelectComponent
-                                        key={input.id}
-                                        createURL={input.createURL as string}
-                                        url={input.url as string}
-                                        required={input.required}
-                                        onChange={input.onChange}
-                                    />
-                                )
-                            case 'search':
-                                return (
-                                    <SearchComponent
-                                        key={input.id}
-                                        url={input.url as string}
-                                        createURL={input.createURL as string}
-                                        required={input.required}
-                                        placeholder={input.placeholder}
-                                        onChange={e =>
-                                            handleInputChange(
-                                                input.id,
-                                                e.target.value,
-                                            )
-                                        }
-                                        onInputChange={input.onInputChange}
-                                    />
-                                )
-                            case 'checkbox':
-                                return (
-                                    <input
-                                        key={input.id}
-                                        type='checkbox'
-                                        required={input.required}
-                                        className={style.checkboxF}
-                                        onChange={e =>
-                                            handleInputChange(
-                                                input.id,
-                                                e.target.checked,
-                                            )
-                                        }
-                                        onInput={input.onInputChange}
-                                    />
-                                )
-                            case 'file':
-                                return (
-                                    <FileUpload
-                                        setFile={
-                                            input.id === 'pieces_associees'
-                                                ? setFile
-                                                : setFile2
-                                        }
-                                    />
-                                )
-
-                            case 'number':
-                                return (
-                                    <input
-                                        key={input.id}
-                                        type='number'
-                                        required={input.required}
-                                        placeholder={input.placeholder}
-                                        className={style.selectF}
-                                        value={
-                                            input.value === null
-                                                ? ''
-                                                : (input.value as string)
-                                        }
-                                        onChange={e =>
-                                            handleInputChange(
-                                                input.id,
-                                                e.target.value,
-                                            )
-                                        }
-                                        onInput={(
-                                            e: React.ChangeEvent<HTMLInputElement>,
-                                        ) => {
-                                            if (
-                                                input.maxLength &&
-                                                e.target.value.length >
-                                                    input.maxLength
-                                            ) {
-                                                e.target.value =
-                                                    e.target.value.slice(
-                                                        0,
-                                                        input.maxLength,
-                                                    )
+            <div
+                className={
+                    fields.some(field => field.id.startsWith('code_type_don'))
+                        ? style.gridTwoColumns
+                        : ''
+                }
+            >
+                {inputs.map(input => (
+                    <div className={style.rowPop} key={input.id}>
+                        <label className={style.label}>
+                            {fieldLabels[input.id]}
+                            {renderRequiredIndicator(input)}
+                        </label>
+                        {(() => {
+                            switch (input.type) {
+                                case 'select':
+                                    return (
+                                        <SelectComponent
+                                            key={input.id}
+                                            createURL={
+                                                input.createURL as string
                                             }
-                                            input.onInputChange &&
-                                                input.onInputChange(e)
-                                        }}
-                                    />
-                                )
-                            default:
-                                return (
-                                    <input
-                                        key={input.id}
-                                        type={input.type}
-                                        placeholder={input.placeholder}
-                                        required={input.required}
-                                        className={style.selectF}
-                                        value={
-                                            input.value === null
-                                                ? ''
-                                                : (input.value as string)
-                                        }
-                                        onChange={e =>
-                                            handleInputChange(
-                                                input.id,
-                                                e.target.value,
-                                            )
-                                        }
-                                        onInput={input.onInputChange}
-                                        disabled={input.disabled}
-                                        maxLength={input.maxLength}
-                                    />
-                                )
-                        }
-                    })()}
-                    {validationErrors[input.id] && (
-                        <span className={style.error}>
-                            {validationErrors[input.id]}
-                        </span>
-                    )}
-                </div>
-            ))}
-            <div className={style.BTNdiv}>
-                <button className={style.BTNsub} onClick={onClose}>
-                    Quitter
-                </button>
-                <button className={style.BTNsub} onClick={handleAction}>
-                    Envoyer
+                                            url={input.url as string}
+                                            required={input.required}
+                                            onChange={input.onChange}
+                                        />
+                                    )
+                                case 'search':
+                                    return (
+                                        <SearchComponent
+                                            key={input.id}
+                                            url={input.url as string}
+                                            required={input.required}
+                                            placeholder={
+                                                input.placeholder as string
+                                            }
+                                        />
+                                    )
+                                case 'password':
+                                    return (
+                                        <input
+                                            className={style.input}
+                                            type='password'
+                                            value={input.value as string}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            required={input.required}
+                                            maxLength={input.maxLength}
+                                        />
+                                    )
+                                case 'checkbox':
+                                    return (
+                                        <input
+                                            className={style.input}
+                                            type='checkbox'
+                                            checked={input.value as boolean}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.checked,
+                                                )
+                                            }
+                                        />
+                                    )
+                                case 'number':
+                                    return (
+                                        <input
+                                            className={style.input}
+                                            type='number'
+                                            value={input.value as string}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            required={input.required}
+                                            maxLength={input.maxLength}
+                                        />
+                                    )
+                                case 'date':
+                                    return (
+                                        <input
+                                            className={style.input}
+                                            type='date'
+                                            value={input.value as string}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            required={input.required}
+                                        />
+                                    )
+                                case 'enum':
+                                    return (
+                                        <select
+                                            className={style.input}
+                                            value={input.value as string}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            required={input.required}
+                                        >
+                                            <option value=''>Select</option>
+                                            <option value='0'>Zero</option>
+                                            <option value='1'>One</option>
+                                            <option value='2'>Two</option>
+                                            <option value='3'>Three</option>
+                                        </select>
+                                    )
+                                case 'input':
+                                default:
+                                    return (
+                                        <input
+                                            className={style.input}
+                                            type='text'
+                                            value={input.value as string}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            required={input.required}
+                                            maxLength={input.maxLength}
+                                        />
+                                    )
+                            }
+                        })()}
+                        {validationErrors[input.id] && (
+                            <p className={style.error}>
+                                {validationErrors[input.id]}
+                            </p>
+                        )}
+                    </div>
+                ))}
+            </div>
+            <div className={style.container}>
+                <button className={style.savebutton} onClick={handleAction}>
+                    Enregistrer
                 </button>
             </div>
         </div>
@@ -538,15 +536,3 @@ const PopUp: React.FC<PopUpProps> = ({
 }
 
 export default PopUp
-
-/*
-<PopUp
-    onClose={handleClose}
-    fields={[
-        { id: 'code_Don', type: 'input', value: ''},
-        { id: 'code_Entite_donatrice', type: 'input', value: '' },
-        { id: 'date_proposition_don', type: 'date', value: '' },
-        { id: 'code_contact_Entite_donatrice', type: 'input', value: '' },
-        { id: 'code_type_don', type: 'input', value: '' },
-    ]}
-/>*/
