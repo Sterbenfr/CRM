@@ -27,7 +27,7 @@ function InteractionsPage({
     useEffect(() => {
         const fetchInteractions = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
             )
 
             if (!res.ok) {
@@ -69,7 +69,7 @@ function InteractionsPage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
+                        url: `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -80,7 +80,7 @@ function InteractionsPage({
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
+                            url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
                             fields={[
                                 {
                                     id: 'code_type_interaction',

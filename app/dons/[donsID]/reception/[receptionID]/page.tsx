@@ -46,7 +46,7 @@ export default function ReceptionPage({
             if (!params.receptionID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/reception/${params.receptionID}`,
+                `../../../../api/dons/${params.donsID}/reception/${params.receptionID}`,
             )
 
             if (!res.ok) {

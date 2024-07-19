@@ -132,7 +132,7 @@ function SitesRattachementPage({ params }: { params: { siteID: string } }) {
     useEffect(() => {
         const fetchSites_Rattachement = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/sites/${params.siteID}/user-site-link?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/sites/${params.siteID}/user-site-link?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -193,7 +193,7 @@ function SitesRattachementPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/sites/${params.siteID}/user-site-link`,
+                        url: `../../../api/sites/${params.siteID}/user-site-link`,
                     }}
                     attribut={{
                         att1: 'Site',
@@ -224,7 +224,7 @@ function SitesRattachementPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/sites/${params.siteID}/user-site-link`}
+                            url={`../../../api/sites/${params.siteID}/user-site-link`}
                             fields={fields}
                         />
                     </div>

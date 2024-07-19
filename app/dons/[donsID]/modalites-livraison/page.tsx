@@ -311,7 +311,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 required: true,
                 maxLength: 8,
                 onInputChange: handleHeurePrevueLivraison,
-                placeholder: 'Exemple: 14:00:00',
+                placeholder: 'Exemple: 14:00',
             },
             {
                 id: 'adresse_enlevement',
@@ -509,7 +509,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         const typeDon = async () => {
             if (typeDonData === undefined) {
                 const res = await fetch(
-                    `http://localhost:3000/api/select/dons/${params.donsID}/type-don`,
+                    `../../../api/select/dons/${params.donsID}/type-don`,
                 )
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -578,7 +578,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     useEffect(() => {
         const fetchModalitesLivraisons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/dons/${params.donsID}/modalites-livraison?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -597,7 +597,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         const fetchSearchModalitesLivraisons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison?limit=5000`,
+                    `../../../api/dons/${params.donsID}/modalites-livraison?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -668,7 +668,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison`,
+                        url: `../../../api/dons/${params.donsID}/modalites-livraison`,
                     }}
                     attribut={{
                         att1: 'Code don',
@@ -704,7 +704,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/dons/${params.donsID}/modalites-livraison`}
+                            url={`../../../api/dons/${params.donsID}/modalites-livraison`}
                             fields={fields}
                         />
                     </div>

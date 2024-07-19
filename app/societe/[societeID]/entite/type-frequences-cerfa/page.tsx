@@ -25,7 +25,7 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
     useEffect(() => {
         const fetchFrequences_cerfa = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`,
+                `../../../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
             )
 
             if (!res.ok) {
@@ -67,7 +67,7 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`,
+                        url: `../../../../api/societe/${params.societeID}/entite/type-frequences-cerfa`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -78,7 +78,7 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-frequences-cerfa`}
+                            url={`../../../../api/societe/${params.societeID}/entite/type-frequences-cerfa`}
                             fields={[
                                 {
                                     id: 'code_frequence_cerfa',

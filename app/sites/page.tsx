@@ -243,7 +243,7 @@ function SitesPage() {
     useEffect(() => {
         const fetchSites = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/sites?page=${page}&limit=${itemsPerPage}`,
+                `../api/sites?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -259,9 +259,7 @@ function SitesPage() {
 
         const fetchSearchSites = async () => {
             if (search.length === 0) {
-                const res = await fetch(
-                    'http://localhost:3000/api/sites?limit=5000',
-                )
+                const res = await fetch('../api/sites?limit=5000')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -303,7 +301,7 @@ function SitesPage() {
                         value3: Sites.adresse.toString(),
                         value4:
                             Sites.date_ouverture.toString().split('T')[0] ==
-                            null || undefined
+                                null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:
@@ -321,7 +319,7 @@ function SitesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/sites',
+                        url: '../api/sites',
                     }}
                     attribut={{
                         att1: 'Désignation longue',
@@ -336,7 +334,7 @@ function SitesPage() {
                         value3: Sites.adresse.toString(),
                         value4:
                             Sites.date_ouverture.toString().split('T')[0] ==
-                            null || undefined
+                                null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:
@@ -367,7 +365,7 @@ function SitesPage() {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/sites'
+                            url='../api/sites'
                             fields={fields}
                         />
                     </div>

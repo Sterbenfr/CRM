@@ -138,7 +138,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     useEffect(() => {
         const fetchContacts = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/societe-site-link?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/societe/${params.societeID}/societe-site-link?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -197,7 +197,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/societe-site-link`,
+                        url: `../../../api/societe/${params.societeID}/societe-site-link`,
                     }}
                     attribut={{
                         att1: 'Entreprise',
@@ -235,7 +235,7 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/societe-site-link`}
+                            url={`../../../api/societe/${params.societeID}/societe-site-link`}
                             fields={fields}
                         />
                     </div>

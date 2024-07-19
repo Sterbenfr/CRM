@@ -43,3 +43,20 @@ export async function POST(req: NextRequest) {
         )
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    const body = await req.json()
+    if (body === undefined) {
+        return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
+    }
+    try {
+        const query = 'DELETE FROM `TypeActiviteSociete` WHERE `code` = ?'
+        const [rows] = await connection.query(query, body.join(' or code = '))
+        return NextResponse.json(rows)
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
+            { status: 500 },
+        )
+    }
+}

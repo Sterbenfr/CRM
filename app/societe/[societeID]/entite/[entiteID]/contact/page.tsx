@@ -257,7 +257,7 @@ function ContactsPage({
     useEffect(() => {
         const fetchContacts = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact?page=${page}&limit=${itemsPerPage}`,
+                `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -274,7 +274,7 @@ function ContactsPage({
         const fetchSearchContacts = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=5000`,
+                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -344,7 +344,7 @@ function ContactsPage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`,
+                        url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact`,
                     }}
                     attribut={{
                         att1: 'Nom',
@@ -386,7 +386,7 @@ function ContactsPage({
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact`}
+                            url={`../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact`}
                             fields={fields}
                             fileUrl2='../../../../../api/upload/image'
                             fileIndex2={6}

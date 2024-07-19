@@ -345,7 +345,7 @@ function PrestatairesPage() {
     useEffect(() => {
         const fetchDons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/prestataire?page=${page}&limit=${itemsPerPage}`,
+                `../api/prestataire?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -361,9 +361,7 @@ function PrestatairesPage() {
 
         const fetchSearchDons = async () => {
             if (search.length === 0) {
-                const res = await fetch(
-                    'http://localhost:3000/api/prestataire?limit=5000',
-                )
+                const res = await fetch('../api/prestataire?limit=5000')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -420,7 +418,7 @@ function PrestatairesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/prestataire',
+                        url: '../api/prestataire',
                     }}
                     attribut={{
                         att1: 'Raison sociale',
@@ -470,7 +468,7 @@ function PrestatairesPage() {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/prestataire'
+                            url='../api/prestataire'
                             fields={fields} // Use the fields state here
                         />
                     </div>

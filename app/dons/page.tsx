@@ -421,7 +421,7 @@ function DonsPage() {
                     id: 'adresse_destinataire_cerfa',
                     type: 'input',
                     value: adresseDestinataireCerfa,
-                    placeholder: 'Exemple: 12 rue des lilas',
+                    placeholder: 'Exemple: 12 rue des lilas, 59000 Lille',
                     maxLength: 100,
                     onInputChange: handleadresseDestinataireCerfaChange,
                 },
@@ -574,7 +574,7 @@ function DonsPage() {
     useEffect(() => {
         const fetchDons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/dons?page=${page}&limit=${itemsPerPage}`,
+                `../api/dons?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -599,9 +599,7 @@ function DonsPage() {
 
         const fetchSearchDons = async () => {
             if (search.length === 0) {
-                const res = await fetch(
-                    'http://localhost:3000/api/dons?limit=5000',
-                )
+                const res = await fetch('../api/dons?limit=5000')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -672,7 +670,7 @@ function DonsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/dons',
+                        url: '../api/dons',
                     }}
                     attribut={{
                         att1: 'Donateur',
@@ -711,7 +709,7 @@ function DonsPage() {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons'
+                            url='../api/dons'
                             fields={fields} // Use the fields state here
                             fileUrl='../api/upload/piece'
                             fileUrl2='../api/upload/cerfa'

@@ -24,7 +24,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         const fetchUtilisateurs = async () => {
             if (!params.siteID) return
             const res = await fetch(
-                `http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                `../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
             )
 
             if (!res.ok) {
@@ -66,7 +66,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                        url: `../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -77,7 +77,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/sites/${params.siteID}/utilisateurs/type-utilisateurs`}
+                            url={`../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`}
                             fields={[
                                 {
                                     id: 'code_type_utilisateur',

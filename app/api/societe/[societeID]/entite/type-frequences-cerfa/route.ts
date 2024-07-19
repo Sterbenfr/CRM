@@ -44,3 +44,24 @@ export async function POST(req: NextRequest) {
         )
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    const body = await req.json()
+    if (body === undefined) {
+        return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
+    }
+    try {
+        const query =
+            'DELETE FROM `FrequencesCerfa` WHERE `code_frequence_cerfa` = ?'
+        const [rows] = await connection.query(
+            query,
+            body.join(' or code_frequence_cerfa = '),
+        )
+        return NextResponse.json(rows)
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
+            { status: 500 },
+        )
+    }
+}

@@ -31,7 +31,7 @@ export default function ContactPage({
             if (!params.contactID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
+                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
             )
 
             if (!res.ok) {

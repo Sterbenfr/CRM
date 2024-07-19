@@ -229,7 +229,7 @@ function SocietesPage() {
     useEffect(() => {
         const fetchSocietes = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe?page=${page}&limit=${itemsPerPage}`,
+                `../api/societe?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -245,9 +245,7 @@ function SocietesPage() {
 
         const fetchSocieteSearch = async () => {
             if (search.length === 0) {
-                const res = await fetch(
-                    `http://localhost:3000/api/societe?limit=5000`,
-                )
+                const res = await fetch(`../api/societe?limit=5000`)
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -299,7 +297,7 @@ function SocietesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/societe',
+                        url: '../api/societe',
                     }}
                     attribut={{
                         att1: 'Raison Sociale',
@@ -343,7 +341,7 @@ function SocietesPage() {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/societe'
+                            url='../api/societe'
                             fields={fields}
                             fileUrl2='../api/upload/image'
                             fileIndex2={4}

@@ -24,7 +24,7 @@ export default function GroupePage({
             if (!params.groupeID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}`,
+                `../../../../api/societe/${params.societeID}/groupe/${params.groupeID}`,
             )
 
             if (!res.ok) {

@@ -21,7 +21,7 @@ function TypeDonsPage() {
 
     useEffect(() => {
         const fetchDons = async () => {
-            const res = await fetch('http://localhost:3000/api/dons/type-don')
+            const res = await fetch('../../api/dons/type-don')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -62,7 +62,7 @@ function TypeDonsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/dons/type-don',
+                        url: '../../api/dons/type-don',
                     }}
                     attribut={{
                         att1: 'Code',
@@ -73,7 +73,7 @@ function TypeDonsPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons/type-don'
+                            url='../../api/dons/type-don'
                             fields={[
                                 {
                                     id: 'code_type_don',

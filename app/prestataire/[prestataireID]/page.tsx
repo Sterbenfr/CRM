@@ -34,7 +34,7 @@ export default function PrestatairePage({
             if (!params.prestataireID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/prestataire/${params.prestataireID}`,
+                `../../api/prestataire/${params.prestataireID}`,
             )
 
             if (!res.ok) {

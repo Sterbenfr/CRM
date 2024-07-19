@@ -27,9 +27,7 @@ export default function SocietePage({
         const fetchSociete = async () => {
             if (!params.societeID) return
 
-            const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}`,
-            )
+            const res = await fetch(`../../api/societe/${params.societeID}`)
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')

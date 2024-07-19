@@ -61,7 +61,7 @@ export default function Modalites_livraisonPage({
             if (!params.modalites_livraisonID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/${params.modalites_livraisonID}`,
+                `../../../../api/dons/${params.donsID}/modalites-livraison/${params.modalites_livraisonID}`,
             )
 
             if (!res.ok) {
