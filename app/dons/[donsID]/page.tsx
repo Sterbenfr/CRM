@@ -227,20 +227,19 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         const applyPrintStyles = () => {
             document.body.innerHTML = printContents
             document.body.style.margin = '0'
-            document.body.style.fontSize = '12px'
             document.body.style.padding = '0'
-            document.body.style.fontFamily = 'Arial'
-            document.body.style.lineHeight = '1'
-            document.body.style.letterSpacing = '0'
-            document.body.style.wordSpacing = '0'
 
             const allElements = document.body.getElementsByTagName('*')
             for (let i = 0; i < allElements.length; i++) {
                 const element = allElements[i] as HTMLElement
-                element.style.margin = '7px'
+                element.style.margin = '10px'
+                element.style.fontSize = '12px'
+                element.style.padding = '0'
+                element.style.fontFamily = 'Arial'
                 element.style.lineHeight = '1'
                 element.style.letterSpacing = '0'
                 element.style.wordSpacing = '0'
+                element.style.borderLeft = 'none'
             }
         }
 
