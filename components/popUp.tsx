@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SelectComponent from './select-component'
 import SearchComponent from './searchComponent'
+import FileUpload from './uploadComponent'
 import Image from 'next/image'
 import style from '../styles/components.module.css'
 
@@ -194,7 +195,7 @@ interface PopUpProps {
     onClose: () => void
     fields: Field[]
     url: string
-    onFieldChange?: (id: string, value: string | boolean) => void
+    onFieldChange?: (id: string, value: string | boolean) => void // New callback function
     fileUrl?: string
     fileUrl2?: string
     fileIndex?: number
@@ -212,6 +213,8 @@ const PopUp: React.FC<PopUpProps> = ({
     fileIndex2,
 }) => {
     const [inputs, setInputs] = useState<Field[]>(fields)
+    const [file, setFile] = useState<File | null>(null)
+    const [file2, setFile2] = useState<File | null>(null)
 
     const [validationErrors, setValidationErrors] = useState<{
         [key: string]: string
@@ -222,6 +225,7 @@ const PopUp: React.FC<PopUpProps> = ({
     }, [fields])
 
     const handleInputChange = (id: string, value: string | boolean) => {
+        // Invoke the function if provided
         const updatedInputs = inputs.map(input =>
             input.id === id ? { ...input, value } : input,
         )
@@ -265,6 +269,7 @@ const PopUp: React.FC<PopUpProps> = ({
             let file2Path
             if (fileUrl && fields[fileIndex ? fileIndex : 0].value) {
                 const formData = new FormData()
+                formData.append('image', file as Blob)
                 console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl, {
@@ -284,6 +289,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
             if (fileUrl2 && fields[fileIndex2 ? fileIndex2 : 0].value) {
                 const formData = new FormData()
+                formData.append('image', file2 as Blob)
                 console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl2, {
@@ -337,7 +343,7 @@ const PopUp: React.FC<PopUpProps> = ({
         }
     }
 
-    const [popupTitle, setPopupTitle] = useState('') // Nouveau const pour titre du popup
+    const [popupTitle, setPopupTitle] = useState('')
 
     const getTableNameFromFieldId = (fieldId: string): string => {
         const tableNameMapping: { [key: string]: string } = {
@@ -415,6 +421,16 @@ const PopUp: React.FC<PopUpProps> = ({
                                             required={input.required}
                                             placeholder={
                                                 input.placeholder as string
+                                            }
+                                        />
+                                    )
+                                case 'file':
+                                    return (
+                                        <FileUpload
+                                            setFile={
+                                                input.id === 'pieces_associees'
+                                                    ? setFile
+                                                    : setFile2
                                             }
                                         />
                                     )
