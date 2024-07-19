@@ -93,7 +93,45 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const handleHeureReceptionChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setHeureReception(event.target.value)
+        if (
+            event.target.value[event.target.value.length - 1] === ':' ||
+            !isNaN(parseInt(event.target.value[event.target.value.length - 1]))
+        ) {
+            if (parseInt(event.target.value.slice(0, 2)) > 23) {
+                event.target.value = '23' + event.target.value.slice(2)
+            }
+            if (parseInt(event.target.value.slice(3, 5)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 3) +
+                    '59' +
+                    event.target.value.slice(5)
+            }
+            if (parseInt(event.target.value.slice(6, 8)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 6) +
+                    '59' +
+                    event.target.value.slice(8)
+            }
+            if (
+                event.target.value.length === 3 &&
+                event.target.value[2] !== ':'
+            ) {
+                event.target.value =
+                    event.target.value + ':' + event.target.value[2]
+            }
+            if (event.target.value.length === 5) {
+                event.target.value = event.target.value + ':00'
+            }
+            if (event.target.value.length === 7) {
+                event.target.value = event.target.value.slice(0, 5)
+            }
+            setHeureReception(event.target.value)
+        } else {
+            event.target.value = event.target.value.slice(
+                0,
+                event.target.value.length - 1,
+            )
+        }
     }
 
     const handleNombrePalettesRecuesChange = (
