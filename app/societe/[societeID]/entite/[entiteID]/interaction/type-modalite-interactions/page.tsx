@@ -29,7 +29,7 @@ function Modalites_InteractionsPage({
     useEffect(() => {
         const fetchModalites_Interactions = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
             )
 
             if (!res.ok) {
@@ -73,7 +73,7 @@ function Modalites_InteractionsPage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
+                        url: `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -84,7 +84,7 @@ function Modalites_InteractionsPage({
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
+                            url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
                             fields={[
                                 {
                                     id: 'code_modalite_interaction',

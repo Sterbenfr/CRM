@@ -21,9 +21,7 @@ function TypeCompetencePage() {
 
     useEffect(() => {
         const fetchCompetences = async () => {
-            const res = await fetch(
-                'http://localhost:3000/api/dons/type-competences',
-            )
+            const res = await fetch('../../api/dons/type-competences')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -64,7 +62,7 @@ function TypeCompetencePage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/dons/type-competences',
+                        url: '../../api/dons/type-competences',
                     }}
                     attribut={{
                         att1: 'Code',
@@ -75,7 +73,7 @@ function TypeCompetencePage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons/type-competences'
+                            url='../../api/dons/type-competences'
                             fields={[
                                 {
                                     id: 'code_type_competence',

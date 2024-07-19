@@ -22,9 +22,7 @@ function PrestatairesPage() {
 
     useEffect(() => {
         const fetchPrestataires = async () => {
-            const res = await fetch(
-                'http://localhost:3000/api/prestataire/type-prestataires',
-            )
+            const res = await fetch('../../api/prestataire/type-prestataires')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -65,7 +63,7 @@ function PrestatairesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/prestataire/type-prestataires',
+                        url: '../../api/prestataire/type-prestataires',
                     }}
                     attribut={{
                         att2: 'Code',
@@ -76,7 +74,7 @@ function PrestatairesPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/prestataire/type-prestataires'
+                            url='../../api/prestataire/type-prestataires'
                             fields={[
                                 {
                                     id: 'code_type_de_Prestataire',

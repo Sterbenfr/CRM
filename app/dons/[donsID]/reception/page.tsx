@@ -325,7 +325,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     useEffect(() => {
         const fetchDons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/reception?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/dons/${params.donsID}/reception?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -342,7 +342,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/dons/${params.donsID}/reception?limit=5000`,
+                    `../../../api/dons/${params.donsID}/reception?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -409,7 +409,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/dons/${params.donsID}/reception`,
+                        url: `../../../api/dons/${params.donsID}/reception`,
                     }}
                     attribut={{
                         att1: 'Numéro de livraison',
@@ -455,7 +455,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/dons/${params.donsID}/reception`}
+                            url={`../../../api/dons/${params.donsID}/reception`}
                             fields={fields}
                         />
                     </div>

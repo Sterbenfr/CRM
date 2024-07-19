@@ -24,9 +24,7 @@ function TypesActiviteSocietesPage() {
 
     useEffect(() => {
         const fetchTypesActiviteSociete = async () => {
-            const res = await fetch(
-                'http://localhost:3000/api/societe/type-activite-societe',
-            )
+            const res = await fetch('../../api/societe/type-activite-societe')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -69,8 +67,15 @@ function TypesActiviteSocietesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/societe/type-activite-societe',
+                        url: '../../api/societe/type-activite-societe',
                     }}
+                    searchItems={TypesActiviteSociete.map(
+                        TypeActiviteSociete => ({
+                            value1: TypeActiviteSociete.id,
+                            value2: TypeActiviteSociete.id,
+                            value3: TypeActiviteSociete.label,
+                        }),
+                    )}
                     attribut={{
                         att1: 'Code',
                         att2: 'Libellé',
@@ -81,7 +86,7 @@ function TypesActiviteSocietesPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/societe/type-activite-societe'
+                            url='../../api/societe/type-activite-societe'
                             fields={[
                                 {
                                     id: 'code',

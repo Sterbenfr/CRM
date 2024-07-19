@@ -136,7 +136,7 @@ function ContactEntitePage({
     useEffect(() => {
         const fetchContacts = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link?page=${page}&limit=${itemsPerPage}`,
+                `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -195,7 +195,7 @@ function ContactEntitePage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`,
+                        url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`,
                     }}
                     attribut={{
                         att1: 'Entité',
@@ -233,7 +233,7 @@ function ContactEntitePage({
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`}
+                            url={`../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`}
                             fields={fields}
                         />
                     </div>

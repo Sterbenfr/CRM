@@ -23,7 +23,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     useEffect(() => {
         const fetchEntites = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`,
+                `../../../../api/societe/${params.societeID}/entite/type-entites`,
             )
 
             if (!res.ok) {
@@ -65,7 +65,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`,
+                        url: `../../../../api/societe/${params.societeID}/entite/type-entites`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -76,7 +76,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/type-entites`}
+                            url={`../../../../api/societe/${params.societeID}/entite/type-entites`}
                             fields={[
                                 {
                                     id: 'code_type_entite',

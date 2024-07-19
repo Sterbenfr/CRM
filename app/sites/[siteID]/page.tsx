@@ -23,9 +23,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
         const fetchSite = async () => {
             if (!params.siteID) return
 
-            const res = await fetch(
-                `http://localhost:3000/api/sites/${params.siteID}`,
-            )
+            const res = await fetch(`../../api/sites/${params.siteID}`)
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -99,7 +97,11 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
 
                     <div className={style.info}>
                         <p className={style.titre}>Libelle :</p>
-                        <p>{site[0].code_type_site == null || '' ? '/' : site[0].code_type_site == null}</p>
+                        <p>
+                            {site[0].code_type_site == null || ''
+                                ? '/'
+                                : site[0].code_type_site == null}
+                        </p>
                     </div>
 
                     <div className={style.info}>

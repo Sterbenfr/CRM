@@ -222,7 +222,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     useEffect(() => {
         const fetchUtilisateurs = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/sites/${params.siteID}/utilisateurs?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/sites/${params.siteID}/utilisateurs?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -239,7 +239,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/sites/${params.siteID}/utilisateurs?limit=5000`,
+                    `../../../api/sites/${params.siteID}/utilisateurs?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -284,7 +284,12 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 <List
                     items={Utilisateurs.map(user => ({
                         value1: user.code_utilisateur.toString(),
-                        value2: user.civilite === 'Mr.' ? 'Monsieur' : (user.civilite === 'Mme.' ? 'Madame' : 'Autre'),
+                        value2:
+                            user.civilite === 'Mr.'
+                                ? 'Monsieur'
+                                : user.civilite === 'Mme.'
+                                  ? 'Madame'
+                                  : 'Autre',
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
@@ -296,7 +301,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/sites/${params.siteID}/utilisateurs`,
+                        url: `../../../api/sites/${params.siteID}/utilisateurs`,
                     }}
                     attribut={{
                         att1: 'Civilité',
@@ -307,7 +312,12 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     }}
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),
-                        value2: user.civilite === 'Mr.' ? 'Monsieur' : (user.civilite === 'Mme.' ? 'Madame' : 'Autre'),
+                        value2:
+                            user.civilite === 'Mr.'
+                                ? 'Monsieur'
+                                : user.civilite === 'Mme.'
+                                  ? 'Madame'
+                                  : 'Autre',
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
@@ -331,7 +341,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/sites/${params.siteID}/utilisateurs`}
+                            url={`../../../api/sites/${params.siteID}/utilisateurs`}
                             fields={fields}
                         />
                     </div>

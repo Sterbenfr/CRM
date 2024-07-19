@@ -41,11 +41,12 @@ const List: React.FC<{
     pageInfos?: PageInfo
 }> = ({ items, functions, attribut, searchItems, pageInfos }) => {
     const [selectedItems, setSelectedItems] = useState<ListProps[]>()
-    const [lineCheckbox, setLineCheckbox] = useState<number[]>([])
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [lineCheckbox, setLineCheckbox] = useState<any[]>([])
     const [searchValue, setSearchValue] = useState('')
 
     const handleLineCheckboxChange = (param: string) => {
-        const value = parseInt(param)
+        const value = !isNaN(parseInt(param)) ? parseInt(param) : param
         if (!lineCheckbox.includes(value)) {
             setLineCheckbox([...lineCheckbox, value])
         } else {
@@ -53,12 +54,22 @@ const List: React.FC<{
         }
     }
 
-    const deleteFunction = () => {
-        lineCheckbox.map(async item => {
-            await fetch(`${functions.url}/${item}`, {
-                method: 'DELETE',
+    const deleteFunction = async () => {
+        if (!functions.url?.includes('type')) {
+            lineCheckbox.map(async item => {
+                await fetch(`${functions.url}/${item}`, {
+                    method: 'DELETE',
+                })
             })
-        })
+        } else {
+            const res = await fetch(functions.url, {
+                method: 'DELETE',
+                body: JSON.stringify(lineCheckbox),
+            })
+            if (!res.ok) {
+                throw new Error('Failed to delete data')
+            }
+        }
         setTimeout(() => {
             window.location.reload()
         }, 400)
@@ -95,6 +106,7 @@ const List: React.FC<{
             setSelectedItems(undefined)
         }
     }, [items, searchValue])
+
     const attributeCount = attribut
         ? Object.keys(attribut).filter(
               key => attribut[key as keyof Attribut] !== undefined,
@@ -247,7 +259,35 @@ const List: React.FC<{
                                   />
                               </div>
                           ))
-                    : ''}
+                    : items.map(item => (
+                          // Wrap Line component with a div and add onClick event
+                          <div key={item.value1}>
+                              <Line
+                                  deleteFunction={handleLineCheckboxChange}
+                                  param1={
+                                      item.value1 == null ? '' : item.value1
+                                  }
+                                  param2={
+                                      item.value2 == null ? '' : item.value2
+                                  }
+                                  param3={
+                                      item.value3 == null ? '' : item.value3
+                                  }
+                                  param4={
+                                      item.value4 == null ? '' : item.value4
+                                  }
+                                  param5={
+                                      item.value5 == null ? '' : item.value5
+                                  }
+                                  param6={
+                                      item.value6 == null ? '' : item.value6
+                                  }
+                                  paramColor={
+                                      item.value7 == null ? '' : item.value7
+                                  }
+                              />
+                          </div>
+                      ))}
             </div>
         </>
     )
