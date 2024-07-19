@@ -418,10 +418,34 @@ const PopUp: React.FC<PopUpProps> = ({
                                         <SearchComponent
                                             key={input.id}
                                             url={input.url as string}
-                                            required={input.required}
-                                            placeholder={
-                                                input.placeholder as string
+                                            createURL={
+                                                input.createURL as string
                                             }
+                                            required={input.required}
+                                            placeholder={input.placeholder}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.value,
+                                                )
+                                            }
+                                            onInputChange={input.onInputChange}
+                                        />
+                                    )
+                                case 'checkbox':
+                                    return (
+                                        <input
+                                            key={input.id}
+                                            type='checkbox'
+                                            required={input.required}
+                                            className={style.checkboxF}
+                                            onChange={e =>
+                                                handleInputChange(
+                                                    input.id,
+                                                    e.target.checked,
+                                                )
+                                            }
+                                            onInput={input.onInputChange}
                                         />
                                     )
                                 case 'file':
@@ -434,101 +458,66 @@ const PopUp: React.FC<PopUpProps> = ({
                                             }
                                         />
                                     )
-                                case 'password':
-                                    return (
-                                        <input
-                                            className={style.input}
-                                            type='password'
-                                            value={input.value as string}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            required={input.required}
-                                            maxLength={input.maxLength}
-                                        />
-                                    )
-                                case 'checkbox':
-                                    return (
-                                        <input
-                                            className={style.input}
-                                            type='checkbox'
-                                            checked={input.value as boolean}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.checked,
-                                                )
-                                            }
-                                        />
-                                    )
+
                                 case 'number':
                                     return (
                                         <input
-                                            className={style.input}
+                                            key={input.id}
                                             type='number'
-                                            value={input.value as string}
+                                            required={input.required}
+                                            placeholder={input.placeholder}
+                                            className={style.selectF}
+                                            value={
+                                                input.value === null
+                                                    ? ''
+                                                    : (input.value as string)
+                                            }
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
                                                     e.target.value,
                                                 )
                                             }
-                                            required={input.required}
-                                            maxLength={input.maxLength}
+                                            onInput={(
+                                                e: React.ChangeEvent<HTMLInputElement>,
+                                            ) => {
+                                                if (
+                                                    input.maxLength &&
+                                                    e.target.value.length >
+                                                        input.maxLength
+                                                ) {
+                                                    e.target.value =
+                                                        e.target.value.slice(
+                                                            0,
+                                                            input.maxLength,
+                                                        )
+                                                }
+                                                input.onInputChange &&
+                                                    input.onInputChange(e)
+                                            }}
                                         />
                                     )
-                                case 'date':
-                                    return (
-                                        <input
-                                            className={style.input}
-                                            type='date'
-                                            value={input.value as string}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            required={input.required}
-                                        />
-                                    )
-                                case 'enum':
-                                    return (
-                                        <select
-                                            className={style.input}
-                                            value={input.value as string}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
-                                                )
-                                            }
-                                            required={input.required}
-                                        >
-                                            <option value=''>Select</option>
-                                            <option value='0'>Zero</option>
-                                            <option value='1'>One</option>
-                                            <option value='2'>Two</option>
-                                            <option value='3'>Three</option>
-                                        </select>
-                                    )
-                                case 'input':
                                 default:
                                     return (
                                         <input
-                                            className={style.input}
-                                            type='text'
-                                            value={input.value as string}
+                                            key={input.id}
+                                            type={input.type}
+                                            placeholder={input.placeholder}
+                                            required={input.required}
+                                            className={style.selectF}
+                                            value={
+                                                input.value === null
+                                                    ? ''
+                                                    : (input.value as string)
+                                            }
                                             onChange={e =>
                                                 handleInputChange(
                                                     input.id,
                                                     e.target.value,
                                                 )
                                             }
-                                            required={input.required}
+                                            onInput={input.onInputChange}
+                                            disabled={input.disabled}
                                             maxLength={input.maxLength}
                                         />
                                     )
