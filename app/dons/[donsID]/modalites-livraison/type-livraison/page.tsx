@@ -22,7 +22,7 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
     useEffect(() => {
         const fetchType_Livraisons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`,
+                `../../../../api/dons/${params.donsID}/modalites-livraison/type-livraison`,
             )
 
             if (!res.ok) {
@@ -64,7 +64,7 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`,
+                        url: `../../../../api/dons/${params.donsID}/modalites-livraison/type-livraison`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -75,7 +75,7 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/dons/${params.donsID}/modalites-livraison/type-livraison`}
+                            url={`../../../../api/dons/${params.donsID}/modalites-livraison/type-livraison`}
                             fields={[
                                 {
                                     id: 'code_type_livraison',

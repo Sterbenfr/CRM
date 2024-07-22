@@ -274,7 +274,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 value: adresse,
                 required: true,
                 onInputChange: handleAdresseChange,
-                placeholder: 'Exemple: 12 rue de la paix',
+                placeholder: 'Exemple: 12 rue de la paix, 75000 Paris',
             },
             {
                 id: 'telephone',
@@ -495,7 +495,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     useEffect(() => {
         const fetchEntite = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/societe/${params.societeID}/entite?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -512,7 +512,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         const fetchSearchEntite = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite?limit=5000`,
+                    `../../../api/societe/${params.societeID}/entite?limit=5000`,
                 )
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -575,7 +575,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite`,
+                        url: `../../../api/societe/${params.societeID}/entite`,
                     }}
                     attribut={{
                         att1: 'Raison Sociale',
@@ -617,7 +617,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite`}
+                            url={`../../../api/societe/${params.societeID}/entite`}
                             fields={fields}
                             fileUrl='../../../api/upload/piece'
                             fileUrl2='../../../api/upload/image'

@@ -28,7 +28,7 @@ export default function InteractionPage({
             if (!params.interactionID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
+                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
             )
 
             if (!res.ok) {

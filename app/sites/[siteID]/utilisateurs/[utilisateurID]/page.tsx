@@ -26,7 +26,7 @@ export default function UtilisateurPage({
             if (!params.utilisateurID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
+                `../../../../api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
             )
 
             if (!res.ok) {

@@ -21,9 +21,7 @@ function TypeProduitsPage() {
 
     useEffect(() => {
         const fetchProduits = async () => {
-            const res = await fetch(
-                'http://localhost:3000/api/dons/type-produits',
-            )
+            const res = await fetch('../../api/dons/type-produits')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -64,7 +62,7 @@ function TypeProduitsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/dons/type-produits',
+                        url: '../../api/dons/type-produits',
                     }}
                     attribut={{
                         att1: 'Code',
@@ -75,7 +73,7 @@ function TypeProduitsPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons/type-produits'
+                            url='../../api/dons/type-produits'
                             fields={[
                                 {
                                     id: 'code_type_produits',

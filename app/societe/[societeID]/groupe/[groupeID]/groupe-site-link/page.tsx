@@ -145,7 +145,7 @@ function SuiviGroupePage({
     useEffect(() => {
         const fetchSuiviGroupe = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link?page=${page}&limit=${itemsPerPage}`,
+                `../../../../../api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -205,7 +205,7 @@ function SuiviGroupePage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`,
+                        url: `../../../../../api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`,
                     }}
                     attribut={{
                         att1: 'Groupe',
@@ -239,7 +239,7 @@ function SuiviGroupePage({
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}
+                            url={`../../../../../api/societe/${params.societeID}/groupe/${params.groupeID}/groupe-site-link`}
                             fields={fields}
                         />
                     </div>

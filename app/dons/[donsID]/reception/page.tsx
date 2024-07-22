@@ -93,7 +93,45 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const handleHeureReceptionChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        setHeureReception(event.target.value)
+        if (
+            event.target.value[event.target.value.length - 1] === ':' ||
+            !isNaN(parseInt(event.target.value[event.target.value.length - 1]))
+        ) {
+            if (parseInt(event.target.value.slice(0, 2)) > 23) {
+                event.target.value = '23' + event.target.value.slice(2)
+            }
+            if (parseInt(event.target.value.slice(3, 5)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 3) +
+                    '59' +
+                    event.target.value.slice(5)
+            }
+            if (parseInt(event.target.value.slice(6, 8)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 6) +
+                    '59' +
+                    event.target.value.slice(8)
+            }
+            if (
+                event.target.value.length === 3 &&
+                event.target.value[2] !== ':'
+            ) {
+                event.target.value =
+                    event.target.value + ':' + event.target.value[2]
+            }
+            if (event.target.value.length === 5) {
+                event.target.value = event.target.value + ':00'
+            }
+            if (event.target.value.length === 7) {
+                event.target.value = event.target.value.slice(0, 5)
+            }
+            setHeureReception(event.target.value)
+        } else {
+            event.target.value = event.target.value.slice(
+                0,
+                event.target.value.length - 1,
+            )
+        }
     }
 
     const handleNombrePalettesRecuesChange = (
@@ -287,7 +325,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     useEffect(() => {
         const fetchDons = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/dons/${params.donsID}/reception?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/dons/${params.donsID}/reception?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -304,7 +342,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/dons/${params.donsID}/reception?limit=5000`,
+                    `../../../api/dons/${params.donsID}/reception?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -371,7 +409,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/dons/${params.donsID}/reception`,
+                        url: `../../../api/dons/${params.donsID}/reception`,
                     }}
                     attribut={{
                         att1: 'Numéro de livraison',
@@ -417,7 +455,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/dons/${params.donsID}/reception`}
+                            url={`../../../api/dons/${params.donsID}/reception`}
                             fields={fields}
                         />
                     </div>

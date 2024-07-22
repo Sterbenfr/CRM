@@ -215,7 +215,7 @@ function InteractionsPage({
     useEffect(() => {
         const fetchInteractions = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?page=${page}&limit=${itemsPerPage}`,
+                `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -231,7 +231,7 @@ function InteractionsPage({
         const fetchSearchInteractions = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=5000`,
+                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -313,7 +313,7 @@ function InteractionsPage({
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
+                        url: `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                     }}
                     attribut={{
                         att1: 'Donateur',
@@ -363,7 +363,7 @@ function InteractionsPage({
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}/interactions`}
+                            url={`../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions`}
                             fields={fields}
                             fileUrl='../../../../../api/upload/piece'
                             fileIndex={7}

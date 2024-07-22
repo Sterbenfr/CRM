@@ -21,9 +21,7 @@ function SiteTypesPage() {
     }
     useEffect(() => {
         const fetchSiteTypes = async () => {
-            const res = await fetch(
-                'http://localhost:3000/api/sites/type-site-types',
-            )
+            const res = await fetch('../../api/sites/type-site-types')
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -64,7 +62,7 @@ function SiteTypesPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/sites/type-site-types',
+                        url: '../../api/sites/type-site-types',
                     }}
                     attribut={{
                         att1: 'Code',
@@ -75,7 +73,7 @@ function SiteTypesPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/sites/type-site-types'
+                            url='../../api/sites/type-site-types'
                             fields={[
                                 {
                                     id: 'code_type_site',

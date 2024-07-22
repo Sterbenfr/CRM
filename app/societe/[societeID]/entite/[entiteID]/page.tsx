@@ -42,7 +42,7 @@ export default function EntitePage({
             if (!params.entiteID) return
 
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/entite/${params.entiteID}`,
+                `../../../../api/societe/${params.societeID}/entite/${params.entiteID}`,
             )
 
             if (!res.ok) {

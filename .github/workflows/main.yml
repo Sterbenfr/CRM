@@ -23,19 +23,15 @@ jobs:
 
     - name: Build application
       run: npm run build
-
-    - name: Deploy via SSH
-      uses: appleboy/ssh-action@v0.1.5
+      
+    - name: pull private repository
+      uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script_stop: true
         script: |
-          cd /home/ubuntu/CRM
-          rm -rf *
-          tar -xzvf /tmp/application.tar.gz
-
-    - name: Upload to server
-      run: |
-        tar -czf application.tar.gz .
-        scp -i ${{ secrets.SSH_KEY }} application.tar.gz ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/application.tar.gz
+          cd CRM && git pull
+          rm -rf CRM

@@ -149,7 +149,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     useEffect(() => {
         const fetchGroupes = async () => {
             const res = await fetch(
-                `http://localhost:3000/api/societe/${params.societeID}/groupe?page=${page}&limit=${itemsPerPage}`,
+                `../../../api/societe/${params.societeID}/groupe?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -166,7 +166,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
         const fetchSearchGroupe = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `http://localhost:3000/api/societe/${params.societeID}/groupe?limit=5000`,
+                    `../../../api/societe/${params.societeID}/groupe?limit=5000`,
                 )
 
                 if (!res.ok) {
@@ -236,7 +236,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                                     ? setIsPopUpOpen(false)
                                     : setIsPopUpOpen(true)
                             },
-                            url: `http://localhost:3000/api/societe/${params.societeID}/groupe`,
+                            url: `../../../api/societe/${params.societeID}/groupe`,
                         }}
                         attribut={{
                             att1: 'Nom du groupe',
@@ -257,7 +257,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                         <div className={style.PopUp}>
                             <PopUp
                                 onClose={handleClose}
-                                url={`http://localhost:3000/api/societe/${params.societeID}/groupe`}
+                                url={`../../../api/societe/${params.societeID}/groupe`}
                                 fields={fields}
                                 fileUrl2='../../../api/upload/image'
                                 fileIndex2={1}

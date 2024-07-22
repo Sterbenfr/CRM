@@ -119,7 +119,7 @@ export default function PrestatairePage({
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/prestataire/${params.prestataireID}`,
+                `../../api/prestataire/${params.prestataireID}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -127,6 +127,7 @@ export default function PrestatairePage({
                     },
                     body: body,
                 },
+
             )
 
             if (!res.ok) {

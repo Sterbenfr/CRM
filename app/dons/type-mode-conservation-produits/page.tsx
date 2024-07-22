@@ -23,7 +23,7 @@ function Mode_Conservations_ProduitsPage() {
     useEffect(() => {
         const fetchMode_Conservations_Produits = async () => {
             const res = await fetch(
-                'http://localhost:3000/api/dons/type-mode-conservations-produits',
+                '../../api/dons/type-mode-conservations-produits',
             )
 
             if (!res.ok) {
@@ -70,7 +70,7 @@ function Mode_Conservations_ProduitsPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: 'http://localhost:3000/api/dons/type-mode-conservations-produits',
+                        url: '../../api/dons/type-mode-conservations-produits',
                     }}
                     attribut={{
                         att1: 'Code',
@@ -81,7 +81,7 @@ function Mode_Conservations_ProduitsPage() {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url='http://localhost:3000/api/dons/type-mode-conservations-produits'
+                            url='../../api/dons/type-mode-conservations-produits'
                             fields={[
                                 {
                                     id: 'code_mode_conservation_produits',

@@ -34,20 +34,20 @@ export async function GET() {
         const formattedDonsD = donsD.map((donsD: { id: number }) => ({
             ...donsD,
             id: `donsD-${donsD.id}`,
-            url: `http://localhost:3000/dons/${donsD.id}`,
+            url: `../../dons/${donsD.id}`,
         }))
 
         const formattedDonsF = donsF.map((donsF: { id: number }) => ({
             ...donsF,
             id: `don-${donsF.id}`,
-            url: `http://localhost:3000/dons/${donsF.id}`,
+            url: `../../dons/${donsF.id}`,
         }))
 
         const formattedReceptions = receptions.map(
             (reception: { id: number; code_Don: number }) => ({
                 ...reception,
                 id: `reception-${reception.id}`,
-                url: `http://localhost:3000/dons/${reception.code_Don}/reception/${reception.id}`,
+                url: `../../dons/${reception.code_Don}/reception/${reception.id}`,
             }),
         )
 
@@ -55,7 +55,7 @@ export async function GET() {
             (modaliteslivraison: { id: number; code_Don: number }) => ({
                 ...modaliteslivraison,
                 id: `modaliteslivraison-${modaliteslivraison.id.toString()}`,
-                url: `http://localhost:3000/dons/${modaliteslivraison.code_Don}/modalites-livraison/${modaliteslivraison.id}`,
+                url: `../../dons/${modaliteslivraison.code_Don}/modalites-livraison/${modaliteslivraison.id}`,
             }),
         )
 
@@ -67,7 +67,7 @@ export async function GET() {
             }) => ({
                 ...interactions,
                 id: `interactions-${interactions.id.toString()}`,
-                url: `http://localhost:3000/societe/${interactions.code_Utilisateur_Prospecteur}/entite/${interactions.code_societe_appartenance}/interaction/${interactions.id}`,
+                url: `../../societe/${interactions.code_Utilisateur_Prospecteur}/entite/${interactions.code_societe_appartenance}/interaction/${interactions.id}`,
             }),
         )
 
@@ -79,7 +79,7 @@ export async function GET() {
             }) => ({
                 ...interactionsrelance,
                 id: `interactionsrelance-${interactionsrelance.id.toString()}`,
-                url: `http://localhost:3000/societe/${interactionsrelance.code_Utilisateur_Prospecteur}/entite/${interactionsrelance.code_societe_appartenance}/interaction/${interactionsrelance.id}`,
+                url: `../../societe/${interactionsrelance.code_Utilisateur_Prospecteur}/entite/${interactionsrelance.code_societe_appartenance}/interaction/${interactionsrelance.id}`,
             }),
         )
 
