@@ -20,6 +20,65 @@ export async function GET(
     }
 }
 
+export async function PUT(
+    request: Request,
+    { params }: { params: { prestataireID: string } },
+) {
+    if (!params || params.prestataireID === undefined) {
+        return NextResponse.json(
+            { error: 'Missing or invalid parameters' },
+            { status: 400 },
+        )
+    }
+
+    const prestataireID = params.prestataireID
+    if (prestataireID === undefined) {
+        return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
+    }
+
+    let body
+
+    try {
+        body = await request.json()
+    } catch (error) {
+        return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
+    if (body === null || body === undefined) {
+        console.log(body, 'body', request.body)
+        return NextResponse.json(
+            { error: 'Body is null or undefined' },
+            { status: 400 },
+        )
+    }
+
+    if (Object.keys(body).length === 0) {
+        return NextResponse.json({ error: 'Empty body' }, { status: 400 })
+    }
+
+    try {
+        const columnMapping: { [key: string]: string } = {
+            TP_libelle: 'code_type_de_Prestataire',
+        }
+
+        const columns = Object.keys(body)
+            .map(key => `\`${columnMapping[key] || key}\` = ?`)
+            .join(', ')
+        const values = Object.values(body)
+        const query = `UPDATE \`prestataires\` SET ${columns} WHERE \`code_prestataire\` = ?`
+
+        // Execute query
+        const [rows] = await connection.query(query, [...values, prestataireID])
+        return NextResponse.json(rows)
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
+            { status: 500 },
+        )
+    }
+}
+
 export async function DELETE(
     req: NextRequest,
     { params }: { params: { prestataireID: string } },

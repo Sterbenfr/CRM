@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 enum StatutGenre {
     Madame = 'Madame',
     Monsieur = 'Monsieur',
-    Autre = 'Autre',
+    Autre = 'Non renseigné',
 }
 
 export async function GET() {
