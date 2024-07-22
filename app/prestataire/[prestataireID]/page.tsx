@@ -43,7 +43,9 @@ export default function PrestatairePage({
     const [prestataire, setPrestataire] = useState<PrestataireID[] | null>()
     const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
-    const [modifiedPrestataire, setModifiedPrestataire] = useState<Partial<PrestataireID>>({})
+    const [modifiedPrestataire, setModifiedPrestataire] = useState<
+        Partial<PrestataireID>
+    >({})
 
     useEffect(() => {
         const fetchSessionAndPrestataire = async () => {
@@ -85,7 +87,7 @@ export default function PrestatairePage({
         let value = event.target.value
 
         if (prestataire[0].TP_libelle !== '' && value === '') {
-            value = "Transporteur"
+            value = 'Transporteur'
         }
         setModifiedPrestataire({
             ...modifiedPrestataire,
@@ -105,11 +107,12 @@ export default function PrestatairePage({
     }
 
     const formatDate = (dateString: string | number | Date) => {
-        return dateString ? new Date(dateString).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
-    };
+        return dateString
+            ? new Date(dateString).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0]
+    }
 
     const handleSubmit = async () => {
-
         const jsonPayload = {
             ...modifiedPrestataire,
         }
@@ -127,7 +130,6 @@ export default function PrestatairePage({
                     },
                     body: body,
                 },
-
             )
 
             if (!res.ok) {
@@ -156,36 +158,34 @@ export default function PrestatairePage({
             </div>
         )
 
-        const Print = () => {
-            const printContents = document.getElementById('printablediv')!.innerHTML
-            const originalContents = document.body.innerHTML
-    
-            const applyPrintStyles = () => {
-                document.body.innerHTML = printContents
-                document.body.style.margin = '0'
-                document.body.style.fontSize = '12px'
-                document.body.style.padding = '0'
-                document.body.style.fontFamily = 'Arial'
-                document.body.style.lineHeight = '1'
-                document.body.style.letterSpacing = '0'
-                document.body.style.wordSpacing = '0'
-    
-                const allElements = document.body.getElementsByTagName('*')
-                for (let i = 0; i < allElements.length; i++) {
-                    const element = allElements[i] as HTMLElement
-                    element.style.margin = '7px'
-                    element.style.lineHeight = '1'
-                    element.style.letterSpacing = '0'
-                    element.style.wordSpacing = '0'
-                }
+    const Print = () => {
+        const printContents = document.getElementById('printablediv')!.innerHTML
+        const originalContents = document.body.innerHTML
+
+        const applyPrintStyles = () => {
+            document.body.innerHTML = printContents
+            document.body.style.margin = '0'
+            document.body.style.padding = '0'
+
+            const allElements = document.body.getElementsByTagName('*')
+            for (let i = 0; i < allElements.length; i++) {
+                const element = allElements[i] as HTMLElement
+                element.style.margin = '10px'
+                element.style.fontSize = '12px'
+                element.style.padding = '0'
+                element.style.fontFamily = 'Arial'
+                element.style.lineHeight = '1'
+                element.style.letterSpacing = '0'
+                element.style.wordSpacing = '0'
+                element.style.borderLeft = 'none'
             }
-    
-            applyPrintStyles()
-            window.print()
-            document.body.innerHTML = originalContents
-            window.location.reload()
         }
 
+        applyPrintStyles()
+        window.print()
+        document.body.innerHTML = originalContents
+        window.location.reload()
+    }
 
     return (
         <div className={style.idPage}>
@@ -221,27 +221,29 @@ export default function PrestatairePage({
                             Imprimer
                         </button>
                     </div>
-                )
-            }
-            
+                )}
+
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
-
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Code du prestataire :</p>
-                                    <p>
-                                        {prestataire[0].code_Prestataire == null
-                                            ? '/'
-                                            : prestataire[0].code_Prestataire}
-                                    </p>
+                                <p className={style.titre}>
+                                    Code du prestataire :
+                                </p>
+                                <p>
+                                    {prestataire[0].code_Prestataire == null
+                                        ? '/'
+                                        : prestataire[0].code_Prestataire}
+                                </p>
                             </div>
                         </div>
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Type du prestataire :</p>
+                                <p className={style.titre}>
+                                    Type du prestataire :
+                                </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
                                     session?.user.role === 'RR') ? (
@@ -253,12 +255,12 @@ export default function PrestatairePage({
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].TP_libelle === null || ''
+                                        {prestataire[0].TP_libelle === null ||
+                                        ''
                                             ? '/'
                                             : prestataire[0].TP_libelle}
                                     </p>
                                 )}
-                                
                             </div>
                         </div>
 
@@ -281,14 +283,15 @@ export default function PrestatairePage({
                                                 : 'Actuellement: ' +
                                                   prestataire[0].raison_sociale
                                         }
-                                        maxLength = {30}
+                                        maxLength={30}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].raison_sociale === (null || '')
-                                        ? '/'
-                                        : prestataire[0].raison_sociale}
+                                        {prestataire[0].raison_sociale ===
+                                        (null || '')
+                                            ? '/'
+                                            : prestataire[0].raison_sociale}
                                     </p>
                                 )}
                             </div>
@@ -318,10 +321,11 @@ export default function PrestatairePage({
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].nom_commercial === (null || '')
-                                        ? '/'
-                                        : prestataire[0].nom_commercial}
-                                </p>
+                                        {prestataire[0].nom_commercial ===
+                                        (null || '')
+                                            ? '/'
+                                            : prestataire[0].nom_commercial}
+                                    </p>
                                 )}
                             </div>
                         </div>
@@ -334,29 +338,29 @@ export default function PrestatairePage({
                                     <input
                                         type='number'
                                         name='Siren'
-                                        value={
-                                            modifiedPrestataire.Siren
-                                        }
+                                        value={modifiedPrestataire.Siren}
                                         placeholder={
-                                            prestataire[0].Siren ==
-                                                null ||
-                                            prestataire[0].Siren == '' 
+                                            prestataire[0].Siren == null ||
+                                            prestataire[0].Siren == ''
                                                 ? 'Exemple: 453684259'
                                                 : 'Actuellement: ' +
                                                   prestataire[0].Siren
                                         }
-                                        onInput={(e: React.ChangeEvent<HTMLInputElement>,
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
                                         ) => {
                                             if (e.target.value.length > 9) {
-                                        e.target.value = e.target.value.slice(0,9)
-                                        }}}
+                                                e.target.value =
+                                                    e.target.value.slice(0, 9)
+                                            }
+                                        }}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
                                         {prestataire[0].Siren === (null || '')
-                                        ? '/'
-                                        : prestataire[0].Siren}
+                                            ? '/'
+                                            : prestataire[0].Siren}
                                     </p>
                                 )}
                             </div>
@@ -370,29 +374,29 @@ export default function PrestatairePage({
                                     <input
                                         type='number'
                                         name='Siret'
-                                        value={
-                                            modifiedPrestataire.Siret
-                                        }
+                                        value={modifiedPrestataire.Siret}
                                         placeholder={
-                                            prestataire[0].Siret ==
-                                                null ||
+                                            prestataire[0].Siret == null ||
                                             prestataire[0].Siret == ''
                                                 ? 'Exemple: 15269783246918'
                                                 : 'Actuellement: ' +
                                                   prestataire[0].Siret
                                         }
-                                        onInput={(e: React.ChangeEvent<HTMLInputElement>,
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
                                         ) => {
                                             if (e.target.value.length > 14) {
-                                        e.target.value = e.target.value.slice(0,14)
-                                        }}}
+                                                e.target.value =
+                                                    e.target.value.slice(0, 14)
+                                            }
+                                        }}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
                                         {prestataire[0].Siret == (null || '')
-                                        ? '/'
-                                        : prestataire[0].Siret}
+                                            ? '/'
+                                            : prestataire[0].Siret}
                                     </p>
                                 )}
                             </div>
@@ -406,29 +410,30 @@ export default function PrestatairePage({
                                     <input
                                         type='number'
                                         name='telephone'
-                                        value={
-                                            modifiedPrestataire.telephone
-                                        }
+                                        value={modifiedPrestataire.telephone}
                                         placeholder={
-                                            prestataire[0].telephone ==
-                                                null ||
+                                            prestataire[0].telephone == null ||
                                             prestataire[0].telephone === ''
                                                 ? 'Exemple: 0658905910'
                                                 : 'Actuellement: ' +
                                                   prestataire[0].telephone
                                         }
-                                        onInput={(e: React.ChangeEvent<HTMLInputElement>,
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
                                         ) => {
                                             if (e.target.value.length > 12) {
-                                        e.target.value = e.target.value.slice(0,12)
-                                        }}}
+                                                e.target.value =
+                                                    e.target.value.slice(0, 12)
+                                            }
+                                        }}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].telephone == (null || '')
-                                        ? '/'
-                                        : prestataire[0].telephone}
+                                        {prestataire[0].telephone ==
+                                        (null || '')
+                                            ? '/'
+                                            : prestataire[0].telephone}
                                     </p>
                                 )}
                             </div>
@@ -442,12 +447,9 @@ export default function PrestatairePage({
                                     <input
                                         type='mail'
                                         name='mail'
-                                        value={
-                                            modifiedPrestataire.mail
-                                        }
+                                        value={modifiedPrestataire.mail}
                                         placeholder={
-                                            prestataire[0].mail ===
-                                                null ||
+                                            prestataire[0].mail === null ||
                                             prestataire[0].mail === ''
                                                 ? 'Exemple: Prestataire.prestataire@gmail.com'
                                                 : 'Actuellement: ' +
@@ -459,8 +461,8 @@ export default function PrestatairePage({
                                 ) : (
                                     <p>
                                         {prestataire[0].mail == (null || '')
-                                        ? '/'
-                                        : prestataire[0].mail}
+                                            ? '/'
+                                            : prestataire[0].mail}
                                     </p>
                                 )}
                             </div>
@@ -468,7 +470,6 @@ export default function PrestatairePage({
                     </div>
 
                     <div className={style.col_2}>
-
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Adresse :</p>
@@ -477,12 +478,9 @@ export default function PrestatairePage({
                                     <input
                                         type='input'
                                         name='adresse'
-                                        value={
-                                            modifiedPrestataire.adresse
-                                        }
+                                        value={modifiedPrestataire.adresse}
                                         placeholder={
-                                            prestataire[0].adresse ==
-                                                null ||
+                                            prestataire[0].adresse == null ||
                                             prestataire[0].adresse === ''
                                                 ? 'Exemple: 12 rue de la paix, 75000 Paris'
                                                 : 'Actuellement: ' +
@@ -494,8 +492,8 @@ export default function PrestatairePage({
                                 ) : (
                                     <p>
                                         {prestataire[0].adresse == (null || '')
-                                        ? '/'
-                                        : prestataire[0].adresse}
+                                            ? '/'
+                                            : prestataire[0].adresse}
                                     </p>
                                 )}
                             </div>
@@ -511,33 +509,31 @@ export default function PrestatairePage({
                                     session?.user.role === 'RR') ? (
                                     <SelectComponent
                                         url='../../api/select/genre'
-                                        onChange={e =>
-                                            handleCiviliteChange(e)
-                                        }
+                                        onChange={e => handleCiviliteChange(e)}
                                     />
                                 ) : (
                                     <p>
-                                    {prestataire[0].civilite_contact_prestataire ==
-                                    (null || '')
-                                        ? '/'
-                                        : prestataire[0]
-                                        .civilite_contact_prestataire === 'M.'
-                                        ? 'Monsieur'
-                                        : prestataire[0]
-                                        .civilite_contact_prestataire ===
-                                            'Mme'
-                                            ? 'Madame'
-                                            : 'Non renseigné'}
-                                </p>
+                                        {prestataire[0]
+                                            .civilite_contact_prestataire ==
+                                        (null || '')
+                                            ? '/'
+                                            : prestataire[0]
+                                                    .civilite_contact_prestataire ===
+                                                'M.'
+                                              ? 'Monsieur'
+                                              : prestataire[0]
+                                                      .civilite_contact_prestataire ===
+                                                  'Mme'
+                                                ? 'Madame'
+                                                : 'Non renseigné'}
+                                    </p>
                                 )}
                             </div>
                         </div>
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>
-                                    Nom du contact :
-                                </p>
+                                <p className={style.titre}>Nom du contact :</p>
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
@@ -547,27 +543,32 @@ export default function PrestatairePage({
                                             modifiedPrestataire.nom_contact_prestataire
                                         }
                                         placeholder={
-                                            prestataire[0].nom_contact_prestataire ==
+                                            prestataire[0]
+                                                .nom_contact_prestataire ==
                                                 null ||
-                                            prestataire[0].nom_contact_prestataire === ''
+                                            prestataire[0]
+                                                .nom_contact_prestataire === ''
                                                 ? 'Exemple: Delacroix'
                                                 : 'Actuellement: ' +
-                                                  prestataire[0].nom_contact_prestataire
+                                                  prestataire[0]
+                                                      .nom_contact_prestataire
                                         }
                                         maxLength={20}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].nom_contact_prestataire ==
+                                        {prestataire[0]
+                                            .nom_contact_prestataire ==
                                         (null || '')
-                                        ? '/'
-                                        : prestataire[0].nom_contact_prestataire}
+                                            ? '/'
+                                            : prestataire[0]
+                                                  .nom_contact_prestataire}
                                     </p>
                                 )}
                             </div>
                         </div>
-                        
+
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
@@ -582,22 +583,28 @@ export default function PrestatairePage({
                                             modifiedPrestataire.prenom_contact_prestataire
                                         }
                                         placeholder={
-                                            prestataire[0].prenom_contact_prestataire ==
+                                            prestataire[0]
+                                                .prenom_contact_prestataire ==
                                                 null ||
-                                            prestataire[0].prenom_contact_prestataire === ''
+                                            prestataire[0]
+                                                .prenom_contact_prestataire ===
+                                                ''
                                                 ? 'Exemple: David'
                                                 : 'Actuellement: ' +
-                                                  prestataire[0].prenom_contact_prestataire
+                                                  prestataire[0]
+                                                      .prenom_contact_prestataire
                                         }
                                         maxLength={20}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].prenom_contact_prestataire ==
+                                        {prestataire[0]
+                                            .prenom_contact_prestataire ==
                                         (null || '')
-                                        ? '/'
-                                        : prestataire[0].prenom_contact_prestataire}
+                                            ? '/'
+                                            : prestataire[0]
+                                                  .prenom_contact_prestataire}
                                     </p>
                                 )}
                             </div>
@@ -617,27 +624,35 @@ export default function PrestatairePage({
                                             modifiedPrestataire.telephone_contact_prestataire
                                         }
                                         placeholder={
-                                            prestataire[0].telephone_contact_prestataire ==
+                                            prestataire[0]
+                                                .telephone_contact_prestataire ==
                                                 null ||
-                                            prestataire[0].telephone_contact_prestataire === ''
+                                            prestataire[0]
+                                                .telephone_contact_prestataire ===
+                                                ''
                                                 ? 'Exemple: 0658905910'
                                                 : 'Actuellement: ' +
-                                                  prestataire[0].telephone_contact_prestataire
+                                                  prestataire[0]
+                                                      .telephone_contact_prestataire
                                         }
-                        
-                                        onInput={(e: React.ChangeEvent<HTMLInputElement>,
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
                                         ) => {
                                             if (e.target.value.length > 12) {
-                                        e.target.value = e.target.value.slice(0,12)
-                                        }}}
+                                                e.target.value =
+                                                    e.target.value.slice(0, 12)
+                                            }
+                                        }}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].telephone_contact_prestataire ==
+                                        {prestataire[0]
+                                            .telephone_contact_prestataire ==
                                         (null || '')
-                                        ? '/'
-                                        : prestataire[0].telephone_contact_prestataire}
+                                            ? '/'
+                                            : prestataire[0]
+                                                  .telephone_contact_prestataire}
                                     </p>
                                 )}
                             </div>
@@ -645,9 +660,7 @@ export default function PrestatairePage({
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>
-                                    Mail du contact :
-                                </p>
+                                <p className={style.titre}>Mail du contact :</p>
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
@@ -657,22 +670,27 @@ export default function PrestatairePage({
                                             modifiedPrestataire.mail_contact_prestataire
                                         }
                                         placeholder={
-                                            prestataire[0].mail_contact_prestataire ==
+                                            prestataire[0]
+                                                .mail_contact_prestataire ==
                                                 null ||
-                                            prestataire[0].mail_contact_prestataire === ''
+                                            prestataire[0]
+                                                .mail_contact_prestataire === ''
                                                 ? 'Exemple: Paul.durand@gmail.com'
                                                 : 'Actuellement: ' +
-                                                  prestataire[0].mail_contact_prestataire
+                                                  prestataire[0]
+                                                      .mail_contact_prestataire
                                         }
                                         maxLength={255}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].mail_contact_prestataire ==
+                                        {prestataire[0]
+                                            .mail_contact_prestataire ==
                                         (null || '')
-                                        ? '/'
-                                        : prestataire[0].mail_contact_prestataire}
+                                            ? '/'
+                                            : prestataire[0]
+                                                  .mail_contact_prestataire}
                                     </p>
                                 )}
                             </div>
@@ -686,9 +704,7 @@ export default function PrestatairePage({
                                     <input
                                         type='input'
                                         name='commentaires'
-                                        value={
-                                            modifiedPrestataire.commentaires
-                                        }
+                                        value={modifiedPrestataire.commentaires}
                                         placeholder={
                                             prestataire[0].commentaires ==
                                                 null ||
@@ -702,9 +718,10 @@ export default function PrestatairePage({
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].commentaires == (null || '')
-                                        ? '/'
-                                        : prestataire[0].commentaires}
+                                        {prestataire[0].commentaires ==
+                                        (null || '')
+                                            ? '/'
+                                            : prestataire[0].commentaires}
                                     </p>
                                 )}
                             </div>
@@ -716,25 +733,35 @@ export default function PrestatairePage({
                                     Date d&apos;arrêt de l&apos;activité :
                                 </p>
                                 {modify &&
-                                    (session?.user.role === 'AD' || session?.user.role === 'RC') ? (
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RC') ? (
                                     <input
                                         type='date'
                                         name='date_arret_activite_du_prestataire'
-                                        value={formatDate(modifiedPrestataire.date_arret_activite_du_prestataire || prestataire[0].date_arret_activite_du_prestataire)}
+                                        value={formatDate(
+                                            modifiedPrestataire.date_arret_activite_du_prestataire ||
+                                                prestataire[0]
+                                                    .date_arret_activite_du_prestataire,
+                                        )}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {prestataire[0].date_arret_activite_du_prestataire == null
+                                        {prestataire[0]
+                                            .date_arret_activite_du_prestataire ==
+                                        null
                                             ? '/'
-                                            : formatDate(prestataire[0].date_arret_activite_du_prestataire)}
+                                            : formatDate(
+                                                  prestataire[0]
+                                                      .date_arret_activite_du_prestataire,
+                                              )}
                                     </p>
                                 )}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     )
 }
