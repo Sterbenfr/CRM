@@ -24,7 +24,6 @@ export async function PUT(
     request: Request,
     { params }: { params: { donsID: string } },
 ) {
-    // Check if params is undefined or does not contain donsID
     if (!params || params.donsID === undefined) {
         return NextResponse.json(
             { error: 'Missing or invalid parameters' },
@@ -45,7 +44,6 @@ export async function PUT(
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    // Check if body is null or undefined
     if (body === null || body === undefined) {
         console.log(body, 'body', request.body)
         return NextResponse.json(
@@ -54,20 +52,17 @@ export async function PUT(
         )
     }
 
-    // Validate body is not empty
     if (Object.keys(body).length === 0) {
         return NextResponse.json({ error: 'Empty body' }, { status: 400 })
     }
 
     try {
-        // Map body keys to match the actual column names in the Dons table
         const columnMapping: { [key: string]: string } = {
             Utilisateur_accepte_refuse_don:
                 'code_Utilisateur_accepte_refuse_don',
             Utilisateur_saisie_don: 'code_Utilisateur_saisie_don',
             contact_entite_donatrice: 'code_contact_Entite_donatrice',
             designation_longue: 'code_site_beneficiaire_don',
-            // Add other mappings if necessary
         }
 
         const columns = Object.keys(body)

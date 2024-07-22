@@ -277,6 +277,7 @@ function PrestatairesPage() {
                 value: telephoneContactPrestataire,
                 placeholder: 'Exemple: 0658905910',
                 maxLength: 12,
+                required: true,
                 onInputChange: handleTelephoneContactPrestataireChange,
             },
             {
@@ -285,6 +286,7 @@ function PrestatairesPage() {
                 value: mailContactPrestataire,
                 placeholder: 'Exemple: David.delacroix@gmail.com',
                 maxLength: 255,
+                required: true,
                 onInputChange: handleMailContactPrestataireChange,
             },
             {
@@ -314,6 +316,13 @@ function PrestatairesPage() {
         } else if (fields[4].value !== '') {
             fields[3].required = false
         }
+
+        if (fields[11].value !== '') {
+            fields[12].required = false
+        } else if (fields[12].value !== '') {
+            fields[11].required = false
+        }
+
 
         if (
             dateArretActiviteDuPrestataire &&
