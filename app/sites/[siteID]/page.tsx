@@ -53,13 +53,12 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
         fetchSessionAndSite()
     }, [params.siteID, modify])
 
-    
     const handleTypeSiteChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         if (!site || site.length === 0 || !session) return
         let value = event.target.value
-        
+
         if (site[0].code_type_site !== '' && value === '') {
             value = site[0].code_type_site
         }
@@ -69,7 +68,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
             code_type_site: value,
         })
     }
-    
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -87,12 +86,12 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
         if (!site || site.length === 0 || !session) return
         const { name, value } = e.target
 
-        const dateOuverture = new Date(site[0].date_ouverture);
-        const dateFermeture = new Date(value);
+        const dateOuverture = new Date(site[0].date_ouverture)
+        const dateFermeture = new Date(value)
 
-        let finalValue = value;
+        let finalValue = value
         if (dateFermeture < dateOuverture) {
-            finalValue = formatDate(dateOuverture);
+            finalValue = formatDate(dateOuverture)
         }
 
         setModifiedSite(prevState => ({
@@ -108,7 +107,6 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
     }
 
     const handleSubmit = async () => {
-
         const jsonPayload = {
             ...modifiedSite,
         }
@@ -195,7 +193,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                 <a href='/sites' className={style.btnC}>
                     <Image
                         className={style.CRid}
-                        src='/IMG/Return.png'
+                        src='/IMG/return.svg'
                         height={30}
                         width={30}
                         alt='Fermer la fenêtre'
@@ -349,9 +347,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 <p>
                                     {site[0].date_ouverture == null
                                         ? '/'
-                                        : formatDate(
-                                              site[0].date_ouverture,
-                                    )}
+                                        : formatDate(site[0].date_ouverture)}
                                 </p>
                             </div>
                         </div>
@@ -371,7 +367,9 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                             modifiedSite.date_fermeture ||
                                                 site[0].date_fermeture,
                                         )}
-                                        onChange={e => handleDateFermetureChange(e)}
+                                        onChange={e =>
+                                            handleDateFermetureChange(e)
+                                        }
                                     />
                                 ) : (
                                     <p>

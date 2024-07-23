@@ -89,7 +89,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `sites` WHERE `code_site` = ?'
+        const query = 'DELETE FROM `Sites` WHERE `code_site` = ?'
         const [rows] = await connection.query(query, siteID)
         return NextResponse.json(rows)
     } catch (error) {

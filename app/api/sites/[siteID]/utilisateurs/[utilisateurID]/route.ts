@@ -89,7 +89,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `utilisateurs` WHERE `code_utilisateur` = ?'
+        const query = 'DELETE FROM `Utilisateurs` WHERE `code_utilisateur` = ?'
         const [rows] = await connection.query(query, utilisateurID)
         return NextResponse.json(rows)
     } catch (error) {

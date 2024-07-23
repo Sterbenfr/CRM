@@ -378,7 +378,7 @@ const PopUp: React.FC<PopUpProps> = ({
                     <button className={style.btnC} onClick={onClose}>
                         <Image
                             className={style.CR}
-                            src='/IMG/CROIX.png'
+                            src='/IMG/close.svg'
                             height={30}
                             width={30}
                             alt='Fermer la fenêtre'

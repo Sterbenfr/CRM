@@ -194,7 +194,7 @@ export default function PrestatairePage({
                 <a href='/prestataire' className={style.btnC}>
                     <Image
                         className={style.CRid}
-                        src='/IMG/Return.png'
+                        src='/IMG/return.svg'
                         height={30}
                         width={30}
                         alt='Fermer la fenêtre'
