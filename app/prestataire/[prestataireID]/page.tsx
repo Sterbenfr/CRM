@@ -278,6 +278,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='raison_sociale'
                                         value={
@@ -311,6 +312,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom_commercial'
                                         value={
@@ -344,6 +346,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='Siren'
                                         value={modifiedPrestataire.Siren}
@@ -380,6 +383,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='Siret'
                                         value={modifiedPrestataire.Siret}
@@ -416,6 +420,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='telephone'
                                         value={modifiedPrestataire.telephone}
@@ -453,6 +458,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='mail'
                                         name='mail'
                                         value={modifiedPrestataire.mail}
@@ -484,6 +490,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='adresse'
                                         value={modifiedPrestataire.adresse}
@@ -545,6 +552,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom_contact_prestataire'
                                         value={
@@ -585,6 +593,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='prenom_contact_prestataire'
                                         value={
@@ -626,6 +635,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='telephone_contact_prestataire'
                                         value={
@@ -672,6 +682,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='mail'
                                         name='mail_contact_prestataire'
                                         value={
@@ -710,6 +721,7 @@ export default function PrestatairePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedPrestataire.commentaires}
@@ -744,6 +756,7 @@ export default function PrestatairePage({
                                 (session?.user.role === 'AD' ||
                                     session?.user.role === 'RC') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_arret_activite_du_prestataire'
                                         value={formatDate(

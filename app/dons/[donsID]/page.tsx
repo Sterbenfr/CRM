@@ -451,6 +451,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'RR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='date'
                                     name='date_acceptation_refus_don'
                                     value={
@@ -489,6 +490,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'RR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='text'
                                     name='Utilisateur_accepte_refuse_don'
                                     value={String(
@@ -545,6 +547,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.checkboxF}
                                     type='checkbox'
                                     name='indicateur_remerciement'
                                     value={
@@ -575,6 +578,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='date'
                                     name='date_remerciement'
                                     value={
@@ -613,6 +617,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='input'
                                     name='nom_destinataire_cerfa'
                                     value={modifiedDon.nom_destinataire_cerfa}
@@ -641,6 +646,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='input'
                                     name='adresse_destinataire_cerfa'
                                     value={
@@ -672,6 +678,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='input'
                                     name='adresse_mail_destinataire_cerfa'
                                     value={
@@ -708,6 +715,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             </p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='number'
                                     name='telephone_destinataire_cerfa'
                                     value={
@@ -739,6 +747,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>Valeur du cerfa :</p>
                             {modify && session?.user.role === ('AD' || 'PR') ? (
                                 <input
+                                    className={style.selectF}
                                     type='number'
                                     name='valeur_cerfa'
                                     value={modifiedDon.valeur_cerfa}
@@ -766,6 +775,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'RC') ? (
                                     <input
+                                        className={style.checkboxF}
                                         type='checkbox'
                                         name='cerfa_fait'
                                         value={
@@ -795,6 +805,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'RC') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_cerfa'
                                         value={
@@ -830,6 +841,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>Cerfa :</p>
                             {modify && session?.user.role === ('AD' || 'RC') ? (
                                 <input
+                                    className={style.selectF}
                                     type='file'
                                     name='cerfa_file'
                                     onChange={handleFileChange}
@@ -854,6 +866,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     '/'
                                 ) : (
                                     <a
+                                        className={style.selectF}
                                         href={don[0].pieces_associees}
                                         download={
                                             'pièce_associée_' +

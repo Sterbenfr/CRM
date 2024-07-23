@@ -9,17 +9,25 @@
 }
 
 .fc .fc-button-primary:not(:disabled),
-.fc .fc-button-primary:not(:disabled):hover,
 .fc .fc-button-primary:not(:disabled):active,
 .fc .fc-button-primary:not(:disabled):focus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #ffffff; /* couleur bouton de droite */
     border-color: #ffffff; /* couleur bordure bouton de droite */
     color: #000000;
     font: 1.2rem;
+    height: 50px;
+    width: 50px;
     font-weight: bold;
     border: none !important;
     box-shadow: none !important;
     outline: none !important; /* Force à ne pas afficher le contour */
+}
+
+.fc .fc-button-primary:not(:disabled):hover {
+    font-size: 1.25rem;
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
@@ -77,15 +85,17 @@
 /* Container for the entire checkbox section */
 .filter-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
     gap: 10px; /* Space between each checkbox */
-    padding: 20px; /* Padding around the container */
+    padding: 15px; /* Padding around the container */
     border: 2px solid #e5007d; /* Optional: adds a border around the container */
     border-radius: 5px; /* Optional: rounds the corners of the container */
-    max-width: 250px; /* Adjust based on preference */
+    width: auto;
     margin: auto; /* Centers the container */
     accent-color: #e5007d;
-    margin-bottom: 50px; /* Optional: adds space between the container and other elements */
+    margin-bottom: 20px; /* Optional: adds space between the container and other elements */
 }
 
 /* Styles for each label, enhancing spacing and interaction */
@@ -104,4 +114,9 @@
 /* Optional: Style for hover effect on labels */
 .filter-container label:hover {
     background-color: #f2f2f2;
+}
+
+.lineCh {
+    display: flex;
+    justify-content: center;
 }

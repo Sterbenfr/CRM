@@ -308,6 +308,22 @@ function DonsPage() {
                     onInputChange: handleEntiteDonatriceChange,
                 },
                 {
+                    id: 'commentaires',
+                    type: 'input',
+                    value: commentaires,
+                    placeholder: 'Exemple: ...',
+                    maxLength: 200,
+                    onInputChange: handleCommentairesChange,
+                },
+                {
+                    id: 'nom_destinataire_cerfa',
+                    type: 'input',
+                    value: nomDestinataireCerfa,
+                    placeholder: 'Exemple: Dupont',
+                    maxLength: 50,
+                    onInputChange: handleNomDestinataireCerfaChange,
+                },
+                {
                     id: 'titre_don',
                     type: 'input',
                     value: titreDon,
@@ -315,6 +331,15 @@ function DonsPage() {
                     maxLength: 50,
                     required: true,
                     onInputChange: handleTitreDonChange,
+                },
+                { id: 'pieces_associees', type: 'file', value: null },
+                {
+                    id: 'adresse_destinataire_cerfa',
+                    type: 'input',
+                    value: adresseDestinataireCerfa,
+                    placeholder: 'Exemple: 12 rue des lilas, 59000 Lille',
+                    maxLength: 100,
+                    onInputChange: handleadresseDestinataireCerfaChange,
                 },
                 {
                     id: 'date_proposition_don',
@@ -326,49 +351,6 @@ function DonsPage() {
                     onInputChange: handleDatePropositionDon,
                 },
                 {
-                    id: 'code_contact_Entite_donatrice',
-                    type: 'select',
-                    value: codeContactEntiteDonatrice,
-                    url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
-                    required: true,
-                    onChange: handleCodeContactEntiteDonatriceChange,
-                }, //si c'est un nouveau contact ?
-                {
-                    id: 'code_type_don',
-                    type: 'select',
-                    value: selectedTypeDon,
-                    url: '../api/dons/type-don',
-                    createURL: '/dons/type-don',
-                    required: true,
-                    onChange: handleTypeDonChange,
-                },
-                {
-                    id: 'date_debut_mise_disposition',
-                    type: 'date',
-                    value: !isNaN(debutMiseDispo.getTime())
-                        ? debutMiseDispo.toISOString().split('T')[0]
-                        : null,
-                    onInputChange: handleDebutMiseDispoChange,
-                },
-                {
-                    id: 'date_fin_mise_disposition',
-                    type: 'date',
-                    value: !isNaN(finMiseDispo.getTime())
-                        ? finMiseDispo.toISOString().split('T')[0]
-                        : null,
-                    onInputChange: handleFinMiseDispoChange,
-                },
-                {
-                    id: 'commentaires',
-                    type: 'input',
-                    value: commentaires,
-                    placeholder: 'Exemple: ...',
-                    maxLength: 200,
-                    onInputChange: handleCommentairesChange,
-                },
-                { id: 'pieces_associees', type: 'file', value: null },
-
-                {
                     id: 'code_Utilisateur_saisie_don',
                     type: 'search',
                     placeholder: 'Exemple: Jean Dupont',
@@ -378,11 +360,49 @@ function DonsPage() {
                     onInputChange: handleCodeUtilisateurSaisieDonChange,
                 }, //default : login
                 {
-                    id: 'statut_acceptation_don',
+                    id: 'adresse_mail_destinataire_cerfa',
+                    type: 'input',
+                    value: adresseMailDestinataireCerfa,
+                    placeholder: 'Exemple: Exemple@exemple.com',
+                    maxLength: 100,
+                    onInputChange: handleAdresseMailDestinataireCerfaChange,
+                },
+                {
+                    id: 'code_contact_Entite_donatrice',
                     type: 'select',
-                    value: statutAcceptationDon,
-                    url: '../api/select/dons',
-                    onChange: handleStatutAcceptationDonChange,
+                    value: codeContactEntiteDonatrice,
+                    url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
+                    required: true,
+                    onChange: handleCodeContactEntiteDonatriceChange,
+                }, //si c'est un nouveau contact ?
+
+                {
+                    id: 'code_site_beneficiaire_don',
+                    type: 'search',
+                    url: '../api/select/sites',
+                    createURL: '/sites',
+                    value: siteBeneficiaireDon,
+                    required: true,
+                    placeholder: 'Exemple: Entrepôt Principal',
+                    onInputChange: handleSiteBeneficiaireDonChange,
+                },
+
+                {
+                    id: 'telephone_destinataire_cerfa',
+                    type: 'input',
+                    value: telephoneDestinataireCerfa,
+                    placeholder: 'Exemple: 0601020304',
+                    maxLength: 12,
+                    onInputChange: handleTelephoneDestinataireCerfaChange,
+                },
+                {
+                    id: 'code_type_don',
+                    type: 'select',
+                    value: selectedTypeDon,
+                    url: '../api/dons/type-don',
+                    createURL: '/dons/type-don',
+                    required: true,
+                    onChange: handleTypeDonChange,
                 },
                 {
                     id: 'code_Utilisateur_accepte_refuse_don',
@@ -394,14 +414,42 @@ function DonsPage() {
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
                 }, //default : login
                 {
-                    id: 'code_site_beneficiaire_don',
-                    type: 'search',
-                    url: '../api/select/sites',
-                    createURL: '/sites',
-                    value: siteBeneficiaireDon,
-                    required: true,
-                    placeholder: 'Exemple: Entrepôt Principal',
-                    onInputChange: handleSiteBeneficiaireDonChange,
+                    id: 'valeur_cerfa',
+                    type: 'number',
+                    value: valeurCerfa.toString(),
+                    placeholder: 'Exemple: 100',
+                    maxLength: 11,
+                    onInputChange: handleValeurCerfaChange,
+                },
+
+                {
+                    id: 'date_debut_mise_disposition',
+                    type: 'date',
+                    value: !isNaN(debutMiseDispo.getTime())
+                        ? debutMiseDispo.toISOString().split('T')[0]
+                        : null,
+                    onInputChange: handleDebutMiseDispoChange,
+                },
+
+                {
+                    id: 'date_fin_mise_disposition',
+                    type: 'date',
+                    value: !isNaN(finMiseDispo.getTime())
+                        ? finMiseDispo.toISOString().split('T')[0]
+                        : null,
+                    onInputChange: handleFinMiseDispoChange,
+                },
+                {
+                    id: 'cerfa',
+                    type: 'file',
+                    value: null,
+                },
+                {
+                    id: 'statut_acceptation_don',
+                    type: 'select',
+                    value: statutAcceptationDon,
+                    url: '../api/select/dons',
+                    onChange: handleStatutAcceptationDonChange,
                 },
                 {
                     id: 'indicateur_remerciement',
@@ -410,55 +458,10 @@ function DonsPage() {
                     onInputChange: handleIndicateurRemerciement,
                 },
                 {
-                    id: 'nom_destinataire_cerfa',
-                    type: 'input',
-                    value: nomDestinataireCerfa,
-                    placeholder: 'Exemple: Dupont',
-                    maxLength: 50,
-                    onInputChange: handleNomDestinataireCerfaChange,
-                },
-                {
-                    id: 'adresse_destinataire_cerfa',
-                    type: 'input',
-                    value: adresseDestinataireCerfa,
-                    placeholder: 'Exemple: 12 rue des lilas, 59000 Lille',
-                    maxLength: 100,
-                    onInputChange: handleadresseDestinataireCerfaChange,
-                },
-                {
-                    id: 'adresse_mail_destinataire_cerfa',
-                    type: 'input',
-                    value: adresseMailDestinataireCerfa,
-                    placeholder: 'Exemple: Exemple@exemple.com',
-                    maxLength: 100,
-                    onInputChange: handleAdresseMailDestinataireCerfaChange,
-                },
-                {
-                    id: 'telephone_destinataire_cerfa',
-                    type: 'input',
-                    value: telephoneDestinataireCerfa,
-                    placeholder: 'Exemple: 0601020304',
-                    maxLength: 12,
-                    onInputChange: handleTelephoneDestinataireCerfaChange,
-                },
-                {
-                    id: 'valeur_cerfa',
-                    type: 'number',
-                    value: valeurCerfa.toString(),
-                    placeholder: 'Exemple: 100',
-                    maxLength: 11,
-                    onInputChange: handleValeurCerfaChange,
-                },
-                {
                     id: 'cerfa_fait',
                     type: 'checkbox',
                     value: cerfaFait ? 'O' : 'N',
                     onInputChange: handleCerfaFait,
-                },
-                {
-                    id: 'cerfa',
-                    type: 'file',
-                    value: null,
                 },
             ]
 
@@ -466,7 +469,7 @@ function DonsPage() {
             let incrementFileIndex2 = 0
 
             const FindIndex = (id: string) => {
-                return fields.findIndex(field => field.id === id) + 1
+                return fields.findIndex(field => field.id === id) + 3
             }
 
             if (debutMiseDispo !== new Date()) {
@@ -518,7 +521,7 @@ function DonsPage() {
                 incrementFileIndex2++
             }
 
-            if (statutAcceptationDon !== 'A') {
+            if (statutAcceptationDon === 'R' || statutAcceptationDon === 'V') {
                 fields.splice(FindIndex('statut_acceptation_don'), 0, {
                     id: 'date_acceptation_refus_don',
                     type: 'date',
