@@ -390,7 +390,9 @@ const PopUp: React.FC<PopUpProps> = ({
             </div>
             <div
                 className={
-                    fields.some(field => field.id.startsWith('code_type_don'))
+                    fields.some(field =>
+                        field.id.startsWith('date_debut_mise_disposition'),
+                    )
                         ? style.gridTwoColumns
                         : ''
                 }

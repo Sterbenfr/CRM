@@ -351,7 +351,7 @@ function SocietesPage() {
                 <TypesButtons
                     items={[
                         {
-                            label: "Types d'activite d'entreprise'",
+                            label: "Types d'activite d'entreprise",
                             url: 'type-activite-societe',
                         },
                     ]}

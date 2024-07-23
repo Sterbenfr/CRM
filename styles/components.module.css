@@ -615,7 +615,7 @@
     align-items: center;
     width: 70%;
     font-weight: bold;
-    margin-right: 8rem;
+    margin-left: 5rem;
 }
 
 .calendar {
@@ -848,8 +848,9 @@
 
 .gridTwoColumns {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(11, 1fr);
+    grid-template-columns: 30% 30% 30%;
+    margin-left: 7%;
+    gap: 1rem;
 }
 
 .popupCol[data-col='0'] {
@@ -922,7 +923,7 @@
     font-family: inherit;
     cursor: pointer;
     margin: 20px auto;
-    margin-bottom: 15rem;
+    margin-bottom: 25rem;
     margin-top: 4rem;
 }
 
