@@ -21,12 +21,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `reception` WHERE code_Don = ? LIMIT ?, ?',
+            'SELECT * FROM `Reception` WHERE code_Don = ? LIMIT ?, ?',
             [donsID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `reception` WHERE code_Don = ?',
+            'SELECT COUNT(*) as count FROM `Reception` WHERE code_Don = ?',
             [donsID],
         )
 
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     try {
         console.log(reception)
-        const query = 'INSERT INTO `reception` SET ?'
+        const query = 'INSERT INTO `Reception` SET ?'
         const [rows] = await connection.query(query, reception)
         return NextResponse.json(rows)
     } catch (error) {

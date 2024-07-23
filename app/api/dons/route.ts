@@ -21,7 +21,7 @@ export async function GET(request: Request) {
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `dons`',
+            'SELECT COUNT(*) as count FROM `Dons`',
         )
 
         const total = totalResult as CountResult
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     }
     console.log(dons)
     try {
-        const query = 'INSERT INTO `dons` SET ?'
+        const query = 'INSERT INTO `Dons` SET ?'
         const [rows] = await connection.query(query, dons)
         console.log('poulets')
         return NextResponse.json(rows)

@@ -65,7 +65,7 @@ export async function PUT(
             .map(key => `\`${columnMapping[key] || key}\` = ?`)
             .join(', ')
         const values = Object.values(body)
-        const query = `UPDATE \`prestataires\` SET ${columns} WHERE \`code_prestataire\` = ?`
+        const query = `UPDATE \`Prestataires\` SET ${columns} WHERE \`code_prestataire\` = ?`
 
         // Execute query
         const [rows] = await connection.query(query, [...values, prestataireID])
@@ -89,7 +89,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `prestataires` WHERE `code_prestataire` = ?'
+        const query = 'DELETE FROM `Prestataires` WHERE `code_prestataire` = ?'
         const [rows] = await connection.query(query, prestataireID)
         return NextResponse.json(rows)
     } catch (error) {

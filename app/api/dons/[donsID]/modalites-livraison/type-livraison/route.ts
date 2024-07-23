@@ -50,6 +50,7 @@ export async function DELETE(req: NextRequest) {
     if (body === undefined) {
         return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
     }
+    
     try {
         const query =
             'DELETE FROM `TypeLivraison` WHERE `code_type_livraison` = ?'

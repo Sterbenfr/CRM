@@ -7,7 +7,7 @@ import type { Competence } from '@/app/dons/type-competences/page'
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_competence as id, libelle as label FROM `typescompetences` LIMIT 1000',
+            'SELECT code_type_competence as id, libelle as label FROM `TypesCompetences` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
