@@ -169,7 +169,7 @@ function ContactsPage({
             },
             {
                 id: 'numero_portable',
-                type: 'input',
+                type: 'number',
                 value: numeroPortable,
                 placeholder: 'Exemple: 0634164183',
                 maxLength: 12,
@@ -208,7 +208,7 @@ function ContactsPage({
             },
             {
                 id: 'numero_fixe',
-                type: 'input',
+                type: 'number',
                 value: numeroFixe,
                 placeholder: 'Exemple: 0634167452',
                 maxLength: 12,

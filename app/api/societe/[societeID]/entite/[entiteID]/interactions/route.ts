@@ -56,11 +56,7 @@ export async function POST(req: NextRequest) {
     if (
         !interactions.code_Utilisateur_Prospecteur ||
         !interactions.code_Entite_Prospectee ||
-        !interactions.date_interaction ||
-        !interactions.code_type_interaction ||
-        !interactions.code_modalite_interaction ||
-        !interactions.code_contact_entite ||
-        !interactions.date_relance
+        !interactions.date_interaction
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
@@ -69,6 +65,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+        console.log(interactions)
         const query = 'INSERT INTO `Interactions` SET ?'
         const [rows] = await connection.query(query, interactions)
         return NextResponse.json(rows)
