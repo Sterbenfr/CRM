@@ -7,8 +7,6 @@ import style from '../styles/components.module.css'
 export default async function Home() {
     const session = await getServerSession(authOptions)
 
-    console.log(session ? session.user : 'No session')
-
     return (
         session && (
             <div className={style.page}>

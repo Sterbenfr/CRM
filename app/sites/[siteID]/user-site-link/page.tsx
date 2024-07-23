@@ -168,7 +168,7 @@ function SitesRattachementPage({ params }: { params: { siteID: string } }) {
                     <a href='javascript:history.go(-1)' className={style.btnC}>
                         <Image
                             className={style.CR}
-                            src='/IMG/Return.png'
+                            src='/IMG/return.svg'
                             height={30}
                             width={30}
                             alt='Fermer la fenêtre'
