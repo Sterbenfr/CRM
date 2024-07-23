@@ -7,7 +7,7 @@ import type { type_utilisateur } from '@/app/sites/[siteID]/utilisateurs/type-ut
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_utilisateur as id, libelle as label FROM `typesutilisateurs` LIMIT 1000',
+            'SELECT code_type_utilisateur as id, libelle as label FROM `TypesUtilisateurs` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {

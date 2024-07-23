@@ -25,12 +25,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `entite` WHERE code_societe_appartenance = ? LIMIT ?, ?',
+            'SELECT * FROM `Entite` WHERE code_societe_appartenance = ? LIMIT ?, ?',
             [societeID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `entite` WHERE code_societe_appartenance = ?',
+            'SELECT COUNT(*) as count FROM `Entite` WHERE code_societe_appartenance = ?',
             [societeID],
         )
 

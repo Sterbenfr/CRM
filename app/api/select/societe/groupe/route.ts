@@ -4,7 +4,7 @@ import connection from '../../../../../utils/db'
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_groupe as id, nom_du_Groupe as label FROM groupe;',
+            'SELECT code_groupe as id, nom_du_Groupe as label FROM Groupe;',
         )
         return NextResponse.json(rows)
     } catch (err) {

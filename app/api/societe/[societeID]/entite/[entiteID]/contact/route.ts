@@ -25,12 +25,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `contacts` WHERE code_entite = ? LIMIT ?, ?',
+            'SELECT * FROM `Contacts` WHERE code_entite = ? LIMIT ?, ?',
             [entiteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `contacts` WHERE code_entite = ?',
+            'SELECT COUNT(*) as count FROM `Contacts` WHERE code_entite = ?',
             [entiteID],
         )
 
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `contacts` SET ?'
+        const query = 'INSERT INTO `Contacts` SET ?'
         const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)
     } catch (error) {

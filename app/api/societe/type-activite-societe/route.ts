@@ -7,7 +7,7 @@ import type { TypeActiviteSociete } from '@/app/societe/type-activite-societe/pa
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'Select code as id, libelle as label from `typeactivitesociete` LIMIT 1000;',
+            'Select code as id, libelle as label from `TypeActiviteSociete` LIMIT 1000;',
         )
         return NextResponse.json(rows)
     } catch (err) {

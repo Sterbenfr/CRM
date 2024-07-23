@@ -7,7 +7,7 @@ import type { Interaction } from '@/app/societe/[societeID]/entite/[entiteID]/in
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_interaction as id, libelle as label FROM `typeinteractions` LIMIT 1000',
+            'SELECT code_type_interaction as id, libelle as label FROM `TypeInteractions` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `typeinteractions` SET ?'
+        const query = 'INSERT INTO `TypeInteractions` SET ?'
         const [rows] = await connection.query(query, code_type_interaction)
         return NextResponse.json(rows)
     } catch (error) {

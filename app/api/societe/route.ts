@@ -17,12 +17,12 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT entreprise.*,TypeActiviteSociete.libelle FROM `entreprise` LEFT JOIN TypeActiviteSociete ON TypeActiviteSociete.code = entreprise.code_type_activite_Societe LIMIT ?, ?',
+            'SELECT Entreprise.*,TypeActiviteSociete.libelle FROM `Entreprise` LEFT JOIN TypeActiviteSociete ON TypeActiviteSociete.code = Entreprise.code_type_activite_Societe LIMIT ?, ?',
             [offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `entreprise`',
+            'SELECT COUNT(*) as count FROM `Entreprise`',
         )
 
         const total = totalResult as CountResult
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
 
     try {
         console.log(societes)
-        const query = 'INSERT INTO `entreprise` SET ?'
+        const query = 'INSERT INTO `Entreprise` SET ?'
         const [rows] = await connection.query(query, societes)
         return NextResponse.json(rows)
     } catch (error) {

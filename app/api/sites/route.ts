@@ -17,12 +17,12 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `sites` LIMIT ?, ?',
+            'SELECT * FROM `Sites` LIMIT ?, ?',
             [offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `sites`',
+            'SELECT COUNT(*) as count FROM `Sites`',
         )
 
         const total = totalResult as CountResult
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
 
     try {
         console.log(sites)
-        const query = 'INSERT INTO `sites` SET ?'
+        const query = 'INSERT INTO `Sites` SET ?'
         const [rows] = await connection.query(query, sites)
         return NextResponse.json(rows)
     } catch (error) {

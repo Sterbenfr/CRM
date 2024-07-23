@@ -19,7 +19,7 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT ContactEntite.*, entite.raison_sociale, SiteTypes.libelle, sites.designation_longue, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as name FROM `ContactEntite` LEFT JOIN entite ON entite.code_entite = ContactEntite.code_entite LEFT JOIN SiteTypes ON SiteTypes.code_type_site = ContactEntite.code_type_site LEFT JOIN sites ON sites.code_site = ContactEntite.code_site_suivi LEFT JOIN utilisateurs ON utilisateurs.code_utilisateur = ContactEntite.code_utilisateur_suivant WHERE ContactEntite.code_entite = ? LIMIT ?, ?',
+            'SELECT ContactEntite.*, Entite.raison_sociale, SiteTypes.libelle, Sites.designation_longue, CONCAT(Utilisateurs.prenom," ",Utilisateurs.nom) as name FROM `ContactEntite` LEFT JOIN Entite ON Entite.code_entite = ContactEntite.code_entite LEFT JOIN SiteTypes ON SiteTypes.code_type_site = ContactEntite.code_type_site LEFT JOIN Sites ON Sites.code_site = ContactEntite.code_site_suivi LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = ContactEntite.code_utilisateur_suivant WHERE ContactEntite.code_entite = ? LIMIT ?, ?',
             [params.entiteID, offset, limitNumber],
         )
 

@@ -25,12 +25,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT interactions.*, entite.raison_sociale, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as nom FROM `interactions` LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = interactions.code_contact_entite LEFT JOIN entite ON entite.code_entite = interactions.code_entite_prospectee WHERE code_Entite_Prospectee = ? LIMIT ?, ?',
+            'SELECT Interactions.*, Entite.raison_sociale, CONCAT(Utilisateurs.prenom," ",Utilisateurs.nom) as nom FROM `Interactions` LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = Interactions.code_contact_entite LEFT JOIN Entite ON Entite.code_entite = Interactions.code_entite_prospectee WHERE code_Entite_Prospectee = ? LIMIT ?, ?',
             [entiteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `interactions` WHERE code_Entite_Prospectee = ?',
+            'SELECT COUNT(*) as count FROM `Interactions` WHERE code_Entite_Prospectee = ?',
             [entiteID],
         )
 
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `interactions` SET ?'
+        const query = 'INSERT INTO `Interactions` SET ?'
         const [rows] = await connection.query(query, interactions)
         return NextResponse.json(rows)
     } catch (error) {

@@ -19,7 +19,7 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT SuiviGroupe.*, groupe.nom_du_groupe, SiteTypes.libelle, sites.designation_longue, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as name FROM `SuiviGroupe` LEFT JOIN groupe ON groupe.code_groupe = SuiviGroupe.code_groupe LEFT JOIN SiteTypes ON SiteTypes.code_type_site = SuiviGroupe.code_type_de_Site LEFT JOIN sites ON sites.code_site = SuiviGroupe.code_site_suivi LEFT JOIN utilisateurs ON utilisateurs.code_utilisateur = SuiviGroupe.code_utilisateur_suivant WHERE SuiviGroupe.code_groupe = ? LIMIT ?, ?',
+            'SELECT SuiviGroupe.*, Groupe.nom_du_groupe, SiteTypes.libelle, Sites.designation_longue, CONCAT(Utilisateurs.prenom," ",Utilisateurs.nom) as name FROM `SuiviGroupe` LEFT JOIN Groupe ON Groupe.code_groupe = SuiviGroupe.code_groupe LEFT JOIN SiteTypes ON SiteTypes.code_type_site = SuiviGroupe.code_type_de_Site LEFT JOIN Sites ON Sites.code_site = SuiviGroupe.code_site_suivi LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = SuiviGroupe.code_utilisateur_suivant WHERE SuiviGroupe.code_groupe = ? LIMIT ?, ?',
             [params.groupeID, offset, limitNumber],
         )
 
