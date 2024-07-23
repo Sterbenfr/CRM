@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     try {
         // Decrypte l'ancien MDP
-        const querySelect = 'SELECT password FROM `utilisateurs` WHERE mail = ?'
+        const querySelect = 'SELECT password FROM `Utilisateurs` WHERE mail = ?'
         const [rows] = await connection.query<RowDataPacket[]>(querySelect, [
             userId,
         ])
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
         // Met a jour le mdp
         const queryUpdate =
-            'UPDATE `utilisateurs` SET password = ? WHERE code_utilisateur = ?'
+            'UPDATE `Utilisateurs` SET password = ? WHERE code_utilisateur = ?'
         await connection.query(queryUpdate, [newPasswordHash, userId])
 
         return NextResponse.json({ success: true })

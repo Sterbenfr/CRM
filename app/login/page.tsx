@@ -30,7 +30,7 @@ const LoginPage = () => {
 
     const handleSignOut = async () => {
         document.cookie = 'next-auth.session-token'
-        signOut()
+        await signOut({ callbackUrl: '/' })
     }
 
     const handleChangePassword = async (

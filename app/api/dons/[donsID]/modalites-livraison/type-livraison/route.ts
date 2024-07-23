@@ -7,7 +7,7 @@ import type { Type_Livraison } from '@/app/dons/[donsID]/modalites-livraison/typ
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_livraison as id, libelle as label FROM `typelivraison` LIMIT 1000',
+            'SELECT code_type_livraison as id, libelle as label FROM `TypeLivraison` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
@@ -50,7 +50,7 @@ export async function DELETE(req: NextRequest) {
     if (body === undefined) {
         return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
     }
-    
+
     try {
         const query =
             'DELETE FROM `TypeLivraison` WHERE `code_type_livraison` = ?'
