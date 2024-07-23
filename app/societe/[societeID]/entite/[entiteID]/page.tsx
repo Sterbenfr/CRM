@@ -282,7 +282,7 @@ export default function EntitePage({
                         <div className={style.info}>
                             <p className={style.titre}>Type de Don :</p>
                             <p>
-                                {entite[0].TD_libelle == (null || '')
+                                {entite[0].TD_libelle == null
                                     ? '/'
                                     : entite[0].TD_libelle}
                             </p>

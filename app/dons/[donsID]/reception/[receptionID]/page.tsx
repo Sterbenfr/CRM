@@ -251,7 +251,7 @@ export default function ReceptionPage({
                         </div>
 
                         <div className={style.info}>
-                            <p className={style.titre}>commentaires :</p>
+                            <p className={style.titre}>Commentaires :</p>
                             <p>
                                 {reception[0].commentaires == (null || '')
                                     ? '/'

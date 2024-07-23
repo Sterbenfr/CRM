@@ -263,6 +263,7 @@ export default function UtilisateurPage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom'
                                         value={modifiedUtilisateur.nom}
@@ -292,6 +293,7 @@ export default function UtilisateurPage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='prenom'
                                         value={modifiedUtilisateur.prenom}
@@ -350,6 +352,7 @@ export default function UtilisateurPage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='tel_perso'
                                         value={modifiedUtilisateur.tel_perso}
@@ -387,6 +390,7 @@ export default function UtilisateurPage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='mail'
                                         name='mail'
                                         value={modifiedUtilisateur.mail}
@@ -416,6 +420,7 @@ export default function UtilisateurPage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedUtilisateur.commentaires}

@@ -632,8 +632,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].nom_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].nom_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].nom_destinataire_cerfa}
                                 </p>
@@ -664,8 +663,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].adresse_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].adresse_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].adresse_destinataire_cerfa}
                                 </p>
@@ -735,8 +733,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].telephone_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].telephone_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].telephone_destinataire_cerfa}
                                 </p>
