@@ -15,8 +15,6 @@ export default function NotLogin() {
         fetchSession()
     }, [])
 
-    console.log(session ? session.user : 'No session')
-
     return (
         <div className={style.connect}>
             {session && session.user ? (

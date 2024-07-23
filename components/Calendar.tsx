@@ -93,7 +93,7 @@ const CalendarPage = () => {
     return (
         <div className='checkbox'>
             <div className='filter-container'>
-                <label>
+                <label className='lineCh'>
                     <input
                         type='checkbox'
                         name='dons'
@@ -102,7 +102,7 @@ const CalendarPage = () => {
                     />
                     Mise à disposition
                 </label>
-                <label>
+                <label className='lineCh'>
                     <input
                         type='checkbox'
                         name='receptions'
@@ -111,7 +111,7 @@ const CalendarPage = () => {
                     />
                     Réception
                 </label>
-                <label>
+                <label className='lineCh'>
                     <input
                         type='checkbox'
                         name='modaliteslivraison'
@@ -120,7 +120,7 @@ const CalendarPage = () => {
                     />
                     Livraison
                 </label>
-                <label>
+                <label className='lineCh'>
                     <input
                         type='checkbox'
                         name='interactions'
