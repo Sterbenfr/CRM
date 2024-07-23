@@ -18,7 +18,7 @@ export async function GET(
         const limitNumber = Number(limit)
         const offset = (pageNumber - 1) * limitNumber
         const [rows] = await connection.query(
-            'SELECT SuiviSociete.*, entreprise.raison_sociale, SiteTypes.libelle, sites.designation_longue, CONCAT(utilisateurs.nom," ",utilisateurs.prenom) as name FROM `SuiviSociete` LEFT JOIN entreprise ON entreprise.code_societe = SuiviSociete.code_societe LEFT JOIN SiteTypes ON SiteTypes.code_type_Site = SuiviSociete.code_type_de_Site LEFT JOIN Sites ON Sites.code_site = SuiviSociete.code_site_suivi LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = SuiviSociete.code_utilisateur_suivant WHERE SuiviSociete.code_Societe = ? LIMIT ?, ?',
+            'SELECT SuiviSociete.*, Entreprise.raison_sociale, SiteTypes.libelle, Sites.designation_longue, CONCAT(Utilisateurs.nom," ",Utilisateurs.prenom) as name FROM `SuiviSociete` LEFT JOIN Entreprise ON Entreprise.code_societe = SuiviSociete.code_societe LEFT JOIN SiteTypes ON SiteTypes.code_type_Site = SuiviSociete.code_type_de_Site LEFT JOIN Sites ON Sites.code_site = SuiviSociete.code_site_suivi LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = SuiviSociete.code_utilisateur_suivant WHERE SuiviSociete.code_Societe = ? LIMIT ?, ?',
             [params.societeID, offset, limitNumber],
         )
 

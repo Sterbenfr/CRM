@@ -7,7 +7,7 @@ export async function GET(
 ) {
     try {
         const [rows] = await connection.query(
-            'Select numero_livraison as id, CONCAT(dons.commentaires," - Livraison ",numero_livraison) as label FROM ModalitesLivraison LEFT JOIN dons ON ModalitesLivraison.code_don = dons.code_don WHERE ModalitesLivraison.code_don = ?;',
+            'Select numero_livraison as id, CONCAT(Dons.titre_don," - Livraison ",numero_livraison) as label FROM ModalitesLivraison LEFT JOIN Dons ON ModalitesLivraison.code_don = Dons.code_don WHERE ModalitesLivraison.code_don = ?;',
             [params.donsID],
         )
         return NextResponse.json(rows)

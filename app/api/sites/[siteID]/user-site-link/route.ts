@@ -19,12 +19,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT SitesRattachement.*, CONCAT(utilisateurs.prenom," ",utilisateurs.nom) as name, sites.designation_longue, TypesUtilisateurs.libelle FROM SitesRattachement LEFT JOIN utilisateurs ON utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur LEFT JOIN sites ON sites.code_site = SitesRattachement.code_site LEFT JOIN TypesUtilisateurs ON TypesUtilisateurs.code_type_utilisateur = SitesRattachement.code_type_utilisateur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
+            'SELECT SitesRattachement.*, CONCAT(Utilisateurs.prenom," ",Utilisateurs.nom) as name, Sites.designation_longue, TypesUtilisateurs.libelle FROM SitesRattachement LEFT JOIN Utilisateurs ON Utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur LEFT JOIN Sites ON Sites.code_site = SitesRattachement.code_site LEFT JOIN TypesUtilisateurs ON TypesUtilisateurs.code_type_utilisateur = SitesRattachement.code_type_utilisateur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
             [params.siteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `ContactEntite` WHERE code_entite = ?',
+            'SELECT COUNT(*) as count FROM `SitesRattachement` WHERE code_site = ?',
             [params.siteID],
         )
 
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `ContactEntite` SET ?'
+        const query = 'INSERT INTO `SitesRattachement` SET ?'
         const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)
     } catch (error) {

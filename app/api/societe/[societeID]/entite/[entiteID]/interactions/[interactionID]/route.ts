@@ -34,7 +34,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `interactions` WHERE `code_interaction` = ?'
+        const query = 'DELETE FROM `Interactions` WHERE `code_interaction` = ?'
         const [rows] = await connection.query(query, interactionID)
         return NextResponse.json(rows)
     } catch (error) {

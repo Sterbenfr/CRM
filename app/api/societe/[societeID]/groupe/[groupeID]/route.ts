@@ -30,7 +30,7 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `groupe` WHERE `code_groupe` = ?'
+        const query = 'DELETE FROM `Groupe` WHERE `code_groupe` = ?'
         const [rows] = await connection.query(query, groupeID)
         return NextResponse.json(rows)
     } catch (error) {
