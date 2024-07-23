@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import style from '../../../../../styles/components.module.css'
 import Image from 'next/image'
+import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 
@@ -23,7 +24,7 @@ interface UtilisateurID {
     tel_perso: string
     mail: string
     commentaires: string
-    code_type_utilisateur: number
+    code_type_utilisateur: string
 }
 
 export default function UtilisateurPage({
@@ -31,36 +32,118 @@ export default function UtilisateurPage({
 }: {
     params: { siteID: string; utilisateurID: string }
 }) {
-    const [Utilisateur, setUtilisateur] = useState<UtilisateurID[]>([])
+    const [utilisateur, setUtilisateur] = useState<UtilisateurID[]>([])
+    const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
+    const [modifiedUtilisateur, setModifiedUtilisateur] = useState<
+        Partial<UtilisateurID>
+    >({})
 
     useEffect(() => {
-        const fetchUtilisateur = async () => {
+        const fetchSessionAndUtilisateur = async () => {
             const sessionData = await getSession()
             setSession(sessionData as ExtendedSession)
-            if (!params.utilisateurID) return
 
+            if (params.utilisateurID) {
+                const res = await fetch(
+                    `../../../../api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
+                )
+    
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+    
+                const utilisateurData: UtilisateurID[] = await res.json()
+                setUtilisateur(utilisateurData)
+            }
+
+        }
+
+        fetchSessionAndUtilisateur()
+    }, [params.utilisateurID, params.siteID, modify])
+    
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        const { name, value } = e.target
+
+        setModifiedUtilisateur(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
+
+    const handleTypeUtilisateurChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!utilisateur || utilisateur.length === 0 || !session) return
+        let value = event.target.value
+
+        if (utilisateur[0].code_type_utilisateur !== '' && value === '') {
+            value = utilisateur[0].code_type_utilisateur
+        }
+        setModifiedUtilisateur({
+            ...modifiedUtilisateur,
+            code_type_utilisateur: value,
+        })
+    }
+
+    const handleCiviliteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!utilisateur || utilisateur.length === 0 || !session) return
+
+        setModifiedUtilisateur({
+            ...modifiedUtilisateur,
+            civilite: event.target.value,
+        })
+    }
+
+    const handleSubmit = async () => {
+        const jsonPayload = {
+            ...modifiedUtilisateur,
+        }
+
+        // Convert non-file data to JSON
+        const body = JSON.stringify(jsonPayload)
+
+        try {
             const res = await fetch(
                 `../../../../api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                },
             )
 
             if (!res.ok) {
-                throw new Error('Failed to fetch data')
+                const errorDetail = await res.text()
+                console.error('Failed to update data:', errorDetail)
+                throw new Error('Failed to update data')
             }
 
-            const Utilisateur: UtilisateurID[] = await res.json()
-            setUtilisateur(Utilisateur)
+            const updatedUtilisateur: UtilisateurID[] = await res.json()
+            setUtilisateur(updatedUtilisateur)
+            setModify(false)
+        } catch (error) {
+            console.error('Error submitting form:', error)
         }
+        window.location.reload()
+    }
 
-        fetchUtilisateur()
-    }, [params.utilisateurID, params.siteID])
-    console.log(Utilisateur)
-    if (!Utilisateur || Utilisateur.length === 0)
-        return (
+    if (
+        !Array.isArray(utilisateur) ||
+        utilisateur.length === 0 ||
+        typeof utilisateur[0]?.code_utilisateur === 'undefined'
+    )
+    return (
             <div className={style.page}>
                 <h2 className={style.load}>Chargement...</h2>
             </div>
-        )
+    )
 
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
@@ -85,22 +168,7 @@ export default function UtilisateurPage({
             }
         }
 
-        const hideElements = () => {
-            const element = document.getElementById('hide1')
-            if (element) {
-                element.style.display = 'none'
-            }
-            const element2 = document.getElementById('hide2')
-            if (element2) {
-                element2.style.display = 'none'
-            }
-            const element3 = document.getElementById('hide3')
-            if (element3) {
-                element3.style.display = 'none'
-            }
-        }
         applyPrintStyles()
-        hideElements()
         window.print()
         document.body.innerHTML = originalContents
         window.location.reload()
@@ -123,88 +191,263 @@ export default function UtilisateurPage({
                 session.user &&
                 session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
                     <div>
-                        <button className={style.btnModif} onClick={Print}>
+                        <button
+                            onClick={() => {
+                                if (modify) {
+                                    handleSubmit()
+                                } else {
+                                    setModify(true)
+                                }
+                            }}
+                            className={style.btnModif}
+                        >
+                            {modify ? 'Envoyer' : 'Modifier'}
+                        </button>
+                        <button className={style.btnModif} onClick={() => {
+                            if (!modify) {
+                                Print()
+                            }
+                        }}
+                        hidden={modify}
+                        >
                             Imprimer
                         </button>
                     </div>
                 )}
+
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code de l&apos;utilisateur :
-                            </p>
-                            <p>
-                                {Utilisateur[0].code_utilisateur == null
-                                    ? '/'
-                                    : Utilisateur[0].code_utilisateur}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code de l&apos;utilisateur :
+                                </p>
+                                <p>
+                                    {utilisateur[0].code_utilisateur == null
+                                        ? '/'
+                                        : utilisateur[0].code_utilisateur}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div className={style.info}>
+                                    <p className={style.titre}>
+                                        Civilite :
+                                    </p>
+                                    {modify &&
+                                        (session?.user.role === 'AD' ||
+                                        session?.user.role === 'RR') ? (
+                                        <SelectComponent
+                                            url='../../../../api/select/genre'
+                                            onChange={e => handleCiviliteChange(e)}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].civilite ==
+                                            (null || '')
+                                                ? '/'
+                                                : utilisateur[0].civilite ===
+                                                    'M.'
+                                                ? 'Monsieur'
+                                                : utilisateur[0].civilite ===
+                                                    'Mme'
+                                                    ? 'Madame'
+                                                    : 'Non renseigné'}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>Civilite :</p>
-                            <p>
-                                {Utilisateur[0].civilite == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].civilite}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Nom :</p>
+                                {modify &&
+                                    session?.user.role === ('AD' || 'PR') ? (
+                                        <input
+                                            type='input'
+                                            name='nom'
+                                            value={
+                                                modifiedUtilisateur.nom
+                                            }
+                                            placeholder={
+                                                utilisateur[0].nom ===
+                                                    null ||
+                                                    utilisateur[0].nom === ''
+                                                    ? 'Exemple: Dupont'
+                                                    : 'Actuellement: ' +
+                                                    utilisateur[0].nom
+                                            }
+                                            maxLength={20}
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                        {utilisateur[0].nom == (null || '')
+                                        ? '/'
+                                        : utilisateur[0].nom}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>Nom :</p>
-                            <p>
-                                {Utilisateur[0].nom == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].nom}
-                            </p>
-                        </div>
-
-                        <div className={style.info}>
-                            <p className={style.titre}>Prénom :</p>
-                            <p>
-                                {Utilisateur[0].prenom == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].prenom}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Prénom :</p>
+                                {modify &&
+                                    session?.user.role === ('AD' || 'PR') ? (
+                                        <input
+                                            type='input'
+                                            name='prenom'
+                                            value={
+                                                modifiedUtilisateur.prenom
+                                            }
+                                            placeholder={
+                                                utilisateur[0].prenom ===
+                                                    null ||
+                                                    utilisateur[0].prenom === ''
+                                                    ? 'Exemple: Jean'
+                                                    : 'Actuellement: ' +
+                                                    utilisateur[0].prenom
+                                            }
+                                            maxLength={20}
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].prenom == (null || '')
+                                                ? '/'
+                                                : utilisateur[0].prenom}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
                     </div>
 
                     <div className={style.col_2}>
-                        <div className={style.info}>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Code utilisateur :</p>
+                                {modify &&
+                                    (session?.user.role === 'AD' ||
+                                        session?.user.role === 'RR') ? (
+                                        <SelectComponent
+                                            url='../../../../api/select/utilisateurs'
+                                            onChange={e =>
+                                                handleTypeUtilisateurChange(e)
+                                            }
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].code_type_utilisateur == null
+                                                ? '/'
+                                                : utilisateur[0].code_type_utilisateur}
+                                        </p>
+                                    )}
+                            </div>
+                        </div>
+                        <div>
+                            <div className={style.info}>
                             <p className={style.titre}>Téléphone personel :</p>
-                            <p>
-                                {Utilisateur[0].tel_perso == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].tel_perso}
-                            </p>
+                            {modify &&
+                                    session?.user.role === ('AD' || 'PR') ? (
+                                        <input
+                                            type='number'
+                                            name='tel_perso'
+                                            value={
+                                                modifiedUtilisateur.tel_perso
+                                            }
+                                            placeholder={
+                                                utilisateur[0].tel_perso ===
+                                                    null ||
+                                                    utilisateur[0].tel_perso === ''
+                                                    ? 'Exemple: 0658905910'
+                                                    : 'Actuellement: ' +
+                                                    utilisateur[0].tel_perso
+                                            }
+                                            onInput={(
+                                                e: React.ChangeEvent<HTMLInputElement>,
+                                            ) => {
+                                                if (e.target.value.length > 12) {
+                                                    e.target.value =
+                                                        e.target.value.slice(0, 12)
+                                                }
+                                            }}
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].tel_perso == (null || '')
+                                                ? '/'
+                                                : utilisateur[0].tel_perso}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
+                        <div>
+                            <div className={style.info}>
                             <p className={style.titre}>Mail :</p>
-                            <p>
-                                {Utilisateur[0].mail == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].mail}
-                            </p>
+                            {modify &&
+                                    session?.user.role === ('AD' || 'PR') ? (
+                                        <input
+                                            type='mail'
+                                            name='mail'
+                                            value={
+                                                modifiedUtilisateur.mail
+                                            }
+                                            placeholder={
+                                                utilisateur[0].mail ===
+                                                    null ||
+                                                    utilisateur[0].mail === ''
+                                                    ? 'Exemple: Jean.dupont@gmail.com'
+                                                    : 'Actuellement: ' +
+                                                    utilisateur[0].mail
+                                            }
+                                            maxLength={50}
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].mail == (null || '')
+                                                ? '/'
+                                                : utilisateur[0].mail}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
+                        <div>
+                            <div className={style.info}>
                             <p className={style.titre}>Commentaires :</p>
-                            <p>
-                                {Utilisateur[0].commentaires == (null || '')
-                                    ? '/'
-                                    : Utilisateur[0].commentaires}
-                            </p>
-                        </div>
-
-                        <div className={style.info}>
-                            <p className={style.titre}>Code utilisateur :</p>
-                            <p>
-                                {Utilisateur[0].code_type_utilisateur == null
-                                    ? '/'
-                                    : Utilisateur[0].code_type_utilisateur}
-                            </p>
+                            {modify &&
+                                    session?.user.role === ('AD' || 'PR') ? (
+                                        <input
+                                            type='input'
+                                            name='commentaires'
+                                            value={
+                                                modifiedUtilisateur.commentaires
+                                            }
+                                            placeholder={
+                                                utilisateur[0].commentaires ===
+                                                    null ||
+                                                    utilisateur[0].commentaires === ''
+                                                    ? 'Exemple: Manutentionnaire de Dunkerque'
+                                                    : 'Actuellement: ' +
+                                                    utilisateur[0].commentaires
+                                            }
+                                            maxLength={200}
+                                            onChange={handleInputChange}
+                                        />
+                                    ) : (
+                                        <p>
+                                            {utilisateur[0].commentaires == (null || '')
+                                                ? '/'
+                                                : utilisateur[0].commentaires}
+                                        </p>
+                                    )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -41,8 +41,8 @@ export default function PrestatairePage({
     params: { prestataireID: string }
 }) {
     const [prestataire, setPrestataire] = useState<PrestataireID[] | null>()
-    const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
+    const [modify, setModify] = useState<boolean>(false)
     const [modifiedPrestataire, setModifiedPrestataire] = useState<
         Partial<PrestataireID>
     >({})
@@ -54,7 +54,7 @@ export default function PrestatairePage({
 
             if (params.prestataireID) {
                 const res = await fetch(
-                    `http://localhost:3000/api/prestataire/${params.prestataireID}`,
+                    `../../api/prestataire/${params.prestataireID}`,
                 )
 
                 if (!res.ok) {
@@ -87,7 +87,7 @@ export default function PrestatairePage({
         let value = event.target.value
 
         if (prestataire[0].TP_libelle !== '' && value === '') {
-            value = 'Transporteur'
+            value = prestataire[0].TP_libelle
         }
         setModifiedPrestataire({
             ...modifiedPrestataire,
@@ -217,7 +217,15 @@ export default function PrestatairePage({
                         >
                             {modify ? 'Envoyer' : 'Modifier'}
                         </button>
-                        <button className={style.btnModif} onClick={Print}>
+                        <button
+                            className={style.btnModif}
+                            onClick={() => {
+                                if (!modify) {
+                                    Print()
+                                }
+                            }}
+                            hidden={modify}
+                        >
                             Imprimer
                         </button>
                     </div>

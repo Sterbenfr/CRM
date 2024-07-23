@@ -289,7 +289,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? 'Monsieur'
                                 : user.civilite === 'Mme.'
                                   ? 'Madame'
-                                  : 'Autre',
+                                  : 'Non renseigné',
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
@@ -317,7 +317,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? 'Monsieur'
                                 : user.civilite === 'Mme.'
                                   ? 'Madame'
-                                  : 'Autre',
+                                  : 'Non renseigné',
                         value3: user.nom,
                         value4: user.prenom,
                         value5: user.tel_perso == '' ? '/' : user.tel_perso,
