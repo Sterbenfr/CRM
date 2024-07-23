@@ -215,6 +215,8 @@ const PopUp: React.FC<PopUpProps> = ({
     const [inputs, setInputs] = useState<Field[]>(fields)
     const [file, setFile] = useState<File | null>(null)
     const [file2, setFile2] = useState<File | null>(null)
+    let colIndex = 0 //seulement pour dons
+    let rowIndex = 0 //seulement pour dons
 
     const [validationErrors, setValidationErrors] = useState<{
         [key: string]: string
@@ -393,143 +395,214 @@ const PopUp: React.FC<PopUpProps> = ({
                         : ''
                 }
             >
-                {inputs.map(input => (
-                    <div className={style.rowPop} key={input.id}>
-                        <label className={style.label}>
-                            {fieldLabels[input.id]}
-                            {renderRequiredIndicator(input)}
-                        </label>
-                        {(() => {
-                            switch (input.type) {
-                                case 'select':
-                                    return (
-                                        <SelectComponent
-                                            key={input.id}
-                                            createURL={
-                                                input.createURL as string
-                                            }
-                                            url={input.url as string}
-                                            required={input.required}
-                                            onChange={input.onChange}
-                                        />
-                                    )
-                                case 'search':
-                                    return (
-                                        <SearchComponent
-                                            key={input.id}
-                                            url={input.url as string}
-                                            createURL={
-                                                input.createURL as string
-                                            }
-                                            required={input.required}
-                                            placeholder={input.placeholder}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
+                {inputs.map(
+                    input => (
+                        (colIndex =
+                            input.id === 'code_Entite_donatrice' &&
+                            colIndex === 0
+                                ? 0
+                                : input.id === 'code_Utilisateur_saisie_don' &&
+                                    colIndex === 0
+                                  ? 1
+                                  : input.id === 'nom_destinataire_cerfa' &&
+                                      colIndex === 1
+                                    ? 2
+                                    : colIndex), //seulement pour dons
+                        (rowIndex =
+                            input.id === 'code_Entite_donatrice' ||
+                            input.id === 'code_Utilisateur_saisie_don' ||
+                            input.id === 'nom_destinataire_cerfa'
+                                ? 0
+                                : rowIndex + 1), //seulement pour dons
+                        (
+                            <div
+                                className={style.popupCol} // seulement pour dons
+                                key={input.id}
+                                data-col={colIndex} //seulement pour dons
+                                data-row={rowIndex} //seulement pour dons
+                            >
+                                <div className={style.rowPop} key={input.id}>
+                                    <label className={style.label}>
+                                        {fieldLabels[input.id]}
+                                        {renderRequiredIndicator(input)}
+                                    </label>
+                                    {(() => {
+                                        switch (input.type) {
+                                            case 'select':
+                                                return (
+                                                    <SelectComponent
+                                                        key={input.id}
+                                                        createURL={
+                                                            input.createURL as string
+                                                        }
+                                                        url={
+                                                            input.url as string
+                                                        }
+                                                        required={
+                                                            input.required
+                                                        }
+                                                        onChange={
+                                                            input.onChange
+                                                        }
+                                                    />
                                                 )
-                                            }
-                                            onInputChange={input.onInputChange}
-                                        />
-                                    )
-                                case 'checkbox':
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type='checkbox'
-                                            required={input.required}
-                                            className={style.checkboxF}
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.checked,
+                                            case 'search':
+                                                return (
+                                                    <SearchComponent
+                                                        key={input.id}
+                                                        url={
+                                                            input.url as string
+                                                        }
+                                                        createURL={
+                                                            input.createURL as string
+                                                        }
+                                                        required={
+                                                            input.required
+                                                        }
+                                                        placeholder={
+                                                            input.placeholder
+                                                        }
+                                                        onChange={e =>
+                                                            handleInputChange(
+                                                                input.id,
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        onInputChange={
+                                                            input.onInputChange
+                                                        }
+                                                    />
                                                 )
-                                            }
-                                            onInput={input.onInputChange}
-                                        />
-                                    )
-                                case 'file':
-                                    return (
-                                        <FileUpload
-                                            setFile={
-                                                input.id === 'pieces_associees'
-                                                    ? setFile
-                                                    : setFile2
-                                            }
-                                        />
-                                    )
+                                            case 'checkbox':
+                                                return (
+                                                    <input
+                                                        key={input.id}
+                                                        type='checkbox'
+                                                        required={
+                                                            input.required
+                                                        }
+                                                        className={
+                                                            style.checkboxF
+                                                        }
+                                                        onChange={e =>
+                                                            handleInputChange(
+                                                                input.id,
+                                                                e.target
+                                                                    .checked,
+                                                            )
+                                                        }
+                                                        onInput={
+                                                            input.onInputChange
+                                                        }
+                                                    />
+                                                )
+                                            case 'file':
+                                                return (
+                                                    <FileUpload
+                                                        setFile={
+                                                            input.id ===
+                                                            'pieces_associees'
+                                                                ? setFile
+                                                                : setFile2
+                                                        }
+                                                    />
+                                                )
 
-                                case 'number':
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type='number'
-                                            required={input.required}
-                                            placeholder={input.placeholder}
-                                            className={style.selectF}
-                                            value={
-                                                input.value === null
-                                                    ? ''
-                                                    : (input.value as string)
-                                            }
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
+                                            case 'number':
+                                                return (
+                                                    <input
+                                                        key={input.id}
+                                                        type='number'
+                                                        required={
+                                                            input.required
+                                                        }
+                                                        placeholder={
+                                                            input.placeholder
+                                                        }
+                                                        className={
+                                                            style.selectF
+                                                        }
+                                                        value={
+                                                            input.value === null
+                                                                ? ''
+                                                                : (input.value as string)
+                                                        }
+                                                        onChange={e =>
+                                                            handleInputChange(
+                                                                input.id,
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        onInput={(
+                                                            e: React.ChangeEvent<HTMLInputElement>,
+                                                        ) => {
+                                                            if (
+                                                                input.maxLength &&
+                                                                e.target.value
+                                                                    .length >
+                                                                    input.maxLength
+                                                            ) {
+                                                                e.target.value =
+                                                                    e.target.value.slice(
+                                                                        0,
+                                                                        input.maxLength,
+                                                                    )
+                                                            }
+                                                            input.onInputChange &&
+                                                                input.onInputChange(
+                                                                    e,
+                                                                )
+                                                        }}
+                                                    />
                                                 )
-                                            }
-                                            onInput={(
-                                                e: React.ChangeEvent<HTMLInputElement>,
-                                            ) => {
-                                                if (
-                                                    input.maxLength &&
-                                                    e.target.value.length >
-                                                        input.maxLength
-                                                ) {
-                                                    e.target.value =
-                                                        e.target.value.slice(
-                                                            0,
-                                                            input.maxLength,
-                                                        )
-                                                }
-                                                input.onInputChange &&
-                                                    input.onInputChange(e)
-                                            }}
-                                        />
-                                    )
-                                default:
-                                    return (
-                                        <input
-                                            key={input.id}
-                                            type={input.type}
-                                            placeholder={input.placeholder}
-                                            required={input.required}
-                                            className={style.selectF}
-                                            value={
-                                                input.value === null
-                                                    ? ''
-                                                    : (input.value as string)
-                                            }
-                                            onChange={e =>
-                                                handleInputChange(
-                                                    input.id,
-                                                    e.target.value,
+                                            default:
+                                                return (
+                                                    <input
+                                                        key={input.id}
+                                                        type={input.type}
+                                                        placeholder={
+                                                            input.placeholder
+                                                        }
+                                                        required={
+                                                            input.required
+                                                        }
+                                                        className={
+                                                            style.selectF
+                                                        }
+                                                        value={
+                                                            input.value === null
+                                                                ? ''
+                                                                : (input.value as string)
+                                                        }
+                                                        onChange={e =>
+                                                            handleInputChange(
+                                                                input.id,
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        onInput={
+                                                            input.onInputChange
+                                                        }
+                                                        disabled={
+                                                            input.disabled
+                                                        }
+                                                        maxLength={
+                                                            input.maxLength
+                                                        }
+                                                    />
                                                 )
-                                            }
-                                            onInput={input.onInputChange}
-                                            disabled={input.disabled}
-                                            maxLength={input.maxLength}
-                                        />
-                                    )
-                            }
-                        })()}
-                        {validationErrors[input.id] && (
-                            <p className={style.error}>
-                                {validationErrors[input.id]}
-                            </p>
-                        )}
-                    </div>
-                ))}
+                                        }
+                                    })()}
+                                    {validationErrors[input.id] && (
+                                        <p className={style.error}>
+                                            {validationErrors[input.id]}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )
+                    ),
+                )}
             </div>
             <div className={style.container}>
                 <button className={style.savebutton} onClick={handleAction}>

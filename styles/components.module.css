@@ -601,7 +601,7 @@
 }
 
 .label {
-    width: 25rem;
+    width: 10rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -848,10 +848,64 @@
 
 .gridTwoColumns {
     display: grid;
-    text-align: center;
-    grid-template-columns: 25% 25% 25%;
-    margin-left: 25%;
-    gap: 3px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+}
+
+.popupCol[data-col='0'] {
+    grid-column: 1;
+}
+
+.popupCol[data-col='1'] {
+    grid-column: 2;
+}
+
+.popupCol[data-col='2'] {
+    grid-column: 3;
+}
+
+.popupCol[data-row='0'] {
+    grid-row: 1;
+}
+
+.popupCol[data-row='1'] {
+    grid-row: 2;
+}
+
+.popupCol[data-row='2'] {
+    grid-row: 3;
+}
+
+.popupCol[data-row='3'] {
+    grid-row: 4;
+}
+
+.popupCol[data-row='4'] {
+    grid-row: 5;
+}
+
+.popupCol[data-row='5'] {
+    grid-row: 6;
+}
+
+.popupCol[data-row='6'] {
+    grid-row: 7;
+}
+
+.popupCol[data-row='7'] {
+    grid-row: 8;
+}
+
+.popupCol[data-row='8'] {
+    grid-row: 9;
+}
+
+.popupCol[data-row='9'] {
+    grid-row: 10;
+}
+
+.popupCol[data-row='10'] {
+    grid-row: 11;
 }
 
 .savebutton {
