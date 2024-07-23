@@ -7,7 +7,7 @@ import type { TypeDon } from '@/app/dons/type-don/page'
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_don as id, libelle as label FROM `typesdons` LIMIT 1000',
+            'SELECT code_type_don as id, libelle as label FROM `TypesDons` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
