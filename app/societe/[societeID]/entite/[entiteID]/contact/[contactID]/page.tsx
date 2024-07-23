@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import style from '../../../../../../../styles/components.module.css'
 import Image from 'next/image'
+import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 
@@ -37,28 +38,101 @@ export default function ContactPage({
 }) {
     const [contact, setContact] = useState<ContactID[]>([])
     const [session, setSession] = useState<ExtendedSession | null>(null)
+    const [modify, setModify] = useState<boolean>(false)
+    const [modifiedContact, setModifiedContact] = useState<Partial<ContactID>>(
+        {},
+    )
 
     useEffect(() => {
-        const fetchContact = async () => {
+        const fetchSessionAndContact = async () => {
             const sessionData = await getSession()
             setSession(sessionData as ExtendedSession)
-            if (!params.contactID) return
 
+            if (params.contactID) {
+                const res = await fetch(
+                    `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const contactData: ContactID[] = await res.json()
+                setContact(contactData)
+            }
+        }
+
+        fetchSessionAndContact()
+    }, [params.contactID, params.societeID, params.entiteID, modify])
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        const { name, value } = e.target
+
+        setModifiedContact(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
+
+    const handleCiviliteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!contact || contact.length === 0 || !session) return
+
+        setModifiedContact({
+            ...modifiedContact,
+            civilite: event.target.value,
+        })
+    }
+
+    const formatDate = (dateString: string | number | Date) => {
+        return dateString
+            ? new Date(dateString).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0]
+    }
+
+    const handleSubmit = async () => {
+        const jsonPayload = {
+            ...modifiedContact,
+        }
+
+        // Convert non-file data to JSON
+        const body = JSON.stringify(jsonPayload)
+
+        try {
             const res = await fetch(
                 `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                },
             )
 
             if (!res.ok) {
-                throw new Error('Failed to fetch data')
+                const errorDetail = await res.text()
+                console.error('Failed to update data:', errorDetail)
+                throw new Error('Failed to update data')
             }
 
-            const contact: ContactID[] = await res.json()
-            setContact(contact)
+            const updatedContact: ContactID[] = await res.json()
+            setContact(updatedContact)
+            setModify(false)
+        } catch (error) {
+            console.error('Error submitting form:', error)
         }
+        window.location.reload()
+    }
 
-        fetchContact()
-    }, [params.contactID, params.societeID, params.entiteID])
-    if (!contact || contact.length === 0)
+    if (
+        !Array.isArray(contact) ||
+        contact.length === 0 ||
+        typeof contact[0]?.code_contact === 'undefined'
+    )
         return (
             <div className={style.page}>
                 <h2 className={style.load}>Chargement...</h2>
@@ -88,22 +162,7 @@ export default function ContactPage({
             }
         }
 
-        const hideElements = () => {
-            const element = document.getElementById('hide1')
-            if (element) {
-                element.style.display = 'none'
-            }
-            const element2 = document.getElementById('hide2')
-            if (element2) {
-                element2.style.display = 'none'
-            }
-            const element3 = document.getElementById('hide3')
-            if (element3) {
-                element3.style.display = 'none'
-            }
-        }
         applyPrintStyles()
-        hideElements()
         window.print()
         document.body.innerHTML = originalContents
         window.location.reload()
@@ -127,7 +186,27 @@ export default function ContactPage({
                 session.user &&
                 session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
                     <div>
-                        <button className={style.btnModif} onClick={Print}>
+                        <button
+                            onClick={() => {
+                                if (modify) {
+                                    handleSubmit()
+                                } else {
+                                    setModify(true)
+                                }
+                            }}
+                            className={style.btnModif}
+                        >
+                            {modify ? 'Envoyer' : 'Modifier'}
+                        </button>
+                        <button
+                            className={style.btnModif}
+                            onClick={() => {
+                                if (!modify) {
+                                    Print()
+                                }
+                            }}
+                            hidden={modify}
+                        >
                             Imprimer
                         </button>
                     </div>
@@ -136,113 +215,364 @@ export default function ContactPage({
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
-                        <div className={style.info}>
-                            <p className={style.titre}>Code du contact :</p>
-                            <p>
-                                {contact[0].code_contact == null
-                                    ? '/'
-                                    : contact[0].code_contact}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Code du contact :</p>
+                                <p>
+                                    {contact[0].code_contact == null
+                                        ? '/'
+                                        : contact[0].code_contact}
+                                </p>
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Nom de l&apos;entité :
-                            </p>
-                            <p>
-                                {contact[0].raison_sociale == null
-                                    ? '/'
-                                    : contact[0].raison_sociale}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Nom de l&apos;entité :
+                                </p>
+                                <p>
+                                    {contact[0].raison_sociale == null
+                                        ? '/'
+                                        : contact[0].raison_sociale}
+                                </p>
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>Civilité du contact :</p>
-                            <p>
-                                {contact[0].civilite == null
-                                    ? '/'
-                                    : contact[0].civilite}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Civilité du contact :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RR') ? (
+                                    <SelectComponent
+                                        url='../../../../../../api/select/genre'
+                                        onChange={e => handleCiviliteChange(e)}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].civilite == (null || '')
+                                            ? '/'
+                                            : contact[0].civilite === 'M.'
+                                              ? 'Monsieur'
+                                              : contact[0].civilite === 'Mme'
+                                                ? 'Madame'
+                                                : 'Non renseigné'}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>Nom du contact :</p>
-                            <p>
-                                {contact[0].nom == null ? '/' : contact[0].nom}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Nom du contact :</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='nom'
+                                        value={modifiedContact.nom}
+                                        placeholder={
+                                            contact[0].nom == null ||
+                                            contact[0].nom === ''
+                                                ? 'Exemple: Dupont'
+                                                : 'Actuellement: ' +
+                                                  contact[0].nom
+                                        }
+                                        maxLength={20}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].nom == null
+                                            ? '/'
+                                            : contact[0].nom}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>Prénom du contact :</p>
-                            <p>
-                                {contact[0].prenom == null
-                                    ? '/'
-                                    : contact[0].prenom}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Prénom du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='prenom'
+                                        value={modifiedContact.prenom}
+                                        placeholder={
+                                            contact[0].prenom == null ||
+                                            contact[0].prenom === ''
+                                                ? 'Exemple: Corrine'
+                                                : 'Actuellement: ' +
+                                                  contact[0].prenom
+                                        }
+                                        maxLength={20}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].prenom == null
+                                            ? '/'
+                                            : contact[0].prenom}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>Fonction du contact :</p>
-                            <p>
-                                {contact[0].fonction == (null || '')
-                                    ? '/'
-                                    : contact[0].fonction}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Fonction du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='fonction'
+                                        value={modifiedContact.fonction}
+                                        placeholder={
+                                            contact[0].fonction == null ||
+                                            contact[0].fonction === ''
+                                                ? 'Exemple: Assistante'
+                                                : 'Actuellement: ' +
+                                                  contact[0].fonction
+                                        }
+                                        maxLength={30}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].fonction == (null || '')
+                                            ? '/'
+                                            : contact[0].fonction}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Service du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='service'
+                                        value={modifiedContact.service}
+                                        placeholder={
+                                            contact[0].service == null ||
+                                            contact[0].service === ''
+                                                ? 'Exemple: Ressources Humaines'
+                                                : 'Actuellement: ' +
+                                                  contact[0].service
+                                        }
+                                        maxLength={30}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].service == (null || '')
+                                            ? '/'
+                                            : contact[0].service}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className={style.col_2}>
-                        <div className={style.info}>
-                            <p className={style.titre}>Service du contact :</p>
-                            <p>
-                                {contact[0].service == (null || '')
-                                    ? '/'
-                                    : contact[0].service}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Téléphone fixe du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='number'
+                                        name='numero_fixe'
+                                        value={modifiedContact.numero_fixe}
+                                        placeholder={
+                                            contact[0].numero_fixe == null ||
+                                            contact[0].numero_fixe === ''
+                                                ? 'Exemple: 0634167452'
+                                                : 'Actuellement: ' +
+                                                  contact[0].numero_fixe
+                                        }
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                        ) => {
+                                            if (e.target.value.length > 12) {
+                                                e.target.value =
+                                                    e.target.value.slice(0, 12)
+                                            }
+                                        }}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].numero_fixe == (null || '')
+                                            ? '/'
+                                            : contact[0].numero_fixe}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Téléphone fixe du contact :
-                            </p>
-                            <p>
-                                {contact[0].numero_fixe == (null || '')
-                                    ? '/'
-                                    : contact[0].numero_fixe}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Téléphone portable du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='number'
+                                        name='numero_portable'
+                                        value={modifiedContact.numero_portable}
+                                        placeholder={
+                                            contact[0].numero_portable ==
+                                                null ||
+                                            contact[0].numero_portable === ''
+                                                ? 'Exemple: 0634161527'
+                                                : 'Actuellement: ' +
+                                                  contact[0].numero_portable
+                                        }
+                                        onInput={(
+                                            e: React.ChangeEvent<HTMLInputElement>,
+                                        ) => {
+                                            if (e.target.value.length > 12) {
+                                                e.target.value =
+                                                    e.target.value.slice(0, 12)
+                                            }
+                                        }}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].numero_portable ===
+                                        (null || '')
+                                            ? '/'
+                                            : contact[0].numero_portable}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Téléphone portable du contact :
-                            </p>
-                            <p>
-                                {contact[0].numero_portable == null
-                                    ? '/'
-                                    : contact[0].numero_portable}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Adresse mail du contact :
+                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='adresse_mail'
+                                        value={modifiedContact.adresse_mail}
+                                        placeholder={
+                                            contact[0].adresse_mail == null ||
+                                            contact[0].adresse_mail === ''
+                                                ? 'Exemple: Corrine.dupont@gmail.com'
+                                                : 'Actuellement: ' +
+                                                  contact[0].adresse_mail
+                                        }
+                                        maxLength={200}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].adresse_mail == (null || '')
+                                            ? '/'
+                                            : contact[0].adresse_mail}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Adresse mail du contact :
-                            </p>
-                            <p>
-                                {contact[0].adresse_mail == (null || '')
-                                    ? '/'
-                                    : contact[0].adresse_mail}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Photo :</p>
+                                <p>
+                                    {contact[0].photo == null ? (
+                                        '/'
+                                    ) : (
+                                        <Image
+                                            src={URL.createObjectURL(
+                                                contact[0].photo,
+                                            )}
+                                            alt='photo'
+                                            height={100}
+                                            width={100}
+                                        />
+                                    )}
+                                </p>
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>Commentaires</p>
-                            <p>
-                                {contact[0].commentaires == (null || '')
-                                    ? '/'
-                                    : contact[0].commentaires}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Commentaires</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='commentaires'
+                                        value={modifiedContact.commentaires}
+                                        placeholder={
+                                            contact[0].commentaires == null ||
+                                            contact[0].commentaires === ''
+                                                ? 'Exemple: Corrine Dupont habite dunkerque'
+                                                : 'Actuellement: ' +
+                                                  contact[0].commentaires
+                                        }
+                                        maxLength={200}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].commentaires == (null || '')
+                                            ? '/'
+                                            : contact[0].commentaires}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Date d&apos;arrêt de liaison avec le contact :
-                            </p>
-                            <p>
-                                {contact[0].date_arret_contact == null
-                                    ? '/'
-                                    : contact[0].date_arret_contact
-                                          .toString()
-                                          .split('T')[0]}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Date d&apos;arrêt de liaison:
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RC') ? (
+                                    <input
+                                        type='date'
+                                        name='date_arret_contact'
+                                        value={formatDate(
+                                            modifiedContact.date_arret_contact ||
+                                                contact[0].date_arret_contact,
+                                        )}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {contact[0].date_arret_contact == null
+                                            ? '/'
+                                            : formatDate(
+                                                  contact[0].date_arret_contact,
+                                              )}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

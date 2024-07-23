@@ -136,7 +136,7 @@ function SocietesPage() {
                 id: 'raison_sociale',
                 type: 'input',
                 value: raisonSociale,
-                placeholder: 'Exemple: Alpha Coproration',
+                placeholder: 'Exemple: Alpha Corporation',
                 required: true,
                 onInputChange: handleRaisonSocialeChange,
                 maxLength: 30,

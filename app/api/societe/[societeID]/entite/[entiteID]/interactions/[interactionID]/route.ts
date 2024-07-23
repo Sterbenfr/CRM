@@ -20,6 +20,65 @@ export async function GET(
     }
 }
 
+export async function PUT(
+    request: Request,
+    { params }: { params: { interactionID: string } },
+) {
+    if (!params || params.interactionID === undefined) {
+        return NextResponse.json(
+            { error: 'Missing or invalid parameters' },
+            { status: 400 },
+        )
+    }
+
+    const interactionID = params.interactionID
+    if (interactionID === undefined) {
+        return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
+    }
+
+    let body
+
+    try {
+        body = await request.json()
+    } catch (error) {
+        return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
+    if (body === null || body === undefined) {
+        console.log(body, 'body', request.body)
+        return NextResponse.json(
+            { error: 'Body is null or undefined' },
+            { status: 400 },
+        )
+    }
+
+    if (Object.keys(body).length === 0) {
+        return NextResponse.json({ error: 'Empty body' }, { status: 400 })
+    }
+
+    try {
+        const columnMapping: { [key: string]: string } = {
+            code_interaction: 'code_interaction',
+        }
+
+        const columns = Object.keys(body)
+            .map(key => `\`${columnMapping[key] || key}\` = ?`)
+            .join(', ')
+        const values = Object.values(body)
+        const query = `UPDATE \`Interactions\` SET ${columns} WHERE \`code_interaction\` = ?`
+
+        // Execute query
+        const [rows] = await connection.query(query, [...values, interactionID])
+        return NextResponse.json(rows)
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
+            { status: 500 },
+        )
+    }
+}
+
 export async function DELETE(
     req: NextRequest,
     {

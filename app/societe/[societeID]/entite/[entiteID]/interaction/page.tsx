@@ -144,6 +144,7 @@ function InteractionsPage({
                 value: codeUtilisateurProspecteur,
                 url: '../../../../../api/select/sites/utilisateurs',
                 required: true,
+                placeholder: 'Exemple: Sophie Petit',
                 onInputChange: handleCodeUtilisateurProspecteur,
             },
             {

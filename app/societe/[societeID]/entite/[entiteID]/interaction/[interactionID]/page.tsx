@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import style from '../../../../../../../styles/components.module.css'
 import Image from 'next/image'
+import SelectComponent from '@/components/select-component'
+import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 
@@ -15,14 +17,14 @@ interface ExtendedSession extends Session {
     }
 }
 
-interface interactionID {
+interface InteractionID {
     code_interaction: number
-    code_Utilisateur_Prospecteur: number
+    code_Utilisateur_Prospecteur: string
     code_Entite_Prospectee: number
     date_interaction: Date
     code_type_interaction: string
     code_modalite_interaction: string
-    code_contact_entite: number
+    code_contact_entite: string
     commentaires: string
     pieces_associees: Blob
     date_relance: Date
@@ -33,29 +35,155 @@ export default function InteractionPage({
 }: {
     params: { societeID: string; entiteID: string; interactionID: string }
 }) {
-    const [interaction, setInteraction] = useState<interactionID[]>([])
+    const [interaction, setInteraction] = useState<InteractionID[]>([])
     const [session, setSession] = useState<ExtendedSession | null>(null)
+    const [modify, setModify] = useState<boolean>(false)
+    const [modifiedInteraction, setmodifiedInteraction] = useState<
+        Partial<InteractionID>
+    >({})
+
     useEffect(() => {
-        const fetchInteraction = async () => {
+        const fetchSessionAndInteraction = async () => {
             const sessionData = await getSession()
             setSession(sessionData as ExtendedSession)
-            if (!params.interactionID) return
 
+            if (params.interactionID) {
+                const res = await fetch(
+                    `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
+                )
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+
+                const interaction: InteractionID[] = await res.json()
+                setInteraction(interaction)
+            }
+        }
+
+        fetchSessionAndInteraction()
+    }, [params.interactionID, params.societeID, params.entiteID, modify])
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        const { name, value } = e.target
+
+        setmodifiedInteraction(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
+
+    const handleTypeInteractionChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!interaction || interaction.length === 0 || !session) return
+        let value = event.target.value
+
+        if (interaction[0].code_type_interaction !== '' && value === '') {
+            value = interaction[0].code_type_interaction
+        }
+        setmodifiedInteraction({
+            ...modifiedInteraction,
+            code_type_interaction: value,
+        })
+    }
+
+    const handleModaliteChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!interaction || interaction.length === 0 || !session) return
+        let value = event.target.value
+
+        if (interaction[0].code_modalite_interaction !== '' && value === '') {
+            value = interaction[0].code_modalite_interaction
+        }
+        setmodifiedInteraction({
+            ...modifiedInteraction,
+            code_modalite_interaction: value,
+        })
+    }
+
+    const handleContactChange = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        if (!interaction || interaction.length === 0 || !session) return
+        let value = event.target.value
+
+        if (interaction[0].code_contact_entite !== '' && value === '') {
+            value = interaction[0].code_contact_entite
+        }
+        setmodifiedInteraction({
+            ...modifiedInteraction,
+            code_contact_entite: value,
+        })
+    }
+
+    const handleProspecteurChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        if (!interaction || interaction.length === 0 || !session) return
+        let value = event.target.value
+
+        if (
+            interaction[0].code_Utilisateur_Prospecteur !== '' &&
+            value === ''
+        ) {
+            value = interaction[0].code_Utilisateur_Prospecteur
+        }
+        setmodifiedInteraction({
+            ...modifiedInteraction,
+            code_Utilisateur_Prospecteur: value,
+        })
+    }
+
+    const formatDate = (dateString: string | number | Date) => {
+        return dateString
+            ? new Date(dateString).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0]
+    }
+
+    const handleSubmit = async () => {
+        const jsonPayload = {
+            ...modifiedInteraction,
+        }
+
+        // Convert non-file data to JSON
+        const body = JSON.stringify(jsonPayload)
+
+        try {
             const res = await fetch(
                 `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                },
             )
 
             if (!res.ok) {
-                throw new Error('Failed to fetch data')
+                const errorDetail = await res.text()
+                console.error('Failed to update data:', errorDetail)
+                throw new Error('Failed to update data')
             }
 
-            const interaction: interactionID[] = await res.json()
-            setInteraction(interaction)
+            const updatedInteraction: InteractionID[] = await res.json()
+            setInteraction(updatedInteraction)
+            setModify(false)
+        } catch (error) {
+            console.error('Error submitting form:', error)
         }
+        window.location.reload()
+    }
 
-        fetchInteraction()
-    }, [params.interactionID, params.societeID, params.entiteID])
-    if (!interaction || interaction.length === 0)
+    if (
+        !Array.isArray(interaction) ||
+        interaction.length === 0 ||
+        typeof interaction[0]?.code_interaction === 'undefined'
+    )
         return (
             <div className={style.page}>
                 <h2 className={style.load}>Chargement...</h2>
@@ -85,22 +213,7 @@ export default function InteractionPage({
             }
         }
 
-        const hideElements = () => {
-            const element = document.getElementById('hide1')
-            if (element) {
-                element.style.display = 'none'
-            }
-            const element2 = document.getElementById('hide2')
-            if (element2) {
-                element2.style.display = 'none'
-            }
-            const element3 = document.getElementById('hide3')
-            if (element3) {
-                element3.style.display = 'none'
-            }
-        }
         applyPrintStyles()
-        hideElements()
         window.print()
         document.body.innerHTML = originalContents
         window.location.reload()
@@ -125,7 +238,27 @@ export default function InteractionPage({
                 session.user &&
                 session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
                     <div>
-                        <button className={style.btnModif} onClick={Print}>
+                        <button
+                            onClick={() => {
+                                if (modify) {
+                                    handleSubmit()
+                                } else {
+                                    setModify(true)
+                                }
+                            }}
+                            className={style.btnModif}
+                        >
+                            {modify ? 'Envoyer' : 'Modifier'}
+                        </button>
+                        <button
+                            className={style.btnModif}
+                            onClick={() => {
+                                if (!modify) {
+                                    Print()
+                                }
+                            }}
+                            hidden={modify}
+                        >
                             Imprimer
                         </button>
                     </div>
@@ -134,100 +267,219 @@ export default function InteractionPage({
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code d&apos;interaction :
-                            </p>
-                            <p>{interaction[0].code_interaction}</p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code d&apos;interaction :
+                                </p>
+                                <p>{interaction[0].code_interaction}</p>
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code utilisateur prospecteur :
-                            </p>
-                            <p>
-                                {interaction[0].code_Utilisateur_Prospecteur ==
-                                null
-                                    ? '/'
-                                    : interaction[0]
-                                          .code_Utilisateur_Prospecteur}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code entité prospectée :
+                                </p>
+                                <p>
+                                    {interaction[0].code_Entite_Prospectee ==
+                                    null
+                                        ? '/'
+                                        : interaction[0].code_Entite_Prospectee}
+                                </p>
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code entite prospectee :
-                            </p>
-                            <p>
-                                {interaction[0].code_Entite_Prospectee == null
-                                    ? '/'
-                                    : interaction[0].code_Entite_Prospectee}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code utilisateur prospecteur :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RR') ? (
+                                    <SearchComponent
+                                        url='../../../../../../api/select/sites/utilisateurs'
+                                        onChange={e =>
+                                            handleProspecteurChange(e)
+                                        }
+                                        placeholder='Exemple: Sophie Petit'
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0]
+                                            .code_Utilisateur_Prospecteur ===
+                                        (null || '')
+                                            ? '/'
+                                            : interaction[0]
+                                                  .code_Utilisateur_Prospecteur}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Date de l&apos;interaction :
-                            </p>
-                            <p>
-                                {interaction[0].date_interaction == null
-                                    ? ''
-                                    : interaction[0].date_interaction
-                                          .toString()
-                                          .split('T')[0]}
-                            </p>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Date de l&apos;interaction :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RC') ? (
+                                    <input
+                                        type='date'
+                                        name='date_interaction'
+                                        value={formatDate(
+                                            modifiedInteraction.date_interaction ||
+                                                interaction[0].date_interaction,
+                                        )}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0].date_interaction == null
+                                            ? '/'
+                                            : formatDate(
+                                                  interaction[0]
+                                                      .date_interaction,
+                                              )}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code type d&apos;interaction :
-                            </p>
-                            <p>
-                                {interaction[0].code_type_interaction == null
-                                    ? '/'
-                                    : interaction[0].code_type_interaction}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code type d&apos;interaction :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RR') ? (
+                                    <SelectComponent
+                                        url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
+                                        onChange={e =>
+                                            handleTypeInteractionChange(e)
+                                        }
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0]
+                                            .code_type_interaction ===
+                                            null
+                                            ? '/'
+                                            : interaction[0]
+                                                  .code_type_interaction}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
 
                     <div className={style.col_2}>
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code modalite interaction :
-                            </p>
-                            <p>
-                                {interaction[0].code_modalite_interaction ==
-                                null
-                                    ? '/'
-                                    : interaction[0].code_modalite_interaction}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code modalite interaction :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RR') ? (
+                                    <SelectComponent
+                                        url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
+                                        onChange={e => handleModaliteChange(e)}
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0]
+                                            .code_modalite_interaction ===
+                                            null
+                                            ? '/'
+                                            : interaction[0]
+                                                  .code_modalite_interaction}
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Code contact de l&apos;entite :
-                            </p>
-                            <p>
-                                {interaction[0].code_contact_entite == null
-                                    ? '/'
-                                    : interaction[0].code_contact_entite}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Code contact de l&apos;entite :
+                                </p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RR') ? (
+                                    <SelectComponent
+                                        url={`../../../../../../api/select/societe/entite/${params.entiteID}/contact`}
+                                        onChange={e => handleContactChange(e)}
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0].code_contact_entite ===
+                                        null
+                                            ? '/'
+                                            : interaction[0].code_contact_entite}
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>Commentaires</p>
-                            <p>
-                                {interaction[0].commentaires == null
-                                    ? '/'
-                                    : interaction[0].commentaires}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Commentaires</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='commentaires'
+                                        value={modifiedInteraction.commentaires}
+                                        placeholder={
+                                            interaction[0].commentaires ==
+                                                null ||
+                                            interaction[0].commentaires === ''
+                                                ? 'Exemple: Relance pour aide a Dunkerque'
+                                                : 'Actuellement: ' +
+                                                  interaction[0].commentaires
+                                        }
+                                        maxLength={200}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0].commentaires ===
+                                        (null || '')
+                                            ? '/'
+                                            : interaction[0].commentaires}
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>Date relance :</p>
-                            <p>
-                                {interaction[0].date_relance == null
-                                    ? '/'
-                                    : interaction[0].date_relance
-                                          .toString()
-                                          .split('T')[0]}
-                            </p>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Date relance :</p>
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RC') ? (
+                                    <input
+                                        type='date'
+                                        name='date_relance'
+                                        value={formatDate(
+                                            modifiedInteraction.date_relance ||
+                                                interaction[0].date_relance,
+                                        )}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {interaction[0].date_relance === null
+                                            ? '/'
+                                            : formatDate(
+                                                  interaction[0].date_relance,
+                                              )}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

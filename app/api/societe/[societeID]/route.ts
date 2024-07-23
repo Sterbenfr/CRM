@@ -8,13 +8,72 @@ export async function GET(
     const societeID = params.societeID
     try {
         const [rows] = await connection.query(
-            'SELECT Entreprise.code_Societe, Entreprise.raison_sociale, Entreprise.nom_commercial, Entreprise.site_Web, Entreprise.Logo, Entreprise.Siren, Entreprise.code_type_activite_Societe, Entreprise.commentaires, Entreprise.code_Groupe_appartenance, Entreprise.date_arret_activite_Societe AS type_activite_nom FROM Entreprise LEFT JOIN TypeActiviteSociete ON Entreprise.code_type_activite_Societe = TypeActiviteSociete.code WHERE Entreprise.code_Societe = ?;',
+            'SELECT Entreprise.code_Societe, Entreprise.raison_sociale, Entreprise.nom_commercial, Entreprise.site_Web, Entreprise.Logo, Entreprise.Siren, Entreprise.code_type_activite_Societe, Entreprise.commentaires, Entreprise.code_Groupe_appartenance, Entreprise.date_arret_activite_Societe FROM Entreprise LEFT JOIN TypeActiviteSociete ON Entreprise.code_type_activite_Societe = TypeActiviteSociete.code WHERE Entreprise.code_Societe = ?;',
             [societeID],
         )
         return NextResponse.json(rows)
     } catch (err) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + err },
+            { status: 500 },
+        )
+    }
+}
+
+export async function PUT(
+    request: Request,
+    { params }: { params: { societeID: string } },
+) {
+    if (!params || params.societeID === undefined) {
+        return NextResponse.json(
+            { error: 'Missing or invalid parameters' },
+            { status: 400 },
+        )
+    }
+
+    const societeID = params.societeID
+    if (societeID === undefined) {
+        return NextResponse.json({ error: 'Bad ID' }, { status: 400 })
+    }
+
+    let body
+
+    try {
+        body = await request.json()
+    } catch (error) {
+        return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
+    if (body === null || body === undefined) {
+        console.log(body, 'body', request.body)
+        return NextResponse.json(
+            { error: 'Body is null or undefined' },
+            { status: 400 },
+        )
+    }
+
+    if (Object.keys(body).length === 0) {
+        return NextResponse.json({ error: 'Empty body' }, { status: 400 })
+    }
+
+    try {
+        const columnMapping: { [key: string]: string } = {
+            code_Societe: 'code_Societe',
+        }
+
+        const columns = Object.keys(body)
+            .map(key => `\`${columnMapping[key] || key}\` = ?`)
+            .join(', ')
+        const values = Object.values(body)
+        const query = `UPDATE \`Entreprise\` SET ${columns} WHERE \`code_Societe\` = ?`
+
+        // Execute query
+        const [rows] = await connection.query(query, [...values, societeID])
+        return NextResponse.json(rows)
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json(
+            { error: 'Internal Server Error : ' + error },
             { status: 500 },
         )
     }
