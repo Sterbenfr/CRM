@@ -382,6 +382,7 @@ function DonsPage() {
                     type: 'select',
                     value: statutAcceptationDon,
                     url: '../api/select/dons',
+                    required: true,
                     onChange: handleStatutAcceptationDonChange,
                 },
                 {
