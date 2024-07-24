@@ -269,7 +269,7 @@ const PopUp: React.FC<PopUpProps> = ({
             const endpoint = url
             let filePath
             let file2Path
-            if (fileUrl && fields[fileIndex ? fileIndex : 0].value) {
+            if (fileUrl && fileIndex) {
                 const formData = new FormData()
                 formData.append('image', file as Blob)
                 console.log('FormData prepared:', formData)
@@ -289,7 +289,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 }
             }
 
-            if (fileUrl2 && fields[fileIndex2 ? fileIndex2 : 0].value) {
+            if (fileUrl2 && fileIndex2) {
                 const formData = new FormData()
                 formData.append('image', file2 as Blob)
                 console.log('FormData prepared:', formData)
@@ -339,6 +339,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
+
             window.location.reload()
         } else {
             scrollToTop()

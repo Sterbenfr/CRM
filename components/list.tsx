@@ -175,119 +175,97 @@ const List: React.FC<{
                 </div>
             </div>
             <div className={style.list_line}>
-                {pageInfos
-                    ? selectedItems
-                        ? selectedItems
-                              .slice(
-                                  (pageInfos.page - 1) * pageInfos.itemsPerPage,
-                                  pageInfos.page * pageInfos.itemsPerPage <
-                                      pageInfos.totalItems
-                                      ? pageInfos.page * pageInfos.itemsPerPage
-                                      : pageInfos.totalItems,
-                              )
-                              .map(item => (
-                                  // Wrap Line component with a div and add onClick event
-                                  <div key={item.value1}>
-                                      <Line
-                                          deleteFunction={
-                                              handleLineCheckboxChange
-                                          }
-                                          param1={
-                                              item.value1 == null
-                                                  ? ''
-                                                  : item.value1
-                                          }
-                                          param2={
-                                              item.value2 == null
-                                                  ? ''
-                                                  : item.value2
-                                          }
-                                          param3={
-                                              item.value3 == null
-                                                  ? ''
-                                                  : item.value3
-                                          }
-                                          param4={
-                                              item.value4 == null
-                                                  ? ''
-                                                  : item.value4
-                                          }
-                                          param5={
-                                              item.value5 == null
-                                                  ? ''
-                                                  : item.value5
-                                          }
-                                          param6={
-                                              item.value6 == null
-                                                  ? ''
-                                                  : item.value6
-                                          }
-                                          paramColor={
-                                              item.value7 == null
-                                                  ? ''
-                                                  : item.value7
-                                          }
-                                      />
-                                  </div>
-                              ))
-                        : items.map(item => (
-                              // Wrap Line component with a div and add onClick event
-                              <div key={item.value1}>
-                                  <Line
-                                      deleteFunction={handleLineCheckboxChange}
-                                      param1={
-                                          item.value1 == null ? '' : item.value1
-                                      }
-                                      param2={
-                                          item.value2 == null ? '' : item.value2
-                                      }
-                                      param3={
-                                          item.value3 == null ? '' : item.value3
-                                      }
-                                      param4={
-                                          item.value4 == null ? '' : item.value4
-                                      }
-                                      param5={
-                                          item.value5 == null ? '' : item.value5
-                                      }
-                                      param6={
-                                          item.value6 == null ? '' : item.value6
-                                      }
-                                      paramColor={
-                                          item.value7 == null ? '' : item.value7
-                                      }
-                                  />
-                              </div>
-                          ))
-                    : items.map(item => (
-                          // Wrap Line component with a div and add onClick event
-                          <div key={item.value1}>
-                              <Line
-                                  deleteFunction={handleLineCheckboxChange}
-                                  param1={
-                                      item.value1 == null ? '' : item.value1
-                                  }
-                                  param2={
-                                      item.value2 == null ? '' : item.value2
-                                  }
-                                  param3={
-                                      item.value3 == null ? '' : item.value3
-                                  }
-                                  param4={
-                                      item.value4 == null ? '' : item.value4
-                                  }
-                                  param5={
-                                      item.value5 == null ? '' : item.value5
-                                  }
-                                  param6={
-                                      item.value6 == null ? '' : item.value6
-                                  }
-                                  paramColor={
-                                      item.value7 == null ? '' : item.value7
-                                  }
-                              />
-                          </div>
-                      ))}
+                {items.length !== 0 ? (
+                    pageInfos && selectedItems ? (
+                        selectedItems
+                            .slice(
+                                (pageInfos.page - 1) * pageInfos.itemsPerPage,
+                                pageInfos.page * pageInfos.itemsPerPage <
+                                    pageInfos.totalItems
+                                    ? pageInfos.page * pageInfos.itemsPerPage
+                                    : pageInfos.totalItems,
+                            )
+                            .map(item => (
+                                // Wrap Line component with a div and add onClick event
+                                <div key={item.value1}>
+                                    <Line
+                                        deleteFunction={
+                                            handleLineCheckboxChange
+                                        }
+                                        param1={
+                                            item.value1 == null
+                                                ? ''
+                                                : item.value1
+                                        }
+                                        param2={
+                                            item.value2 == null
+                                                ? ''
+                                                : item.value2
+                                        }
+                                        param3={
+                                            item.value3 == null
+                                                ? ''
+                                                : item.value3
+                                        }
+                                        param4={
+                                            item.value4 == null
+                                                ? ''
+                                                : item.value4
+                                        }
+                                        param5={
+                                            item.value5 == null
+                                                ? ''
+                                                : item.value5
+                                        }
+                                        param6={
+                                            item.value6 == null
+                                                ? ''
+                                                : item.value6
+                                        }
+                                        paramColor={
+                                            item.value7 == null
+                                                ? ''
+                                                : item.value7
+                                        }
+                                    />
+                                </div>
+                            ))
+                    ) : (
+                        items.map(item => (
+                            // Wrap Line component with a div and add onClick event
+                            <div key={item.value1}>
+                                <Line
+                                    deleteFunction={handleLineCheckboxChange}
+                                    param1={
+                                        item.value1 == null ? '' : item.value1
+                                    }
+                                    param2={
+                                        item.value2 == null ? '' : item.value2
+                                    }
+                                    param3={
+                                        item.value3 == null ? '' : item.value3
+                                    }
+                                    param4={
+                                        item.value4 == null ? '' : item.value4
+                                    }
+                                    param5={
+                                        item.value5 == null ? '' : item.value5
+                                    }
+                                    param6={
+                                        item.value6 == null ? '' : item.value6
+                                    }
+                                    paramColor={
+                                        item.value7 == null ? '' : item.value7
+                                    }
+                                />
+                            </div>
+                        ))
+                    )
+                ) : (
+                    <div>
+                        <p>Pas de données</p>
+                    </div>
+                )}
             </div>
         </>
     )
