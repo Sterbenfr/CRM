@@ -329,6 +329,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Utilisateurs}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

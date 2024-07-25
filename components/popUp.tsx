@@ -378,7 +378,7 @@ const PopUp: React.FC<PopUpProps> = ({
             <div className={style.page1}>
                 <div className={style.croix}>
                     <h2 className={style.lg1}>{popupTitle}</h2>
-                    <button className={style.btnC} onClick={onClose}>
+                    <button className={style.btnC} onClick={() => { onClose(); window.location.reload(); }}>
                         <Image
                             className={style.CR}
                             src='/IMG/close.svg'

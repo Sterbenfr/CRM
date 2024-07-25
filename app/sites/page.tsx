@@ -352,6 +352,7 @@ function SitesPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Sites}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

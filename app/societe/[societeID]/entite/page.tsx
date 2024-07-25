@@ -604,6 +604,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Entites}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

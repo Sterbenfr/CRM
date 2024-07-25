@@ -442,6 +442,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Receptions}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

@@ -691,6 +691,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={ModalitesLivraisons}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

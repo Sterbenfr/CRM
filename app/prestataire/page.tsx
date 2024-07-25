@@ -397,6 +397,7 @@ function PrestatairesPage() {
         <>
             <div className={style.page}>
                 <h1 className={style.lg}>Prestataire</h1>
+
                 <List
                     items={Prestataires.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
@@ -463,6 +464,7 @@ function PrestatairesPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Prestataires}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

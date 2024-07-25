@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Line from './line'
 import FunctionBlock from './functionBlock'
 import style from '../styles/components.module.css'
+import Excel from './Excel'
 
 interface ListProps {
     value1?: string
@@ -39,7 +40,9 @@ const List: React.FC<{
     attribut?: Attribut
     searchItems?: ListProps[]
     pageInfos?: PageInfo
-}> = ({ items, functions, attribut, searchItems, pageInfos }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dataExcel?: any[]
+}> = ({ items, functions, attribut, searchItems, pageInfos, dataExcel }) => {
     const [selectedItems, setSelectedItems] = useState<ListProps[]>()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [lineCheckbox, setLineCheckbox] = useState<any[]>([])
@@ -101,6 +104,28 @@ const List: React.FC<{
         }
     }
 
+    const exportToExcel = () => {
+        const dataToExport = dataExcel?.filter(item => {
+            if (
+                lineCheckbox.includes(
+                    parseInt(item[Object.keys(item)[0]] as string),
+                )
+            ) {
+                return item
+            }
+            if (lineCheckbox.length === 0) {
+                return item
+            }
+        })
+
+        if (dataToExport) {
+            Excel({
+                data: dataToExport,
+                fileName: 'DATATEST',
+            })
+        }
+    }
+
     useEffect(() => {
         if (searchValue.length < 3) {
             setSelectedItems(undefined)
@@ -134,6 +159,7 @@ const List: React.FC<{
                 fonc1={functions.fonc1}
                 fonc2={deleteFunction}
                 fonc3={searchFunction}
+                fonc4={exportToExcel}
             />
             <div className={`${style.colName} ${padding}`}>
                 <div className={style.lineContainer}>
