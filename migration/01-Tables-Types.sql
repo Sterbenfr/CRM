@@ -8,7 +8,7 @@ INSERT INTO TypesUtilisateurs (code_type_utilisateur, libelle)
 VALUES
 ('AP', 'Approvisionneur'),
 ('EN', 'Entrepôt'),
-('SU', 'Super Utilisateur')
+('SU', 'Super Utilisateur'),
 ('AD', 'Administrateur');
 
 CREATE TABLE SiteTypes (
