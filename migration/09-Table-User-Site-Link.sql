@@ -14,8 +14,8 @@ INSERT INTO SitesRattachement (
     code_type_utilisateur,
     date_fin_activite
 ) VALUES 
-(1, 1, 'PR', NULL),
+(1, 1, 'EN', NULL),
 (2, 2, 'AP', NULL),
-(3, 3, 'RR', NULL),
-(4, 4, 'RC', NULL),
-(5, 5, 'RR', NULL);
+(3, 3, 'SU', NULL),
+(4, 4, 'AP', NULL),
+(5, 5, 'AD', NULL);
