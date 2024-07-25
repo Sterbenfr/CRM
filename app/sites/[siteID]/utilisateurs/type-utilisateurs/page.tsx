@@ -102,4 +102,4 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
     )
 }
 
-export default withAuthorization(UtilisateursPage, ['AD', 'PR'])
+export default withAuthorization(UtilisateursPage, ['AD', 'SU'])

@@ -97,4 +97,4 @@ function TypeCompetencePage() {
         </>
     )
 }
-export default withAuthorization(TypeCompetencePage, ['AD', 'PR'])
+export default withAuthorization(TypeCompetencePage, ['AD', 'SU'])

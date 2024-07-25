@@ -234,4 +234,4 @@ function SitesRattachementPage({ params }: { params: { siteID: string } }) {
     )
 }
 
-export default withAuthorization(SitesRattachementPage, ['AD', 'PR'])
+export default withAuthorization(SitesRattachementPage, ['AD', 'SU'])

@@ -189,7 +189,7 @@ function UtilisateurPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -238,7 +238,7 @@ function UtilisateurPage({
                                 <p className={style.titre}>Civilite :</p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    session?.user.role === 'SU') ? (
                                     <SelectComponent
                                         url='../../../../api/select/genre'
                                         onChange={e => handleCiviliteChange(e)}
@@ -262,7 +262,7 @@ function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -292,7 +292,7 @@ function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Prénom :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -327,7 +327,7 @@ function UtilisateurPage({
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    session?.user.role === 'SU') ? (
                                     <SelectComponent
                                         url='../../../../api/select/utilisateurs'
                                         onChange={e =>
@@ -351,7 +351,7 @@ function UtilisateurPage({
                                     Téléphone personel :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -389,7 +389,7 @@ function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Mail :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -419,7 +419,7 @@ function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'

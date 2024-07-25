@@ -103,4 +103,4 @@ function Frequences_cerfaPage({ params }: { params: { societeID: string } }) {
     )
 }
 
-export default withAuthorization(Frequences_cerfaPage, ['AD', 'PR'])
+export default withAuthorization(Frequences_cerfaPage, ['AD', 'SU'])

@@ -106,4 +106,4 @@ function Mode_Conservations_ProduitsPage() {
     )
 }
 
-export default withAuthorization(Mode_Conservations_ProduitsPage, ['AD', 'PR'])
+export default withAuthorization(Mode_Conservations_ProduitsPage, ['AD', 'SU'])
