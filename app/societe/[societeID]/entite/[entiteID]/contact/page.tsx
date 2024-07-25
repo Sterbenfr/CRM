@@ -399,4 +399,4 @@ function ContactsPage({
     )
 }
 
-export default withAuthorization(ContactsPage, ['AD', 'PR'])
+export default withAuthorization(ContactsPage, ['AD', 'SU', 'AP'])

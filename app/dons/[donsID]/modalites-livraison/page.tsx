@@ -721,4 +721,9 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     )
 }
 
-export default withAuthorization(ModalitesLivraisonPage, ['AD', 'PR'])
+export default withAuthorization(ModalitesLivraisonPage, [
+    'AD',
+    'AP',
+    'EN',
+    'SU',
+])

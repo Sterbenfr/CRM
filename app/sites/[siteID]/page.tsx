@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -28,7 +29,7 @@ interface SiteID {
     commentaires: string
 }
 
-export default function SitePage({ params }: { params: { siteID: string } }) {
+function SitePage({ params }: { params: { siteID: string } }) {
     const [site, setSite] = useState<SiteID[]>([])
     const [session, setSession] = useState<ExtendedSession | null>(null)
     const [modify, setModify] = useState<boolean>(false)
@@ -203,7 +204,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
 
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -251,7 +252,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                     Désignation longue :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -285,7 +286,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                     Désignation courte :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -317,7 +318,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                             <div className={style.info}>
                                 <p className={style.titre}>Adresse :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -361,8 +362,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                     Date de fermeture :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -393,7 +393,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                             <div className={style.info}>
                                 <p className={style.titre}>Type de site :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <SelectComponent
                                         url='../../api/sites/type-site-types'
                                         onChange={e => handleTypeSiteChange(e)}
@@ -414,7 +414,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                     Numero de téléphone :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -452,7 +452,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                             <div className={style.info}>
                                 <p className={style.titre}>Adresse mail :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -481,7 +481,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -526,3 +526,5 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
         </div>
     )
 }
+
+export default withAuthorization(SitePage, ['AD', 'SU'])

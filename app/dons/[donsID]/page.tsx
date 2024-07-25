@@ -7,6 +7,7 @@ import SearchComponent from '@/components/searchComponent'
 import SelectComponent from '@/components/select-component'
 import Image from 'next/image'
 import fileUpload, { setFile, setFile2 } from '@/components/fileUploadModify'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -50,7 +51,7 @@ interface DonID {
     designation_longue: string
 }
 
-export default function DonPage({ params }: { params: { donsID: string } }) {
+function DonPage({ params }: { params: { donsID: string } }) {
     const [don, setDon] = useState<DonID[] | null>()
     const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
@@ -928,3 +929,5 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         </div>
     )
 }
+
+export default withAuthorization(DonPage, ['AD', 'AP', 'SU', 'EN'])

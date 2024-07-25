@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -31,7 +32,7 @@ interface ContactID {
     date_arret_contact: Date
 }
 
-export default function ContactPage({
+function ContactPage({
     params,
 }: {
     params: { societeID: string; entiteID: string; contactID: string }
@@ -184,7 +185,7 @@ export default function ContactPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU' || 'AP') && (
                     <div>
                         <button
                             onClick={() => {
@@ -245,8 +246,8 @@ export default function ContactPage({
                                     Civilité du contact :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SelectComponent
                                         url='../../../../../../api/select/genre'
                                         onChange={e => handleCiviliteChange(e)}
@@ -269,7 +270,8 @@ export default function ContactPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom du contact :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='nom'
@@ -300,7 +302,8 @@ export default function ContactPage({
                                     Prénom du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='prenom'
@@ -331,7 +334,8 @@ export default function ContactPage({
                                     Fonction du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='fonction'
@@ -362,7 +366,8 @@ export default function ContactPage({
                                     Service du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='service'
@@ -394,7 +399,8 @@ export default function ContactPage({
                                     Téléphone fixe du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='number'
                                         name='numero_fixe'
@@ -432,7 +438,8 @@ export default function ContactPage({
                                     Téléphone portable du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='number'
                                         name='numero_portable'
@@ -472,7 +479,8 @@ export default function ContactPage({
                                     Adresse mail du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='adresse_mail'
@@ -521,7 +529,8 @@ export default function ContactPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='commentaires'
@@ -552,8 +561,8 @@ export default function ContactPage({
                                     Date d&apos;arrêt de liaison:
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='date'
                                         name='date_arret_contact'
@@ -580,3 +589,5 @@ export default function ContactPage({
         </div>
     )
 }
+
+export default withAuthorization(ContactPage, ['AD', 'SU', 'AP'])

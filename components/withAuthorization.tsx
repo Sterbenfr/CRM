@@ -11,7 +11,7 @@ type ExtendedSession = Session & {
     user: ExtendedUser
 }
 
-type Role = 'AD' | 'PR' | 'RR' | 'AP' | 'RE' | 'RC' | 'RS' | 'RA' | 'RN'
+type Role = 'AD' | 'AP' | 'EN' | 'SU'
 
 const withAuthorization = <P extends object>(
     WrappedComponent: React.ComponentType<P>,

@@ -645,4 +645,4 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     )
 }
 
-export default withAuthorization(EntitesPage, ['AD', 'PR'])
+export default withAuthorization(EntitesPage, ['AD', 'SU', 'AP'])

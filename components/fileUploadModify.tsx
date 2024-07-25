@@ -8,7 +8,7 @@ const setFile2 = (item: File) => {
 }
 
 const fileUpload = async (fileUrl?: string, fileUrl2?: string) => {
-    const filePaths = []
+    const filePaths = [null, null]
     if (file && fileUrl) {
         const formData = new FormData()
         formData.append('image', file as unknown as Blob)
@@ -17,7 +17,7 @@ const fileUpload = async (fileUrl?: string, fileUrl2?: string) => {
             body: formData,
         })
         const data = await response.json()
-        filePaths.push(data.filePath)
+        filePaths[0] = data.filePath
     }
     if (file2 && fileUrl2) {
         const formData = new FormData()
@@ -27,7 +27,7 @@ const fileUpload = async (fileUrl?: string, fileUrl2?: string) => {
             body: formData,
         })
         const data = await response.json()
-        filePaths.push(data.filePath)
+        filePaths[1] = data.filePath
     }
     return filePaths
 }
