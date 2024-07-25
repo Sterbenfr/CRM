@@ -4,6 +4,7 @@ import style from '../../../../../styles/components.module.css'
 import Image from 'next/image'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
@@ -19,7 +20,7 @@ interface ExtendedSession extends Session {
 interface GroupeID {
     code_groupe: number
     nom_du_Groupe: string
-    Logo: Blob
+    Logo: string
     site_Web: string
     commentaires: string
     date_arret_activite_du_Groupe: Date
@@ -74,9 +75,22 @@ function GroupePage({
             : new Date().toISOString().split('T')[0]
     }
 
+    const handleLogoChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../api/upload/image',
+        )
+
         const jsonPayload = {
             ...modifiedGroupe,
+            Logo: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -273,63 +287,95 @@ function GroupePage({
                                 )}
                             </div>
                         </div>
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Logo :</p>
+
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='Logo_file'
+                                        onChange={handleLogoChange}
+                                    />
+                                ) : groupe[0].Logo == null ? (
+                                    <p>/</p>
+                                ) : typeof groupe[0].Logo === 'string' ? (
+                                    <a href={groupe[0].Logo} download='Logo'>
+                                        Télécharger le logo
+                                    </a>
+                                ) : (
+                                    <a href={groupe[0].Logo} download='Logo'>
+                                        Télécharger le logo
+                                    </a>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     <div className={style.col_2}>
-                        <div className={style.info}>
-                            <p className={style.titre}>Commentaires :</p>
-                            {modify &&
-                            session?.user.role === ('AD' || 'SU' || 'AP') ? (
-                                <input
-                                    type='input'
-                                    name='commentaires'
-                                    value={modifiedGroupe.commentaires}
-                                    placeholder={
-                                        groupe[0].commentaires === null ||
-                                        groupe[0].commentaires === ''
-                                            ? 'Exemple: Groupe actif en dons alimentaires'
-                                            : 'Actuellement: ' +
-                                              groupe[0].commentaires
-                                    }
-                                    maxLength={200}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <p>
-                                    {groupe[0].commentaires == null
-                                        ? '/'
-                                        : groupe[0].commentaires}
-                                </p>
-                            )}
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Commentaires :</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'PR') ? (
+                                    <input
+                                        type='input'
+                                        name='commentaires'
+                                        value={modifiedGroupe.commentaires}
+                                        placeholder={
+                                            groupe[0].commentaires === null ||
+                                            groupe[0].commentaires === ''
+                                                ? 'Exemple: Groupe actif en dons alimentaires'
+                                                : 'Actuellement: ' +
+                                                  groupe[0].commentaires
+                                        }
+                                        maxLength={200}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {groupe[0].commentaires == null
+                                            ? '/'
+                                            : groupe[0].commentaires}
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
-                        <div className={style.info}>
-                            <p className={style.titre}>
-                                Date d&apos;arrêt d&apos;activité du groupe :
-                            </p>
-                            {modify &&
-                            session?.user.role === ('AD' || 'SU' || 'AP') ? (
-                                <input
-                                    type='date'
-                                    name='date_arret_activite_du_Groupe'
-                                    value={formatDate(
-                                        modifiedGroupe.date_arret_activite_du_Groupe ||
-                                            groupe[0]
-                                                .date_arret_activite_du_Groupe,
-                                    )}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <p>
-                                    {groupe[0].date_arret_activite_du_Groupe ==
-                                    null
-                                        ? '/'
-                                        : formatDate(
-                                              groupe[0]
-                                                  .date_arret_activite_du_Groupe,
-                                          )}
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>
+                                    Date d&apos;arrêt d&apos;activité du groupe
+                                    :
                                 </p>
-                            )}
+                                {modify &&
+                                (session?.user.role === 'AD' ||
+                                    session?.user.role === 'RC') ? (
+                                    <input
+                                        type='date'
+                                        name='date_arret_activite_du_Groupe'
+                                        value={formatDate(
+                                            modifiedGroupe.date_arret_activite_du_Groupe ||
+                                                groupe[0]
+                                                    .date_arret_activite_du_Groupe,
+                                        )}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {groupe[0]
+                                            .date_arret_activite_du_Groupe ==
+                                        null
+                                            ? '/'
+                                            : formatDate(
+                                                  groupe[0]
+                                                      .date_arret_activite_du_Groupe,
+                                              )}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                         <div className={style.info} id='hide1'>
                             {!modify && (

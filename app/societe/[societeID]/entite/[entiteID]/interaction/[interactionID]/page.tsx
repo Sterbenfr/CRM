@@ -6,6 +6,7 @@ import SelectComponent from '@/components/select-component'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
@@ -27,7 +28,7 @@ interface InteractionID {
     code_modalite_interaction: string
     code_contact_entite: string
     commentaires: string
-    pieces_associees: Blob
+    pieces_associees: string
     date_relance: Date
     raison_sociale: string
     utilisateur_prospecteur: string
@@ -150,9 +151,22 @@ function InteractionPage({
             : new Date().toISOString().split('T')[0]
     }
 
+    const handleFileChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../../../api/upload/piece',
+        )
+        
         const jsonPayload = {
             ...modifiedInteraction,
+            pieces_associees: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -461,6 +475,38 @@ function InteractionPage({
                             </div>
                         </div>
 
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Pieces associees :</p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='pieces_associees'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : interaction[0].pieces_associees == null ? (
+                                    <p>/</p>
+                                ) : typeof interaction[0].pieces_associees ===
+                                  'string' ? (
+                                    <a
+                                        href={interaction[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={interaction[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                        
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Date relance :</p>

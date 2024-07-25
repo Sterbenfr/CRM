@@ -6,6 +6,7 @@ import SelectComponent from '@/components/select-component'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
@@ -22,7 +23,7 @@ interface SocieteID {
     code_Societe: number
     raison_sociale: string
     nom_commercial: string
-    Logo: Blob
+    Logo: string
     site_Web: string
     Siren: string
     code_type_activite_Societe: string
@@ -108,9 +109,20 @@ function SocietePage({ params }: { params: { societeID: string } }) {
             : new Date().toISOString().split('T')[0]
     }
 
+    const handleFileChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload('../../api/upload/image')
+
         const jsonPayload = {
             ...modifiedSociete,
+            Logo: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -137,7 +149,9 @@ function SocietePage({ params }: { params: { societeID: string } }) {
         } catch (error) {
             console.error('Error submitting form:', error)
         }
-        window.location.reload()
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
     }
 
     if (
@@ -319,6 +333,32 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                             ? '/'
                                             : societe[0].nom_commercial}
                                     </p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Logo :</p>
+
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='logo_file'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : societe[0].Logo == null ? (
+                                    <p>/</p>
+                                ) : typeof societe[0].Logo === 'string' ? (
+                                    <a href={societe[0].Logo} download='logo'>
+                                        Télécharger le logo
+                                    </a>
+                                ) : (
+                                    <a href={societe[0].Logo} download='logo'>
+                                        Télécharger le logo
+                                    </a>
                                 )}
                             </div>
                         </div>

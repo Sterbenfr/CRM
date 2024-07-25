@@ -235,6 +235,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
+                        
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Code du site :</p>

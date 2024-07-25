@@ -5,7 +5,9 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
+
 
 interface ExtendedSession extends Session {
     user: {
@@ -22,7 +24,7 @@ interface ContactID {
     civilite: string
     nom: string
     prenom: string
-    photo: Blob
+    photo: string
     fonction: string
     service: string
     numero_fixe: string
@@ -94,9 +96,22 @@ function ContactPage({
             : new Date().toISOString().split('T')[0]
     }
 
+    const handlePhotoChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../../../api/upload/image',
+        )
+
         const jsonPayload = {
             ...modifiedContact,
+            photo: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -508,20 +523,32 @@ function ContactPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Photo :</p>
-                                <p>
-                                    {contact[0].photo == null ? (
-                                        '/'
-                                    ) : (
-                                        <Image
-                                            src={URL.createObjectURL(
-                                                contact[0].photo,
-                                            )}
-                                            alt='photo'
-                                            height={100}
-                                            width={100}
-                                        />
-                                    )}
-                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='photo_file'
+                                        onChange={handlePhotoChange}
+                                    />
+                                ) : contact[0].photo == null ? (
+                                    <p>/</p>
+                                ) : typeof contact[0].photo ===
+                                  'string' ? (
+                                    <a
+                                        href={contact[0].photo}
+                                        download='photo'
+                                    >
+                                        Télécharger la photo
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={contact[0].photo}
+                                        download='photo'
+                                    >
+                                        Télécharger la photo
+                                    </a>
+                                )}
                             </div>
                         </div>
 
