@@ -6,14 +6,9 @@ CREATE TABLE TypesUtilisateurs (
 -- Insert predefined types of utilisateurs
 INSERT INTO TypesUtilisateurs (code_type_utilisateur, libelle)
 VALUES
-('PR', 'Prospecteur'),
 ('AP', 'Approvisionneur'),
-('RR', 'Responsable Réception'),
-('RE', 'Responsable Entrepôt'),
-('RC', 'Responsable de Centre'),
-('RS', 'Responsable Site'),
-('RA', 'Responsable Antenne'),
-('RN', 'Responsable National'),
+('EN', 'Entrepôt'),
+('SU', 'Super Utilisateur'),
 ('AD', 'Administrateur');
 
 CREATE TABLE SiteTypes (

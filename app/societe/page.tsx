@@ -361,4 +361,4 @@ function SocietesPage() {
         </>
     )
 }
-export default withAuthorization(SocietesPage, ['AD', 'PR'])
+export default withAuthorization(SocietesPage, ['AD', 'SU', 'AP'])

@@ -100,4 +100,4 @@ function Type_LivraisonsPage({ params }: { params: { donsID: string } }) {
     )
 }
 
-export default withAuthorization(Type_LivraisonsPage, ['AD', 'PR'])
+export default withAuthorization(Type_LivraisonsPage, ['AD', 'SU'])

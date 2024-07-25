@@ -289,7 +289,7 @@ const List: React.FC<{
                     )
                 ) : (
                     <div>
-                        <p>Pas de données</p>
+                        <p className={style.anyData}>Pas de données</p>
                     </div>
                 )}
             </div>

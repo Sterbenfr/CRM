@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -25,9 +26,10 @@ interface UtilisateurID {
     mail: string
     commentaires: string
     code_type_utilisateur: string
+    libelle_type_utilisateur: string
 }
 
-export default function UtilisateurPage({
+function UtilisateurPage({
     params,
 }: {
     params: { siteID: string; utilisateurID: string }
@@ -188,7 +190,7 @@ export default function UtilisateurPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -237,7 +239,7 @@ export default function UtilisateurPage({
                                 <p className={style.titre}>Civilite :</p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    session?.user.role === 'SU') ? (
                                     <SelectComponent
                                         url='../../../../api/select/genre'
                                         onChange={e => handleCiviliteChange(e)}
@@ -261,7 +263,7 @@ export default function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -291,7 +293,7 @@ export default function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Prénom :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -322,11 +324,11 @@ export default function UtilisateurPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code utilisateur :
+                                    Type d&apos;utilisateur :
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    session?.user.role === 'SU') ? (
                                     <SelectComponent
                                         url='../../../../api/select/utilisateurs'
                                         onChange={e =>
@@ -335,11 +337,11 @@ export default function UtilisateurPage({
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].code_type_utilisateur ==
-                                        null
+                                        {utilisateur[0]
+                                            .libelle_type_utilisateur == null
                                             ? '/'
                                             : utilisateur[0]
-                                                  .code_type_utilisateur}
+                                                  .libelle_type_utilisateur}
                                     </p>
                                 )}
                             </div>
@@ -350,7 +352,7 @@ export default function UtilisateurPage({
                                     Téléphone personel :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -388,7 +390,7 @@ export default function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Mail :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -418,7 +420,7 @@ export default function UtilisateurPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -451,3 +453,5 @@ export default function UtilisateurPage({
         </div>
     )
 }
+
+export default withAuthorization(UtilisateurPage, ['AD', 'SU'])

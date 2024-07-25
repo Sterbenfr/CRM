@@ -6,6 +6,8 @@ import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
+import withAuthorization from '../../../../../components/withAuthorization'
+
 
 interface ExtendedSession extends Session {
     user: {
@@ -31,9 +33,11 @@ interface ReceptionID {
     produits_sur_palettes: string
     commentaires: string
     pieces_associees: string
+    raison_sociale_don: string
+
 }
 
-export default function ReceptionPage({
+function ReceptionPage({
     params,
 }: {
     params: { donsID: string; receptionID: string }
@@ -217,7 +221,7 @@ export default function ReceptionPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'EN' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -262,11 +266,11 @@ export default function ReceptionPage({
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Code de don :</p>
+                                <p className={style.titre}>Raison sociale :</p>
                                 <p>
-                                    {reception[0].code_Don == null
+                                    {reception[0].raison_sociale_don == null
                                         ? '/'
-                                        : reception[0].code_Don}
+                                        : reception[0].raison_sociale_don}
                                 </p>
                             </div>
                         </div>
@@ -278,7 +282,8 @@ export default function ReceptionPage({
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    'EN' ||
+                                    'SU') ? (
                                     <SearchComponent
                                         url={`../../../api/select/dons/${params.donsID}/modalites-livraison`}
                                         onChange={e =>
@@ -309,8 +314,8 @@ export default function ReceptionPage({
                                     Date de réception :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -352,7 +357,8 @@ export default function ReceptionPage({
                                     Nombre de palettes recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -396,7 +402,7 @@ export default function ReceptionPage({
                                     Nombre palettes consignées recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -443,7 +449,7 @@ export default function ReceptionPage({
                                     Nombre de palettes consignées rendues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -489,7 +495,7 @@ export default function ReceptionPage({
                                     Nombre de cartons recus :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -532,7 +538,7 @@ export default function ReceptionPage({
                                     Poids recu en kg :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -570,7 +576,7 @@ export default function ReceptionPage({
                                     Produits sur les palettes :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -605,7 +611,7 @@ export default function ReceptionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -668,3 +674,5 @@ export default function ReceptionPage({
         </div>
     )
 }
+
+export default withAuthorization(ReceptionPage, ['AD', 'EN', 'SU'])

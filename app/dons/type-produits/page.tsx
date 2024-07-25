@@ -98,4 +98,4 @@ function TypeProduitsPage() {
     )
 }
 
-export default withAuthorization(TypeProduitsPage, ['AD', 'PR'])
+export default withAuthorization(TypeProduitsPage, ['AD', 'SU'])

@@ -245,4 +245,4 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
     )
 }
 
-export default withAuthorization(ContactSocietePage, ['AD', 'PR'])
+export default withAuthorization(ContactSocietePage, ['AD', 'SU'])

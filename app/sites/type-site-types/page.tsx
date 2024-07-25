@@ -98,4 +98,4 @@ function SiteTypesPage() {
     )
 }
 
-export default withAuthorization(SiteTypesPage, ['AD', 'PR'])
+export default withAuthorization(SiteTypesPage, ['AD', 'SU'])

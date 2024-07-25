@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -25,7 +26,7 @@ interface GroupeID {
     date_arret_activite_du_Groupe: Date
 }
 
-export default function GroupePage({
+function GroupePage({
     params,
 }: {
     params: { societeID: string; groupeID: string }
@@ -185,7 +186,7 @@ export default function GroupePage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU' || 'AP') && (
                     <div>
                         <button
                             onClick={() => {
@@ -231,7 +232,8 @@ export default function GroupePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom du groupe :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='nom_du_Groupe'
@@ -260,7 +262,8 @@ export default function GroupePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Site web :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='site_Web'
@@ -393,3 +396,5 @@ export default function GroupePage({
         </div>
     )
 }
+
+export default withAuthorization(GroupePage, ['AD', 'SU', 'AP'])

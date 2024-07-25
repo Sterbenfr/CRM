@@ -8,7 +8,15 @@ export async function GET(
     const interactionID = params.interactionID
     try {
         const [rows] = await connection.query(
-            'SELECT i.code_interaction, i.code_Utilisateur_Prospecteur, i.code_Entite_Prospectee, i.date_interaction, i.code_type_interaction, i.code_modalite_interaction, i.code_contact_entite, i.commentaires, i.pieces_associees, i.date_relance FROM Interactions i LEFT JOIN Utilisateurs u ON i.code_Utilisateur_Prospecteur = u.code_utilisateur LEFT JOIN Entite e ON i.code_Entite_Prospectee = e.code_Entite LEFT JOIN TypeInteractions t ON i.code_type_interaction = t.code_type_interaction LEFT JOIN ModaliteInteractions m ON i.code_modalite_interaction = m.code_modalite_interaction LEFT JOIN ContactEntite c ON i.code_contact_entite = c.code_utilisateur_suivant WHERE i.code_interaction = ?;',
+            `SELECT i.code_interaction, i.code_Utilisateur_Prospecteur, i.code_Entite_Prospectee, i.date_interaction, i.code_type_interaction, i.code_modalite_interaction, i.code_contact_entite, i.commentaires, i.pieces_associees, i.date_relance, e.raison_sociale, concat(u.prenom, " ", u.nom) AS utilisateur_prospecteur, concat(co.prenom, " ", co.nom) AS contact_entite, t.libelle AS libelle_type_interaction, m.libelle AS libelle_modalite_interaction
+            FROM Interactions i
+            LEFT JOIN Utilisateurs u ON i.code_Utilisateur_Prospecteur = u.code_utilisateur
+            LEFT JOIN Entite e ON i.code_Entite_Prospectee = e.code_Entite
+            LEFT JOIN TypeInteractions t ON i.code_type_interaction = t.code_type_interaction
+            LEFT JOIN ModaliteInteractions m ON i.code_modalite_interaction = m.code_modalite_interaction
+            LEFT JOIN ContactEntite c ON i.code_contact_entite = c.code_utilisateur_suivant
+            LEFT JOIN Contacts co ON i.code_contact_entite = co.code_contact
+            WHERE i.code_interaction = ?;`,
             [interactionID],
         )
         return NextResponse.json(rows)

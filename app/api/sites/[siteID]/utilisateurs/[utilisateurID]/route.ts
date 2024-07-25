@@ -8,7 +8,7 @@ export async function GET(
     const utilisateurID = params.utilisateurID
     try {
         const [rows] = await connection.query(
-            'SELECT * FROM Utilisateurs WHERE code_utilisateur = ?;',
+            'SELECT u.code_utilisateur, u.civilite, u.nom, u.prenom, u.tel_perso, u.mail, u.commentaires, u.code_type_utilisateur, t.libelle AS libelle_type_utilisateur FROM Utilisateurs u LEFT JOIN TypesUtilisateurs t ON u.code_type_utilisateur = t.code_type_utilisateur WHERE code_utilisateur = ?;',
             [utilisateurID],
         )
         return NextResponse.json(rows)

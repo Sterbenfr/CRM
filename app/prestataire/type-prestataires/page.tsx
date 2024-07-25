@@ -98,4 +98,4 @@ function PrestatairesPage() {
         </>
     )
 }
-export default withAuthorization(PrestatairesPage, ['AD', 'PR'])
+export default withAuthorization(PrestatairesPage, ['AD', 'SU'])

@@ -7,6 +7,7 @@ import SearchComponent from '@/components/searchComponent'
 import SelectComponent from '@/components/select-component'
 import Image from 'next/image'
 import fileUpload, { setFile, setFile2 } from '@/components/fileUploadModify'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -50,7 +51,7 @@ interface DonID {
     designation_longue: string
 }
 
-export default function DonPage({ params }: { params: { donsID: string } }) {
+function DonPage({ params }: { params: { donsID: string } }) {
     const [don, setDon] = useState<DonID[] | null>()
     const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
@@ -175,7 +176,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
         }
 
-        const filePaths: string[] = await fileUpload(
+        const filePaths = await fileUpload(
             '../../api/upload/cerfa',
             '../../api/upload/piece',
         )
@@ -287,7 +288,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'SU' || 'AP' || 'EN') && (
                     <div>
                         <button
                             onClick={() => {
@@ -439,8 +440,8 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 Statut d&apos;acceptation du don :
                             </p>
                             {modify &&
-                            (session?.user.role === 'AD' ||
-                                session?.user.role === 'RR') ? (
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <SelectComponent
                                     url='../../api/select/dons'
                                     onChange={e =>
@@ -460,7 +461,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Date d&apos;acceptation / refus :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'RR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='date'
@@ -499,7 +502,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 L&apos;utilisateur qui accepte ou refuse le don
                                 :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'RR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='text'
@@ -529,8 +534,8 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         <div className={style.info}>
                             <p className={style.titre}>Site de réception :</p>
                             {modify &&
-                            (session?.user.role === 'AD' ||
-                                session?.user.role === 'RR') ? (
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <SearchComponent
                                     url='../../api/select/sites'
                                     onChange={e => handleSiteChange(e)}
@@ -556,7 +561,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Indicateur de remerciement :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.checkboxF}
                                     type='checkbox'
@@ -587,7 +594,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Date du remerciement :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='date'
@@ -626,7 +635,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Nom du destinataire du cerfa :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='input'
@@ -654,7 +665,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Adresse du destinataire du cerfa :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='input'
@@ -685,7 +698,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Adresse mail du destinataire du cerfa :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='input'
@@ -722,7 +737,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>
                                 Téléphone du destinataire du cerfa :
                             </p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='number'
@@ -753,7 +770,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
 
                         <div className={style.info}>
                             <p className={style.titre}>Valeur du cerfa :</p>
-                            {modify && session?.user.role === ('AD' || 'PR') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='number'
@@ -781,7 +800,8 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>Cerfa fait :</p>
                             <p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP' || 'EN') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -811,7 +831,8 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>Date du cerfa :</p>
                             <p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP' || 'EN') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -847,7 +868,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
 
                         <div className={style.info}>
                             <p className={style.titre}>Cerfa :</p>
-                            {modify && session?.user.role === ('AD' || 'RC') ? (
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
                                 <input
                                     className={style.selectF}
                                     type='file'
@@ -871,7 +894,8 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                             <p className={style.titre}>Pièce associée :</p>
                             <p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP' || 'EN') ? (
                                     <input
                                         className={style.selectF}
                                         type='file'
@@ -928,3 +952,5 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         </div>
     )
 }
+
+export default withAuthorization(DonPage, ['AD', 'AP', 'SU', 'EN'])

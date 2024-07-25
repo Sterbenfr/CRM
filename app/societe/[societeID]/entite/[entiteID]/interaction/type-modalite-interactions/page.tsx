@@ -108,4 +108,4 @@ function Modalites_InteractionsPage({
         </>
     )
 }
-export default withAuthorization(Modalites_InteractionsPage, ['AD', 'PR'])
+export default withAuthorization(Modalites_InteractionsPage, ['AD', 'SU'])

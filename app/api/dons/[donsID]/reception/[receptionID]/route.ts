@@ -9,7 +9,25 @@ export async function GET(
     const donsID = params.donsID
     try {
         const [rows] = await connection.query(
-            'SELECT * FROM Reception WHERE Reception.numero_reception = ? AND code_Don = ?;',
+            `SELECT numero_reception,
+            Reception.code_Don,
+            Reception.date_reception,
+            Reception.numero_livraison,
+            Reception.date_reception,
+            Reception.heure_reception,
+            Reception.nombre_palettes_recues,
+            Reception.nombre_palettes_consignees_recues,
+            Reception.nombre_palettes_consignees_rendues,
+            Reception.nombre_cartons_recus,
+            Reception.poids_recu_kg,
+            Reception.produits_sur_palettes,
+            Reception.commentaires,
+            Reception.pieces_associees,
+            Entite.raison_sociale AS raison_sociale_don
+            FROM Reception
+            LEFT JOIN Dons on Reception.code_Don = Dons.code_Don
+            LEFT JOIN Entite on Dons.code_Entite_donatrice = Entite.code_Entite
+            WHERE Reception.numero_reception = ? AND Reception.code_Don = ?;`,
             [receptionID, donsID],
         )
         return NextResponse.json(rows)
