@@ -4,7 +4,7 @@ import connection from '../../../../utils/db'
 export async function GET() {
     try {
         const [rows] = await connection.query(
-            'Select code_type_de_Prestataire as id, raison_sociale as label FROM Prestataires;',
+            'Select code_Prestataire as id, raison_sociale as label FROM Prestataires;',
         )
         return NextResponse.json(rows)
     } catch (err) {

@@ -274,6 +274,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 value: adresse,
                 required: true,
                 onInputChange: handleAdresseChange,
+                maxLength: 255,
                 placeholder: 'Exemple: 12 rue de la paix, 75000 Paris',
             },
             {
@@ -310,7 +311,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             }, // if number !== 14 = pas de validation
             {
                 id: 'code_ape',
-                type: 'number',
+                type: 'input',
                 value: codeApe,
                 maxLength: 5,
                 onInputChange: handleCodeApeChange,
@@ -318,7 +319,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             }, // 4 chiffres et 1 lettre
             {
                 id: 'code_rna',
-                type: 'number',
+                type: 'input',
                 value: codeRna,
                 maxLength: 10,
                 onInputChange: handleCodeRnaChange,
