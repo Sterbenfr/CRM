@@ -274,7 +274,7 @@ function ContactsPage({
         const fetchSearchContacts = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact?limit=5000`,
+                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact`,
                 )
 
                 if (!res.ok) {

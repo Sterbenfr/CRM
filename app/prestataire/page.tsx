@@ -323,7 +323,6 @@ function PrestatairesPage() {
             fields[11].required = false
         }
 
-
         if (
             dateArretActiviteDuPrestataire &&
             dateArretActiviteDuPrestataire?.toISOString().split('T')[0] <
@@ -370,7 +369,7 @@ function PrestatairesPage() {
 
         const fetchSearchDons = async () => {
             if (search.length === 0) {
-                const res = await fetch('../api/prestataire?limit=5000')
+                const res = await fetch('../api/prestataire')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
