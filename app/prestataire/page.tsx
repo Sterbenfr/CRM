@@ -7,6 +7,7 @@ import PopUp from '@/components/popUp'
 import style from '../../styles/components.module.css'
 import { useCallback } from 'react'
 import TypesButtons from '@/components/TypesButtons'
+import Excel from '@/components/Excel'
 
 export interface Prestataire {
     code_Prestataire: number
@@ -323,7 +324,6 @@ function PrestatairesPage() {
             fields[11].required = false
         }
 
-
         if (
             dateArretActiviteDuPrestataire &&
             dateArretActiviteDuPrestataire?.toISOString().split('T')[0] <
@@ -398,7 +398,30 @@ function PrestatairesPage() {
         <>
             <div className={style.page}>
                 <h1 className={style.lg}>Prestataire</h1>
+
                 <List
+                    excelitems={Prestataires.map(Prestataire => ({
+                        value1: Prestataire.code_Prestataire.toString(),
+                        value2: Prestataire.raison_sociale.toString(),
+                        value3:
+                            Prestataire.telephone.toString() == ''
+                                ? '/'
+                                : Prestataire.telephone.toString(),
+                        value4:
+                            Prestataire.mail.toString() == ''
+                                ? '/'
+                                : Prestataire.mail.toString(),
+                        value5:
+                            Prestataire.telephone_contact_prestataire.toString() ==
+                            ''
+                                ? '/'
+                                : Prestataire.telephone_contact_prestataire.toString(),
+                        value6:
+                            Prestataire.mail_contact_prestataire.toString() ==
+                            ''
+                                ? '/'
+                                : Prestataire.mail_contact_prestataire.toString(),
+                    }))}
                     items={Prestataires.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),

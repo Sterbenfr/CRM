@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Line from './line'
 import FunctionBlock from './functionBlock'
 import style from '../styles/components.module.css'
+import Excel from './Excel'
 
 interface ListProps {
     value1?: string
@@ -101,6 +102,19 @@ const List: React.FC<{
         }
     }
 
+    const exportToExcel = () => {
+        const dataToExport = items.filter(item => {
+            if (lineCheckbox.includes(parseInt(item.value1 as string))) {
+                return item
+            }
+        })
+
+        Excel({
+            data: dataToExport,
+            fileName: 'DATATEST',
+        })
+    }
+
     useEffect(() => {
         if (searchValue.length < 3) {
             setSelectedItems(undefined)
@@ -134,6 +148,7 @@ const List: React.FC<{
                 fonc1={functions.fonc1}
                 fonc2={deleteFunction}
                 fonc3={searchFunction}
+                fonc4={exportToExcel}
             />
             <div className={`${style.colName} ${padding}`}>
                 <div className={style.lineContainer}>

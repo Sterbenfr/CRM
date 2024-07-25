@@ -695,6 +695,7 @@ function DonsPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    excelData={Dons}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
