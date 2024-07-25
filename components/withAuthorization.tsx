@@ -2,6 +2,7 @@ import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Session, User } from 'next-auth'
+import DeniedAccess from './DeniedAccess'
 
 interface ExtendedUser extends User {
     role: Role
@@ -38,6 +39,9 @@ const withAuthorization = <P extends object>(
 
         if (session && allowedRoles.includes(session.user.role)) {
             return <WrappedComponent {...props} />
+            
+        } else if (session && !allowedRoles.includes(session.user.role)) {
+            return <DeniedAccess />
         }
 
         return null
