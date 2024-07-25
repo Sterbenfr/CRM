@@ -6,6 +6,7 @@ import SelectComponent from '@/components/select-component'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -30,11 +31,7 @@ interface SocieteID {
     date_arret_activite_Societe: Date
 }
 
-export default function SocietePage({
-    params,
-}: {
-    params: { societeID: string }
-}) {
+function SocietePage({ params }: { params: { societeID: string } }) {
     const [societe, setSociete] = useState<SocieteID[]>([])
     const [session, setSession] = useState<ExtendedSession | null>(null)
     const [modify, setModify] = useState<boolean>(false)
@@ -214,7 +211,7 @@ export default function SocietePage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU' || 'AP') && (
                     <div>
                         <button
                             onClick={() => {
@@ -262,7 +259,8 @@ export default function SocietePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Raison sociale :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='raison_sociale'
@@ -293,7 +291,8 @@ export default function SocietePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom commercial :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='nom_commercial'
@@ -327,8 +326,8 @@ export default function SocietePage({
                                     d&apos;appartenance :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SearchComponent
                                         url='../../api/select/societe/groupe'
                                         onChange={e =>
@@ -352,7 +351,8 @@ export default function SocietePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Siren :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='number'
                                         name='Siren'
@@ -388,7 +388,8 @@ export default function SocietePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Site web :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='site_Web'
@@ -412,15 +413,15 @@ export default function SocietePage({
                                 )}
                             </div>
                         </div>
-                        
+
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
                                     Type d&apos;activite de l&apos;entreprise :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SelectComponent
                                         url='../../api/societe/type-activite-societe'
                                         onChange={e => handleActiviteChange(e)}
@@ -440,12 +441,12 @@ export default function SocietePage({
                     </div>
 
                     <div className={style.col_2}>
-
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='commentaires'
@@ -476,8 +477,8 @@ export default function SocietePage({
                                     Date d&apos;arrêt d&apos;activité :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='date'
                                         name='date_arret_activite_Societe'
@@ -558,3 +559,5 @@ export default function SocietePage({
         </div>
     )
 }
+
+export default withAuthorization(SocietePage, ['AD', 'SU', 'AP'])

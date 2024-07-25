@@ -173,7 +173,10 @@ function InteractionsPage({
             {
                 id: 'code_contact_entite',
                 type: 'select',
-                value: codeContactEntiteInteraction,
+                value:
+                    codeContactEntiteInteraction !== ''
+                        ? codeContactEntiteInteraction
+                        : null,
                 url: `../../../../../api/select/societe/entite/${params.entiteID}/contact`,
                 onChange: handleCodeContactEntiteInteraction,
             },
@@ -246,14 +249,8 @@ function InteractionsPage({
 
         fetchInteractions()
         fetchSearchInteractions()
-    }, [
-        page,
-        itemsPerPage,
-        params.societeID,
-        params.entiteID,
-        search,
-        generateFields,
-    ])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, itemsPerPage, params.societeID, params.entiteID, generateFields])
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
@@ -387,4 +384,4 @@ function InteractionsPage({
         </>
     )
 }
-export default withAuthorization(InteractionsPage, ['AD', 'PR'])
+export default withAuthorization(InteractionsPage, ['AD', 'SU', 'AP'])

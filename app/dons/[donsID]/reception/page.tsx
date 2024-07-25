@@ -465,4 +465,4 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
     )
 }
 
-export default withAuthorization(ReceptionsPage, ['AD', 'PR'])
+export default withAuthorization(ReceptionsPage, ['AD', 'EN', 'SU'])

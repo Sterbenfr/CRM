@@ -737,4 +737,4 @@ function DonsPage() {
     )
 }
 
-export default withAuthorization(DonsPage, ['AD', 'PR'])
+export default withAuthorization(DonsPage, ['AD', 'AP', 'SU', 'EN'])

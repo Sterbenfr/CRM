@@ -383,4 +383,4 @@ function SitesPage() {
     )
 }
 
-export default withAuthorization(SitesPage, ['AD', 'PR'])
+export default withAuthorization(SitesPage, ['AD', 'SU'])

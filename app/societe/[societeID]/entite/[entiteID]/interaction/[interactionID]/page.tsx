@@ -6,6 +6,7 @@ import SelectComponent from '@/components/select-component'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -30,7 +31,7 @@ interface InteractionID {
     date_relance: Date
 }
 
-export default function InteractionPage({
+function InteractionPage({
     params,
 }: {
     params: { societeID: string; entiteID: string; interactionID: string }
@@ -236,7 +237,7 @@ export default function InteractionPage({
 
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU' || 'AP') && (
                     <div>
                         <button
                             onClick={() => {
@@ -296,8 +297,8 @@ export default function InteractionPage({
                                     Code utilisateur prospecteur :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SearchComponent
                                         url='../../../../../../api/select/sites/utilisateurs'
                                         onChange={e =>
@@ -324,8 +325,8 @@ export default function InteractionPage({
                                     Date de l&apos;interaction :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='date'
                                         name='date_interaction'
@@ -353,8 +354,8 @@ export default function InteractionPage({
                                     Code type d&apos;interaction :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SelectComponent
                                         url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-interactions`}
                                         onChange={e =>
@@ -364,8 +365,7 @@ export default function InteractionPage({
                                 ) : (
                                     <p>
                                         {interaction[0]
-                                            .code_type_interaction ===
-                                            null
+                                            .code_type_interaction === null
                                             ? '/'
                                             : interaction[0]
                                                   .code_type_interaction}
@@ -382,8 +382,8 @@ export default function InteractionPage({
                                     Code modalite interaction :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SelectComponent
                                         url={`../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/type-modalite-interactions`}
                                         onChange={e => handleModaliteChange(e)}
@@ -391,8 +391,7 @@ export default function InteractionPage({
                                 ) : (
                                     <p>
                                         {interaction[0]
-                                            .code_modalite_interaction ===
-                                            null
+                                            .code_modalite_interaction === null
                                             ? '/'
                                             : interaction[0]
                                                   .code_modalite_interaction}
@@ -407,8 +406,8 @@ export default function InteractionPage({
                                     Code contact de l&apos;entite :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <SelectComponent
                                         url={`../../../../../../api/select/societe/entite/${params.entiteID}/contact`}
                                         onChange={e => handleContactChange(e)}
@@ -418,7 +417,8 @@ export default function InteractionPage({
                                         {interaction[0].code_contact_entite ===
                                         null
                                             ? '/'
-                                            : interaction[0].code_contact_entite}
+                                            : interaction[0]
+                                                  .code_contact_entite}
                                     </p>
                                 )}
                             </div>
@@ -428,7 +428,8 @@ export default function InteractionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='input'
                                         name='commentaires'
@@ -459,8 +460,8 @@ export default function InteractionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Date relance :</p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'SU' || 'AP') ? (
                                     <input
                                         type='date'
                                         name='date_relance'
@@ -487,3 +488,5 @@ export default function InteractionPage({
         </div>
     )
 }
+
+export default withAuthorization(InteractionPage, ['AD', 'SU', 'AP'])

@@ -4,6 +4,7 @@ import style from '../../../../../styles/components.module.css'
 import Image from 'next/image'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -41,7 +42,7 @@ interface EntiteID {
     date_arret_activite: Date
 }
 
-export default function EntitePage({
+function EntitePage({
     params,
 }: {
     params: { societeID: string; entiteID: string }
@@ -137,7 +138,7 @@ export default function EntitePage({
 
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'SU' || 'AP') && (
                     <div>
                         <button className={style.btnModif} onClick={Print}>
                             Imprimer
@@ -398,3 +399,5 @@ export default function EntitePage({
         </div>
     )
 }
+
+export default withAuthorization(EntitePage, ['AD', 'SU', 'AP'])

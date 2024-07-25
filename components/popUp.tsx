@@ -269,7 +269,8 @@ const PopUp: React.FC<PopUpProps> = ({
             const endpoint = url
             let filePath
             let file2Path
-            if (fileUrl && fileIndex) {
+            console.log(file, file2)
+            if (fileUrl && fileIndex && file !== null) {
                 const formData = new FormData()
                 formData.append('image', file as Blob)
                 console.log('FormData prepared:', formData)
@@ -289,7 +290,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 }
             }
 
-            if (fileUrl2 && fileIndex2) {
+            if (fileUrl2 && fileIndex2 && file2 !== null) {
                 const formData = new FormData()
                 formData.append('image', file2 as Blob)
                 console.log('FormData prepared:', formData)

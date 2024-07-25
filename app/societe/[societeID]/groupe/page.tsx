@@ -270,4 +270,4 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
     )
 }
 
-export default withAuthorization(GroupesPage, ['AD', 'PR'])
+export default withAuthorization(GroupesPage, ['AD', 'SU', 'AP'])

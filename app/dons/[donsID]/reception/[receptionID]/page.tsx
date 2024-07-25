@@ -4,6 +4,7 @@ import style from '../../../../../styles/components.module.css'
 import Image from 'next/image'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '../../../../../components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -31,7 +32,7 @@ interface ReceptionID {
     pieces_associees: Blob
 }
 
-export default function ReceptionPage({
+function ReceptionPage({
     params,
 }: {
     params: { donsID: string; receptionID: string }
@@ -268,3 +269,5 @@ export default function ReceptionPage({
         </div>
     )
 }
+
+export default withAuthorization(ReceptionPage, ['AD', 'EN', 'SU'])

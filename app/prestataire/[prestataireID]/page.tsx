@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -35,11 +36,7 @@ interface PrestataireID {
     date_arret_activite_du_prestataire: Date
 }
 
-export default function PrestatairePage({
-    params,
-}: {
-    params: { prestataireID: string }
-}) {
+function PrestatairePage({ params }: { params: { prestataireID: string } }) {
     const [prestataire, setPrestataire] = useState<PrestataireID[] | null>()
     const [session, setSession] = useState<ExtendedSession | null>(null)
     const [modify, setModify] = useState<boolean>(false)
@@ -203,7 +200,7 @@ export default function PrestatairePage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session?.user.role === ('AD' || 'EN' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -253,8 +250,8 @@ export default function PrestatairePage({
                                     Type du prestataire :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <SelectComponent
                                         url='../../api/prestataire/type-prestataires'
                                         onChange={e =>
@@ -276,7 +273,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Raison sociale :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -310,7 +308,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom commercial :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -344,7 +343,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Siren :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -381,7 +381,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Siret :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -418,7 +419,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Téléphone :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -456,7 +458,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Mail :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -488,7 +491,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Adresse :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -520,8 +524,8 @@ export default function PrestatairePage({
                                     Civilité du contact :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <SelectComponent
                                         url='../../api/select/genre'
                                         onChange={e => handleCiviliteChange(e)}
@@ -550,7 +554,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Nom du contact :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -591,7 +596,8 @@ export default function PrestatairePage({
                                     Prénom du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -633,7 +639,8 @@ export default function PrestatairePage({
                                     Téléphone du contact :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -680,7 +687,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Mail du contact :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -719,7 +727,8 @@ export default function PrestatairePage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -753,8 +762,8 @@ export default function PrestatairePage({
                                     Date d&apos;arrêt de l&apos;activité :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -786,3 +795,5 @@ export default function PrestatairePage({
         </div>
     )
 }
+
+export default withAuthorization(PrestatairePage, ['AD', 'EN', 'SU'])

@@ -4,6 +4,7 @@ import style from '../../../../../styles/components.module.css'
 import Image from 'next/image'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -43,7 +44,7 @@ interface modalite_livraisonID {
     pieces_associees: Blob
 }
 
-export default function Modalites_livraisonPage({
+function Modalites_livraisonPage({
     params,
 }: {
     params: { donsID: string; modalites_livraisonID: string }
@@ -358,3 +359,10 @@ export default function Modalites_livraisonPage({
         </div>
     )
 }
+
+export default withAuthorization(Modalites_livraisonPage, [
+    'AD',
+    'AP',
+    'EN',
+    'SU',
+])

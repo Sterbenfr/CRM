@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import withAuthorization from '@/components/withAuthorization'
 
 interface ExtendedSession extends Session {
     user: {
@@ -27,7 +28,7 @@ interface UtilisateurID {
     code_type_utilisateur: string
 }
 
-export default function UtilisateurPage({
+function UtilisateurPage({
     params,
 }: {
     params: { siteID: string; utilisateurID: string }
@@ -451,3 +452,5 @@ export default function UtilisateurPage({
         </div>
     )
 }
+
+export default withAuthorization(UtilisateurPage, ['AD', 'SU'])
