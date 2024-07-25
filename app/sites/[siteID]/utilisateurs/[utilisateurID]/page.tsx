@@ -26,6 +26,7 @@ interface UtilisateurID {
     mail: string
     commentaires: string
     code_type_utilisateur: string
+    password: string
     libelle_type_utilisateur: string
 }
 
@@ -318,9 +319,6 @@ function UtilisateurPage({
                                 )}
                             </div>
                         </div>
-                    </div>
-
-                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
@@ -346,6 +344,9 @@ function UtilisateurPage({
                                 )}
                             </div>
                         </div>
+                    </div>
+
+                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
@@ -411,6 +412,37 @@ function UtilisateurPage({
                                         {utilisateur[0].mail == (null || '')
                                             ? '/'
                                             : utilisateur[0].mail}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className={style.info}>
+                                <p className={style.titre}>Mot de passe :</p>
+                                {modify &&
+                                session?.user.role === 'AD' ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='password'
+                                        name='password'
+                                        value={modifiedUtilisateur.password}
+                                        placeholder={
+                                            utilisateur[0].password ===
+                                                null ||
+                                            utilisateur[0].password === ''
+                                                ? 'Exemple: Manutentionnaire de Dunkerque'
+                                                : 'Changer de mot de passe'
+                                        }
+                                        maxLength={150}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {utilisateur[0].password ==
+                                        (null || '')
+                                            ? '/'
+                                            : '*********'}
                                     </p>
                                 )}
                             </div>
