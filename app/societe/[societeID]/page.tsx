@@ -118,7 +118,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
     }
 
     const handleSubmit = async () => {
-        const filePaths: string[] = await fileUpload('../../api/upload/image')
+        const filePaths = await fileUpload('../../api/upload/image')
 
         const jsonPayload = {
             ...modifiedSociete,

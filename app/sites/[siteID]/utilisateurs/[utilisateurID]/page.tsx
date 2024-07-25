@@ -431,7 +431,7 @@ function UtilisateurPage({
                                             utilisateur[0].password ===
                                                 null ||
                                             utilisateur[0].password === ''
-                                                ? 'Exemple: Manutentionnaire de Dunkerque'
+                                                ? 'Exemple: ChevaLDE_3'
                                                 : 'Changer de mot de passe'
                                         }
                                         maxLength={150}
