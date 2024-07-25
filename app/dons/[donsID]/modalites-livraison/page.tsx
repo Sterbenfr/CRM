@@ -598,7 +598,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         const fetchSearchModalitesLivraisons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../api/dons/${params.donsID}/modalites-livraison?limit=5000`,
+                    `../../../api/dons/${params.donsID}/modalites-livraison`,
                 )
 
                 if (!res.ok) {
@@ -692,6 +692,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={ModalitesLivraisons}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

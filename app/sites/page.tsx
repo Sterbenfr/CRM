@@ -259,7 +259,7 @@ function SitesPage() {
 
         const fetchSearchSites = async () => {
             if (search.length === 0) {
-                const res = await fetch('../api/sites?limit=5000')
+                const res = await fetch('../api/sites')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -352,6 +352,7 @@ function SitesPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Sites}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

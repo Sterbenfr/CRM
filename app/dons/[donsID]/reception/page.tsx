@@ -342,7 +342,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         const fetchSearchDons = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../api/dons/${params.donsID}/reception?limit=5000`,
+                    `../../../api/dons/${params.donsID}/reception`,
                 )
 
                 if (!res.ok) {
@@ -442,6 +442,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Receptions}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

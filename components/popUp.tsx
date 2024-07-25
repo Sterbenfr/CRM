@@ -269,7 +269,7 @@ const PopUp: React.FC<PopUpProps> = ({
             const endpoint = url
             let filePath
             let file2Path
-            if (fileUrl && fields[fileIndex ? fileIndex : 0].value) {
+            if (fileUrl && fileIndex) {
                 const formData = new FormData()
                 formData.append('image', file as Blob)
                 console.log('FormData prepared:', formData)
@@ -289,7 +289,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 }
             }
 
-            if (fileUrl2 && fields[fileIndex2 ? fileIndex2 : 0].value) {
+            if (fileUrl2 && fileIndex2) {
                 const formData = new FormData()
                 formData.append('image', file2 as Blob)
                 console.log('FormData prepared:', formData)
@@ -339,6 +339,7 @@ const PopUp: React.FC<PopUpProps> = ({
                 console.error('Network error:', error)
             }
             onClose()
+
             window.location.reload()
         } else {
             scrollToTop()
@@ -377,7 +378,7 @@ const PopUp: React.FC<PopUpProps> = ({
             <div className={style.page1}>
                 <div className={style.croix}>
                     <h2 className={style.lg1}>{popupTitle}</h2>
-                    <button className={style.btnC} onClick={onClose}>
+                    <button className={style.btnC} onClick={() => { onClose(); window.location.reload(); }}>
                         <Image
                             className={style.CR}
                             src='/IMG/close.svg'
@@ -390,7 +391,9 @@ const PopUp: React.FC<PopUpProps> = ({
             </div>
             <div
                 className={
-                    fields.some(field => field.id.startsWith('code_type_don'))
+                    fields.some(field =>
+                        field.id.startsWith('date_debut_mise_disposition'),
+                    )
                         ? style.gridTwoColumns
                         : ''
                 }

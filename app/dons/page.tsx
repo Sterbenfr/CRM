@@ -382,6 +382,7 @@ function DonsPage() {
                     type: 'select',
                     value: statutAcceptationDon,
                     url: '../api/select/dons',
+                    required: true,
                     onChange: handleStatutAcceptationDonChange,
                 },
                 {
@@ -598,7 +599,7 @@ function DonsPage() {
 
         const fetchSearchDons = async () => {
             if (search.length === 0) {
-                const res = await fetch('../api/dons?limit=5000')
+                const res = await fetch('../api/dons')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -695,6 +696,7 @@ function DonsPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Dons}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

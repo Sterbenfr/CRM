@@ -6,6 +6,7 @@ import { Session } from 'next-auth'
 import SearchComponent from '@/components/searchComponent'
 import SelectComponent from '@/components/select-component'
 import Image from 'next/image'
+import fileUpload, { setFile, setFile2 } from '@/components/fileUploadModify'
 
 interface ExtendedSession extends Session {
     user: {
@@ -146,14 +147,17 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleFileChange: React.ChangeEventHandler<
+    const handleCerfaFileChange: React.ChangeEventHandler<
         HTMLInputElement
     > = event => {
         if (event.target.files && event.target.files.length > 0) {
-            setModifiedDon({
-                ...modifiedDon,
-                cerfa: '', // TODO : Add the file to the modifiedDon object
-            })
+            setFile(event.target.files[0])
+        }
+    }
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile2(event.target.files[0])
         }
     }
 
@@ -171,6 +175,11 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
         }
 
+        const filePaths: string[] = await fileUpload(
+            '../../api/upload/cerfa',
+            '../../api/upload/piece',
+        )
+
         const jsonPayload = {
             ...modifiedDon,
             date_remerciement: formatDate(modifiedDon.date_remerciement),
@@ -178,10 +187,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
             date_acceptation_refus_don: formatDate(
                 modifiedDon.date_acceptation_refus_don,
             ),
+            cerfa: filePaths[0],
+            pieces_associees: filePaths[1],
         }
-
-        // Remove the file from the JSON payload
-        delete jsonPayload.cerfa
 
         // Convert non-file data to JSON
         const body = JSON.stringify(jsonPayload)
@@ -207,6 +215,9 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
         } catch (error) {
             console.error('Error submitting form:', error)
         }
+        setTimeout(() => {
+            window.location.reload()
+        }, 200)
     }
 
     if (
@@ -632,8 +643,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].nom_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].nom_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].nom_destinataire_cerfa}
                                 </p>
@@ -664,8 +674,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].adresse_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].adresse_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].adresse_destinataire_cerfa}
                                 </p>
@@ -735,8 +744,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                 />
                             ) : (
                                 <p>
-                                    {don[0].telephone_destinataire_cerfa ==
-                                    (null || '')
+                                    {don[0].telephone_destinataire_cerfa == null
                                         ? '/'
                                         : don[0].telephone_destinataire_cerfa}
                                 </p>
@@ -844,7 +852,7 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                                     className={style.selectF}
                                     type='file'
                                     name='cerfa_file'
-                                    onChange={handleFileChange}
+                                    onChange={handleCerfaFileChange}
                                 />
                             ) : don[0].cerfa == null ? (
                                 <p>/</p>
@@ -862,18 +870,29 @@ export default function DonPage({ params }: { params: { donsID: string } }) {
                         <div className={style.info}>
                             <p className={style.titre}>Pièce associée :</p>
                             <p>
-                                {don[0].pieces_associees == null ? (
-                                    '/'
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='pieces_associees'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : don[0].pieces_associees == null ? (
+                                    <p>/</p>
+                                ) : typeof don[0].pieces_associees ===
+                                  'string' ? (
+                                    <a
+                                        href={don[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
                                 ) : (
                                     <a
-                                        className={style.selectF}
                                         href={don[0].pieces_associees}
-                                        download={
-                                            'pièce_associée_' +
-                                            don[0].commentaires
-                                        }
+                                        download='pieces_associees'
                                     >
-                                        {' '}
                                         Télécharger la pièce associée
                                     </a>
                                 )}

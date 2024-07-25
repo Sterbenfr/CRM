@@ -245,7 +245,7 @@ function SocietesPage() {
 
         const fetchSocieteSearch = async () => {
             if (search.length === 0) {
-                const res = await fetch(`../api/societe?limit=5000`)
+                const res = await fetch(`../api/societe`)
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -328,6 +328,7 @@ function SocietesPage() {
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Societes}
                 />
                 <Pagination
                     onPageChange={handlePageChange}
@@ -351,7 +352,7 @@ function SocietesPage() {
                 <TypesButtons
                     items={[
                         {
-                            label: "Types d'activite d'entreprise'",
+                            label: "Types d'activite d'entreprise",
                             url: 'type-activite-societe',
                         },
                     ]}

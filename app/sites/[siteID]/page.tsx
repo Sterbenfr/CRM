@@ -253,6 +253,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='designation_longue'
                                         value={modifiedSite.designation_longue}
@@ -286,6 +287,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='designation_courte'
                                         value={modifiedSite.designation_courte}
@@ -317,6 +319,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='adresse'
                                         value={modifiedSite.adresse}
@@ -361,6 +364,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 (session?.user.role === 'AD' ||
                                     session?.user.role === 'RC') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_fermeture'
                                         value={formatDate(
@@ -412,6 +416,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='numero_telephone'
                                         value={modifiedSite.numero_telephone}
@@ -449,6 +454,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='mail'
                                         name='adresse_mail'
                                         value={modifiedSite.adresse_mail}
@@ -477,6 +483,7 @@ export default function SitePage({ params }: { params: { siteID: string } }) {
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedSite.commentaires}
