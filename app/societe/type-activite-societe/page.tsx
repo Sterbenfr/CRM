@@ -110,4 +110,4 @@ function TypesActiviteSocietesPage() {
         </>
     )
 }
-export default withAuthorization(TypesActiviteSocietesPage, ['AD', 'PR'])
+export default withAuthorization(TypesActiviteSocietesPage, ['AD', 'SU'])

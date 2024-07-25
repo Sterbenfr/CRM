@@ -98,4 +98,4 @@ function TypeDonsPage() {
     )
 }
 
-export default withAuthorization(TypeDonsPage, ['AD', 'PR'])
+export default withAuthorization(TypeDonsPage, ['AD', 'SU'])

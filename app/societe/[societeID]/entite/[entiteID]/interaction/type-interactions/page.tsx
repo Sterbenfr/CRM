@@ -104,4 +104,4 @@ function InteractionsPage({
         </>
     )
 }
-export default withAuthorization(InteractionsPage, ['AD', 'PR'])
+export default withAuthorization(InteractionsPage, ['AD', 'SU'])

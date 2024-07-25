@@ -249,4 +249,4 @@ function SuiviGroupePage({
     )
 }
 
-export default withAuthorization(SuiviGroupePage, ['AD', 'PR'])
+export default withAuthorization(SuiviGroupePage, ['AD', 'SU'])

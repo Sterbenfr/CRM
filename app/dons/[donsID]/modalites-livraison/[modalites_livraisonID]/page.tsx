@@ -326,7 +326,7 @@ function Modalites_livraisonPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'AP' || 'EN' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -389,8 +389,8 @@ function Modalites_livraisonPage({
                                     Code du type de livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <SelectComponent
                                         url={`../../../api/dons/${params.donsID}/modalites-livraison/type-livraison`}
                                         onChange={e =>
@@ -415,8 +415,8 @@ function Modalites_livraisonPage({
                                     Code prestataire transporteur :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <SearchComponent
                                         url={`../../../api/select/prestataire`}
                                         onChange={e =>
@@ -451,8 +451,8 @@ function Modalites_livraisonPage({
                                     Date prévue de la livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -484,7 +484,8 @@ function Modalites_livraisonPage({
                                     Heure prévue livraison :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -531,8 +532,8 @@ function Modalites_livraisonPage({
                                     Civilite contact enlévement :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <SelectComponent
                                         url={`../../../api/select/genre`}
                                         onChange={e =>
@@ -557,7 +558,8 @@ function Modalites_livraisonPage({
                                     Nom du contact d&apos;enlévement :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -597,7 +599,8 @@ function Modalites_livraisonPage({
                                     Prénom du contact d&apos;enlévement :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -638,7 +641,8 @@ function Modalites_livraisonPage({
                                     Téléphone du contact d&apos;enlévement :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -687,7 +691,8 @@ function Modalites_livraisonPage({
                                     Mail du contact d&apos;enlévement :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -727,8 +732,8 @@ function Modalites_livraisonPage({
                                     Adresse d&apos;enlévement :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -767,8 +772,8 @@ function Modalites_livraisonPage({
                                     Adresse de la livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <SearchComponent
                                         url={`../../../api/select/sites`}
                                         onChange={e => handleAdresseChange(e)}
@@ -801,8 +806,8 @@ function Modalites_livraisonPage({
                                     Civilite contact livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <SelectComponent
                                         url={`../../../api/select/genre`}
                                         onChange={e =>
@@ -829,8 +834,8 @@ function Modalites_livraisonPage({
                                     Nom contact livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -870,8 +875,8 @@ function Modalites_livraisonPage({
                                     Prenom contact livraison :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -911,7 +916,8 @@ function Modalites_livraisonPage({
                                     Téléphone contact livraison :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -959,7 +965,8 @@ function Modalites_livraisonPage({
                                     Mail contact livraison :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='mail'
@@ -999,7 +1006,8 @@ function Modalites_livraisonPage({
                                     Nombre de palette(s) prévue(s) :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -1047,7 +1055,8 @@ function Modalites_livraisonPage({
                                     :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -1096,7 +1105,8 @@ function Modalites_livraisonPage({
                                     Nombre de carton(s) prévu(s) :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -1142,7 +1152,8 @@ function Modalites_livraisonPage({
                                     Poids prévu en kg :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -1188,7 +1199,8 @@ function Modalites_livraisonPage({
                                     Produit(s) sur palette(s) ? :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -1227,7 +1239,8 @@ function Modalites_livraisonPage({
                                     produit(s) :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -1274,7 +1287,8 @@ function Modalites_livraisonPage({
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'

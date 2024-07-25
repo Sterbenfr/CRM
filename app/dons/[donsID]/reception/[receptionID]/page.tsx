@@ -204,7 +204,7 @@ function ReceptionPage({
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'RR' || 'PR' || 'RC') && (
+                session.user.role === ('AD' || 'EN' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -265,7 +265,8 @@ function ReceptionPage({
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RR') ? (
+                                    'EN' ||
+                                    'SU') ? (
                                     <SearchComponent
                                         url={`../../../api/select/dons/${params.donsID}/modalites-livraison`}
                                         onChange={e =>
@@ -296,8 +297,8 @@ function ReceptionPage({
                                     Date de réception :
                                 </p>
                                 {modify &&
-                                (session?.user.role === 'AD' ||
-                                    session?.user.role === 'RC') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='date'
@@ -339,7 +340,8 @@ function ReceptionPage({
                                     Nombre de palettes recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -383,7 +385,7 @@ function ReceptionPage({
                                     Nombre palettes consignées recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -430,7 +432,7 @@ function ReceptionPage({
                                     Nombre de palettes consignées rendues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -476,7 +478,7 @@ function ReceptionPage({
                                     Nombre de cartons recus :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -519,7 +521,7 @@ function ReceptionPage({
                                     Poids recu en kg :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -557,7 +559,7 @@ function ReceptionPage({
                                     Produits sur les palettes :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'RC') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -592,7 +594,7 @@ function ReceptionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'PR') ? (
+                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'

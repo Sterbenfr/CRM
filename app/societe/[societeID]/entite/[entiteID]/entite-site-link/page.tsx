@@ -243,4 +243,4 @@ function ContactEntitePage({
     )
 }
 
-export default withAuthorization(ContactEntitePage, ['AD', 'PR'])
+export default withAuthorization(ContactEntitePage, ['AD', 'SU'])
