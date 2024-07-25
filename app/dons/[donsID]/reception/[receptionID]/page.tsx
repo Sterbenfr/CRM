@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 
 interface ExtendedSession extends Session {
     user: {
@@ -29,7 +30,7 @@ interface ReceptionID {
     poids_recu_kg: number
     produits_sur_palettes: string
     commentaires: string
-    pieces_associees: Blob
+    pieces_associees: string
 }
 
 export default function ReceptionPage({
@@ -112,9 +113,22 @@ export default function ReceptionPage({
             : new Date().toISOString().split('T')[0]
     }
 
+    const handleFileChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../api/upload/piece',
+        )
+
         const jsonPayload = {
             ...modifiedReception,
+            pieces_associees: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -622,7 +636,30 @@ export default function ReceptionPage({
                                 <p className={style.titre}>
                                     Pièces associées :
                                 </p>
-                                <p>{reception[0].pieces_associees == null}</p>
+                                {modify && session?.user.role === ('AD' || 'RC') ? (
+                                <input
+                                    className={style.selectF}
+                                    type='file'
+                                    name='pieces_associees'
+                                    onChange={handleFileChange}
+                                />
+                            ) : reception[0].pieces_associees == null ? (
+                                <p>/</p>
+                            ) : typeof reception[0].pieces_associees === 'string' ? (
+                                <a
+                                    href={reception[0].pieces_associees}
+                                    download='pieces_associees'
+                                >
+                                    Télécharger la pièce associée
+                                </a>
+                            ) : (
+                                <a
+                                    href={reception[0].pieces_associees}
+                                    download='pieces_associees'
+                                >
+                                    Télécharger la pièce associée
+                                </a>
+                            )}
                             </div>
                         </div>
                     </div>

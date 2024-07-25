@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SelectComponent from '@/components/select-component'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile, setFile2 } from '@/components/fileUploadModify'
 
 interface ExtendedSession extends Session {
     user: {
@@ -19,7 +20,7 @@ interface EntiteID {
     code_entite: number
     raison_sociale: string
     nom_commercial: string
-    logo: Blob
+    logo: string
     siret: string
     code_ape: string
     code_rna: string
@@ -36,7 +37,7 @@ interface EntiteID {
     TC_libelle: string
     commentaires_logistique: string
     presence_quai: string
-    pieces_associees: Blob
+    pieces_associees: string
     cerfa: string
     FC_libelle: string
     date_arret_activite: Date
@@ -171,6 +172,20 @@ export default function EntitePage({
         })
     }
 
+    const handleLogoFileChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
+    const handlePiecesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile2(event.target.files[0])
+        }
+    }
+
     const formatDate = (dateString: string | number | Date) => {
         return dateString
             ? new Date(dateString).toISOString().split('T')[0]
@@ -178,8 +193,15 @@ export default function EntitePage({
     }
 
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../api/upload/image',
+            '../../../../api/upload/piece',
+        )
+
         const jsonPayload = {
             ...modifiedEntite,
+            logo: filePaths[0],
+            pieces_associees: filePaths[1],
         }
 
         // Convert non-file data to JSON
@@ -406,12 +428,25 @@ export default function EntitePage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Logo :</p>
-
-                                <p>
-                                    {entite[0].cerfa == (null || '')
-                                        ? '/'
-                                        : entite[0].cerfa}
-                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='logo_file'
+                                        onChange={handleLogoFileChange}
+                                    />
+                                ) : entite[0].logo == null ? (
+                                    <p>/</p>
+                                ) : typeof entite[0].logo === 'string' ? (
+                                    <a href={entite[0].logo} download='logo'>
+                                        Télécharger le logo
+                                    </a>
+                                ) : (
+                                    <a href={entite[0].logo} download='logo'>
+                                        Télécharger le logo
+                                    </a>
+                                )}
                             </div>
                         </div>
 
@@ -865,12 +900,32 @@ export default function EntitePage({
                                 <p className={style.titre}>
                                     Pieces associees :
                                 </p>
-
-                                <p>
-                                    {entite[0].cerfa == (null || '')
-                                        ? '/'
-                                        : entite[0].cerfa}
-                                </p>
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='pieces_associees'
+                                        onChange={handlePiecesChange}
+                                    />
+                                ) : entite[0].pieces_associees == null ? (
+                                    <p>/</p>
+                                ) : typeof entite[0].pieces_associees ===
+                                  'string' ? (
+                                    <a
+                                        href={entite[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pieces associées
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={entite[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pieces associées
+                                    </a>
+                                )}
                             </div>
                         </div>
 

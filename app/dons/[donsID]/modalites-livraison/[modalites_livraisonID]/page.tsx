@@ -6,6 +6,7 @@ import SelectComponent from '@/components/select-component'
 import SearchComponent from '@/components/searchComponent'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import fileUpload, { setFile } from '@/components/fileUploadModify'
 
 interface ExtendedSession extends Session {
     user: {
@@ -43,7 +44,7 @@ interface Modalite_livraisonID {
     produits_sur_palettes: string
     temperature_conserv_produits: number
     commentaires: string
-    pieces_associees: Blob
+    pieces_associees: string
 }
 
 export default function Modalites_livraisonPage({
@@ -232,10 +233,23 @@ export default function Modalites_livraisonPage({
         }
     }
 
+    const handleFileChange: React.ChangeEventHandler<
+        HTMLInputElement
+    > = event => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0])
+        }
+    }
+
     const handleSubmit = async () => {
+        const filePaths: string[] = await fileUpload(
+            '../../../../api/upload/piece',
+        )
+
         console.log(modalite_livraison[0].code_Prestataire_transporteur)
         const jsonPayload = {
             ...modifiedModalite_livraison,
+            pieces_associees: filePaths[0],
         }
 
         // Convert non-file data to JSON
@@ -1308,9 +1322,30 @@ export default function Modalites_livraisonPage({
 
                         <div className={style.info}>
                             <p className={style.titre}>Pièces associées :</p>
-                            <p>
-                                {modalite_livraison[0].pieces_associees == null}
-                            </p>
+                            {modify && session?.user.role === ('AD' || 'RC') ? (
+                                <input
+                                    className={style.selectF}
+                                    type='file'
+                                    name='pieces_associees'
+                                    onChange={handleFileChange}
+                                />
+                            ) : modalite_livraison[0].pieces_associees == null ? (
+                                <p>/</p>
+                            ) : typeof modalite_livraison[0].pieces_associees === 'string' ? (
+                                <a
+                                    href={modalite_livraison[0].pieces_associees}
+                                    download='pieces_associees'
+                                >
+                                    Télécharger la pièce associée
+                                </a>
+                            ) : (
+                                <a
+                                    href={modalite_livraison[0].pieces_associees}
+                                    download='pieces_associees'
+                                >
+                                    Télécharger la pièce associée
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
