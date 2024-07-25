@@ -26,6 +26,7 @@ interface UtilisateurID {
     mail: string
     commentaires: string
     code_type_utilisateur: string
+    libelle_type_utilisateur: string
 }
 
 function UtilisateurPage({
@@ -323,7 +324,7 @@ function UtilisateurPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code utilisateur :
+                                    Type d&apos;utilisateur :
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
@@ -336,11 +337,11 @@ function UtilisateurPage({
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].code_type_utilisateur ==
-                                        null
+                                        {utilisateur[0]
+                                            .libelle_type_utilisateur == null
                                             ? '/'
                                             : utilisateur[0]
-                                                  .code_type_utilisateur}
+                                                  .libelle_type_utilisateur}
                                     </p>
                                 )}
                             </div>

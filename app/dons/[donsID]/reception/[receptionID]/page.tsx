@@ -31,6 +31,7 @@ interface ReceptionID {
     produits_sur_palettes: string
     commentaires: string
     pieces_associees: Blob
+    raison_sociale_don: string
 }
 
 function ReceptionPage({
@@ -249,11 +250,11 @@ function ReceptionPage({
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Code de don :</p>
+                                <p className={style.titre}>Raison sociale :</p>
                                 <p>
-                                    {reception[0].code_Don == null
+                                    {reception[0].raison_sociale_don == null
                                         ? '/'
-                                        : reception[0].code_Don}
+                                        : reception[0].raison_sociale_don}
                                 </p>
                             </div>
                         </div>

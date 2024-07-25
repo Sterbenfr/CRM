@@ -29,6 +29,8 @@ interface SocieteID {
     commentaires: string
     code_Groupe_appartenance: string
     date_arret_activite_Societe: Date
+    libelle_type_activite_Societe: string
+    nom_du_Groupe: string
 }
 
 function SocietePage({ params }: { params: { societeID: string } }) {
@@ -262,6 +264,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='raison_sociale'
                                         value={modifiedSociete.raison_sociale}
@@ -294,6 +297,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom_commercial'
                                         value={modifiedSociete.nom_commercial}
@@ -322,8 +326,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code de l&apos;entreprise
-                                    d&apos;appartenance :
+                                    Entreprise d&apos;appartenance :
                                 </p>
                                 {modify &&
                                 session?.user.role ===
@@ -337,11 +340,9 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                     />
                                 ) : (
                                     <p>
-                                        {societe[0].code_Groupe_appartenance ==
-                                        null
+                                        {societe[0].nom_du_Groupe == null
                                             ? '/'
-                                            : societe[0]
-                                                  .code_Groupe_appartenance}
+                                            : societe[0].nom_du_Groupe}
                                     </p>
                                 )}
                             </div>
@@ -354,6 +355,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='Siren'
                                         value={modifiedSociete.Siren}
@@ -391,6 +393,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='site_Web'
                                         value={modifiedSociete.site_Web}
@@ -429,11 +432,11 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 ) : (
                                     <p>
                                         {societe[0]
-                                            .code_type_activite_Societe ==
+                                            .libelle_type_activite_Societe ==
                                         (null || '')
                                             ? '/'
                                             : societe[0]
-                                                  .code_type_activite_Societe}
+                                                  .libelle_type_activite_Societe}
                                     </p>
                                 )}
                             </div>
@@ -448,6 +451,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedSociete.commentaires}
@@ -480,6 +484,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_arret_activite_Societe'
                                         value={formatDate(

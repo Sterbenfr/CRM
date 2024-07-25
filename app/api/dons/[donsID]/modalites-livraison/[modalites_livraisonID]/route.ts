@@ -8,7 +8,42 @@ export async function GET(
     const modalites_livraisonID = params.modalites_livraisonID
     try {
         const [rows] = await connection.query(
-            'select ModalitesLivraison.numero_livraison, Dons.code_Don, TypeLivraison.code_type_livraison, date_prevue_livraison, heure_prevue_livraison, adresse_enlevement, civilite_contact_enlevement, nom_contact_enlevement, prenom_contact_enlevement, telephone_contact_enlevement, mail_contact_enlevement, adresse_livraison, civilite_contact_livraison, nom_contact_livraison, prenom_contact_livraison, telephone_contact_livraison, mail_contact_livraison, nombre_palettes_prevu, nombre_palettes_consignees_prevu, nombre_cartons_prevu, poids_prevu_kg, produits_sur_palettes, temperature_conserv_produits, ModalitesLivraison.commentaires, ModalitesLivraison.pieces_associees, TypeLivraison.libelle, Prestataires.code_Prestataire, civilite_contact_livraison FROM ModalitesLivraison LEFT JOIN Dons on ModalitesLivraison.code_Don = Dons.code_Don left join TypeLivraison on ModalitesLivraison.code_type_livraison = TypeLivraison.code_type_livraison LEFT JOIN Prestataires on ModalitesLivraison.code_Prestataire_transporteur = Prestataires.code_Prestataire WHERE ModalitesLivraison.numero_livraison = ?;',
+            `select ModalitesLivraison.numero_livraison,
+            ModalitesLivraison.code_Don,
+            ModalitesLivraison.code_type_livraison,
+            ModalitesLivraison.date_prevue_livraison,
+            ModalitesLivraison.heure_prevue_livraison,
+            ModalitesLivraison.adresse_enlevement,
+            ModalitesLivraison.civilite_contact_enlevement,
+            ModalitesLivraison.nom_contact_enlevement,
+            ModalitesLivraison.prenom_contact_enlevement,
+            ModalitesLivraison.telephone_contact_enlevement,
+            ModalitesLivraison.mail_contact_enlevement,
+            ModalitesLivraison.code_Prestataire_transporteur,
+            ModalitesLivraison.adresse_livraison,
+            ModalitesLivraison.civilite_contact_livraison,
+            ModalitesLivraison.nom_contact_livraison,
+            ModalitesLivraison.prenom_contact_livraison,
+            ModalitesLivraison.telephone_contact_livraison,
+            ModalitesLivraison.mail_contact_livraison,
+            ModalitesLivraison.nombre_palettes_prevu,
+            ModalitesLivraison.nombre_palettes_consignees_prevu,
+            ModalitesLivraison.nombre_cartons_prevu,
+            ModalitesLivraison.poids_prevu_kg,
+            ModalitesLivraison.produits_sur_palettes,
+            ModalitesLivraison.temperature_conserv_produits,
+            ModalitesLivraison.commentaires,
+            ModalitesLivraison.pieces_associees,
+            TypeLivraison.libelle AS libelle_type_livraison,
+            Prestataires.code_Prestataire,
+            Prestataires.raison_sociale AS raison_sociale_prestataire,
+            Entite.raison_sociale AS raison_sociale_don
+            FROM ModalitesLivraison 
+            LEFT JOIN Dons on ModalitesLivraison.code_Don = Dons.code_Don
+            LEFT JOIN Entite on Dons.code_Entite_donatrice = Entite.code_Entite
+            LEFT JOIN TypeLivraison on ModalitesLivraison.code_type_livraison = TypeLivraison.code_type_livraison 
+            LEFT JOIN Prestataires on ModalitesLivraison.code_Prestataire_transporteur = Prestataires.code_Prestataire 
+            WHERE ModalitesLivraison.numero_livraison = ?;`,
             [modalites_livraisonID],
         )
         return NextResponse.json(rows)
@@ -72,7 +107,10 @@ export async function PUT(
         const query = `UPDATE \`ModalitesLivraison\` SET ${columns} WHERE \`numero_livraison\` = ?`
 
         // Execute query
-        const [rows] = await connection.query(query, [...values, modalites_livraisonID])
+        const [rows] = await connection.query(query, [
+            ...values,
+            modalites_livraisonID,
+        ])
         return NextResponse.json(rows)
     } catch (error) {
         console.error(error)

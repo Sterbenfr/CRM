@@ -29,6 +29,11 @@ interface InteractionID {
     commentaires: string
     pieces_associees: Blob
     date_relance: Date
+    raison_sociale: string
+    utilisateur_prospecteur: string
+    contact_entite: string
+    libelle_type_interaction: string
+    libelle_modalite_interaction: string
 }
 
 function InteractionPage({
@@ -283,10 +288,9 @@ function InteractionPage({
                                     Code entité prospectée :
                                 </p>
                                 <p>
-                                    {interaction[0].code_Entite_Prospectee ==
-                                    null
+                                    {interaction[0].raison_sociale == null
                                         ? '/'
-                                        : interaction[0].code_Entite_Prospectee}
+                                        : interaction[0].raison_sociale}
                                 </p>
                             </div>
                         </div>
@@ -309,11 +313,11 @@ function InteractionPage({
                                 ) : (
                                     <p>
                                         {interaction[0]
-                                            .code_Utilisateur_Prospecteur ===
+                                            .utilisateur_prospecteur ===
                                         (null || '')
                                             ? '/'
                                             : interaction[0]
-                                                  .code_Utilisateur_Prospecteur}
+                                                  .utilisateur_prospecteur}
                                     </p>
                                 )}
                             </div>
@@ -328,6 +332,7 @@ function InteractionPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_interaction'
                                         value={formatDate(
@@ -365,10 +370,10 @@ function InteractionPage({
                                 ) : (
                                     <p>
                                         {interaction[0]
-                                            .code_type_interaction === null
+                                            .libelle_type_interaction === null
                                             ? '/'
                                             : interaction[0]
-                                                  .code_type_interaction}
+                                                  .libelle_type_interaction}
                                     </p>
                                 )}
                             </div>
@@ -391,10 +396,11 @@ function InteractionPage({
                                 ) : (
                                     <p>
                                         {interaction[0]
-                                            .code_modalite_interaction === null
+                                            .libelle_modalite_interaction ===
+                                        null
                                             ? '/'
                                             : interaction[0]
-                                                  .code_modalite_interaction}
+                                                  .libelle_modalite_interaction}
                                     </p>
                                 )}
                             </div>
@@ -414,11 +420,9 @@ function InteractionPage({
                                     />
                                 ) : (
                                     <p>
-                                        {interaction[0].code_contact_entite ===
-                                        null
+                                        {interaction[0].contact_entite === null
                                             ? '/'
-                                            : interaction[0]
-                                                  .code_contact_entite}
+                                            : interaction[0].contact_entite}
                                     </p>
                                 )}
                             </div>
@@ -431,6 +435,7 @@ function InteractionPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedInteraction.commentaires}
@@ -463,6 +468,7 @@ function InteractionPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_relance'
                                         value={formatDate(

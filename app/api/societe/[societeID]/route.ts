@@ -8,7 +8,22 @@ export async function GET(
     const societeID = params.societeID
     try {
         const [rows] = await connection.query(
-            'SELECT Entreprise.code_Societe, Entreprise.raison_sociale, Entreprise.nom_commercial, Entreprise.site_Web, Entreprise.Logo, Entreprise.Siren, Entreprise.code_type_activite_Societe, Entreprise.commentaires, Entreprise.code_Groupe_appartenance, Entreprise.date_arret_activite_Societe FROM Entreprise LEFT JOIN TypeActiviteSociete ON Entreprise.code_type_activite_Societe = TypeActiviteSociete.code WHERE Entreprise.code_Societe = ?;',
+            `SELECT Entreprise.code_Societe,
+            Entreprise.raison_sociale,
+            Entreprise.nom_commercial,
+            Entreprise.site_Web,
+            Entreprise.Logo,
+            Entreprise.Siren,
+            Entreprise.code_type_activite_Societe,
+            Entreprise.commentaires,
+            Entreprise.code_Groupe_appartenance,
+            Entreprise.date_arret_activite_Societe,
+            TypeActiviteSociete.libelle AS libelle_type_activite_Societe,
+            Groupe.nom_du_Groupe
+            FROM Entreprise
+            LEFT JOIN Groupe ON Entreprise.code_Groupe_appartenance = Groupe.code_Groupe
+            LEFT JOIN TypeActiviteSociete ON Entreprise.code_type_activite_Societe = TypeActiviteSociete.code 
+            WHERE Entreprise.code_Societe = ?;`,
             [societeID],
         )
         return NextResponse.json(rows)
