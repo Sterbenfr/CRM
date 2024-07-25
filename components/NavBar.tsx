@@ -22,7 +22,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
             <nav className={styles.navbar}>
                 <Link href='/' className={styles.img_nav}>
                     <Image
-                        src='/IMG/logo_bl.png'
+                        src='/IMG/logo-bl.svg'
                         alt='logo'
                         width={180}
                         height={80}

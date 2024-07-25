@@ -45,6 +45,9 @@ interface Modalite_livraisonID {
     temperature_conserv_produits: number
     commentaires: string
     pieces_associees: Blob
+    libelle_type_livraison: string
+    raison_sociale_prestataire: string
+    raison_sociale_don: string
 }
 
 function Modalites_livraisonPage({
@@ -374,11 +377,13 @@ function Modalites_livraisonPage({
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Code du don :</p>
+                                <p className={style.titre}>Raison Sociale :</p>
                                 <p>
-                                    {modalite_livraison[0].code_Don == null
+                                    {modalite_livraison[0].raison_sociale_don ==
+                                    null
                                         ? '/'
-                                        : modalite_livraison[0].code_Don}
+                                        : modalite_livraison[0]
+                                              .raison_sociale_don}
                                 </p>
                             </div>
                         </div>
@@ -386,7 +391,7 @@ function Modalites_livraisonPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code du type de livraison :
+                                    Type de livraison :
                                 </p>
                                 {modify &&
                                 session?.user.role ===
@@ -400,10 +405,10 @@ function Modalites_livraisonPage({
                                 ) : (
                                     <p>
                                         {modalite_livraison[0]
-                                            .code_type_livraison == null
+                                            .libelle_type_livraison == null
                                             ? '/'
                                             : modalite_livraison[0]
-                                                  .code_type_livraison}
+                                                  .libelle_type_livraison}
                                     </p>
                                 )}
                             </div>
@@ -412,7 +417,7 @@ function Modalites_livraisonPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code prestataire transporteur :
+                                    Prestataire transporteur :
                                 </p>
                                 {modify &&
                                 session?.user.role ===
@@ -435,11 +440,10 @@ function Modalites_livraisonPage({
                                 ) : (
                                     <p>
                                         {modalite_livraison[0]
-                                            .code_Prestataire_transporteur ==
-                                        null
+                                            .raison_sociale_prestataire == null
                                             ? '/'
                                             : modalite_livraison[0]
-                                                  .code_Prestataire_transporteur}
+                                                  .raison_sociale_prestataire}
                                     </p>
                                 )}
                             </div>

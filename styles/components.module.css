@@ -930,3 +930,10 @@
 .savebutton:hover {
     border-color: #e5007d;
 }
+
+.anyData {
+    font-size: 1.8rem;
+    color: #e5007d;
+    padding: 4rem;
+    padding-bottom: 0rem;
+}
