@@ -599,7 +599,7 @@ function DonsPage() {
 
         const fetchSearchDons = async () => {
             if (search.length === 0) {
-                const res = await fetch('../api/dons?limit=5000')
+                const res = await fetch('../api/dons')
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')

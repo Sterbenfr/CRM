@@ -38,7 +38,6 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
                     httpEquiv='Permissions-Policy'
                     content='fullscreen=(self)'
                 />
-                <meta httpEquiv='X-Frame-Options' content='DENY' />
                 <meta
                     httpEquiv='Cross-Origin-Resource-Policy'
                     content='same-origin'

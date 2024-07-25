@@ -239,7 +239,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../api/sites/${params.siteID}/utilisateurs?limit=5000`,
+                    `../../../api/sites/${params.siteID}/utilisateurs`,
                 )
 
                 if (!res.ok) {

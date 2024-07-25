@@ -512,7 +512,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         const fetchSearchEntite = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../api/societe/${params.societeID}/entite?limit=5000`,
+                    `../../../api/societe/${params.societeID}/entite`,
                 )
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')

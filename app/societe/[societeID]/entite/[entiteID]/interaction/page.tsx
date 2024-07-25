@@ -232,7 +232,7 @@ function InteractionsPage({
         const fetchSearchInteractions = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions?limit=5000`,
+                    `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions`,
                 )
 
                 if (!res.ok) {
