@@ -50,14 +50,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
     if (
-        !ModalitesLivraison.code_Don ||
-        !ModalitesLivraison.code_type_livraison ||
-        !ModalitesLivraison.date_prevue_livraison ||
-        !ModalitesLivraison.adresse_enlevement ||
-        !ModalitesLivraison.adresse_livraison ||
-        !ModalitesLivraison.nombre_palettes_consignees_prevu ||
-        !ModalitesLivraison.nombre_palettes_prevu ||
-        !ModalitesLivraison.nombre_cartons_prevu
+        !ModalitesLivraison.code_Don
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },

@@ -13,6 +13,7 @@ export interface ModalitesLivraison {
     code_Don: number
     code_type_livraison: string
     date_prevue_livraison: Date
+    heure_prevue_livraison: string
     adresse_enlevement: string
     civilite_contact_enlevement: string
     nom_contact_enlevement: string
