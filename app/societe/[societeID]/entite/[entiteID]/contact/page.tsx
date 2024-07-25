@@ -373,6 +373,7 @@ function ContactsPage({
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={contacts}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

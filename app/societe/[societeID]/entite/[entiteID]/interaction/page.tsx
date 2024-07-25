@@ -351,6 +351,7 @@ function InteractionsPage({
                         totalItems,
                         setTotal: setTotalItems,
                     }}
+                    dataExcel={Interactions}
                 />
                 <Pagination
                     onPageChange={handlePageChange}

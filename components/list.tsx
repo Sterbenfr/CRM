@@ -40,7 +40,9 @@ const List: React.FC<{
     attribut?: Attribut
     searchItems?: ListProps[]
     pageInfos?: PageInfo
-}> = ({ items, functions, attribut, searchItems, pageInfos }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dataExcel?: any[]
+}> = ({ items, functions, attribut, searchItems, pageInfos, dataExcel }) => {
     const [selectedItems, setSelectedItems] = useState<ListProps[]>()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [lineCheckbox, setLineCheckbox] = useState<any[]>([])
@@ -103,16 +105,25 @@ const List: React.FC<{
     }
 
     const exportToExcel = () => {
-        const dataToExport = items.filter(item => {
-            if (lineCheckbox.includes(parseInt(item.value1 as string))) {
+        const dataToExport = dataExcel?.filter(item => {
+            if (
+                lineCheckbox.includes(
+                    parseInt(item[Object.keys(item)[0]] as string),
+                )
+            ) {
+                return item
+            }
+            if (lineCheckbox.length === 0) {
                 return item
             }
         })
 
-        Excel({
-            data: dataToExport,
-            fileName: 'DATATEST',
-        })
+        if (dataToExport) {
+            Excel({
+                data: dataToExport,
+                fileName: 'DATATEST',
+            })
+        }
     }
 
     useEffect(() => {

@@ -244,6 +244,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                             att3: 'Commentaire',
                             att4: "Date d'arrêt d'activité",
                         }}
+                        dataExcel={groupes}
                     />
                     <Pagination
                         onPageChange={handlePageChange}
