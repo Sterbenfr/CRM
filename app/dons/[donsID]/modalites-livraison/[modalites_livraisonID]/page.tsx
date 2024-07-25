@@ -9,7 +9,6 @@ import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
-
 interface ExtendedSession extends Session {
     user: {
         name?: string | null
@@ -46,12 +45,10 @@ interface Modalite_livraisonID {
     produits_sur_palettes: string
     temperature_conserv_produits: number
     commentaires: string
-
     pieces_associees: string
     libelle_type_livraison: string
     raison_sociale_prestataire: string
     raison_sociale_don: string
-
 }
 
 function Modalites_livraisonPage({
@@ -249,9 +246,7 @@ function Modalites_livraisonPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths: string[] = await fileUpload(
-            '../../../../api/upload/piece',
-        )
+        const filePaths = await fileUpload('../../../../api/upload/piece')
 
         console.log(modalite_livraison[0].code_Prestataire_transporteur)
         const jsonPayload = {
@@ -1351,18 +1346,24 @@ function Modalites_livraisonPage({
                                     name='pieces_associees'
                                     onChange={handleFileChange}
                                 />
-                            ) : modalite_livraison[0].pieces_associees == null ? (
+                            ) : modalite_livraison[0].pieces_associees ==
+                              null ? (
                                 <p>/</p>
-                            ) : typeof modalite_livraison[0].pieces_associees === 'string' ? (
+                            ) : typeof modalite_livraison[0]
+                                  .pieces_associees === 'string' ? (
                                 <a
-                                    href={modalite_livraison[0].pieces_associees}
+                                    href={
+                                        modalite_livraison[0].pieces_associees
+                                    }
                                     download='pieces_associees'
                                 >
                                     Télécharger la pièce associée
                                 </a>
                             ) : (
                                 <a
-                                    href={modalite_livraison[0].pieces_associees}
+                                    href={
+                                        modalite_livraison[0].pieces_associees
+                                    }
                                     download='pieces_associees'
                                 >
                                     Télécharger la pièce associée

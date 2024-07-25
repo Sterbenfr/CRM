@@ -126,7 +126,7 @@ function ReceptionPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths: string[] = await fileUpload(
+        const filePaths = await fileUpload(
             '../../../../api/upload/piece',
         )
 
