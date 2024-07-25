@@ -105,6 +105,7 @@ const List: React.FC<{
     }
 
     const exportToExcel = () => {
+        console.log(functions)
         const dataToExport = dataExcel?.filter(item => {
             if (
                 lineCheckbox.includes(
@@ -118,10 +119,58 @@ const List: React.FC<{
             }
         })
 
+        let TableName = 'Unknown'
+
+        if (dataExcel?.find(item => Object.keys(item)[0] === 'code_Don')) {
+            TableName = 'Dons'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_utilisateur')
+        ) {
+            TableName = 'Utilisateurs'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_site')
+        ) {
+            TableName = 'Sites'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'numero_reception')
+        ) {
+            TableName = 'Réceptions'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_Prestataire')
+        ) {
+            TableName = 'Préstataires'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'numero_livraison')
+        ) {
+            TableName = 'Modalités de livraisons'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_interaction')
+        ) {
+            TableName = 'Interactions'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_groupe')
+        ) {
+            TableName = 'Groupes'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_Societe')
+        ) {
+            TableName = 'Entpreprises'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[0] === 'code_entite')
+        ) {
+            TableName = 'Entités'
+        } else if (
+            dataExcel?.find(item => Object.keys(item)[1] === 'code_contact')
+        ) {
+            TableName = 'Contacts'
+        }
+        // Add more conditions for other table names as needed
+
         if (dataToExport) {
+            console.log(functions)
             Excel({
                 data: dataToExport,
-                fileName: 'DATATEST',
+                fileName: TableName,
             })
         }
     }
