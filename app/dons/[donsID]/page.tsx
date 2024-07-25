@@ -288,7 +288,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
             </div>
             {session &&
                 session.user &&
-                session.user.role === ('AD' || 'SU' || 'AP' || 'EN') && (
+                session.user.role === ('AD' || 'AP' || 'EN' || 'SU') && (
                     <div>
                         <button
                             onClick={() => {
@@ -302,7 +302,15 @@ function DonPage({ params }: { params: { donsID: string } }) {
                         >
                             {modify ? 'Envoyer' : 'Modifier'}
                         </button>
-                        <button className={style.btnModif} onClick={Print}>
+                        <button
+                            className={style.btnModif}
+                            onClick={() => {
+                                if (!modify) {
+                                    Print()
+                                }
+                            }}
+                            hidden={modify}
+                        >
                             Imprimer
                         </button>
                     </div>
