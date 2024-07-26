@@ -8,7 +8,6 @@ import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '../../../../../components/withAuthorization'
 
-
 interface ExtendedSession extends Session {
     user: {
         name?: string | null
@@ -34,7 +33,6 @@ interface ReceptionID {
     commentaires: string
     pieces_associees: string
     raison_sociale_don: string
-
 }
 
 function ReceptionPage({
@@ -117,6 +115,48 @@ function ReceptionPage({
             : new Date().toISOString().split('T')[0]
     }
 
+    const handleHeureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (
+            event.target.value[event.target.value.length - 1] === ':' ||
+            !isNaN(parseInt(event.target.value[event.target.value.length - 1]))
+        ) {
+            if (parseInt(event.target.value.slice(0, 2)) > 23) {
+                event.target.value = '23' + event.target.value.slice(2)
+            }
+            if (parseInt(event.target.value.slice(3, 5)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 3) +
+                    '59' +
+                    event.target.value.slice(5)
+            }
+            if (parseInt(event.target.value.slice(6, 8)) > 59) {
+                event.target.value =
+                    event.target.value.slice(0, 6) +
+                    '59' +
+                    event.target.value.slice(8)
+            }
+            if (
+                event.target.value.length === 3 &&
+                event.target.value[2] !== ':'
+            ) {
+                event.target.value =
+                    event.target.value.slice(0, 2) + ':' + event.target.value[2]
+            }
+            if (event.target.value.length === 5) {
+                event.target.value = event.target.value + ':00'
+            }
+            if (event.target.value.length === 7) {
+                event.target.value = event.target.value.slice(0, 5)
+            }
+            reception[0].heure_reception = event.target.value
+        } else {
+            event.target.value = event.target.value.slice(
+                0,
+                event.target.value.length - 1,
+            )
+        }
+    }
+
     const handleFileChange: React.ChangeEventHandler<
         HTMLInputElement
     > = event => {
@@ -126,9 +166,7 @@ function ReceptionPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths = await fileUpload(
-            '../../../../api/upload/piece',
-        )
+        const filePaths = await fileUpload('../../../../api/upload/piece')
 
         const jsonPayload = {
             ...modifiedReception,
@@ -343,11 +381,33 @@ function ReceptionPage({
                                 <p className={style.titre}>
                                     Heure de réception :
                                 </p>
-                                <p>
-                                    {reception[0].heure_reception == null
-                                        ? '/'
-                                        : reception[0].heure_reception}
-                                </p>
+                                {modify &&
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='input'
+                                        name='heure_prevue_livraison'
+                                        value={
+                                            modifiedReception.heure_reception
+                                        }
+                                        placeholder={
+                                            reception[0].heure_reception ==
+                                                null ||
+                                            reception[0].heure_reception === ''
+                                                ? 'Exemple: 14:20'
+                                                : 'Actuellement: ' +
+                                                  reception[0].heure_reception
+                                        }
+                                        onInput={handleHeureChange}
+                                    />
+                                ) : (
+                                    <p>
+                                        {reception[0].heure_reception == null
+                                            ? '/'
+                                            : reception[0].heure_reception}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
@@ -402,7 +462,8 @@ function ReceptionPage({
                                     Nombre palettes consignées recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -449,7 +510,8 @@ function ReceptionPage({
                                     Nombre de palettes consignées rendues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -495,7 +557,8 @@ function ReceptionPage({
                                     Nombre de cartons recus :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -538,7 +601,8 @@ function ReceptionPage({
                                     Poids recu en kg :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -576,7 +640,8 @@ function ReceptionPage({
                                     Produits sur les palettes :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -611,7 +676,8 @@ function ReceptionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -642,30 +708,32 @@ function ReceptionPage({
                                 <p className={style.titre}>
                                     Pièces associées :
                                 </p>
-                                {modify && session?.user.role === ('AD' || 'RC') ? (
-                                <input
-                                    className={style.selectF}
-                                    type='file'
-                                    name='pieces_associees'
-                                    onChange={handleFileChange}
-                                />
-                            ) : reception[0].pieces_associees == null ? (
-                                <p>/</p>
-                            ) : typeof reception[0].pieces_associees === 'string' ? (
-                                <a
-                                    href={reception[0].pieces_associees}
-                                    download='pieces_associees'
-                                >
-                                    Télécharger la pièce associée
-                                </a>
-                            ) : (
-                                <a
-                                    href={reception[0].pieces_associees}
-                                    download='pieces_associees'
-                                >
-                                    Télécharger la pièce associée
-                                </a>
-                            )}
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='pieces_associees'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : reception[0].pieces_associees == null ? (
+                                    <p>/</p>
+                                ) : typeof reception[0].pieces_associees ===
+                                  'string' ? (
+                                    <a
+                                        href={reception[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={reception[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

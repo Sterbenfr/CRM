@@ -134,7 +134,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 event.target.value[2] !== ':'
             ) {
                 event.target.value =
-                    event.target.value + ':' + event.target.value[2]
+                    event.target.value.slice(0, 2) + ':' + event.target.value[2]
             }
             if (event.target.value.length === 5) {
                 event.target.value = event.target.value + ':00'

@@ -220,7 +220,7 @@ function Modalites_livraisonPage({
                 event.target.value[2] !== ':'
             ) {
                 event.target.value =
-                    event.target.value + ':' + event.target.value[2]
+                    event.target.value.slice(0, 2) + ':' + event.target.value[2]
             }
             if (event.target.value.length === 5) {
                 event.target.value = event.target.value + ':00'
@@ -504,7 +504,7 @@ function Modalites_livraisonPage({
                                     ('AD' || 'AP' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
-                                        type='number'
+                                        type='input'
                                         name='heure_prevue_livraison'
                                         value={
                                             modifiedModalite_livraison.heure_prevue_livraison
@@ -520,16 +520,8 @@ function Modalites_livraisonPage({
                                                   modalite_livraison[0]
                                                       .heure_prevue_livraison
                                         }
-                                        onInput={(
-                                            e: React.ChangeEvent<HTMLInputElement>,
-                                        ) => {
-                                            if (e.target.value.length > 8) {
-                                                e.target.value =
-                                                    e.target.value.slice(0, 8)
-                                            }
-                                        }}
-                                        onChange={handleHeureChange}
-                                    /> // marche pas
+                                        onInput={handleHeureChange}
+                                    />
                                 ) : (
                                     <p>
                                         {modalite_livraison[0]
