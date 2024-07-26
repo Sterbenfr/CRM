@@ -22,7 +22,7 @@ export interface Don {
     date_debut_mise_disposition: Date
     date_fin_mise_disposition: Date
     commentaires: string
-    pieces_associees: Blob //Faire blob
+    pieces_associees: Blob
     code_Utilisateur_saisie_don: number
     statut_acceptation_don: string
     date_acceptation_refus_don: Date
@@ -85,8 +85,8 @@ function DonsPage() {
     const [valeurCerfa, setValeurCerfa] = useState('0')
     const [dateCerfa, setDateCerfa] = useState(new Date())
 
-    const [Dons, setDons] = useState<Don[]>([]) // list of dons
-    const [page, setPage] = useState(1) // new state for the current page
+    const [Dons, setDons] = useState<Don[]>([])
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -304,6 +304,7 @@ function DonsPage() {
                     value: EntiteDonatrice,
                     url: '../api/select/societe/entite',
                     required: true,
+                    createURL: '/societe',
                     placeholder: 'Exemple: Entreprise Alpha',
                     onInputChange: handleEntiteDonatriceChange,
                 },
