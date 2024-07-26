@@ -8,7 +8,6 @@ import { Session } from 'next-auth'
 import fileUpload, { setFile, setFile2 } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
-
 interface ExtendedSession extends Session {
     user: {
         name?: string | null
@@ -247,6 +246,35 @@ function EntitePage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'raison_sociale',
+            'nom_commercial',
+            'siret',
+            'code_ape',
+            'code_rna',
+            'code_cee',
+            'adresse',
+            'telephone',
+            'mail',
+            'site_internet',
+            'commentaires',
+            'commentaires_logistique',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                entite[0][key as keyof EntiteID] !== null &&
+                entite[0][key as keyof EntiteID] !== ''
+            ) {
+                setModifiedEntite(prevState => ({
+                    ...prevState,
+                    [key]: entite[0][key as keyof EntiteID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -316,6 +344,7 @@ function EntitePage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}

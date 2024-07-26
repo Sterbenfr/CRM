@@ -243,6 +243,29 @@ function ReceptionPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'nombre_palettes_recues',
+            'nombre_palettes_consignees_recues',
+            'nombre_palettes_consignees_rendues',
+            'nombre_cartons_recus',
+            'poids_recu_kg',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                reception[0][key as keyof ReceptionID] !== null &&
+                reception[0][key as keyof ReceptionID] !== ''
+            ) {
+                setModifiedReception(prevState => ({
+                    ...prevState,
+                    [key]: reception[0][key as keyof ReceptionID],
+                }))
+            }
+        })
+    }
+
     return (
         <div className={style.idPage}>
             <div className={style.croixID}>
@@ -267,6 +290,7 @@ function ReceptionPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}

@@ -296,6 +296,42 @@ function Modalites_livraisonPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'heure_prevue_livraison',
+            'nom_contact_enlevement',
+            'prenom_contact_enlevement',
+            'telephone_contact_enlevement',
+            'mail_contact_enlevement',
+            'adresse_enlevement',
+            'nom_contact_livraison',
+            'prenom_contact_livraison',
+            'telephone_contact_livraison',
+            'mail_contact_livraison',
+            'nombre_palettes_prevu',
+            'nombre_palettes_consignees_prevu',
+            'nombre_cartons_prevu',
+            'poids_prevu_kg',
+            'temperature_conserv_produits',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modalite_livraison[0][key as keyof Modalite_livraisonID] !==
+                    null &&
+                modalite_livraison[0][key as keyof Modalite_livraisonID] !== ''
+            ) {
+                setModifiedModalite_livraison(prevState => ({
+                    ...prevState,
+                    [key]: modalite_livraison[0][
+                        key as keyof Modalite_livraisonID
+                    ],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -349,6 +385,7 @@ function Modalites_livraisonPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}

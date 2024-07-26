@@ -232,6 +232,29 @@ function DonPage({ params }: { params: { donsID: string } }) {
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'commentaires',
+            'nom_destinataire_cerfa',
+            'adresse_destinataire_cerfa',
+            'adresse_mail_destinataire_cerfa',
+            'telephone_destinataire_cerfa',
+            'valeur_cerfa',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                don[0][key as keyof DonID] !== null &&
+                don[0][key as keyof DonID] !== ''
+            ) {
+                setModifiedDon(prevState => ({
+                    ...prevState,
+                    [key]: don[0][key as keyof DonID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -296,6 +319,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -389,7 +413,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                         </div>
 
                         <div className={style.info}>
-                            <p className={style.titre}>Mode de consomation :</p>
+                            <p className={style.titre}>Mode de conservation :</p>
                             <p>
                                 {don[0].MCP_libelle == null
                                     ? '/'
@@ -424,15 +448,6 @@ function DonPage({ params }: { params: { donsID: string } }) {
                         </div>
 
                         <div className={style.info}>
-                            <p className={style.titre}>Commentaires :</p>
-                            <p>
-                                {don[0].commentaires == (null || '')
-                                    ? '/'
-                                    : don[0].commentaires}
-                            </p>
-                        </div>
-
-                        <div className={style.info}>
                             <p className={style.titre}>
                                 Utilisateur saisie de don :
                             </p>
@@ -441,6 +456,34 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                     ? '/'
                                     : don[0].Utilisateur_saisie_don}
                             </p>
+                        </div>
+
+                        <div className={style.info}>
+                            <p className={style.titre}>Commentaires :</p>
+                            {modify &&
+                            session?.user.role ===
+                                ('AD' || 'SU' || 'AP' || 'EN') ? (
+                                <input
+                                    className={style.selectF}
+                                    type='input'
+                                    name='commentaires'
+                                    value={modifiedDon.commentaires}
+                                    placeholder={
+                                        don[0].commentaires == null ||
+                                        don[0].commentaires === ''
+                                            ? 'Exemple: Durand'
+                                            : 'Actuellement: ' +
+                                              don[0].commentaires
+                                    }
+                                    onChange={handleInputChange}
+                                />
+                            ) : (
+                                <p>
+                                    {don[0].commentaires == (null || '')
+                                        ? '/'
+                                        : don[0].commentaires}
+                                </p>
+                            )}
                         </div>
 
                         <div className={style.info}>

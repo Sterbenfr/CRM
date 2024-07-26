@@ -160,10 +160,8 @@ function InteractionPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths = await fileUpload(
-            '../../../../../../api/upload/piece',
-        )
-        
+        const filePaths = await fileUpload('../../../../../../api/upload/piece')
+
         const jsonPayload = {
             ...modifiedInteraction,
             pieces_associees: filePaths[0],
@@ -210,6 +208,22 @@ function InteractionPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = ['commentaires']
+
+        keysToCheck.forEach(key => {
+            if (
+                interaction[0][key as keyof InteractionID] !== null &&
+                interaction[0][key as keyof InteractionID] !== ''
+            ) {
+                setmodifiedInteraction(prevState => ({
+                    ...prevState,
+                    [key]: interaction[0][key as keyof InteractionID],
+                }))
+            }
+        })
+    }
+    
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -264,6 +278,7 @@ function InteractionPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -477,7 +492,9 @@ function InteractionPage({
 
                         <div>
                             <div className={style.info}>
-                                <p className={style.titre}>Pieces associees :</p>
+                                <p className={style.titre}>
+                                    Pieces associees :
+                                </p>
                                 {modify &&
                                 session?.user.role === ('AD' || 'RC') ? (
                                     <input
@@ -506,7 +523,7 @@ function InteractionPage({
                                 )}
                             </div>
                         </div>
-                        
+
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Date relance :</p>

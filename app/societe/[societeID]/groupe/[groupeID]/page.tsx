@@ -132,6 +132,22 @@ function GroupePage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = ['nom_du_Groupe', 'site_Web', 'commentaires']
+
+        keysToCheck.forEach(key => {
+            if (
+                groupe[0][key as keyof GroupeID] !== null &&
+                groupe[0][key as keyof GroupeID] !== ''
+            ) {
+                setModifiedGroupe(prevState => ({
+                    ...prevState,
+                    [key]: groupe[0][key as keyof GroupeID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -192,6 +208,7 @@ function GroupePage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}

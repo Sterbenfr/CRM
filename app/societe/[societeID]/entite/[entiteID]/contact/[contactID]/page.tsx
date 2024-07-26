@@ -152,6 +152,31 @@ function ContactPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'nom',
+            'prenom',
+            'fonction',
+            'service',
+            'numero_fixe',
+            'numero_portable',
+            'adresse_mail',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                contact[0][key as keyof ContactID] !== null &&
+                contact[0][key as keyof ContactID] !== ''
+            ) {
+                setModifiedContact(prevState => ({
+                    ...prevState,
+                    [key]: contact[0][key as keyof ContactID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -205,6 +230,7 @@ function ContactPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}

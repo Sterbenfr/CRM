@@ -165,6 +165,28 @@ function SocietePage({ params }: { params: { societeID: string } }) {
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'raison_sociale',
+            'nom_commercial',
+            'Siren',
+            'site_Web',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                societe[0][key as keyof SocieteID] !== null &&
+                societe[0][key as keyof SocieteID] !== ''
+            ) {
+                setModifiedSociete(prevState => ({
+                    ...prevState,
+                    [key]: societe[0][key as keyof SocieteID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -235,6 +257,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -366,7 +389,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Entreprise d&apos;appartenance :
+                                    Groupe appartenance :
                                 </p>
                                 {modify &&
                                 session?.user.role ===
