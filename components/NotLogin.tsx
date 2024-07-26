@@ -19,10 +19,12 @@ export default function NotLogin() {
         <div className={style.connect}>
             {session && session.user ? (
                 <>
-                    <p>Connecté avec l&apos;adresse : {session.user.email}</p>
+                    <p className={style.conect}>
+                        Connecté avec l&apos;adresse : {session.user.email}
+                    </p>
                 </>
             ) : (
-                <p>Vous n&apos;êtes pas connecté</p>
+                <p className={style.notLog}>Vous n&apos;êtes pas connecté</p>
             )}
         </div>
     )

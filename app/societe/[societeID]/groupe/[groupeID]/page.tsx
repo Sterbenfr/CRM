@@ -84,9 +84,7 @@ function GroupePage({
     }
 
     const handleSubmit = async () => {
-        const filePaths = await fileUpload(
-            '../../../../api/upload/image',
-        )
+        const filePaths = await fileUpload('../../../../api/upload/image')
 
         const jsonPayload = {
             ...modifiedGroupe,
@@ -235,6 +233,7 @@ function GroupePage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom_du_Groupe'
                                         value={modifiedGroupe.nom_du_Groupe}
@@ -265,6 +264,7 @@ function GroupePage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='site_Web'
                                         value={modifiedGroupe.site_Web}
@@ -321,6 +321,7 @@ function GroupePage({
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedGroupe.commentaires}
@@ -354,6 +355,7 @@ function GroupePage({
                                 (session?.user.role === 'AD' ||
                                     session?.user.role === 'RC') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_arret_activite_du_Groupe'
                                         value={formatDate(
