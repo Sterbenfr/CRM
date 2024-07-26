@@ -65,7 +65,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                                 : ''
                         }`}
                     >
-                        Sites
+                        Sites RC
                     </Link>
                     <Link
                         href='/prestataire'
@@ -91,6 +91,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                             </Link>
                         </>
                     ) : (
+
                         <Link
                             href='/login'
                             className={`${styles.links} ${
