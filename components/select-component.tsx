@@ -24,41 +24,6 @@ export default function SelectComponent({
 }: SelectComponentProps) {
     const [options, setOptions] = useState<Option[]>([])
 
-    const fetchOptions = async () => {
-        try {
-            const response = await fetch(url)
-            const data = await response.json()
-            const formattedOptions = data.map(
-                (item: {
-                    id: string
-                    label: string
-                    params1: string
-                    params2: string
-                    params3: string
-                }) => ({
-                    value: item.id,
-                    label: item.label,
-                    params1: item.params1,
-                    params2: item.params2,
-                    params3: item.params3,
-                }),
-            )
-            setOptions(formattedOptions)
-            if (formattedOptions.length > 0 && onChange) {
-                const event = new Event('change', { bubbles: true })
-                Object.defineProperty(event, 'target', {
-                    writable: false,
-                    value: '',
-                })
-                onChange(
-                    event as unknown as React.ChangeEvent<HTMLSelectElement>,
-                )
-            }
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données', error)
-        }
-    }
-
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === 'Créer une nouvelle option' && createURL) {
             window.open(createURL, '_blank')
@@ -69,6 +34,43 @@ export default function SelectComponent({
     }
 
     useEffect(() => {
+        const fetchOptions = async () => {
+            try {
+                const response = await fetch(url)
+                const data = await response.json()
+                const formattedOptions = data.map(
+                    (item: {
+                        id: string
+                        label: string
+                        params1: string
+                        params2: string
+                        params3: string
+                    }) => ({
+                        value: item.id,
+                        label: item.label,
+                        params1: item.params1,
+                        params2: item.params2,
+                        params3: item.params3,
+                    }),
+                )
+                setOptions(formattedOptions)
+                if (formattedOptions.length > 0 && onChange) {
+                    const event = new Event('change', { bubbles: true })
+                    Object.defineProperty(event, 'target', {
+                        writable: false,
+                        value: '',
+                    })
+                    onChange(
+                        event as unknown as React.ChangeEvent<HTMLSelectElement>,
+                    )
+                }
+            } catch (error) {
+                console.error(
+                    'Erreur lors de la récupération des données',
+                    error,
+                )
+            }
+        }
         fetchOptions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url])
