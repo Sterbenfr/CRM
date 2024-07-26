@@ -114,18 +114,189 @@ const List: React.FC<{
     }
 
     const exportToExcel = () => {
-        const dataToExport = dataExcel?.filter(item => {
-            if (
-                lineCheckbox.includes(
-                    parseInt(item[Object.keys(item)[0]] as string),
-                )
-            ) {
-                return item
-            }
-            if (lineCheckbox.length === 0) {
-                return item
-            }
-        })
+        const dataToExport = dataExcel
+            ?.filter(item => {
+                if (
+                    lineCheckbox.includes(
+                        parseInt(item[Object.keys(item)[0]] as string),
+                    )
+                ) {
+                    return item
+                }
+                if (lineCheckbox.length === 0) {
+                    return item
+                }
+            })
+            ?.map(item => {
+                const keyMapping: { [key: string]: string } = {
+                    code_Entite_donatrice: 'Entité donatrice',
+                    titre_don: 'Titre du don',
+                    date_proposition_don: 'Date de proposition du don',
+                    code_contact_Entite_donatrice:
+                        "Contact de l'entité donatrice",
+                    code_type_don: 'Type de dons',
+                    code_type_competences: 'Type de compétences',
+                    code_type_produits: 'Type de produits',
+                    code_mode_conservation_produits:
+                        'Mode de conservation des produits',
+                    date_debut_mise_disposition:
+                        'Date de début de mise à disposition',
+                    date_fin_mise_disposition:
+                        'Date de fin de mise à disposition',
+                    commentaires: 'Commentaires',
+                    pieces_associees: 'Pièces associées',
+                    code_Utilisateur_saisie_don:
+                        'Utilisateur de la saisie du don',
+                    statut_acceptation_don: 'Statut du don',
+                    date_acceptation_refus_don:
+                        "Date d'acceptation ou de refus du don",
+                    code_Utilisateur_accepte_refuse_don:
+                        'Utilisateur statut du don',
+                    code_site_beneficiaire_don: 'Site bénéficiaire du don',
+                    indicateur_remerciement: 'Indicateur du remerciement',
+                    date_remerciement: 'Date de remerciement du don',
+                    nom_destinataire_cerfa: 'Nom du destinataire cerfa',
+                    adresse_destinataire_cerfa: 'Adresse du destinataire cerfa',
+                    adresse_mail_destinataire_cerfa:
+                        'Adresse mail du destinataire cerfa',
+                    telephone_destinataire_cerfa:
+                        'Téléphone du destinataire cerfa',
+                    valeur_cerfa: 'Valeur du cerfa',
+                    cerfa_fait: 'Cerfa fait',
+                    date_cerfa: 'Date du cerfa',
+                    cerfa: 'Cerfa',
+                    numero_livraison: 'Numéro de livraison',
+                    code_Don: 'Don',
+                    code_type_livraison: 'Type de livraison',
+                    date_prevue_livraison: 'Date de livraison prévue',
+                    heure_prevue_livraison: 'Heure de livraison prévue',
+                    adresse_enlevement: "Adresse d'enlèvement",
+                    civilite_contact_enlevement:
+                        "Civilité du contact d'enlèvement",
+                    nom_contact_enlevement: "Nom du contact d'enlèvement",
+                    prenom_contact_enlevement: "Prénom du contact d'enlèvement",
+                    telephone_contact_enlevement:
+                        "Téléphone du contact d'enlèvement",
+                    mail_contact_enlevement: "Mail du contact d'enlèvement",
+                    code_Prestataire_transporteur: 'Prestataire transporteur',
+                    adresse_livraison: 'Adresse de livraison',
+                    civilite_contact_livraison:
+                        'Civilité du contact de livraison',
+                    nom_contact_livraison: 'Nom du contact de livraison',
+                    prenom_contact_livraison: 'Prénom du contact de livraison',
+                    telephone_contact_livraison:
+                        'Téléphone du contact de livraison',
+                    mail_contact_livraison: 'Mail du contact de livraison',
+                    nombre_palettes_prevu: 'Nombre de palettes prévues',
+                    nombre_palettes_consignees_prevu:
+                        'Nombre de palettes consignées prévues',
+                    nombre_cartons_prevu: 'Nombre de cartons prévus',
+                    poids_prevu_kg: 'Poids prévu en kg',
+                    produits_sur_palettes: 'Produits sur palettes',
+                    temperature_conserv_produits:
+                        'Température de conservation des produits',
+                    numero_reception: 'Numéro de réception',
+                    numero_livraion: 'Numéro de livraison',
+                    date_reception: 'Date de réception',
+                    heure_reception: 'Heure de réception',
+                    nombre_palettes_recues: 'Nombre de palettes reçues',
+                    nombre_palettes_consignees_recues:
+                        'Nombre de palettes consignées reçues',
+                    nombre_palettes_consignees_rendues:
+                        'Nombre de palettes consignées rendues',
+                    nombre_cartons_recus: 'Nombre de cartons reçus',
+                    poids_recu_kg: 'Poids reçu en kg',
+                    code_Prestataire: 'Prestataire',
+                    code_type_de_Prestataire: 'Type de prestataire',
+                    raison_sociale: 'Raison sociale',
+                    nom_commercial: 'Nom commercial',
+                    Siren: 'Siren',
+                    Siret: 'Siret',
+                    telephone: 'Téléphone',
+                    mail: 'Mail',
+                    adresse: 'Adresse',
+                    civilite_contact_prestataire: 'Civilité du prestataire',
+                    nom_contact_prestataire: 'Nom du prestataire',
+                    prenom_contact_prestataire: 'Prénom du prestataire',
+                    telephone_contact_prestataire: 'Téléphone du prestataire',
+                    mail_contact_prestataire: 'Mail du prestataire',
+                    date_arret_activite_du_prestataire:
+                        "Date d'arrêt d'activité du prestataire",
+                    code_Utilisateur_Prospecteur: 'Utilisateur prospecteur',
+                    code_Entite_Prospectee: 'Entité prospectée',
+                    date_interaction: "Date d'interaction",
+                    code_type_interaction: "Type d'interaction",
+                    code_modalite_interaction: "Modalité d'interaction",
+                    code_contact_entite: "Contact de l'entité",
+                    date_relance: 'Date de relance',
+                    code_Site: 'Site',
+                    designation_longue: 'Désignation longue',
+                    designation_courte: 'Désignation courte',
+                    code_type_site: 'Type de site',
+                    date_ouverture: "Date d'ouverture",
+                    date_fermeture: 'Date de fermeture',
+                    numero_telephone: 'Numéro de téléphone',
+                    adresse_mail: 'Adresse mail',
+                    code_utilisateur: 'Utilisateur',
+                    code_site: 'Site',
+                    code_type_utilisateur: "Type d'utilisateur",
+                    date_fin_activite: "Date de fin d'activité",
+                    civilite: 'Civilité',
+                    nom: 'Nom',
+                    prenom: 'Prénom',
+                    tel_perso: 'Téléphone personnel',
+                    password: 'Mot de passe',
+                    code_Societe: 'Société',
+                    Logo: 'Logo',
+                    site_Web: 'Site Web',
+                    code_type_activite_Societe: "Type d'activité de la société",
+                    code_Groupe_appartenance: 'Appartenance du groupe',
+                    date_arret_activite_Societe:
+                        "Date d'arrêt d'activité de la société",
+                    code_type_de_Site: 'Type de site',
+                    code_site_suivi: 'Suivi de site',
+                    code_utilisateur_suivant: 'Utilisateur suivant',
+                    code_groupe: 'Groupe',
+                    nom_du_Groupe: 'Nom du groupe',
+                    date_arret_activite_du_Groupe:
+                        "Date d'arrêt d'activité du groupe",
+                    code_entite: 'Entité',
+                    logo: 'Logo',
+                    siret: 'Siret',
+                    code_ape: 'APE',
+                    code_ape_naf: 'APE NAF',
+                    code_rna: 'RNA',
+                    code_cee: 'CEE',
+                    code_societe_appartenance: 'Appartenance de la société',
+                    site_internet: 'Site internet',
+                    code_type_entite: "Type d'entité",
+                    code_type_produit: 'Type de produit',
+                    code_type_competence: 'Type de compétence',
+                    commentaires_logistique: 'Commentaires de logistique',
+                    presence_quai: "Présence d'un quai",
+                    code_frequence_cerfa: 'Fréquence de cerfa',
+                    date_arret_activite: "Date d'arrêt d'activité de l'entité",
+                    code_contact: 'Contact',
+                    photo: 'Photo',
+                    fonction: 'Fonction',
+                    service: 'Service',
+                    numero_fixe: 'Numéro de téléphone fixe',
+                    numero_portable: 'Numéro de téléphone portable',
+                    date_arret_contact: 'Date arrêt contact',
+                    code: 'Code',
+                    libelle: 'Libellé',
+                }
+
+                const transformedItem: { [key: string]: unknown } = {}
+                for (const key in item) {
+                    if (keyMapping[key]) {
+                        transformedItem[keyMapping[key]] = item[key]
+                    } else {
+                        transformedItem[key] = item[key]
+                    }
+                }
+                return transformedItem
+            })
 
         let TableName = 'Unknown'
 
@@ -171,11 +342,14 @@ const List: React.FC<{
             dataExcel?.find(item => Object.keys(item)[1] === 'code_contact')
         ) {
             TableName = 'Contacts'
+        } else {
+            TableName = 'Excel'
         }
-        // Add more conditions for other table names as needed
+
+        console.log(TableName)
+        console.log(dataToExport)
 
         if (dataToExport) {
-            console.log(functions)
             Excel({
                 data: dataToExport,
                 fileName: TableName,
