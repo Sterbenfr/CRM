@@ -22,7 +22,7 @@ const fieldLabels: { [key: string]: string } = {
     code_Utilisateur_saisie_don: 'Utilisateur de la saisie du don',
     statut_acceptation_don: 'Statut du don',
     date_acceptation_refus_don: "Date d'acceptation ou de refus du don",
-    code_Utilisateur_accepte_refuse_don: 'Utilisateur statut du don',
+    code_Utilisateur_accepte_refuse_don: 'Validateur du don',
     code_site_beneficiaire_don: 'Site bénéficiaire du don',
     indicateur_remerciement: 'Indicateur du remerciement',
     date_remerciement: 'Date de remerciement du don',
@@ -71,7 +71,7 @@ const fieldLabels: { [key: string]: string } = {
     poids_recu_kg: 'Poids reçu en kg',
     //Prestataires
     code_Prestataire: 'Prestataire',
-    code_type_de_Prestataire: 'Type de Prestataire',
+    code_type_de_Prestataire: 'Type de prestataire',
     raison_sociale: 'Raison sociale',
     nom_commercial: 'Nom commercial',
     Siren: 'Siren',
@@ -87,8 +87,8 @@ const fieldLabels: { [key: string]: string } = {
     date_arret_activite_du_prestataire:
         "Date d'arrêt d'activité du prestataire",
     //Interactions
-    code_Utilisateur_Prospecteur: 'Utilisateur Prospecteur',
-    code_Entite_Prospectee: 'Entité Prospectée',
+    code_Utilisateur_Prospecteur: 'Utilisateur prospecteur',
+    code_Entite_Prospectee: 'Entité prospectée',
     date_interaction: "Date d'interaction",
     code_type_interaction: "Type d'interaction",
     code_modalite_interaction: "Modalité d'interaction",
@@ -119,16 +119,16 @@ const fieldLabels: { [key: string]: string } = {
     Logo: 'Logo',
     site_Web: 'Site Web',
     code_type_activite_Societe: "Type d'activité de la société",
-    code_Groupe_appartenance: 'Appartenance du Groupe',
+    code_Groupe_appartenance: 'Appartenance du groupe',
     date_arret_activite_Societe: "Date d'arrêt d'activité de la société",
     //SuiviSociete
     code_type_de_Site: 'Type de site',
-    code_site_suivi: 'Suivi de site',
+    code_site_suivi: 'Site assurant suivi',
     code_utilisateur_suivant: 'Utilisateur suivant',
     //Groupe
     code_groupe: 'Groupe',
-    nom_du_Groupe: 'Nom du Groupe',
-    date_arret_activite_du_Groupe: "Date d'arrêt d'activité du Groupe",
+    nom_du_Groupe: 'Nom du groupe',
+    date_arret_activite_du_Groupe: "Date d'arrêt d'activité du groupe",
     //SuiviGroupe
     //Entité
     code_entite: 'Entité',
@@ -145,7 +145,7 @@ const fieldLabels: { [key: string]: string } = {
     code_type_competence: 'Type de compétence',
     commentaires_logistique: 'Commentaires de logistique',
     presence_quai: "Présence d'un quai",
-    code_frequence_cerfa: 'Fréquence de Cerfa',
+    code_frequence_cerfa: 'Fréquence de cerfa',
     date_arret_activite: "Date d'arrêt d'activité de l'entité",
     //ContactEntite
     //Contacts
@@ -379,7 +379,13 @@ const PopUp: React.FC<PopUpProps> = ({
             <div className={style.page1}>
                 <div className={style.croix}>
                     <h2 className={style.lg1}>{popupTitle}</h2>
-                    <button className={style.btnC} onClick={() => { onClose(); window.location.reload(); }}>
+                    <button
+                        className={style.btnC}
+                        onClick={() => {
+                            onClose()
+                            window.location.reload()
+                        }}
+                    >
                         <Image
                             className={style.CR}
                             src='/IMG/close.svg'
