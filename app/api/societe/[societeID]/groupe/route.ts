@@ -30,7 +30,7 @@ export async function GET(
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `Groupe` LEFT JOIN entreprise ON Groupe.code_groupe = Entreprise.code_Groupe_appartenance WHERE Entreprise.code_Societe = ?',
+            'SELECT COUNT(*) as count FROM `Groupe` LEFT JOIN Entreprise ON Groupe.code_groupe = Entreprise.code_Groupe_appartenance WHERE Entreprise.code_Societe = ?',
             [societeID],
         )
 

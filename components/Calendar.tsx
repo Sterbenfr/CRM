@@ -74,7 +74,6 @@ const CalendarPage = () => {
         return (
             <a
                 href={eventInfo.event.url}
-                target='_blank'
                 rel='noopener noreferrer'
                 style={{
                     overflow: 'hidden',

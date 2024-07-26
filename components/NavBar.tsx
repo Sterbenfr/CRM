@@ -62,7 +62,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                             : ''
                     }`}
                 >
-                    Sites
+                    Sites RC
                 </Link>
                 <Link
                     href='/prestataire'
