@@ -150,6 +150,29 @@ function SitePage({ params }: { params: { siteID: string } }) {
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'designation_longue',
+            'designation_courte',
+            'adresse',
+            'numero_telephone',
+            'adresse_mail',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                site[0][key as keyof SiteID] !== null &&
+                site[0][key as keyof SiteID] !== ''
+            ) {
+                setModifiedSite(prevState => ({
+                    ...prevState,
+                    [key]: site[0][key as keyof SiteID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -177,6 +200,10 @@ function SitePage({ params }: { params: { siteID: string } }) {
             const element = document.getElementById('hide1')
             if (element) {
                 element.style.display = 'none'
+            }
+            const element2 = document.getElementById('hide2')
+            if (element2) {
+                element2.style.display = 'none'
             }
         }
 
@@ -212,6 +239,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -235,7 +263,6 @@ function SitePage({ params }: { params: { siteID: string } }) {
             <div id='printablediv'>
                 <div className={style.info_id}>
                     <div className={style.col_1}>
-                        
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Code du site :</p>
@@ -387,9 +414,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                 )}
                             </div>
                         </div>
-                    </div>
 
-                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Type de site :</p>
@@ -408,7 +433,9 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                 )}
                             </div>
                         </div>
+                    </div>
 
+                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
@@ -517,6 +544,19 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                     <p className={style.titre}>
                                         {' '}
                                         Utilisateurs du site{' '}
+                                    </p>
+                                </a>
+                            )}
+                        </div>
+                        <div className={style.info} id='hide2'>
+                            {!modify && (
+                                <a
+                                    className={style.linkID}
+                                    href={`/sites/${params.siteID}/user-site-link`}
+                                >
+                                    <p className={style.titre}>
+                                        {' '}
+                                        Utilisateur(s) suivant le site{' '}
                                     </p>
                                 </a>
                             )}

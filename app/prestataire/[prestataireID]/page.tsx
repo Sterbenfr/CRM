@@ -24,8 +24,6 @@ interface PrestataireID {
     nom_commercial: string
     Siren: string
     Siret: string
-    telephone: string
-    mail: string
     adresse: string
     civilite_contact_prestataire: string
     nom_contact_prestataire: string
@@ -155,6 +153,35 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'raison_sociale',
+            'nom_commercial',
+            'Siren',
+            'Siret',
+            'adresse',
+            'civilite_contact_prestataire',
+            'nom_contact_prestataire',
+            'prenom_contact_prestataire',
+            'telephone_contact_prestataire',
+            'mail_contact_prestataire',
+            'commentaires',
+            'date_arret_activite_du_prestataire',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                prestataire[0][key as keyof PrestataireID] !== null &&
+                prestataire[0][key as keyof PrestataireID] !== ''
+            ) {
+                setModifiedPrestataire(prevState => ({
+                    ...prevState,
+                    [key]: prestataire[0][key as keyof PrestataireID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -208,6 +235,7 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -286,7 +314,7 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                             prestataire[0].raison_sociale ===
                                                 null ||
                                             prestataire[0].raison_sociale === ''
-                                                ? 'Exemple: Entreprise Alpha'
+                                                ? 'Exemple: Alpha Corp'
                                                 : 'Actuellement: ' +
                                                   prestataire[0].raison_sociale
                                         }
@@ -414,79 +442,6 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                 )}
                             </div>
                         </div>
-
-                        <div>
-                            <div className={style.info}>
-                                <p className={style.titre}>Téléphone :</p>
-                                {modify &&
-                                session?.user.role ===
-                                    ('AD' || 'EN' || 'SU') ? (
-                                    <input
-                                        className={style.selectF}
-                                        type='number'
-                                        name='telephone'
-                                        value={modifiedPrestataire.telephone}
-                                        placeholder={
-                                            prestataire[0].telephone == null ||
-                                            prestataire[0].telephone === ''
-                                                ? 'Exemple: 0658905910'
-                                                : 'Actuellement: ' +
-                                                  prestataire[0].telephone
-                                        }
-                                        onInput={(
-                                            e: React.ChangeEvent<HTMLInputElement>,
-                                        ) => {
-                                            if (e.target.value.length > 12) {
-                                                e.target.value =
-                                                    e.target.value.slice(0, 12)
-                                            }
-                                        }}
-                                        onChange={handleInputChange}
-                                    />
-                                ) : (
-                                    <p>
-                                        {prestataire[0].telephone ==
-                                        (null || '')
-                                            ? '/'
-                                            : prestataire[0].telephone}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className={style.info}>
-                                <p className={style.titre}>Mail :</p>
-                                {modify &&
-                                session?.user.role ===
-                                    ('AD' || 'EN' || 'SU') ? (
-                                    <input
-                                        className={style.selectF}
-                                        type='mail'
-                                        name='mail'
-                                        value={modifiedPrestataire.mail}
-                                        placeholder={
-                                            prestataire[0].mail === null ||
-                                            prestataire[0].mail === ''
-                                                ? 'Exemple: Prestataire.prestataire@gmail.com'
-                                                : 'Actuellement: ' +
-                                                  prestataire[0].mail
-                                        }
-                                        maxLength={255}
-                                        onChange={handleInputChange}
-                                    />
-                                ) : (
-                                    <p>
-                                        {prestataire[0].mail == (null || '')
-                                            ? '/'
-                                            : prestataire[0].mail}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Adresse :</p>
@@ -517,7 +472,9 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                 )}
                             </div>
                         </div>
+                    </div>
 
+                    <div className={style.col_2}>
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>

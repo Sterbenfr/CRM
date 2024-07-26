@@ -5,8 +5,6 @@ CREATE TABLE Prestataires (
     nom_commercial VARCHAR(30),
     Siren CHAR(9),
     Siret CHAR(14),
-    telephone VARCHAR(12),
-    mail VARCHAR(255),
     adresse VARCHAR(255),
     civilite_contact_prestataire VARCHAR(3),
     nom_contact_prestataire VARCHAR(20),

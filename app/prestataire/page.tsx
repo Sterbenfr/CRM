@@ -15,8 +15,6 @@ export interface Prestataire {
     nom_commercial: string
     Siren: string
     Siret: string
-    telephone: string
-    mail: string
     adresse: string
     civilite_contact_prestataire: string
     nom_contact_prestataire: string
@@ -39,8 +37,6 @@ function PrestatairesPage() {
     const [nomCommercial, setNomCommercial] = useState('')
     const [siren, setSiren] = useState('')
     const [siret, setSiret] = useState('')
-    const [telephone, setTelephone] = useState('')
-    const [mail, setMail] = useState('')
     const [adresse, setAdresse] = useState('')
     const [civiliteContactPrestataire, setCiviliteContactPrestataire] =
         useState('')
@@ -77,16 +73,6 @@ function PrestatairesPage() {
 
     const handleSiretChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSiret(event.target.value)
-    }
-
-    const handleTelephoneChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setTelephone(event.target.value)
-    }
-
-    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMail(event.target.value)
     }
 
     const handleAdresseChange = (
@@ -207,24 +193,6 @@ function PrestatairesPage() {
                 onChange: handleCodeTypeDePrestataireChange,
             },
             {
-                id: 'telephone',
-                type: 'number',
-                placeholder: 'Exemple: 0658905910',
-                value: telephone,
-                maxLength: 12,
-                required: true,
-                onInputChange: handleTelephoneChange,
-            },
-            {
-                id: 'mail',
-                type: 'input',
-                value: mail,
-                required: true,
-                placeholder: 'Exemple: Prestataire.prestataire@gmail.com',
-                maxLength: 255,
-                onInputChange: handleMailChange,
-            },
-            {
                 id: 'Siren',
                 type: 'number',
                 value: siren,
@@ -311,16 +279,10 @@ function PrestatairesPage() {
             },
         ]
 
-        if (fields[3].value !== '') {
-            fields[4].required = false
-        } else if (fields[4].value !== '') {
-            fields[3].required = false
-        }
-
-        if (fields[11].value !== '') {
-            fields[12].required = false
-        } else if (fields[12].value !== '') {
-            fields[11].required = false
+        if (fields[9].value !== '') {
+            fields[10].required = false
+        } else if (fields[10].value !== '') {
+            fields[9].required = false
         }
 
         if (
@@ -338,8 +300,6 @@ function PrestatairesPage() {
         nomCommercial,
         siren,
         siret,
-        telephone,
-        mail,
         adresse,
         civiliteContactPrestataire,
         nomContactPrestataire,
@@ -402,14 +362,11 @@ function PrestatairesPage() {
                     items={Prestataires.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3:
-                            Prestataire.telephone.toString() == ''
-                                ? '/'
-                                : Prestataire.telephone.toString(),
+                        value3: Prestataire.code_type_de_Prestataire.toString(),
                         value4:
-                            Prestataire.mail.toString() == ''
+                            Prestataire.adresse.toString() == ''
                                 ? '/'
-                                : Prestataire.mail.toString(),
+                                : Prestataire.adresse.toString(),
                         value5:
                             Prestataire.telephone_contact_prestataire.toString() ==
                             ''
@@ -431,22 +388,19 @@ function PrestatairesPage() {
                     }}
                     attribut={{
                         att1: 'Raison sociale',
-                        att2: 'Téléphone',
-                        att3: 'Mail',
+                        att2: 'Code type prestataire',
+                        att3: 'Adresse',
                         att4: 'Téléphone du contact',
                         att5: 'Mail du contact',
                     }}
                     searchItems={search.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3:
-                            Prestataire.telephone.toString() == ''
-                                ? '/'
-                                : Prestataire.telephone.toString(),
+                        value3: Prestataire.code_type_de_Prestataire.toString(),
                         value4:
-                            Prestataire.mail.toString() == ''
+                            Prestataire.adresse.toString() == ''
                                 ? '/'
-                                : Prestataire.mail.toString(),
+                                : Prestataire.adresse.toString(),
                         value5:
                             Prestataire.telephone_contact_prestataire.toString() ==
                             ''

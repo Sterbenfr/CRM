@@ -285,9 +285,9 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     items={Utilisateurs.map(user => ({
                         value1: user.code_utilisateur.toString(),
                         value2:
-                            user.civilite === 'Mr.'
+                            user.civilite == "M."
                                 ? 'Monsieur'
-                                : user.civilite === 'Mme.'
+                                : user.civilite == "Mme"
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,
@@ -313,9 +313,9 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),
                         value2:
-                            user.civilite === 'Mr.'
+                            user.civilite === "M."
                                 ? 'Monsieur'
-                                : user.civilite === 'Mme.'
+                                : user.civilite === "Mme"
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,

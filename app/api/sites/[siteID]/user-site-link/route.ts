@@ -50,8 +50,7 @@ export async function POST(req: NextRequest) {
     if (
         !contact.code_utilisateur ||
         !contact.code_site ||
-        !contact.code_type_utilisateur ||
-        !contact.date_fin_activite
+        !contact.code_type_utilisateur
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },

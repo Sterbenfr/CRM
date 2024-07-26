@@ -147,6 +147,28 @@ function UtilisateurPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'nom',
+            'prenom',
+            'tel_perso',
+            'mail',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                utilisateur[0][key as keyof UtilisateurID] !== null &&
+                utilisateur[0][key as keyof UtilisateurID] !== ''
+            ) {
+                setModifiedUtilisateur(prevState => ({
+                    ...prevState,
+                    [key]: utilisateur[0][key as keyof UtilisateurID],
+                }))
+            }
+        })
+    }
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
@@ -199,6 +221,7 @@ function UtilisateurPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -420,16 +443,14 @@ function UtilisateurPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Mot de passe :</p>
-                                {modify &&
-                                session?.user.role === 'AD' ? (
+                                {modify && session?.user.role === 'AD' ? (
                                     <input
                                         className={style.selectF}
                                         type='password'
                                         name='password'
                                         value={modifiedUtilisateur.password}
                                         placeholder={
-                                            utilisateur[0].password ===
-                                                null ||
+                                            utilisateur[0].password === null ||
                                             utilisateur[0].password === ''
                                                 ? 'Exemple: ChevaLDE_3'
                                                 : 'Changer de mot de passe'
@@ -439,8 +460,7 @@ function UtilisateurPage({
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].password ==
-                                        (null || '')
+                                        {utilisateur[0].password == (null || '')
                                             ? '/'
                                             : '*********'}
                                     </p>

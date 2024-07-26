@@ -7,12 +7,20 @@ interface FunctionBlockProps {
     fonc4?: React.MouseEventHandler<HTMLButtonElement>
 }
 
+
 const FunctionBlock: React.FC<FunctionBlockProps> = ({
     fonc1,
     fonc2,
     fonc3,
     fonc4,
 }) => {
+    let isExport = true
+    
+    if (window.location.href.includes('/type') || window.location.href.includes('site-link')) {
+        isExport = false
+    } else {
+        isExport = true
+    }
     return (
         <div className={style.page1}>
             <div className={style.functionBlock}>
@@ -22,16 +30,20 @@ const FunctionBlock: React.FC<FunctionBlockProps> = ({
                 <button className={style.btnFunctionBlockDEL} onClick={fonc2}>
                     Supprimer
                 </button>
-                <button className={style.btnFunctionBlockADD} onClick={fonc4}>
-                    Exporter
-                </button>
+                {isExport && (
+                    <button className={style.btnFunctionBlockADD} onClick={fonc4}>
+                        Exporter
+                    </button>
+                )}
             </div>
-            <input
-                placeholder='Rechercher... (3 caractères minimum)'
-                className={style.searchLine}
-                type='text'
-                onInput={fonc3}
-            />
+            {isExport && (
+                <input
+                    placeholder='Rechercher... (3 caractères minimum)'
+                    className={style.searchLine}
+                    type='text'
+                    onInput={fonc3}
+                />
+            )}
         </div>
     )
 }

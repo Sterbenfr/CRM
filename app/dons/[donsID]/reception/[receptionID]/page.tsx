@@ -8,7 +8,6 @@ import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '../../../../../components/withAuthorization'
 
-
 interface ExtendedSession extends Session {
     user: {
         name?: string | null
@@ -34,7 +33,6 @@ interface ReceptionID {
     commentaires: string
     pieces_associees: string
     raison_sociale_don: string
-
 }
 
 function ReceptionPage({
@@ -126,9 +124,7 @@ function ReceptionPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths = await fileUpload(
-            '../../../../api/upload/piece',
-        )
+        const filePaths = await fileUpload('../../../../api/upload/piece')
 
         const jsonPayload = {
             ...modifiedReception,
@@ -205,6 +201,29 @@ function ReceptionPage({
             </div>
         )
 
+    const initialValue = () => {
+        const keysToCheck = [
+            'nombre_palettes_recues',
+            'nombre_palettes_consignees_recues',
+            'nombre_palettes_consignees_rendues',
+            'nombre_cartons_recus',
+            'poids_recu_kg',
+            'commentaires',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                reception[0][key as keyof ReceptionID] !== null &&
+                reception[0][key as keyof ReceptionID] !== ''
+            ) {
+                setModifiedReception(prevState => ({
+                    ...prevState,
+                    [key]: reception[0][key as keyof ReceptionID],
+                }))
+            }
+        })
+    }
+
     return (
         <div className={style.idPage}>
             <div className={style.croixID}>
@@ -229,6 +248,7 @@ function ReceptionPage({
                                     handleSubmit()
                                 } else {
                                     setModify(true)
+                                    initialValue()
                                 }
                             }}
                             className={style.btnModif}
@@ -402,7 +422,8 @@ function ReceptionPage({
                                     Nombre palettes consignées recues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -449,7 +470,8 @@ function ReceptionPage({
                                     Nombre de palettes consignées rendues :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -495,7 +517,8 @@ function ReceptionPage({
                                     Nombre de cartons recus :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -538,7 +561,8 @@ function ReceptionPage({
                                     Poids recu en kg :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='number'
@@ -576,7 +600,8 @@ function ReceptionPage({
                                     Produits sur les palettes :
                                 </p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.checkboxF}
                                         type='checkbox'
@@ -611,7 +636,8 @@ function ReceptionPage({
                             <div className={style.info}>
                                 <p className={style.titre}>commentaires :</p>
                                 {modify &&
-                                session?.user.role === ('AD' || 'EN' || 'SU') ? (
+                                session?.user.role ===
+                                    ('AD' || 'EN' || 'SU') ? (
                                     <input
                                         className={style.selectF}
                                         type='input'
@@ -642,30 +668,32 @@ function ReceptionPage({
                                 <p className={style.titre}>
                                     Pièces associées :
                                 </p>
-                                {modify && session?.user.role === ('AD' || 'RC') ? (
-                                <input
-                                    className={style.selectF}
-                                    type='file'
-                                    name='pieces_associees'
-                                    onChange={handleFileChange}
-                                />
-                            ) : reception[0].pieces_associees == null ? (
-                                <p>/</p>
-                            ) : typeof reception[0].pieces_associees === 'string' ? (
-                                <a
-                                    href={reception[0].pieces_associees}
-                                    download='pieces_associees'
-                                >
-                                    Télécharger la pièce associée
-                                </a>
-                            ) : (
-                                <a
-                                    href={reception[0].pieces_associees}
-                                    download='pieces_associees'
-                                >
-                                    Télécharger la pièce associée
-                                </a>
-                            )}
+                                {modify &&
+                                session?.user.role === ('AD' || 'RC') ? (
+                                    <input
+                                        className={style.selectF}
+                                        type='file'
+                                        name='pieces_associees'
+                                        onChange={handleFileChange}
+                                    />
+                                ) : reception[0].pieces_associees == null ? (
+                                    <p>/</p>
+                                ) : typeof reception[0].pieces_associees ===
+                                  'string' ? (
+                                    <a
+                                        href={reception[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={reception[0].pieces_associees}
+                                        download='pieces_associees'
+                                    >
+                                        Télécharger la pièce associée
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

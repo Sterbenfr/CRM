@@ -190,13 +190,18 @@ function SitesPage() {
             {
                 id: 'date_ouverture',
                 type: 'date',
-                value: dateOuverture?.toISOString().split('T')[0] || '',
+                value: dateOuverture && !isNaN(dateOuverture?.getTime())
+                    ? dateOuverture.toISOString().split('T')[0]
+                    : null,
+                required: true,
                 onInputChange: handleDateOuvertureChange,
             },
             {
                 id: 'date_fermeture',
                 type: 'date',
-                value: dateFermeture?.toISOString().split('T')[0] || '',
+                value: dateFermeture && !isNaN(dateFermeture?.getTime())
+                ? dateFermeture.toISOString().split('T')[0]
+                : null,
                 onInputChange: handleDateFermetureChange,
             },
             {
@@ -207,6 +212,7 @@ function SitesPage() {
                 onInputChange: handleCommentairesChange,
                 maxLength: 200,
             },
+            
         ]
 
         if (dateFermeture !== undefined && dateOuverture > dateFermeture) {
