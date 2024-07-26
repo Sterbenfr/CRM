@@ -5,6 +5,7 @@ import { Session } from 'next-auth'
 
 export default function NotLogin() {
     const [session, setSession] = useState<Session | null>(null)
+    const [isTimeoutReached, setIsTimeoutReached] = useState(false)
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -13,19 +14,27 @@ export default function NotLogin() {
         }
 
         fetchSession()
+        const timer = setTimeout(() => {
+            setIsTimeoutReached(true)
+        }, 100)
+        return () => clearTimeout(timer)
     }, [])
 
     return (
         <div className={style.connect}>
-            {session && session.user ? (
-                <>
-                    <p className={style.conect}>
-                        Connecté avec l&apos;adresse : {session.user.email}
+            {isTimeoutReached ? (
+                session && session.user ? (
+                    <>
+                        <p className={style.conect}>
+                            Connecté avec l&apos;adresse : {session.user.email}
+                        </p>
+                    </>
+                ) : (
+                    <p className={style.notLog}>
+                        Vous n&apos;êtes pas connecté
                     </p>
-                </>
-            ) : (
-                <p className={style.notLog}>Vous n&apos;êtes pas connecté</p>
-            )}
+                )
+            ) : null}
         </div>
     )
 }
