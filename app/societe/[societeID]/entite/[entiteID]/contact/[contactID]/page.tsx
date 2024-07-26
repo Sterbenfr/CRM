@@ -8,7 +8,6 @@ import { Session } from 'next-auth'
 import fileUpload, { setFile } from '@/components/fileUploadModify'
 import withAuthorization from '@/components/withAuthorization'
 
-
 interface ExtendedSession extends Session {
     user: {
         name?: string | null
@@ -105,9 +104,7 @@ function ContactPage({
     }
 
     const handleSubmit = async () => {
-        const filePaths = await fileUpload(
-            '../../../../../../api/upload/image',
-        )
+        const filePaths = await fileUpload('../../../../../../api/upload/image')
 
         const jsonPayload = {
             ...modifiedContact,
@@ -288,6 +285,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='nom'
                                         value={modifiedContact.nom}
@@ -320,6 +318,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='prenom'
                                         value={modifiedContact.prenom}
@@ -352,6 +351,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='fonction'
                                         value={modifiedContact.fonction}
@@ -384,6 +384,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='service'
                                         value={modifiedContact.service}
@@ -417,6 +418,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='numero_fixe'
                                         value={modifiedContact.numero_fixe}
@@ -456,6 +458,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='number'
                                         name='numero_portable'
                                         value={modifiedContact.numero_portable}
@@ -497,6 +500,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='adresse_mail'
                                         value={modifiedContact.adresse_mail}
@@ -533,19 +537,12 @@ function ContactPage({
                                     />
                                 ) : contact[0].photo == null ? (
                                     <p>/</p>
-                                ) : typeof contact[0].photo ===
-                                  'string' ? (
-                                    <a
-                                        href={contact[0].photo}
-                                        download='photo'
-                                    >
+                                ) : typeof contact[0].photo === 'string' ? (
+                                    <a href={contact[0].photo} download='photo'>
                                         Télécharger la photo
                                     </a>
                                 ) : (
-                                    <a
-                                        href={contact[0].photo}
-                                        download='photo'
-                                    >
+                                    <a href={contact[0].photo} download='photo'>
                                         Télécharger la photo
                                     </a>
                                 )}
@@ -559,6 +556,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='input'
                                         name='commentaires'
                                         value={modifiedContact.commentaires}
@@ -591,6 +589,7 @@ function ContactPage({
                                 session?.user.role ===
                                     ('AD' || 'SU' || 'AP') ? (
                                     <input
+                                        className={style.selectF}
                                         type='date'
                                         name='date_arret_contact'
                                         value={formatDate(

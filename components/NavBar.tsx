@@ -20,62 +20,78 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
     return (
         <div>
             <nav className={styles.navbar}>
-                <Link href='/' className={styles.img_nav}>
-                    <Image
-                        src='/IMG/logo-bl.svg'
-                        alt='logo'
-                        width={180}
-                        height={80}
-                    />
-                </Link>
-                <Link
-                    href='/'
-                    className={`${styles.links} ${
-                        firstPathnameSegment === '/' ? styles.underline : ''
-                    }`}
-                >
-                    Calendrier
-                </Link>
-                <Link
-                    href='/dons'
-                    className={`${styles.links} ${
-                        firstPathnameSegment === '/dons' ? styles.underline : ''
-                    }`}
-                >
-                    Dons
-                </Link>
-                <Link
-                    href='/societe'
-                    className={`${styles.links} ${
-                        firstPathnameSegment === '/societe'
-                            ? styles.underline
-                            : ''
-                    }`}
-                >
-                    Entreprise
-                </Link>
-                <Link
-                    href='/sites'
-                    className={`${styles.links} ${
-                        firstPathnameSegment === '/sites'
-                            ? styles.underline
-                            : ''
-                    }`}
-                >
-                    Sites RC
-                </Link>
-                <Link
-                    href='/prestataire'
-                    className={`${styles.links} ${
-                        firstPathnameSegment === '/prestataire'
-                            ? styles.underline
-                            : ''
-                    }`}
-                >
-                    Prestataires
-                </Link>
-                {session ? (
-                    <>
+                <div className={styles.nav}>
+                    <Link href='/' className={styles.img_nav}>
+                        <Image
+                            src='/IMG/logo-bl.svg'
+                            alt='logo'
+                            width={180}
+                            height={80}
+                        />
+                    </Link>
+                    <Link
+                        href='/'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/' ? styles.underline : ''
+                        }`}
+                    >
+                        Calendrier
+                    </Link>
+                    <Link
+                        href='/dons'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/dons'
+                                ? styles.underline
+                                : ''
+                        }`}
+                    >
+                        Dons
+                    </Link>
+                    <Link
+                        href='/societe'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/societe'
+                                ? styles.underline
+                                : ''
+                        }`}
+                    >
+                        Entreprise
+                    </Link>
+                    <Link
+                        href='/sites'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/sites'
+                                ? styles.underline
+                                : ''
+                        }`}
+                    >
+                        Sites RC
+                    </Link>
+                    <Link
+                        href='/prestataire'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/prestataire'
+                                ? styles.underline
+                                : ''
+                        }`}
+                    >
+                        Prestataires
+                    </Link>
+                    {session ? (
+                        <>
+                            <Link
+                                href='/login'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/login'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Compte
+                            </Link>
+                        </>
+                    ) : (
+
                         <Link
                             href='/login'
                             className={`${styles.links} ${
@@ -84,21 +100,20 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                                     : ''
                             }`}
                         >
-                            Compte
+                            Connexion
                         </Link>
-                    </>
-                ) : (
-                    <Link
-                        href='/login'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/login'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Connexion
-                    </Link>
-                )}
+                    )}
+                </div>
+                <Link
+                    href='/documentation'
+                    className={`${styles.doc} ${
+                        firstPathnameSegment === '/prestataire'
+                            ? styles.circle
+                            : ''
+                    }`}
+                >
+                    ?
+                </Link>
             </nav>
             {children}
         </div>

@@ -16,6 +16,14 @@
     z-index: 10000;
 }
 
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 10000000;
+}
+
 .btn_nav {
     display: flex;
     align-items: center;
@@ -46,8 +54,31 @@
     border-bottom: 3px solid #e5007d;
 }
 
+.doc {
+    color: #f2f2f2; /* Couleur du texte des liens */
+    text-decoration: none; /* Supprime le soulignement des liens */
+    width: auto;
+    font-size: 1.5rem;
+    text-align: center;
+    position: relative;
+    margin-right: 4rem;
+    padding: 0.5rem;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.doc:hover {
+    border: 3px solid #e5007d;
+}
+
 .underline {
     border-bottom: 3px solid #e5007d;
+}
+
+.circle {
+    border: 3px solid #e5007d;
 }
 
 /* BTN FONCTION */
@@ -964,4 +995,50 @@
     border-radius: 10px;
     width: 50%;
     height: 50%;
+}
+
+.notLog {
+    font-weight: bold;
+    padding: 2rem;
+    margin-top: 12rem;
+    font-size: 1.6rem;
+    color: #000000;
+    border: 3px solid #e5007d;
+    border-radius: 50px;
+}
+
+.conect {
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #000000;
+    width: 100%;
+}
+
+.sommaire {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.compart {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    width: 70%;
+}
+.titleCompart {
+    text-align: flex-start;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    padding: 0.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-bottom: 2px solid #e5007d;
+    margin-bottom: 0.5rem;
 }
