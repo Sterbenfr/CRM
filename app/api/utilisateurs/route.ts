@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../utils/db'
-
 import { streamToString } from '../../../utils/streamUtils'
-import type { Prestataire } from '@/app/prestataire/page'
+import type { Utilisateurs } from '@/app/utilisateurs/page'
 
 type CountResult = { count: number }[]
 
@@ -10,6 +9,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
     const limit = searchParams.get('limit') || '10'
+    
 
     try {
         const pageNumber = Number(page)
@@ -17,12 +17,12 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `Prestataires` ORDER BY `code_Prestataire` DESC LIMIT ?, ?',
+            'SELECT * FROM `Utilisateurs` ORDER BY `code_utilisateur` DESC LIMIT ?, ?',
             [offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `Prestataires`',
+            'SELECT COUNT(*) as count FROM `Utilisateurs`',
         )
 
         const total = totalResult as CountResult
@@ -36,29 +36,33 @@ export async function GET(request: Request) {
         )
     }
 }
+
+type extendedUtilisateurs = Utilisateurs & { code_site: string }
 export async function POST(req: NextRequest) {
-    let prestataires: Prestataire
+    let Utilisateur: extendedUtilisateurs
     try {
-        prestataires = JSON.parse(await streamToString(req.body))
+        Utilisateur = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
     if (
-        !prestataires.code_type_de_Prestataire ||
-        !prestataires.raison_sociale
+        !Utilisateur.civilite ||
+        !Utilisateur.nom ||
+        !Utilisateur.prenom ||
+        !Utilisateur.password ||
+        !Utilisateur.code_type_utilisateur
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
         )
     }
-
     try {
-        console.log(prestataires)
-        const query = 'INSERT INTO `Prestataires` SET ?'
-        const [rows] = await connection.query(query, prestataires)
-        return NextResponse.json(rows)
+        console.log(Utilisateur)
+        const query = 'INSERT INTO `Utilisateurs` SET ?'
+        const [rows] = await connection.query(query, Utilisateur)
+        return NextResponse.json({rows})
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + error },

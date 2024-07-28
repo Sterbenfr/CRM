@@ -16,7 +16,7 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT Dons.*,Entite.raison_sociale FROM Dons LEFT JOIN  Entite ON Dons.code_Entite_donatrice = Entite.code_Entite LIMIT ?, ?',
+            'SELECT Dons.*, Entite.raison_sociale FROM Dons LEFT JOIN Entite ON Dons.code_Entite_donatrice = Entite.code_Entite ORDER BY Dons.code_Don DESC LIMIT ?, ?',
             [offset, limitNumber],
         )
 

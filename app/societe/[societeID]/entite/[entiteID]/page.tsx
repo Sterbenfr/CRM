@@ -856,7 +856,7 @@ function EntitePage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Présence en quai :
+                                    Présence d&apos;un quai :
                                 </p>
                                 {modify &&
                                 session?.user.role === ('AD' || 'PR') ? (

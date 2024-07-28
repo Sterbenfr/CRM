@@ -17,8 +17,8 @@ interface ExtendedSession extends Session {
     }
 }
 
-interface UtilisateurID {
-    code_utilisateur: number
+interface InterlocuteurID {
+    code_interlocuteur: number
     civilite: string
     nom: string
     prenom: string
@@ -26,66 +26,65 @@ interface UtilisateurID {
     mail: string
     commentaires: string
     code_type_utilisateur: string
-    password: string
     libelle_type_utilisateur: string
 }
 
-function UtilisateurPage({
+function InterlocuteurPage({
     params,
 }: {
-    params: { siteID: string; utilisateurID: string }
+    params: { siteID: string; interlocuteursID: string }
 }) {
-    const [utilisateur, setUtilisateur] = useState<UtilisateurID[]>([])
+    const [interlocuteur, setInterlocuteur] = useState<InterlocuteurID[]>([])
     const [modify, setModify] = useState<boolean>(false)
     const [session, setSession] = useState<ExtendedSession | null>(null)
-    const [modifiedUtilisateur, setModifiedUtilisateur] = useState<
-        Partial<UtilisateurID>
+    const [modifiedInterlocuteur, setModifiedInterlocuteur] = useState<
+        Partial<InterlocuteurID>
     >({})
 
     useEffect(() => {
-        const fetchSessionAndUtilisateur = async () => {
+        const fetchSessionAndInterlocuteur = async () => {
             const sessionData = await getSession()
             setSession(sessionData as ExtendedSession)
 
-            if (params.utilisateurID) {
+            if (params.interlocuteursID) {
                 const res = await fetch(
-                    `../../../../api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
+                    `../../../../api/sites/${params.siteID}/interlocuteurs/${params.interlocuteursID}`,
                 )
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
                 }
 
-                const utilisateurData: UtilisateurID[] = await res.json()
-                setUtilisateur(utilisateurData)
+                const interlocuteurData: InterlocuteurID[] = await res.json()
+                setInterlocuteur(interlocuteurData)
             }
         }
 
-        fetchSessionAndUtilisateur()
-    }, [params.utilisateurID, params.siteID, modify])
+        fetchSessionAndInterlocuteur()
+    }, [params.interlocuteursID, params.siteID, modify])
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
         const { name, value } = e.target
 
-        setModifiedUtilisateur(prevState => ({
+        setModifiedInterlocuteur(prevState => ({
             ...prevState,
             [name]: value,
         }))
     }
 
-    const handleTypeUtilisateurChange = (
+    const handleTypeInterlocuteurChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        if (!utilisateur || utilisateur.length === 0 || !session) return
+        if (!interlocuteur || interlocuteur.length === 0 || !session) return
         let value = event.target.value
 
-        if (utilisateur[0].code_type_utilisateur !== '' && value === '') {
-            value = utilisateur[0].code_type_utilisateur
+        if (interlocuteur[0].code_type_utilisateur !== '' && value === '') {
+            value = interlocuteur[0].code_type_utilisateur
         }
-        setModifiedUtilisateur({
-            ...modifiedUtilisateur,
+        setModifiedInterlocuteur({
+            ...modifiedInterlocuteur,
             code_type_utilisateur: value,
         })
     }
@@ -93,17 +92,17 @@ function UtilisateurPage({
     const handleCiviliteChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
-        if (!utilisateur || utilisateur.length === 0 || !session) return
+        if (!interlocuteur || interlocuteur.length === 0 || !session) return
 
-        setModifiedUtilisateur({
-            ...modifiedUtilisateur,
+        setModifiedInterlocuteur({
+            ...modifiedInterlocuteur,
             civilite: event.target.value,
         })
     }
 
     const handleSubmit = async () => {
         const jsonPayload = {
-            ...modifiedUtilisateur,
+            ...modifiedInterlocuteur,
         }
 
         // Convert non-file data to JSON
@@ -111,7 +110,7 @@ function UtilisateurPage({
 
         try {
             const res = await fetch(
-                `../../../../api/sites/${params.siteID}/utilisateurs/${params.utilisateurID}`,
+                `../../../../api/sites/${params.siteID}/interlocuteurs/${params.interlocuteursID}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -127,8 +126,8 @@ function UtilisateurPage({
                 throw new Error('Failed to update data')
             }
 
-            const updatedUtilisateur: UtilisateurID[] = await res.json()
-            setUtilisateur(updatedUtilisateur)
+            const updatedInterlocuteur: InterlocuteurID[] = await res.json()
+            setInterlocuteur(updatedInterlocuteur)
             setModify(false)
         } catch (error) {
             console.error('Error submitting form:', error)
@@ -137,9 +136,9 @@ function UtilisateurPage({
     }
 
     if (
-        !Array.isArray(utilisateur) ||
-        utilisateur.length === 0 ||
-        typeof utilisateur[0]?.code_utilisateur === 'undefined'
+        !Array.isArray(interlocuteur) ||
+        interlocuteur.length === 0 ||
+        typeof interlocuteur[0]?.code_interlocuteur === 'undefined'
     )
         return (
             <div className={style.page}>
@@ -158,12 +157,12 @@ function UtilisateurPage({
 
         keysToCheck.forEach(key => {
             if (
-                utilisateur[0][key as keyof UtilisateurID] !== null &&
-                utilisateur[0][key as keyof UtilisateurID] !== ''
+                interlocuteur[0][key as keyof InterlocuteurID] !== null &&
+                interlocuteur[0][key as keyof InterlocuteurID] !== ''
             ) {
-                setModifiedUtilisateur(prevState => ({
+                setModifiedInterlocuteur(prevState => ({
                     ...prevState,
-                    [key]: utilisateur[0][key as keyof UtilisateurID],
+                    [key]: interlocuteur[0][key as keyof InterlocuteurID],
                 }))
             }
         })
@@ -200,7 +199,7 @@ function UtilisateurPage({
     return (
         <div className={style.idPage}>
             <div className={style.croixID}>
-                <h1 className={style.titre_global}>Utilisateurs</h1>
+                <h1 className={style.titre_global}>Interlocuteur</h1>
                 <a href='javascript:history.go(-1)' className={style.btnC}>
                     <Image
                         className={style.CRid}
@@ -248,12 +247,12 @@ function UtilisateurPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Code de l&apos;utilisateur :
+                                    Code de l&apos;interlocuteur :
                                 </p>
                                 <p>
-                                    {utilisateur[0].code_utilisateur == null
+                                    {interlocuteur[0].code_interlocuteur == null
                                         ? '/'
-                                        : utilisateur[0].code_utilisateur}
+                                        : interlocuteur[0].code_interlocuteur}
                                 </p>
                             </div>
                         </div>
@@ -270,11 +269,12 @@ function UtilisateurPage({
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].civilite == (null || '')
+                                        {interlocuteur[0].civilite ==
+                                        (null || '')
                                             ? '/'
-                                            : utilisateur[0].civilite === 'M.'
+                                            : interlocuteur[0].civilite === 'M.'
                                               ? 'Monsieur'
-                                              : utilisateur[0].civilite ===
+                                              : interlocuteur[0].civilite ===
                                                   'Mme'
                                                 ? 'Madame'
                                                 : 'Non renseigné'}
@@ -292,22 +292,22 @@ function UtilisateurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='nom'
-                                        value={modifiedUtilisateur.nom}
+                                        value={modifiedInterlocuteur.nom}
                                         placeholder={
-                                            utilisateur[0].nom === null ||
-                                            utilisateur[0].nom === ''
+                                            interlocuteur[0].nom === null ||
+                                            interlocuteur[0].nom === ''
                                                 ? 'Exemple: Dupont'
                                                 : 'Actuellement: ' +
-                                                  utilisateur[0].nom
+                                                  interlocuteur[0].nom
                                         }
                                         maxLength={20}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].nom == (null || '')
+                                        {interlocuteur[0].nom == (null || '')
                                             ? '/'
-                                            : utilisateur[0].nom}
+                                            : interlocuteur[0].nom}
                                     </p>
                                 )}
                             </div>
@@ -322,22 +322,22 @@ function UtilisateurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='prenom'
-                                        value={modifiedUtilisateur.prenom}
+                                        value={modifiedInterlocuteur.prenom}
                                         placeholder={
-                                            utilisateur[0].prenom === null ||
-                                            utilisateur[0].prenom === ''
+                                            interlocuteur[0].prenom === null ||
+                                            interlocuteur[0].prenom === ''
                                                 ? 'Exemple: Jean'
                                                 : 'Actuellement: ' +
-                                                  utilisateur[0].prenom
+                                                  interlocuteur[0].prenom
                                         }
                                         maxLength={20}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].prenom == (null || '')
+                                        {interlocuteur[0].prenom == (null || '')
                                             ? '/'
-                                            : utilisateur[0].prenom}
+                                            : interlocuteur[0].prenom}
                                     </p>
                                 )}
                             </div>
@@ -345,7 +345,7 @@ function UtilisateurPage({
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>
-                                    Type d&apos;utilisateur :
+                                    Type d&apos;interlocuteur :
                                 </p>
                                 {modify &&
                                 (session?.user.role === 'AD' ||
@@ -353,15 +353,15 @@ function UtilisateurPage({
                                     <SelectComponent
                                         url='../../../../api/select/utilisateurs'
                                         onChange={e =>
-                                            handleTypeUtilisateurChange(e)
+                                            handleTypeInterlocuteurChange(e)
                                         }
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0]
+                                        {interlocuteur[0]
                                             .libelle_type_utilisateur == null
                                             ? '/'
-                                            : utilisateur[0]
+                                            : interlocuteur[0]
                                                   .libelle_type_utilisateur}
                                     </p>
                                 )}
@@ -381,13 +381,14 @@ function UtilisateurPage({
                                         className={style.selectF}
                                         type='number'
                                         name='tel_perso'
-                                        value={modifiedUtilisateur.tel_perso}
+                                        value={modifiedInterlocuteur.tel_perso}
                                         placeholder={
-                                            utilisateur[0].tel_perso === null ||
-                                            utilisateur[0].tel_perso === ''
+                                            interlocuteur[0].tel_perso ===
+                                                null ||
+                                            interlocuteur[0].tel_perso === ''
                                                 ? 'Exemple: 0658905910'
                                                 : 'Actuellement: ' +
-                                                  utilisateur[0].tel_perso
+                                                  interlocuteur[0].tel_perso
                                         }
                                         onInput={(
                                             e: React.ChangeEvent<HTMLInputElement>,
@@ -401,10 +402,10 @@ function UtilisateurPage({
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].tel_perso ==
+                                        {interlocuteur[0].tel_perso ==
                                         (null || '')
                                             ? '/'
-                                            : utilisateur[0].tel_perso}
+                                            : interlocuteur[0].tel_perso}
                                     </p>
                                 )}
                             </div>
@@ -419,54 +420,27 @@ function UtilisateurPage({
                                         className={style.selectF}
                                         type='mail'
                                         name='mail'
-                                        value={modifiedUtilisateur.mail}
+                                        value={modifiedInterlocuteur.mail}
                                         placeholder={
-                                            utilisateur[0].mail === null ||
-                                            utilisateur[0].mail === ''
+                                            interlocuteur[0].mail === null ||
+                                            interlocuteur[0].mail === ''
                                                 ? 'Exemple: Jean.dupont@gmail.com'
                                                 : 'Actuellement: ' +
-                                                  utilisateur[0].mail
+                                                  interlocuteur[0].mail
                                         }
                                         maxLength={50}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].mail == (null || '')
+                                        {interlocuteur[0].mail == (null || '')
                                             ? '/'
-                                            : utilisateur[0].mail}
+                                            : interlocuteur[0].mail}
                                     </p>
                                 )}
                             </div>
                         </div>
 
-                        <div>
-                            <div className={style.info}>
-                                <p className={style.titre}>Mot de passe :</p>
-                                {modify && session?.user.role === 'AD' ? (
-                                    <input
-                                        className={style.selectF}
-                                        type='password'
-                                        name='password'
-                                        value={modifiedUtilisateur.password}
-                                        placeholder={
-                                            utilisateur[0].password === null ||
-                                            utilisateur[0].password === ''
-                                                ? 'Exemple: ChevaLDE_3'
-                                                : 'Changer de mot de passe'
-                                        }
-                                        maxLength={150}
-                                        onChange={handleInputChange}
-                                    />
-                                ) : (
-                                    <p>
-                                        {utilisateur[0].password == (null || '')
-                                            ? '/'
-                                            : '*********'}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
 
                         <div>
                             <div className={style.info}>
@@ -477,24 +451,24 @@ function UtilisateurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='commentaires'
-                                        value={modifiedUtilisateur.commentaires}
+                                        value={modifiedInterlocuteur.commentaires}
                                         placeholder={
-                                            utilisateur[0].commentaires ===
+                                            interlocuteur[0].commentaires ===
                                                 null ||
-                                            utilisateur[0].commentaires === ''
+                                                interlocuteur[0].commentaires === ''
                                                 ? 'Exemple: Manutentionnaire de Dunkerque'
                                                 : 'Actuellement: ' +
-                                                  utilisateur[0].commentaires
+                                                interlocuteur[0].commentaires
                                         }
                                         maxLength={200}
                                         onChange={handleInputChange}
                                     />
                                 ) : (
                                     <p>
-                                        {utilisateur[0].commentaires ==
+                                        {interlocuteur[0].commentaires ==
                                         (null || '')
                                             ? '/'
-                                            : utilisateur[0].commentaires}
+                                            : interlocuteur[0].commentaires}
                                     </p>
                                 )}
                             </div>
@@ -506,4 +480,4 @@ function UtilisateurPage({
     )
 }
 
-export default withAuthorization(UtilisateurPage, ['AD', 'SU'])
+export default withAuthorization(InterlocuteurPage, ['AD', 'SU'])

@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../utils/db'
 
 import { streamToString } from '../../../../../utils/streamUtils'
-import type { Utilisateurs } from '@/app/sites/[siteID]/utilisateurs/page'
+import type { Interlocuteurs } from '@/app/sites/[siteID]/interlocuteurs/page'
 import { ResultSetHeader } from 'mysql2'
 
 type CountResult = { count: number }[]
 
 export async function GET(
     request: Request,
-    { params }: { params: { siteID: string; utilisateurID: string } },
+    { params }: { params: { siteID: string; interlocuteurID: string } },
 ) {
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
@@ -22,12 +22,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `Utilisateurs` LEFT JOIN SitesRattachement ON Utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
+            'SELECT * FROM `Interlocuteurs` LEFT JOIN SitesRattachement ON Interlocuteurs.code_interlocuteur = SitesRattachement.code_interlocuteur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
             [siteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `Utilisateurs` LEFT JOIN SitesRattachement ON Utilisateurs.code_utilisateur = SitesRattachement.code_utilisateur WHERE SitesRattachement.code_site = ?',
+            'SELECT COUNT(*) as count FROM `Interlocuteurs` LEFT JOIN SitesRattachement ON Interlocuteurs.code_interlocuteur = SitesRattachement.code_interlocuteur WHERE SitesRattachement.code_site = ?',
             [siteID],
         )
 
@@ -43,38 +43,37 @@ export async function GET(
     }
 }
 
-type extendedUtilisateurs = Utilisateurs & { code_site: string }
+type extendedInterlocuteurs = Interlocuteurs & { code_site: string }
 export async function POST(req: NextRequest) {
-    let Utilisateur: extendedUtilisateurs
+    let Interlocuteur: extendedInterlocuteurs
     try {
-        Utilisateur = JSON.parse(await streamToString(req.body))
+        Interlocuteur = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
     if (
-        !Utilisateur.code_site ||
-        !Utilisateur.civilite ||
-        !Utilisateur.nom ||
-        !Utilisateur.prenom ||
-        !Utilisateur.password ||
-        !Utilisateur.code_type_utilisateur
+        !Interlocuteur.code_site ||
+        !Interlocuteur.civilite ||
+        !Interlocuteur.nom ||
+        !Interlocuteur.prenom ||
+        !Interlocuteur.code_type_utilisateur
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
         )
     }
-    const { code_site, ...user } = Utilisateur
+    const { code_site, ...user } = Interlocuteur
     try {
-        const query = 'INSERT INTO `Utilisateurs` SET ?'
+        const query = 'INSERT INTO `Interlocuteurs` SET ?'
         const [result] = await connection.query<ResultSetHeader>(query, user)
         const query2 =
-            'INSERT INTO `SitesRattachement` SET code_utilisateur = ?, code_site = ?, code_type_utilisateur = ?'
+            'INSERT INTO `SitesRattachement` SET code_interlocuteur = ?, code_site = ?, code_type_utilisateur = ?'
         const [rows2] = await connection.query(query2, [
             result.insertId,
             code_site,
-            Utilisateur.code_type_utilisateur,
+            Interlocuteur.code_type_utilisateur,
         ])
         return NextResponse.json({ result, rows2 })
     } catch (error) {

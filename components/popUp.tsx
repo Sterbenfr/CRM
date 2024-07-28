@@ -104,7 +104,7 @@ const fieldLabels: { [key: string]: string } = {
     numero_telephone: 'Numéro de téléphone',
     adresse_mail: 'Adresse mail',
     //SitesRattachement
-    code_utilisateur: 'Utilisateur',
+    code_interlocuteur: 'Utilisateur',
     code_site: 'Site',
     code_type_utilisateur: "Type d'utilisateur",
     date_fin_activite: "Date de fin d'activité",

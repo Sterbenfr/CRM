@@ -539,11 +539,11 @@ function SitePage({ params }: { params: { siteID: string } }) {
                             {!modify && (
                                 <a
                                     className={style.linkID}
-                                    href={`/sites/${params.siteID}/utilisateurs`}
+                                    href={`/sites/${params.siteID}/interlocuteurs`}
                                 >
                                     <p className={style.titre}>
                                         {' '}
-                                        Utilisateurs du site{' '}
+                                        Interlocuteur(s) du site{' '}
                                     </p>
                                 </a>
                             )}

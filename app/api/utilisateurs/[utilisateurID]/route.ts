@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import connection from '../../../../../../utils/db'
+import connection from '../../../../utils/db'
 
 export async function GET(
     request: Request,
-    { params }: { params: { siteID: string; utilisateurID: string } },
+    { params }: { params: { utilisateurID: string } },
 ) {
     const utilisateurID = params.utilisateurID
     try {
@@ -81,7 +81,7 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { siteID: string; utilisateurID: string } },
+    { params }: { params: { utilisateurID: string } },
 ) {
     const utilisateurID = params.utilisateurID
     if (utilisateurID === undefined) {
