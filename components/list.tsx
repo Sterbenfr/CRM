@@ -67,9 +67,9 @@ const List: React.FC<{
                     method: 'DELETE',
                 })
             })
-            setTimeout(() => {
+            /*setTimeout(() => {
                 window.location.reload()
-            }, 400)
+            }, 400)*/ // A remettre par la suite
         } else {
             const res = await fetch(functions.url, {
                 method: 'DELETE',

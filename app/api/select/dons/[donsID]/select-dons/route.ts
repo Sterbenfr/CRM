@@ -7,7 +7,7 @@ export async function GET(
 ) {
     try {
         const [rows] = await connection.query(
-            'Select code_Don as id, commentaires as label FROM Dons WHERE code_Don = ?;',
+            'Select code_Don as id, titre_don as label FROM Dons WHERE code_Don = ?;',
             [params.donsID],
         )
         return NextResponse.json(rows)

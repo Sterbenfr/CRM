@@ -29,25 +29,24 @@ export default function SearchComponent({
 
     useEffect(() => {
         const fetchOptions = async () => {
-            try {
-                const response = await fetch(url)
-                const data = await response.json()
-                const formattedOptions = data.map(
-                    (item: { id: string; label: string }) => ({
-                        value: item.id,
-                        label: item.label,
-                    }),
-                )
-                setOptions(formattedOptions)
-            } catch (error) {
+            const response = await fetch(url)
+            if (!response.ok) {
                 console.error(
                     'Erreur lors de la récupération des données',
-                    error,
+                    response,
                 )
             }
+            const data = await response.json()
+            console.log(data)
+            const formattedOptions = data.map(
+                (item: { id: string; label: string }) => ({
+                    value: item.id,
+                    label: item.label,
+                }),
+            )
+            setOptions(formattedOptions)
         }
         fetchOptions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
