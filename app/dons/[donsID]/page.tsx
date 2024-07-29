@@ -413,7 +413,9 @@ function DonPage({ params }: { params: { donsID: string } }) {
                         </div>
 
                         <div className={style.info}>
-                            <p className={style.titre}>Mode de conservation :</p>
+                            <p className={style.titre}>
+                                Mode de conservation :
+                            </p>
                             <p>
                                 {don[0].MCP_libelle == null
                                     ? '/'

@@ -767,6 +767,8 @@
     border-radius: 1rem;
     font-family: inherit;
     background-color: white;
+    margin-right: 5px;
+    margin-left: 14px;
 }
 
 .btnModif:hover {

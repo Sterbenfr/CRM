@@ -61,6 +61,13 @@ const List: React.FC<{
     }
 
     const deleteFunction = async () => {
+        const isConfirmed = window.confirm(
+            'Êtes-vous sûr de vouloir supprimer le(s) élément(s) sélectionné(s) ?',
+        )
+        if (!isConfirmed) {
+            return
+        }
+
         if (!functions.url?.includes('type')) {
             lineCheckbox.map(async item => {
                 await fetch(`${functions.url}/${item}`, {

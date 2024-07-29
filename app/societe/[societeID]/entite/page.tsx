@@ -431,11 +431,17 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         }
 
         if (codeTypeCompetence === '' && codeTypeDon === 'SIP') {
-            fields[FindIndex('code_type_competence')].value = null
+            const codeTypeCompetenceIndex = FindIndex('code_type_competence')
+            if (codeTypeCompetenceIndex !== -1) {
+                fields[codeTypeCompetenceIndex].value = null
+            }
         }
 
         if (codeTypeProduit === '' && codeTypeDon === 'MAR') {
-            fields[FindIndex('code_type_produit')].value = null
+            const codeTypeProduitIndex = FindIndex('code_type_produit')
+            if (codeTypeProduitIndex !== -1) {
+                fields[codeTypeProduitIndex].value = null
+            }
         }
 
         if (codeFrequenceCerfa === '') {
