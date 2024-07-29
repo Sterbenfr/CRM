@@ -40,6 +40,7 @@ function InterlocuteurPage({
     const [modifiedInterlocuteur, setModifiedInterlocuteur] = useState<
         Partial<InterlocuteurID>
     >({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndInterlocuteur = async () => {
@@ -100,41 +101,6 @@ function InterlocuteurPage({
         })
     }
 
-    const handleSubmit = async () => {
-        const jsonPayload = {
-            ...modifiedInterlocuteur,
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../../../api/sites/${params.siteID}/interlocuteurs/${params.interlocuteursID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedInterlocuteur: InterlocuteurID[] = await res.json()
-            setInterlocuteur(updatedInterlocuteur)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(interlocuteur) ||
         interlocuteur.length === 0 ||
@@ -145,6 +111,84 @@ function InterlocuteurPage({
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'civilite',
+            'nom',
+            'prenom',
+            'code_type_utilisateur',
+            'tel_perso',
+            'mail',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedInterlocuteur[key as keyof InterlocuteurID] === null ||
+                modifiedInterlocuteur[key as keyof InterlocuteurID] === ''
+            ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
+                setModifiedInterlocuteur(prevState => ({
+                    ...prevState,
+                    [key]: interlocuteur[0][key as keyof InterlocuteurID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedInterlocuteur.nom ||
+            modifiedInterlocuteur.nom.trim() === '' ||
+            !modifiedInterlocuteur.prenom ||
+            modifiedInterlocuteur.prenom.trim() === '' ||
+            !(modifiedInterlocuteur.tel_perso || modifiedInterlocuteur.mail)
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const jsonPayload = {
+                ...modifiedInterlocuteur,
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../api/sites/${params.siteID}/interlocuteurs/${params.interlocuteursID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedInterlocuteur: InterlocuteurID[] = await res.json()
+                setInterlocuteur(updatedInterlocuteur)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -292,7 +336,7 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='nom'
-                                        value={modifiedInterlocuteur.nom}
+                                        value={modifiedInterlocuteur.nom ?? ''}
                                         placeholder={
                                             interlocuteur[0].nom === null ||
                                             interlocuteur[0].nom === ''
@@ -322,7 +366,9 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='prenom'
-                                        value={modifiedInterlocuteur.prenom}
+                                        value={
+                                            modifiedInterlocuteur.prenom ?? ''
+                                        }
                                         placeholder={
                                             interlocuteur[0].prenom === null ||
                                             interlocuteur[0].prenom === ''
@@ -381,7 +427,10 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='number'
                                         name='tel_perso'
-                                        value={modifiedInterlocuteur.tel_perso}
+                                        value={
+                                            modifiedInterlocuteur.tel_perso ??
+                                            ''
+                                        }
                                         placeholder={
                                             interlocuteur[0].tel_perso ===
                                                 null ||
@@ -420,7 +469,7 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='mail'
                                         name='mail'
-                                        value={modifiedInterlocuteur.mail}
+                                        value={modifiedInterlocuteur.mail ?? ''}
                                         placeholder={
                                             interlocuteur[0].mail === null ||
                                             interlocuteur[0].mail === ''
@@ -441,7 +490,6 @@ function InterlocuteurPage({
                             </div>
                         </div>
 
-
                         <div>
                             <div className={style.info}>
                                 <p className={style.titre}>Commentaires :</p>
@@ -451,14 +499,16 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='commentaires'
-                                        value={modifiedInterlocuteur.commentaires}
+                                        value={
+                                            modifiedInterlocuteur.commentaires
+                                        }
                                         placeholder={
                                             interlocuteur[0].commentaires ===
                                                 null ||
-                                                interlocuteur[0].commentaires === ''
+                                            interlocuteur[0].commentaires === ''
                                                 ? 'Exemple: Manutentionnaire de Dunkerque'
                                                 : 'Actuellement: ' +
-                                                interlocuteur[0].commentaires
+                                                  interlocuteur[0].commentaires
                                         }
                                         maxLength={200}
                                         onChange={handleInputChange}

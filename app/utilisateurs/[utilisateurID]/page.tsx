@@ -37,6 +37,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
     const [modifiedUtilisateur, setModifiedUtilisateur] = useState<
         Partial<UtilisateurID>
     >({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndUtilisateur = async () => {
@@ -97,41 +98,6 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
         })
     }
 
-    const handleSubmit = async () => {
-        const jsonPayload = {
-            ...modifiedUtilisateur,
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../api/utilisateurs/${params.utilisateurID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedUtilisateur: UtilisateurID[] = await res.json()
-            setUtilisateur(updatedUtilisateur)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(utilisateur) ||
         utilisateur.length === 0 ||
@@ -142,6 +108,85 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'civilite',
+            'nom',
+            'prenom',
+            'tel_perso',
+            'mail',
+            'password',
+            'code_type_utilisateur',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedUtilisateur[key as keyof UtilisateurID] === null ||
+                modifiedUtilisateur[key as keyof UtilisateurID] === ''
+            ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
+                setModifiedUtilisateur(prevState => ({
+                    ...prevState,
+                    [key]: utilisateur[0][key as keyof UtilisateurID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedUtilisateur.nom ||
+            modifiedUtilisateur.nom.trim() === '' ||
+            !modifiedUtilisateur.prenom ||
+            modifiedUtilisateur.prenom.trim() === '' ||
+            !(modifiedUtilisateur.tel_perso || modifiedUtilisateur.mail)
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const jsonPayload = {
+                ...modifiedUtilisateur,
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../api/utilisateurs/${params.utilisateurID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedUtilisateur: UtilisateurID[] = await res.json()
+                setUtilisateur(updatedUtilisateur)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -197,7 +242,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
         <div className={style.idPage}>
             <div className={style.croixID}>
                 <h1 className={style.titre_global}>Utilisateurs</h1>
-                <a href='javascript:history.go(-1)' className={style.btnC}>
+                <a href='/utilisateurs' className={style.btnC}>
                     <Image
                         className={style.CRid}
                         src='/IMG/return.svg'
@@ -288,7 +333,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='nom'
-                                        value={modifiedUtilisateur.nom}
+                                        value={modifiedUtilisateur.nom ?? ''}
                                         placeholder={
                                             utilisateur[0].nom === null ||
                                             utilisateur[0].nom === ''
@@ -318,7 +363,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='prenom'
-                                        value={modifiedUtilisateur.prenom}
+                                        value={modifiedUtilisateur.prenom ?? ''}
                                         placeholder={
                                             utilisateur[0].prenom === null ||
                                             utilisateur[0].prenom === ''
@@ -377,7 +422,9 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='number'
                                         name='tel_perso'
-                                        value={modifiedUtilisateur.tel_perso}
+                                        value={
+                                            modifiedUtilisateur.tel_perso ?? ''
+                                        }
                                         placeholder={
                                             utilisateur[0].tel_perso === null ||
                                             utilisateur[0].tel_perso === ''
@@ -415,7 +462,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='mail'
                                         name='mail'
-                                        value={modifiedUtilisateur.mail}
+                                        value={modifiedUtilisateur.mail ?? ''}
                                         placeholder={
                                             utilisateur[0].mail === null ||
                                             utilisateur[0].mail === ''

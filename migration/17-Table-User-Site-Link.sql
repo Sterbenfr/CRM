@@ -4,7 +4,7 @@ CREATE TABLE SitesRattachement (
     code_type_utilisateur CHAR(4) NOT NULL,
     date_fin_activite DATE,
     PRIMARY KEY (code_interlocuteur, code_site),
-    FOREIGN KEY (code_interlocuteur) REFERENCES interlocuteurs(code_interlocuteur) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (code_interlocuteur) REFERENCES Interlocuteurs(code_interlocuteur) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_site) REFERENCES Sites(code_site) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_type_utilisateur) REFERENCES TypesUtilisateurs(code_type_utilisateur) ON UPDATE CASCADE
 );

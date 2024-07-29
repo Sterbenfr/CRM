@@ -1023,3 +1023,7 @@
     color: #000000;
     width: 100%;
 }
+
+.isReq {
+    border: 2px solid red;
+}

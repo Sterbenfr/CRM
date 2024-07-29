@@ -21,6 +21,7 @@ interface ExtendedSession extends Session {
 
 interface DonID {
     code_Don: number
+    titre_don: string
     raison_sociale: string
     date_proposition_don: Date
     contact_entite_donatrice: string
@@ -353,6 +354,15 @@ function DonPage({ params }: { params: { donsID: string } }) {
                         </div>
 
                         <div className={style.info}>
+                            <p className={style.titre}>Titre du don :</p>
+                            <p>
+                                {don[0].titre_don == null
+                                    ? '/'
+                                    : don[0].titre_don}
+                            </p>
+                        </div>
+
+                        <div className={style.info}>
                             <p className={style.titre}>Raison sociale :</p>
                             <p>
                                 {don[0].raison_sociale == null
@@ -379,7 +389,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                 Contact de l&apos;entité donatrice :
                             </p>
                             <p>
-                                {don[0].contact_entite_donatrice == null
+                                {don[0].contact_entite_donatrice == (null || '')
                                     ? '/'
                                     : don[0].contact_entite_donatrice}
                             </p>
@@ -454,7 +464,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                 Utilisateur saisie de don :
                             </p>
                             <p>
-                                {don[0].Utilisateur_saisie_don == null
+                                {don[0].Utilisateur_saisie_don == (null || '')
                                     ? '/'
                                     : don[0].Utilisateur_saisie_don}
                             </p>
@@ -575,7 +585,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                             ) : (
                                 <p>
                                     {don[0].Utilisateur_accepte_refuse_don ==
-                                    null
+                                    (null || '')
                                         ? '/'
                                         : don[0].Utilisateur_accepte_refuse_don}
                                 </p>

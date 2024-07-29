@@ -132,6 +132,10 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                 modifiedPrestataire[key as keyof PrestataireID] === null ||
                 modifiedPrestataire[key as keyof PrestataireID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedPrestataire(prevState => ({
                     ...prevState,
                     [key]: prestataire[0][key as keyof PrestataireID],
@@ -143,7 +147,6 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
     const handleSubmit = async () => {
         requiredValue()
 
-        // Vérifier les valeurs après avoir réinitialisé les champs requis
         if (
             !modifiedPrestataire.raison_sociale ||
             modifiedPrestataire.raison_sociale.trim() === '' ||
@@ -152,9 +155,9 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                 modifiedPrestataire.mail_contact_prestataire
             )
         ) {
-            canSubmit = false;
+            canSubmit = false
         } else {
-            canSubmit = true;
+            canSubmit = true
         }
 
         if (canSubmit) {
@@ -643,7 +646,8 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                         type='number'
                                         name='telephone_contact_prestataire'
                                         value={
-                                            modifiedPrestataire.telephone_contact_prestataire ?? ''
+                                            modifiedPrestataire.telephone_contact_prestataire ??
+                                            ''
                                         }
                                         placeholder={
                                             prestataire[0]
@@ -691,7 +695,8 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                         type='mail'
                                         name='mail_contact_prestataire'
                                         value={
-                                            modifiedPrestataire.mail_contact_prestataire ?? ''
+                                            modifiedPrestataire.mail_contact_prestataire ??
+                                            ''
                                         }
                                         placeholder={
                                             prestataire[0]
