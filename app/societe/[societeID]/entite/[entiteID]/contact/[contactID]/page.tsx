@@ -129,6 +129,10 @@ function ContactPage({
                 modifiedContact[key as keyof ContactID] === null ||
                 modifiedContact[key as keyof ContactID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedContact(prevState => ({
                     ...prevState,
                     [key]: contact[0][key as keyof ContactID],
@@ -528,7 +532,10 @@ function ContactPage({
                                         className={style.selectF}
                                         type='number'
                                         name='numero_portable'
-                                        value={modifiedContact.numero_portable ?? ''}
+                                        value={
+                                            modifiedContact.numero_portable ??
+                                            ''
+                                        }
                                         placeholder={
                                             contact[0].numero_portable ==
                                                 null ||
@@ -570,7 +577,9 @@ function ContactPage({
                                         className={style.selectF}
                                         type='input'
                                         name='adresse_mail'
-                                        value={modifiedContact.adresse_mail ?? ''}
+                                        value={
+                                            modifiedContact.adresse_mail ?? ''
+                                        }
                                         placeholder={
                                             contact[0].adresse_mail == null ||
                                             contact[0].adresse_mail === ''

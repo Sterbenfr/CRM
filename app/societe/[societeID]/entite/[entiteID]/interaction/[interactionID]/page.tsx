@@ -179,6 +179,10 @@ function InteractionPage({
                 modifiedInteraction[key as keyof InteractionID] === null ||
                 modifiedInteraction[key as keyof InteractionID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedInteraction(prevState => ({
                     ...prevState,
                     [key]: interaction[0][key as keyof InteractionID],
