@@ -49,6 +49,7 @@ const List: React.FC<{
     const [lineCheckbox, setLineCheckbox] = useState<any[]>([])
     const [searchValue, setSearchValue] = useState('')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isTimeoutReached, setIsTimeoutReached] = useState(false)
 
     const handleLineCheckboxChange = (param: string) => {
         const value = !isNaN(parseInt(param)) ? parseInt(param) : param
@@ -129,6 +130,7 @@ const List: React.FC<{
             })
             ?.map(item => {
                 const keyMapping: { [key: string]: string } = {
+                    //Dons
                     code_Entite_donatrice: 'Entité donatrice',
                     titre_don: 'Titre du don',
                     date_proposition_don: 'Date de proposition du don',
@@ -150,8 +152,7 @@ const List: React.FC<{
                     statut_acceptation_don: 'Statut du don',
                     date_acceptation_refus_don:
                         "Date d'acceptation ou de refus du don",
-                    code_Utilisateur_accepte_refuse_don:
-                        'Utilisateur statut du don',
+                    code_Utilisateur_accepte_refuse_don: 'Validateur du don',
                     code_site_beneficiaire_don: 'Site bénéficiaire du don',
                     indicateur_remerciement: 'Indicateur du remerciement',
                     date_remerciement: 'Date de remerciement du don',
@@ -165,6 +166,7 @@ const List: React.FC<{
                     cerfa_fait: 'Cerfa fait',
                     date_cerfa: 'Date du cerfa',
                     cerfa: 'Cerfa',
+                    //Modaliteés Livraison
                     numero_livraison: 'Numéro de livraison',
                     code_Don: 'Don',
                     code_type_livraison: 'Type de livraison',
@@ -195,6 +197,7 @@ const List: React.FC<{
                     produits_sur_palettes: 'Produits sur palettes',
                     temperature_conserv_produits:
                         'Température de conservation des produits',
+                    //Reception
                     numero_reception: 'Numéro de réception',
                     numero_livraion: 'Numéro de livraison',
                     date_reception: 'Date de réception',
@@ -206,6 +209,7 @@ const List: React.FC<{
                         'Nombre de palettes consignées rendues',
                     nombre_cartons_recus: 'Nombre de cartons reçus',
                     poids_recu_kg: 'Poids reçu en kg',
+                    //Prestataires
                     code_Prestataire: 'Prestataire',
                     code_type_de_Prestataire: 'Type de prestataire',
                     raison_sociale: 'Raison sociale',
@@ -222,6 +226,7 @@ const List: React.FC<{
                     mail_contact_prestataire: 'Mail du prestataire',
                     date_arret_activite_du_prestataire:
                         "Date d'arrêt d'activité du prestataire",
+                    //Interactions
                     code_Utilisateur_Prospecteur: 'Utilisateur prospecteur',
                     code_Entite_Prospectee: 'Entité prospectée',
                     date_interaction: "Date d'interaction",
@@ -229,6 +234,7 @@ const List: React.FC<{
                     code_modalite_interaction: "Modalité d'interaction",
                     code_contact_entite: "Contact de l'entité",
                     date_relance: 'Date de relance',
+                    //Sites
                     code_Site: 'Site',
                     designation_longue: 'Désignation longue',
                     designation_courte: 'Désignation courte',
@@ -237,15 +243,18 @@ const List: React.FC<{
                     date_fermeture: 'Date de fermeture',
                     numero_telephone: 'Numéro de téléphone',
                     adresse_mail: 'Adresse mail',
+                    //SitesRattachement
                     code_utilisateur: 'Utilisateur',
                     code_site: 'Site',
                     code_type_utilisateur: "Type d'utilisateur",
                     date_fin_activite: "Date de fin d'activité",
+                    //Utilisateurs
                     civilite: 'Civilité',
                     nom: 'Nom',
                     prenom: 'Prénom',
                     tel_perso: 'Téléphone personnel',
                     password: 'Mot de passe',
+                    //Societe
                     code_Societe: 'Société',
                     Logo: 'Logo',
                     site_Web: 'Site Web',
@@ -253,13 +262,17 @@ const List: React.FC<{
                     code_Groupe_appartenance: 'Appartenance du groupe',
                     date_arret_activite_Societe:
                         "Date d'arrêt d'activité de la société",
+                    //SuiviSociete
                     code_type_de_Site: 'Type de site',
-                    code_site_suivi: 'Suivi de site',
+                    code_site_suivi: 'Site assurant suivi',
                     code_utilisateur_suivant: 'Utilisateur suivant',
+                    //Groupe
                     code_groupe: 'Groupe',
                     nom_du_Groupe: 'Nom du groupe',
                     date_arret_activite_du_Groupe:
                         "Date d'arrêt d'activité du groupe",
+                    //SuiviGroupe
+                    //Entité
                     code_entite: 'Entité',
                     logo: 'Logo',
                     siret: 'Siret',
@@ -276,6 +289,8 @@ const List: React.FC<{
                     presence_quai: "Présence d'un quai",
                     code_frequence_cerfa: 'Fréquence de cerfa',
                     date_arret_activite: "Date d'arrêt d'activité de l'entité",
+                    //ContactEntite
+                    //Contacts
                     code_contact: 'Contact',
                     photo: 'Photo',
                     fonction: 'Fonction',
@@ -283,6 +298,7 @@ const List: React.FC<{
                     numero_fixe: 'Numéro de téléphone fixe',
                     numero_portable: 'Numéro de téléphone portable',
                     date_arret_contact: 'Date arrêt contact',
+                    //type
                     code: 'Code',
                     libelle: 'Libellé',
                 }
@@ -346,9 +362,6 @@ const List: React.FC<{
             TableName = 'Excel'
         }
 
-        console.log(TableName)
-        console.log(dataToExport)
-
         if (dataToExport) {
             Excel({
                 data: dataToExport,
@@ -361,7 +374,13 @@ const List: React.FC<{
         if (searchValue.length < 3) {
             setSelectedItems(undefined)
         }
-    }, [items, searchValue])
+        if (items.length === 0) {
+            const timer = setTimeout(() => {
+                setIsTimeoutReached(true)
+            }, 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [searchValue, items])
 
     const attributeCount = attribut
         ? Object.keys(attribut).filter(
@@ -493,7 +512,11 @@ const List: React.FC<{
                                 ))
                         ) : (
                             <div>
-                                <p className={style.anyData}>Pas de données</p>
+                                {isTimeoutReached ? (
+                                    <p className={style.anyData}>
+                                        Pas de données
+                                    </p>
+                                ) : null}
                             </div>
                         )
                     ) : (
@@ -529,7 +552,9 @@ const List: React.FC<{
                     )
                 ) : (
                     <div>
-                        <p className={style.anyData}>Pas de données</p>
+                        {isTimeoutReached ? (
+                            <p className={style.anyData}>Pas de données</p>
+                        ) : null}
                     </div>
                 )}
             </div>
