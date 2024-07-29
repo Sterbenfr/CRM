@@ -101,7 +101,6 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                             </Link>
                         </>
                     ) : (
-
                         <Link
                             href='/login'
                             className={`${styles.links} ${
@@ -114,16 +113,20 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                         </Link>
                     )}
                 </div>
-                <Link
-                    href='/documentation'
-                    className={`${styles.doc} ${
-                        firstPathnameSegment === '/prestataire'
-                            ? styles.circle
-                            : ''
-                    }`}
-                >
-                    ?
-                </Link>
+                {session ? (
+                    <Link
+                        href='/documentation'
+                        className={`${styles.doc} ${
+                            firstPathnameSegment === '/prestataire'
+                                ? styles.circle
+                                : ''
+                        }`}
+                    >
+                        ?
+                    </Link>
+                ) : (
+                    ''
+                )}
             </nav>
             {children}
         </div>
