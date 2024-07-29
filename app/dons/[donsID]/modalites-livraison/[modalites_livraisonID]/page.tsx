@@ -245,7 +245,6 @@ function Modalites_livraisonPage({
             setFile(event.target.files[0])
         }
     }
-
     if (
         !Array.isArray(modalite_livraison) ||
         modalite_livraison.length === 0 ||

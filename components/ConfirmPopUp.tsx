@@ -13,7 +13,7 @@ const ConfirmPopUp: React.FC<ConfirmPopUpProps> = ({
     onCancel,
 }) => {
     return (
-        <div className={style.popUpBackground}>
+        <div className={`${style.popUpBackground} ${style.z1}`}>
             <div className={style.errorPopUp}>
                 <h2 className={style.NF}>Confirmation:</h2>
                 <p className={style.CNF}>{message}</p>

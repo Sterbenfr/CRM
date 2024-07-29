@@ -37,7 +37,6 @@ export default function SearchComponent({
                 )
             }
             const data = await response.json()
-            console.log(data)
             const formattedOptions = data.map(
                 (item: { id: string; label: string }) => ({
                     value: item.id,
