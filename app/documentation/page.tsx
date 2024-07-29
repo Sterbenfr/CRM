@@ -595,6 +595,15 @@ function Docu() {
                                     </span>{' '}
                                     Cliquez sur le bouton &quot;Supprimer&quot;.
                                 </li>
+                                <li className={style.linkLi}>
+                                    <span className={style.important}>
+                                        Validation :
+                                    </span>{' '}
+                                    Une alerte va apparaître en haut de la page.
+                                    Vous pourrez alors valider la sélection en
+                                    cliquant sur &quot;Ok&quot; ou
+                                    &quot;Annuler&quot; la suppression.
+                                </li>
                             </ol>
                             <br />
                             <p>
@@ -721,9 +730,11 @@ function Docu() {
                                     <span className={style.important}>
                                         Saisir :
                                     </span>{' '}
-                                    Pour que la recherche soit efficace,
-                                    saisissez les 3 premières lettres du mot que
-                                    vous recherchez.
+                                    Dans le champ de recherche situé en haut de
+                                    la page, saisissez le mot ou la phrase que
+                                    vous recherchez. Pour que la recherche soit
+                                    efficace, saisissez les 3 premières lettres
+                                    du mot que vous recherchez.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -812,19 +823,27 @@ function Docu() {
                             <ol>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
-                                        Sélection :
+                                        Localisez :
                                     </span>{' '}
-                                    Cliquez dans l&apos;une des pages sur une
-                                    ligne pour sélectionner l&apos;élément à
-                                    imprimer.
+                                    Accédez à la page où vous souhaitez imprimer
+                                    des données.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
-                                        Saisir :
+                                        Sélection :
                                     </span>{' '}
-                                    Pour que la recherche soit efficace,
-                                    saisissez les 3 premières lettres du mot que
-                                    vous recherchez.
+                                    Cliquez dans les cases à gauche des lignes
+                                    de données pour sélectionner les éléments à
+                                    imprimer.
+                                    <br />
+                                    <span className={style.important}>
+                                        Tout sélectionner :
+                                    </span>{' '}
+                                    Pour sélectionner tous les éléments à
+                                    imprimer. Il vous suffira de cliquer
+                                    directement sur le bouton imprimé en haut de
+                                    la page. (Il n&apos;est pas nécessaire de
+                                    cocher des cases individuellement !)
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -834,16 +853,6 @@ function Docu() {
                                     en haut de la page.
                                 </li>
                             </ol>
-
-                            <br />
-                            <p>
-                                <span className={style.attention}>
-                                    Attention :
-                                </span>{' '}
-                                Utilisez des accents et un seul espace entre les
-                                mots pour affiner vos résultats. (ils peuvent
-                                avoir une incidence sur la recherche).
-                            </p>
                         </div>
                     </div>
                     <h2 className={style.titre2} id='2' ref={elementRef}>
@@ -1024,8 +1033,8 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre de dons
-                                    affichés par page.
+                                    page et personnaliser le nombre
+                                    d&apos;entreprise affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -1059,7 +1068,7 @@ function Docu() {
                                     Fonctionnalités
                                 </a>
                                 ). Ne cochez pas ces cases si vous ne souhaitez
-                                pas réaliser des actions sur les dons.
+                                pas réaliser des actions sur les Entreprises.
                             </p>
                         </div>
                         <div className={style.sousCompart}>
@@ -1076,7 +1085,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une entreprise(voir la
+                                page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3'
@@ -1102,7 +1112,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une entité(s)
+                                appartenant à l&apos;entreprise(voir la page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3.1'
@@ -1128,7 +1139,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une entité(s)
+                                appartenant à l&apos;entreprise(voir la page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3.1'
@@ -1154,7 +1166,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une Entité(s)
+                                appartenant à l&apos;entreprise(voir la page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3.1'
@@ -1180,7 +1193,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une entreprise(voir la
+                                page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3'
@@ -1206,7 +1220,9 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;un groupe
+                                d&apos;appartenance de l&apos;entreprise(voir la
+                                page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3.2'
@@ -1233,7 +1249,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;une entreprise(voir la
+                                page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3'
@@ -1262,14 +1279,14 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre de dons
-                                    affichés par page.
+                                    page et personnaliser le nombre de sites du
+                                    RC affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
                                         Triage :
                                     </span>{' '}
-                                    Les Entreprises sont classés par date de
+                                    Les sites du RC sont classés par date de
                                     création, du plus récent au plus ancien.
                                 </li>
                                 <li className={style.linkLi}>
@@ -1277,7 +1294,7 @@ function Docu() {
                                         Accès aux détails :
                                     </span>{' '}
                                     Pour consulter les informations détaillées
-                                    d&apos;une entreprise, cliquez simplement
+                                    d&apos;un site du RC, cliquez simplement
                                     sur l&apos;un des éléments présentés.
                                 </li>
                             </ol>
@@ -1297,7 +1314,8 @@ function Docu() {
                                     Fonctionnalités
                                 </a>
                                 ). Ne cochez pas ces cases si vous ne souhaitez
-                                pas réaliser des actions sur les dons.
+                                pas réaliser des actions sur les sites du 
+                                RC.
                             </p>
                         </div>
                         <div className={style.sousCompart}>
@@ -1314,14 +1332,14 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un don(voir la page{' '}
+                                d&apos;information d&apos;un Sites RC(voir la page{' '}
                                 <a
                                     className={style.linkA}
-                                    href='#2.3'
-                                    data-id='2.3'
+                                    href='#2.4'
+                                    data-id='2.4'
                                     onClick={scrollToElement}
                                 >
-                                    Entreprise
+                                    Sites RC
                                 </a>
                                 )
                             </p>
@@ -1343,14 +1361,14 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre de dons
+                                    page et personnaliser le nombre de prestataires
                                     affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
                                         Triage :
                                     </span>{' '}
-                                    Les Entreprises sont classés par date de
+                                    Les prestataires sont classés par date de
                                     création, du plus récent au plus ancien.
                                 </li>
                                 <li className={style.linkLi}>
@@ -1358,7 +1376,7 @@ function Docu() {
                                         Accès aux détails :
                                     </span>{' '}
                                     Pour consulter les informations détaillées
-                                    d&apos;une entreprise, cliquez simplement
+                                    d&apos;un prestataire, cliquez simplement
                                     sur l&apos;un des éléments présentés.
                                 </li>
                             </ol>
@@ -1378,7 +1396,7 @@ function Docu() {
                                     Fonctionnalités
                                 </a>
                                 ). Ne cochez pas ces cases si vous ne souhaitez
-                                pas réaliser des actions sur les dons.
+                                pas réaliser des actions sur les prestataires.
                             </p>
                         </div>
                         <div className={style.sousCompart}>
@@ -1398,14 +1416,14 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre de dons
+                                    page et personnaliser le nombre d&apos;utilisateurs
                                     affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
                                         Triage :
                                     </span>{' '}
-                                    Les Entreprises sont classés par date de
+                                    Les utilisateurs sont classés par date de
                                     création, du plus récent au plus ancien.
                                 </li>
                                 <li className={style.linkLi}>
@@ -1413,7 +1431,7 @@ function Docu() {
                                         Accès aux détails :
                                     </span>{' '}
                                     Pour consulter les informations détaillées
-                                    d&apos;une entreprise, cliquez simplement
+                                    d&apos;un utilisateur, cliquez simplement
                                     sur l&apos;un des éléments présentés.
                                 </li>
                             </ol>
@@ -1433,7 +1451,7 @@ function Docu() {
                                     Fonctionnalités
                                 </a>
                                 ). Ne cochez pas ces cases si vous ne souhaitez
-                                pas réaliser des actions sur les dons.
+                                pas réaliser des actions sur les utilisateurs.
                             </p>
                         </div>
                         <div className={style.sousCompart}>
@@ -1493,7 +1511,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page dons (Voir ici comment accéder
+                                Accéder à la page dons (Voir ici comment accéder
                                 à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1519,7 +1537,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page dons (Voir ici comment accéder
+                                Accéder à la page dons (Voir ici comment accéder
                                 à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1545,7 +1563,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page dons (Voir ici comment accéder
+                                Accéder à la page dons (Voir ici comment accéder
                                 à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1571,7 +1589,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page dons (Voir ici comment accéder
+                                Accéder à la page dons (Voir ici comment accéder
                                 à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1597,7 +1615,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Modalité de la livraison (Voir
+                                Accéder à la page Modalité de la livraison (Voir
                                 ici comment accéder à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1623,7 +1641,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Reception de la livraison (Voir
+                                Accéder à la page Reception de la livraison (Voir
                                 ici comment accéder à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1649,7 +1667,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Entité(s) appartenant à
+                                Accéder à la page Entité(s) appartenant à
                                 l&apos;entreprise (Voir ici comment accéder à la
                                 page{' '}
                                 <a
@@ -1676,7 +1694,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Entité(s) appartenant à
+                                Accéder à la page Entité(s) appartenant à
                                 l&apos;entreprise (Voir ici comment accéder à la
                                 page{' '}
                                 <a
@@ -1703,7 +1721,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Interaction(s) avec
+                                Accéder à la page Interaction(s) avec
                                 l&apos;Entité (Voir ici comment accéder à la
                                 page{' '}
                                 <a
@@ -1730,7 +1748,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accédé à la page Interaction(s) avec
+                                Accéder à la page Interaction(s) avec
                                 l&apos;Entité (Voir ici comment accéder à la
                                 page{' '}
                                 <a

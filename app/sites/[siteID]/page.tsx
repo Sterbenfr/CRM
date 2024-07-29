@@ -244,10 +244,6 @@ function SitePage({ params }: { params: { siteID: string } }) {
             if (element) {
                 element.style.display = 'none'
             }
-            const element2 = document.getElementById('hide2')
-            if (element2) {
-                element2.style.display = 'none'
-            }
         }
 
         applyPrintStyles()
@@ -591,19 +587,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                 </a>
                             )}
                         </div>
-                        <div className={style.info} id='hide2'>
-                            {!modify && (
-                                <a
-                                    className={style.linkID}
-                                    href={`/sites/${params.siteID}/user-site-link`}
-                                >
-                                    <p className={style.titre}>
-                                        {' '}
-                                        Utilisateur(s) suivant le site{' '}
-                                    </p>
-                                </a>
-                            )}
-                        </div>
+                        
                     </div>
                 </div>
             </div>
