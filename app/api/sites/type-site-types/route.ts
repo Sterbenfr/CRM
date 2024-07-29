@@ -4,8 +4,10 @@ import connection from '../../../../utils/db'
 import { streamToString } from '../../../../utils/streamUtils'
 import type { siteType } from '@/app/sites/type-site-types/page'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_type_site as id, libelle as label FROM `SiteTypes` LIMIT 1000',
         )

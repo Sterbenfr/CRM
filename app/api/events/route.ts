@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import connection from '../../../utils/db'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         // Récupérer les données de don, réception, modalités de livraison et entreprise
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const [donsD]: any[] = await connection.query(

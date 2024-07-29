@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const events = await getEventsByDate()
+        const events = await getEventsByDate(req)
 
         return NextResponse.json(events, { status: 200 })
     } catch (error) {

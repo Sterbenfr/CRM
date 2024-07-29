@@ -4,8 +4,10 @@ import connection from '../../../../../../utils/db'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { Entite } from '@/app/societe/[societeID]/entite/type-entites/page'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_type_entite as id, libelle as label FROM `TypesEntites` LIMIT 1000',
         )

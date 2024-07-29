@@ -6,8 +6,10 @@ enum StatutAcceptationDon {
     Attente = 'En attente',
 }
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const statuts = [
             { id: 'A', label: StatutAcceptationDon.Attente },
             { id: 'V', label: StatutAcceptationDon.Valide },

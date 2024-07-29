@@ -3,8 +3,10 @@ import type { Produit } from '@/app/dons/type-produits/page'
 import connection from '../../../../utils/db'
 import { streamToString } from '../../../../utils/streamUtils'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_type_produits as id, libelle as label FROM `TypesProduits` LIMIT 1000',
         )

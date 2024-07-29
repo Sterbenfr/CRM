@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from '../styles/components.module.css'
 
-interface SelectComponentProps {
+interface SearchComponentProps {
     url: string
     createURL?: string
     required?: boolean
@@ -22,7 +22,7 @@ export default function SearchComponent({
     placeholder,
     onChange,
     onInputChange,
-}: SelectComponentProps) {
+}: SearchComponentProps) {
     const [options, setOptions] = useState<Option[]>([])
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([])
     const [inputValue, setInputValue] = useState('')

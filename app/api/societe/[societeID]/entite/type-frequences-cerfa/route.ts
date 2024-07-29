@@ -4,8 +4,10 @@ import connection from '../../../../../../utils/db'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { Frequence_cerfa } from '@/app/societe/[societeID]/entite/type-frequences-cerfa/page'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_frequence_cerfa as id, libelle as label FROM `FrequencesCerfa` LIMIT 1000',
         )

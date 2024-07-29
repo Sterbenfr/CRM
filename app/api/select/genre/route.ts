@@ -6,8 +6,10 @@ enum StatutGenre {
     Autre = 'Non renseigné',
 }
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const statuts = [
             { id: 'Mme', label: StatutGenre.Madame },
             { id: 'M.', label: StatutGenre.Monsieur },
