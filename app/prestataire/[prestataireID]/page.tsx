@@ -41,6 +41,7 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
     const [modifiedPrestataire, setModifiedPrestataire] = useState<
         Partial<PrestataireID>
     >({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndPrestataire = async () => {
@@ -107,41 +108,6 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
             : new Date().toISOString().split('T')[0]
     }
 
-    const handleSubmit = async () => {
-        const jsonPayload = {
-            ...modifiedPrestataire,
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../api/prestataire/${params.prestataireID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedPrestataire: PrestataireID[] = await res.json()
-            setPrestataire(updatedPrestataire)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(prestataire) ||
         prestataire.length === 0 ||
@@ -152,6 +118,79 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'raison_sociale',
+            'TP_libelle',
+            'mail_contact_prestataire',
+            'telephone_contact_prestataire',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedPrestataire[key as keyof PrestataireID] === null ||
+                modifiedPrestataire[key as keyof PrestataireID] === ''
+            ) {
+                setModifiedPrestataire(prevState => ({
+                    ...prevState,
+                    [key]: prestataire[0][key as keyof PrestataireID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        // Vérifier les valeurs après avoir réinitialisé les champs requis
+        if (
+            !modifiedPrestataire.raison_sociale ||
+            modifiedPrestataire.raison_sociale.trim() === '' ||
+            !(
+                modifiedPrestataire.telephone_contact_prestataire ||
+                modifiedPrestataire.mail_contact_prestataire
+            )
+        ) {
+            canSubmit = false;
+        } else {
+            canSubmit = true;
+        }
+
+        if (canSubmit) {
+            const jsonPayload = {
+                ...modifiedPrestataire,
+            }
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../api/prestataire/${params.prestataireID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedPrestataire: PrestataireID[] = await res.json()
+                setPrestataire(updatedPrestataire)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -308,7 +347,8 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                         type='input'
                                         name='raison_sociale'
                                         value={
-                                            modifiedPrestataire.raison_sociale
+                                            modifiedPrestataire.raison_sociale ??
+                                            ''
                                         }
                                         placeholder={
                                             prestataire[0].raison_sociale ===
@@ -603,7 +643,7 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                         type='number'
                                         name='telephone_contact_prestataire'
                                         value={
-                                            modifiedPrestataire.telephone_contact_prestataire
+                                            modifiedPrestataire.telephone_contact_prestataire ?? ''
                                         }
                                         placeholder={
                                             prestataire[0]
@@ -651,7 +691,7 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
                                         type='mail'
                                         name='mail_contact_prestataire'
                                         value={
-                                            modifiedPrestataire.mail_contact_prestataire
+                                            modifiedPrestataire.mail_contact_prestataire ?? ''
                                         }
                                         placeholder={
                                             prestataire[0]
