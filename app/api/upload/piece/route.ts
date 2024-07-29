@@ -3,8 +3,14 @@ import { v4 as uuidv4 } from 'uuid'
 import path from 'path'
 import { promises as fs } from 'fs'
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
 export async function POST(req: NextRequest) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', req.url))
+    }
     console.log('Received a POST request')
 
     // Check if the request method is POST
