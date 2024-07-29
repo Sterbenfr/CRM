@@ -1,35 +1,104 @@
 .globalStyles {
-    margin-top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
     margin-bottom: 1px;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+}
+
+.sommaire {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1px;
+}
+
+.pres {
+    padding: 2rem;
+    padding-top: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .numerotation {
     list-style-type: decimal;
     margin-left: 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
 }
 
 .sousNumerotation1 {
     list-style-type: upper-alpha;
     margin-left: 20px;
+    text-decoration: none;
 }
 
 .sousNumerotation2 {
     list-style-type: lower-alpha;
     margin-left: 40px;
+    text-decoration: none;
 }
 
 .sousNumerotation3 {
     list-style-type: lower-roman;
     margin-left: 60px;
+    text-decoration: none;
 }
 
-.important{
+.compart {
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.sousCompart {
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin: 1rem;
+}
+
+.important {
     color: #e5007d;
     font-size: 1.1rem;
 }
-.attention{
+
+.attention {
     color: #ff0000;
     font-weight: bold;
+}
+
+.linkA {
+    color: #e5007d;
+    text-decoration: none;
+}
+
+.linkA:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+}
+
+.linkLi {
+    padding: 0.5rem;
+}
+
+.titre {
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 0.3rem;
+    width: 20%;
+    border-bottom: 3px solid #e5007d;
 }
 
 .titre2 {
@@ -37,6 +106,8 @@
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 10px;
+    color: black;
+    padding: 1rem;
 }
 
 .titre3 {
@@ -44,4 +115,6 @@
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 10px;
+    text-decoration: none;
+    color: black;
 }
