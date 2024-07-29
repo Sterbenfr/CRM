@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../utils/db'
-
 import { streamToString } from '../../../../utils/streamUtils'
 import type { Prestataire } from '@/app/prestataire/type-prestataires/page'
 
