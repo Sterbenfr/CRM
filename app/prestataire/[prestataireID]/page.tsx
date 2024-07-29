@@ -143,7 +143,6 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
     const handleSubmit = async () => {
         requiredValue()
 
-        // Vérifier les valeurs après avoir réinitialisé les champs requis
         if (
             !modifiedPrestataire.raison_sociale ||
             modifiedPrestataire.raison_sociale.trim() === '' ||

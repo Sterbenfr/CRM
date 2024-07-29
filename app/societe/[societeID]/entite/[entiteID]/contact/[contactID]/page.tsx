@@ -44,6 +44,7 @@ function ContactPage({
     const [modifiedContact, setModifiedContact] = useState<Partial<ContactID>>(
         {},
     )
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndContact = async () => {
@@ -103,44 +104,6 @@ function ContactPage({
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../../../../../api/upload/image')
-
-        const jsonPayload = {
-            ...modifiedContact,
-            photo: filePaths[0],
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedContact: ContactID[] = await res.json()
-            setContact(updatedContact)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(contact) ||
         contact.length === 0 ||
@@ -151,6 +114,84 @@ function ContactPage({
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'civilite',
+            'nom',
+            'prenom',
+            'numero_portable',
+            'adresse_mail',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedContact[key as keyof ContactID] === null ||
+                modifiedContact[key as keyof ContactID] === ''
+            ) {
+                setModifiedContact(prevState => ({
+                    ...prevState,
+                    [key]: contact[0][key as keyof ContactID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedContact.nom ||
+            modifiedContact.nom.trim() === '' ||
+            !modifiedContact.prenom ||
+            modifiedContact.prenom.trim() === '' ||
+            !(modifiedContact.numero_portable || modifiedContact.adresse_mail)
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const filePaths = await fileUpload(
+                '../../../../../../api/upload/image',
+            )
+
+            const jsonPayload = {
+                ...modifiedContact,
+                photo: filePaths[0],
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/contact/${params.contactID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedContact: ContactID[] = await res.json()
+                setContact(updatedContact)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -314,7 +355,7 @@ function ContactPage({
                                         className={style.selectF}
                                         type='input'
                                         name='nom'
-                                        value={modifiedContact.nom}
+                                        value={modifiedContact.nom ?? ''}
                                         placeholder={
                                             contact[0].nom == null ||
                                             contact[0].nom === ''
@@ -347,7 +388,7 @@ function ContactPage({
                                         className={style.selectF}
                                         type='input'
                                         name='prenom'
-                                        value={modifiedContact.prenom}
+                                        value={modifiedContact.prenom ?? ''}
                                         placeholder={
                                             contact[0].prenom == null ||
                                             contact[0].prenom === ''
@@ -487,7 +528,7 @@ function ContactPage({
                                         className={style.selectF}
                                         type='number'
                                         name='numero_portable'
-                                        value={modifiedContact.numero_portable}
+                                        value={modifiedContact.numero_portable ?? ''}
                                         placeholder={
                                             contact[0].numero_portable ==
                                                 null ||
@@ -529,7 +570,7 @@ function ContactPage({
                                         className={style.selectF}
                                         type='input'
                                         name='adresse_mail'
-                                        value={modifiedContact.adresse_mail}
+                                        value={modifiedContact.adresse_mail ?? ''}
                                         placeholder={
                                             contact[0].adresse_mail == null ||
                                             contact[0].adresse_mail === ''

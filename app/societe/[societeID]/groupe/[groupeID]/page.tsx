@@ -35,6 +35,7 @@ function GroupePage({
     const [session, setSession] = useState<ExtendedSession | null>(null)
     const [modify, setModify] = useState<boolean>(false)
     const [modifiedGroupe, setModifiedGroupe] = useState<Partial<GroupeID>>({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndGroupe = async () => {
@@ -83,44 +84,6 @@ function GroupePage({
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../../../api/upload/image')
-
-        const jsonPayload = {
-            ...modifiedGroupe,
-            Logo: filePaths[0],
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../../../api/societe/${params.societeID}/groupe/${params.groupeID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedGroupe: GroupeID[] = await res.json()
-            setGroupe(updatedGroupe)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(groupe) ||
         groupe.length === 0 ||
@@ -131,6 +94,73 @@ function GroupePage({
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = ['nom_du_Groupe']
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedGroupe[key as keyof GroupeID] === null ||
+                modifiedGroupe[key as keyof GroupeID] === ''
+            ) {
+                setModifiedGroupe(prevState => ({
+                    ...prevState,
+                    [key]: groupe[0][key as keyof GroupeID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedGroupe.nom_du_Groupe ||
+            modifiedGroupe.nom_du_Groupe.trim() === ''
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const filePaths = await fileUpload('../../../../api/upload/image')
+
+            const jsonPayload = {
+                ...modifiedGroupe,
+                Logo: filePaths[0],
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../api/societe/${params.societeID}/groupe/${params.groupeID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedGroupe: GroupeID[] = await res.json()
+                setGroupe(updatedGroupe)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = ['nom_du_Groupe', 'site_Web', 'commentaires']

@@ -63,6 +63,7 @@ function Modalites_livraisonPage({
     const [modify, setModify] = useState<boolean>(false)
     const [modifiedModalite_livraison, setModifiedModalite_livraison] =
         useState<Partial<Modalite_livraisonID>>({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndModalites_livraison = async () => {
@@ -245,46 +246,6 @@ function Modalites_livraisonPage({
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../../../api/upload/piece')
-
-        console.log(modalite_livraison[0].code_Prestataire_transporteur)
-        const jsonPayload = {
-            ...modifiedModalite_livraison,
-            pieces_associees: filePaths[0],
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../../../api/dons/${params.donsID}/modalites-livraison/${params.modalites_livraisonID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedModalite_livraison: Modalite_livraisonID[] =
-                await res.json()
-            setModalites_livraison(updatedModalite_livraison)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(modalite_livraison) ||
         modalite_livraison.length === 0 ||
@@ -295,6 +256,110 @@ function Modalites_livraisonPage({
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'code_type_livraison',
+            'date_prevue_livraison',
+            'heure_prevue_livraison',
+            'adresse_enlevement',
+            'telephone_contact_enlevement',
+            'mail_contact_enlevement',
+            'adresse_livraison',
+            'telephone_contact_livraison',
+            'mail_contact_livraison',
+            'nombre_palettes_prevu',
+            'nombre_palettes_consignees_prevu',
+            'nombre_cartons_prevu',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedModalite_livraison[
+                    key as keyof Modalite_livraisonID
+                ] === null ||
+                modifiedModalite_livraison[
+                    key as keyof Modalite_livraisonID
+                ] === ''
+            ) {
+                setModifiedModalite_livraison(prevState => ({
+                    ...prevState,
+                    [key]: modalite_livraison[0][
+                        key as keyof Modalite_livraisonID
+                    ],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedModalite_livraison.heure_prevue_livraison ||
+            modifiedModalite_livraison.heure_prevue_livraison.trim() === '' ||
+            !modifiedModalite_livraison.adresse_enlevement ||
+            modifiedModalite_livraison.adresse_enlevement.trim() === '' ||
+            !modifiedModalite_livraison.nombre_palettes_prevu ||
+            modifiedModalite_livraison.nombre_palettes_prevu === 0 ||
+            !modifiedModalite_livraison.nombre_palettes_consignees_prevu ||
+            modifiedModalite_livraison.nombre_palettes_consignees_prevu === 0 ||
+            !modifiedModalite_livraison.nombre_cartons_prevu ||
+            modifiedModalite_livraison.nombre_cartons_prevu === 0 ||
+            !(
+                modifiedModalite_livraison.telephone_contact_enlevement ||
+                modifiedModalite_livraison.mail_contact_enlevement
+            ) ||
+            !(
+                modifiedModalite_livraison.telephone_contact_livraison ||
+                modifiedModalite_livraison.mail_contact_livraison
+            )
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const filePaths = await fileUpload('../../../../api/upload/piece')
+
+            console.log(modalite_livraison[0].code_Prestataire_transporteur)
+            const jsonPayload = {
+                ...modifiedModalite_livraison,
+                pieces_associees: filePaths[0],
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../api/dons/${params.donsID}/modalites-livraison/${params.modalites_livraisonID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedModalite_livraison: Modalite_livraisonID[] =
+                    await res.json()
+                setModalites_livraison(updatedModalite_livraison)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -544,7 +609,7 @@ function Modalites_livraisonPage({
                                         type='input'
                                         name='heure_prevue_livraison'
                                         value={
-                                            modifiedModalite_livraison.heure_prevue_livraison
+                                            modifiedModalite_livraison.heure_prevue_livraison ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -693,7 +758,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='telephone_contact_enlevement'
                                         value={
-                                            modifiedModalite_livraison.telephone_contact_enlevement
+                                            modifiedModalite_livraison.telephone_contact_enlevement ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -743,7 +808,7 @@ function Modalites_livraisonPage({
                                         type='mail'
                                         name='mail_contact_enlevement'
                                         value={
-                                            modifiedModalite_livraison.mail_contact_enlevement
+                                            modifiedModalite_livraison.mail_contact_enlevement ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -784,7 +849,7 @@ function Modalites_livraisonPage({
                                         type='input'
                                         name='adresse_enlevement'
                                         value={
-                                            modifiedModalite_livraison.adresse_enlevement
+                                            modifiedModalite_livraison.adresse_enlevement ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -968,7 +1033,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='telephone_contact_livraison'
                                         value={
-                                            modifiedModalite_livraison.telephone_contact_livraison
+                                            modifiedModalite_livraison.telephone_contact_livraison ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1017,7 +1082,7 @@ function Modalites_livraisonPage({
                                         type='mail'
                                         name='mail_contact_livraison'
                                         value={
-                                            modifiedModalite_livraison.mail_contact_livraison
+                                            modifiedModalite_livraison.mail_contact_livraison ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1058,7 +1123,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_prevu
+                                            modifiedModalite_livraison.nombre_palettes_prevu ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1107,7 +1172,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_consignees_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu
+                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1157,7 +1222,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_cartons_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_cartons_prevu
+                                            modifiedModalite_livraison.nombre_cartons_prevu ?? ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
