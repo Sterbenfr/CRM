@@ -46,6 +46,7 @@ function ReceptionPage({
     const [modifiedReception, setModifiedReception] = useState<
         Partial<ReceptionID>
     >({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndReception = async () => {
@@ -165,42 +166,86 @@ function ReceptionPage({
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../../../api/upload/piece')
+    if (
+        !Array.isArray(reception) ||
+        reception.length === 0 ||
+        typeof reception[0]?.numero_reception === 'undefined'
+    )
+        return (
+            <div className={style.page}>
+                <h2 className={style.load}>Chargement...</h2>
+            </div>
+        )
 
-        const jsonPayload = {
-            ...modifiedReception,
-            pieces_associees: filePaths[0],
+    const requiredValue = () => {
+        const keysToCheck = [
+            'numero_livraison',
+            'date_reception',
+            'heure_reception',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedReception[key as keyof ReceptionID] === null ||
+                modifiedReception[key as keyof ReceptionID] === ''
+            ) {
+                setModifiedReception(prevState => ({
+                    ...prevState,
+                    [key]: reception[0][key as keyof ReceptionID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedReception.heure_reception ||
+            modifiedReception.heure_reception.trim() === ''
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
         }
 
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
+        if (canSubmit) {
+            const filePaths = await fileUpload('../../../../api/upload/piece')
 
-        try {
-            const res = await fetch(
-                `../../../../api/dons/${params.donsID}/reception/${params.receptionID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
+            const jsonPayload = {
+                ...modifiedReception,
+                pieces_associees: filePaths[0],
             }
 
-            const updatedReception: ReceptionID[] = await res.json()
-            setReception(updatedReception)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../api/dons/${params.donsID}/reception/${params.receptionID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedReception: ReceptionID[] = await res.json()
+                setReception(updatedReception)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
         }
-        window.location.reload()
     }
 
     const Print = () => {
@@ -231,17 +276,6 @@ function ReceptionPage({
         document.body.innerHTML = originalContents
         window.location.reload()
     }
-
-    if (
-        !Array.isArray(reception) ||
-        reception.length === 0 ||
-        typeof reception[0]?.numero_reception === 'undefined'
-    )
-        return (
-            <div className={style.page}>
-                <h2 className={style.load}>Chargement...</h2>
-            </div>
-        )
 
     const initialValue = () => {
         const keysToCheck = [
@@ -413,7 +447,7 @@ function ReceptionPage({
                                         type='input'
                                         name='heure_prevue_livraison'
                                         value={
-                                            modifiedReception.heure_reception
+                                            modifiedReception.heure_reception ?? ''
                                         }
                                         placeholder={
                                             reception[0].heure_reception ==

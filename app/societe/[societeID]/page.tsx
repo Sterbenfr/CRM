@@ -41,6 +41,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
     const [modifiedSociete, setModifiedSociete] = useState<Partial<SocieteID>>(
         {},
     )
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndSociete = async () => {
@@ -117,43 +118,6 @@ function SocietePage({ params }: { params: { societeID: string } }) {
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../api/upload/image')
-
-        const jsonPayload = {
-            ...modifiedSociete,
-            Logo: filePaths[0],
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(`../../api/societe/${params.societeID}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: body,
-            })
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedSociete: SocieteID[] = await res.json()
-            setSociete(updatedSociete)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        setTimeout(() => {
-            window.location.reload()
-        }, 200)
-    }
-
     if (
         !Array.isArray(societe) ||
         societe.length === 0 ||
@@ -164,6 +128,81 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                 <h2 className={style.load}>Chargement...</h2>
             </div>
         )
+
+    const requiredValue = () => {
+        const keysToCheck = [
+            'raison_sociale',
+            'Siren',
+            'code_type_activite_Societe',
+        ]
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedSociete[key as keyof SocieteID] === null ||
+                modifiedSociete[key as keyof SocieteID] === ''
+            ) {
+                setModifiedSociete(prevState => ({
+                    ...prevState,
+                    [key]: societe[0][key as keyof SocieteID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (
+            !modifiedSociete.raison_sociale ||
+            modifiedSociete.raison_sociale.trim() === '' ||
+            !modifiedSociete.Siren ||
+            modifiedSociete.Siren.trim() === ''
+        ) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const filePaths = await fileUpload('../../api/upload/image')
+
+            const jsonPayload = {
+                ...modifiedSociete,
+                Logo: filePaths[0],
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../api/societe/${params.societeID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedSociete: SocieteID[] = await res.json()
+                setSociete(updatedSociete)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            setTimeout(() => {
+                window.location.reload()
+            }, 200)
+        }
+    }
 
     const initialValue = () => {
         const keysToCheck = [
@@ -304,7 +343,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='raison_sociale'
-                                        value={modifiedSociete.raison_sociale}
+                                        value={modifiedSociete.raison_sociale ?? ''}
                                         placeholder={
                                             societe[0].raison_sociale ===
                                                 null ||
@@ -421,7 +460,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                         className={style.selectF}
                                         type='number'
                                         name='Siren'
-                                        value={modifiedSociete.Siren}
+                                        value={modifiedSociete.Siren ?? ''}
                                         placeholder={
                                             societe[0].Siren === null ||
                                             societe[0].Siren === ''

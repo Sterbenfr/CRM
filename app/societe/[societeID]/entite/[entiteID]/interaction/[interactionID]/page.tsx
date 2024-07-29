@@ -45,9 +45,10 @@ function InteractionPage({
     const [interaction, setInteraction] = useState<InteractionID[]>([])
     const [session, setSession] = useState<ExtendedSession | null>(null)
     const [modify, setModify] = useState<boolean>(false)
-    const [modifiedInteraction, setmodifiedInteraction] = useState<
+    const [modifiedInteraction, setModifiedInteraction] = useState<
         Partial<InteractionID>
     >({})
+    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndInteraction = async () => {
@@ -76,7 +77,7 @@ function InteractionPage({
     ) => {
         const { name, value } = e.target
 
-        setmodifiedInteraction(prevState => ({
+        setModifiedInteraction(prevState => ({
             ...prevState,
             [name]: value,
         }))
@@ -91,7 +92,7 @@ function InteractionPage({
         if (interaction[0].code_type_interaction !== '' && value === '') {
             value = interaction[0].code_type_interaction
         }
-        setmodifiedInteraction({
+        setModifiedInteraction({
             ...modifiedInteraction,
             code_type_interaction: value,
         })
@@ -106,7 +107,7 @@ function InteractionPage({
         if (interaction[0].code_modalite_interaction !== '' && value === '') {
             value = interaction[0].code_modalite_interaction
         }
-        setmodifiedInteraction({
+        setModifiedInteraction({
             ...modifiedInteraction,
             code_modalite_interaction: value,
         })
@@ -121,7 +122,7 @@ function InteractionPage({
         if (interaction[0].code_contact_entite !== '' && value === '') {
             value = interaction[0].code_contact_entite
         }
-        setmodifiedInteraction({
+        setModifiedInteraction({
             ...modifiedInteraction,
             code_contact_entite: value,
         })
@@ -139,7 +140,7 @@ function InteractionPage({
         ) {
             value = interaction[0].code_Utilisateur_Prospecteur
         }
-        setmodifiedInteraction({
+        setModifiedInteraction({
             ...modifiedInteraction,
             code_Utilisateur_Prospecteur: value,
         })
@@ -159,44 +160,6 @@ function InteractionPage({
         }
     }
 
-    const handleSubmit = async () => {
-        const filePaths = await fileUpload('../../../../../../api/upload/piece')
-
-        const jsonPayload = {
-            ...modifiedInteraction,
-            pieces_associees: filePaths[0],
-        }
-
-        // Convert non-file data to JSON
-        const body = JSON.stringify(jsonPayload)
-
-        try {
-            const res = await fetch(
-                `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: body,
-                },
-            )
-
-            if (!res.ok) {
-                const errorDetail = await res.text()
-                console.error('Failed to update data:', errorDetail)
-                throw new Error('Failed to update data')
-            }
-
-            const updatedInteraction: InteractionID[] = await res.json()
-            setInteraction(updatedInteraction)
-            setModify(false)
-        } catch (error) {
-            console.error('Error submitting form:', error)
-        }
-        window.location.reload()
-    }
-
     if (
         !Array.isArray(interaction) ||
         interaction.length === 0 ||
@@ -208,6 +171,72 @@ function InteractionPage({
             </div>
         )
 
+    const requiredValue = () => {
+        const keysToCheck = ['code_Entite_Prospectee', 'date_interaction']
+
+        keysToCheck.forEach(key => {
+            if (
+                modifiedInteraction[key as keyof InteractionID] === null ||
+                modifiedInteraction[key as keyof InteractionID] === ''
+            ) {
+                setModifiedInteraction(prevState => ({
+                    ...prevState,
+                    [key]: interaction[0][key as keyof InteractionID],
+                }))
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        requiredValue()
+
+        if (!modifiedInteraction.date_interaction) {
+            canSubmit = false
+        } else {
+            canSubmit = true
+        }
+
+        if (canSubmit) {
+            const filePaths = await fileUpload(
+                '../../../../../../api/upload/piece',
+            )
+
+            const jsonPayload = {
+                ...modifiedInteraction,
+                pieces_associees: filePaths[0],
+            }
+
+            // Convert non-file data to JSON
+            const body = JSON.stringify(jsonPayload)
+
+            try {
+                const res = await fetch(
+                    `../../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/interactions/${params.interactionID}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body,
+                    },
+                )
+
+                if (!res.ok) {
+                    const errorDetail = await res.text()
+                    console.error('Failed to update data:', errorDetail)
+                    throw new Error('Failed to update data')
+                }
+
+                const updatedInteraction: InteractionID[] = await res.json()
+                setInteraction(updatedInteraction)
+                setModify(false)
+            } catch (error) {
+                console.error('Error submitting form:', error)
+            }
+            window.location.reload()
+        }
+    }
+
     const initialValue = () => {
         const keysToCheck = ['commentaires']
 
@@ -216,14 +245,14 @@ function InteractionPage({
                 interaction[0][key as keyof InteractionID] !== null &&
                 interaction[0][key as keyof InteractionID] !== ''
             ) {
-                setmodifiedInteraction(prevState => ({
+                setModifiedInteraction(prevState => ({
                     ...prevState,
                     [key]: interaction[0][key as keyof InteractionID],
                 }))
             }
         })
     }
-    
+
     const Print = () => {
         const printContents = document.getElementById('printablediv')!.innerHTML
         const originalContents = document.body.innerHTML
