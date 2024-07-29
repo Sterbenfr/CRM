@@ -77,6 +77,16 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                     >
                         Prestataires
                     </Link>
+                    <Link
+                        href='/utilisateurs'
+                        className={`${styles.links} ${
+                            firstPathnameSegment === '/utilisateurs'
+                                ? styles.underline
+                                : ''
+                        }`}
+                    >
+                        Utilisateurs
+                    </Link>
                     {session ? (
                         <>
                             <Link

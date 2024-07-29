@@ -1,0 +1,47 @@
+.globalStyles {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.numerotation {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+.sousNumerotation1 {
+    list-style-type: upper-alpha;
+    margin-left: 20px;
+}
+
+.sousNumerotation2 {
+    list-style-type: lower-alpha;
+    margin-left: 40px;
+}
+
+.sousNumerotation3 {
+    list-style-type: lower-roman;
+    margin-left: 60px;
+}
+
+.important{
+    color: #e5007d;
+    font-size: 1.1rem;
+}
+.attention{
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.titre2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.titre3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}

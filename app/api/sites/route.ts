@@ -16,7 +16,7 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `Sites` LIMIT ?, ?',
+            'SELECT * FROM `Sites` ORDER BY `code_site` DESC LIMIT ?, ?',
             [offset, limitNumber],
         )
 

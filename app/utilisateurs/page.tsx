@@ -4,7 +4,7 @@ import List from '@/components/list'
 import { Pagination } from '@/components/pagination'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
-import style from '../../../../styles/components.module.css'
+import style from '../../styles/components.module.css'
 import TypesButtons from '@/components/TypesButtons'
 import Image from 'next/image'
 
@@ -20,7 +20,7 @@ export interface Utilisateurs {
     code_type_utilisateur: number
 }
 
-function UtilisateursPage({ params }: { params: { siteID: string } }) {
+function UtilisateursPage() {
     const [Utilisateurs, setUtilisateurs] = useState<Utilisateurs[]>([])
     const [page, setPage] = useState(1) // new state for the current page
     const [totalItems, setTotalItems] = useState(0)
@@ -122,18 +122,12 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
-            {
-                id: 'code_site',
-                type: 'input',
-                value: params.siteID,
-                disabled: true,
-                required: true,
-            },
+            
             {
                 id: 'civilite',
                 type: 'select',
                 value: civilite,
-                url: `../../../../../api/select/genre`,
+                url: `../../api/select/genre`,
                 required: true,
                 onChange: handleCiviliteChange,
             },
@@ -169,7 +163,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 type: 'select',
                 required: true,
                 value: codeTypeUtilisateur,
-                url: `../../../../../api/select/utilisateurs`,
+                url: `../../api/select/utilisateurs`,
                 onChange: handleCodeTypeUtilisateurChange,
             },
             {
@@ -216,13 +210,13 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         commentaires,
         password,
         codeTypeUtilisateur,
-        params.siteID,
+        
     ])
 
     useEffect(() => {
         const fetchUtilisateurs = async () => {
             const res = await fetch(
-                `../../../api/sites/${params.siteID}/utilisateurs?page=${page}&limit=${itemsPerPage}`,
+                `../../api/utilisateurs?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -239,7 +233,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../../api/sites/${params.siteID}/utilisateurs`,
+                    `../../api/utilisateurs`,
                 )
 
                 if (!res.ok) {
@@ -254,7 +248,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         fetchUtilisateurs()
         fetchSearchUtilisateurs()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.siteID, generateFields])
+    }, [page, itemsPerPage, generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -301,7 +295,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `../../../api/sites/${params.siteID}/utilisateurs`,
+                        url: `../../api/utilisateurs`,
                     }}
                     attribut={{
                         att1: 'Civilité',
@@ -342,7 +336,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`../../../api/sites/${params.siteID}/utilisateurs`}
+                            url={`../../api/utilisateurs`}
                             fields={fields}
                         />
                     </div>

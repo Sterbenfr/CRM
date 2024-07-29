@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../../../utils/db'
 
 import { streamToString } from '../../../../../../utils/streamUtils'
-import type { type_utilisateur } from '@/app/sites/[siteID]/utilisateurs/type-utilisateurs/page'
+import type { type_utilisateur } from '@/app/sites/[siteID]/interlocuteurs/type-utilisateurs/page'
 
 export async function GET() {
     try {
