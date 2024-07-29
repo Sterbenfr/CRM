@@ -503,6 +503,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 url: '../../../api/select/prestataire',
                 createURL: '/prestataire',
                 placeholder: 'Exemple: Entreprise alpha',
+                required: true,
                 onInputChange: handleCodePrestataireTransporteur,
             })
         }
