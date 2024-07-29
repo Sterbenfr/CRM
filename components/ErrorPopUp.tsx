@@ -6,7 +6,7 @@ interface ErrorPopUpProps {
 
 const ErrorPopUp: React.FC<ErrorPopUpProps> = ({ err }) => {
     return (
-        <div className={style.popUpBackground}>
+        <div className={`${style.popUpBackground} ${style.z2}`}>
             <div className={style.errorPopUp}>
                 <h2 className={style.NF}>Erreur avec la base de données</h2>
                 <p className={style.CNF}>{err}</p>

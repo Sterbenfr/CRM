@@ -9,7 +9,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ setFile }) => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files && e.target.files[0]
         if (selectedFile) {
-            console.log('Selected file:', selectedFile)
             setFile(selectedFile)
         }
     }

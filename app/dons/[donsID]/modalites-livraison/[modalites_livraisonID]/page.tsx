@@ -248,7 +248,6 @@ function Modalites_livraisonPage({
     const handleSubmit = async () => {
         const filePaths = await fileUpload('../../../../api/upload/piece')
 
-        console.log(modalite_livraison[0].code_Prestataire_transporteur)
         const jsonPayload = {
             ...modifiedModalite_livraison,
             pieces_associees: filePaths[0],
