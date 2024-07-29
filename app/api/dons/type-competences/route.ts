@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connection from '../../../../utils/db'
-
 import { streamToString } from '../../../../utils/streamUtils'
 import type { Competence } from '@/app/dons/type-competences/page'
 
