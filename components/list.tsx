@@ -4,6 +4,7 @@ import FunctionBlock from './functionBlock'
 import style from '../styles/components.module.css'
 import Excel from './Excel'
 import ErrorPopUp from './ErrorPopUp'
+import ConfirmPopUp from './ConfirmPopUp'
 
 interface ListProps {
     value1?: string
@@ -50,6 +51,7 @@ const List: React.FC<{
     const [searchValue, setSearchValue] = useState('')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [isTimeoutReached, setIsTimeoutReached] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const handleLineCheckboxChange = (param: string) => {
         const value = !isNaN(parseInt(param)) ? parseInt(param) : param
@@ -60,39 +62,49 @@ const List: React.FC<{
         }
     }
 
-    const deleteFunction = async () => {
-        const isConfirmed = window.confirm(
-            'Êtes-vous sûr de vouloir supprimer le(s) élément(s) sélectionné(s) ?',
-        )
-        if (!isConfirmed) {
-            return
-        }
+    const handleConfirm = () => {
+        setShowConfirm(true)
+    }
 
+    const confirmDelete = () => {
         if (!functions.url?.includes('type')) {
-            lineCheckbox.map(async item => {
-                await fetch(`${functions.url}/${item}`, {
-                    method: 'DELETE',
-                })
+            Promise.all(
+                lineCheckbox.map(item =>
+                    fetch(`${functions.url}/${item}`, {
+                        method: 'DELETE',
+                    }),
+                ),
+            ).then(() => {
+                setTimeout(() => {
+                    window.location.reload()
+                }, 100)
             })
-            /*setTimeout(() => {
-                window.location.reload()
-            }, 400)*/ // A remettre par la suite
         } else {
-            const res = await fetch(functions.url, {
+            fetch(functions.url, {
                 method: 'DELETE',
                 body: JSON.stringify(lineCheckbox),
             })
-            const err = await res.json()
-            if (err.error.toString().includes('foreign key constraint fails')) {
-                setErrorMessage(
-                    'Impossible de supprimer un/des élément(s) sélectionné(s)',
-                )
-            } else {
-                setTimeout(() => {
-                    window.location.reload()
-                }, 400)
-            }
+                .then(res => res.json())
+                .then(err => {
+                    if (
+                        err.error
+                            .toString()
+                            .includes('foreign key constraint fails')
+                    ) {
+                        setErrorMessage(
+                            'Impossible de supprimer un/des élément(s) sélectionné(s)',
+                        )
+                    } else {
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 400)
+                    }
+                })
         }
+    }
+
+    const deleteFunction = () => {
+        handleConfirm()
     }
 
     const searchFunction = (e: React.FormEvent<HTMLInputElement>) => {
@@ -413,6 +425,13 @@ const List: React.FC<{
     return (
         <>
             {errorMessage && <ErrorPopUp err={errorMessage} />}
+            {showConfirm && (
+                <ConfirmPopUp
+                    message='êtes-vous sûr de vouloir supprimer les éléments séléctionnés?'
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowConfirm(false)}
+                />
+            )}
             <FunctionBlock
                 fonc1={functions.fonc1}
                 fonc2={deleteFunction}
