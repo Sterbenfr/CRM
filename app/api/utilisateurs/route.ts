@@ -4,6 +4,7 @@ import { authOptions } from '../auth/[...nextauth]/authOptions'
 import connection from '../../../utils/db'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Utilisateurs } from '@/app/utilisateurs/page'
+import bcrypt from 'bcryptjs'
 
 type CountResult = { count: number }[]
 
@@ -64,6 +65,7 @@ export async function POST(req: NextRequest) {
         )
     }
     try {
+        Utilisateur.password = await bcrypt.hash(Utilisateur.password, 10)
         console.log(Utilisateur)
         const query = 'INSERT INTO `Utilisateurs` SET ?'
         const [rows] = await connection.query(query, Utilisateur)
