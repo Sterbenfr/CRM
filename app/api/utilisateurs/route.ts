@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]/authOptions'
 import connection from '../../../utils/db'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Utilisateurs } from '@/app/utilisateurs/page'
@@ -6,10 +8,13 @@ import type { Utilisateurs } from '@/app/utilisateurs/page'
 type CountResult = { count: number }[]
 
 export async function GET(request: Request) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
     const limit = searchParams.get('limit') || '10'
-    
 
     try {
         const pageNumber = Number(page)
@@ -62,7 +67,7 @@ export async function POST(req: NextRequest) {
         console.log(Utilisateur)
         const query = 'INSERT INTO `Utilisateurs` SET ?'
         const [rows] = await connection.query(query, Utilisateur)
-        return NextResponse.json({rows})
+        return NextResponse.json({ rows })
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + error },

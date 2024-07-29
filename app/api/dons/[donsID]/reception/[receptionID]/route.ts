@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../../../auth/[...nextauth]/authOptions'
 import connection from '../../../../../../utils/db'
 
 export async function GET(
     request: Request,
     { params }: { params: { donsID: string; receptionID: string } },
 ) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     const receptionID = params.receptionID
     const donsID = params.donsID
     try {

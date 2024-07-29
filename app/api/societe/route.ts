@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]/authOptions'
 import connection from '../../../utils/db'
 import { streamToString } from '../../../utils/streamUtils'
 import type { Societe } from '@/app/societe/page'
@@ -6,6 +8,10 @@ import type { Societe } from '@/app/societe/page'
 type CountResult = { count: number }[]
 
 export async function GET(request: Request) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
     const limit = searchParams.get('limit') || '10'

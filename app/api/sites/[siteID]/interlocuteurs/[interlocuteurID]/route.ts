@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../../../auth/[...nextauth]/authOptions'
 import connection from '../../../../../../utils/db'
 
 export async function GET(
     request: Request,
     { params }: { params: { siteID: string; interlocuteurID: string } },
 ) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     const interlocuteurID = params.interlocuteurID
     try {
         const [rows] = await connection.query(
@@ -68,7 +74,10 @@ export async function PUT(
         const query = `UPDATE \`Interlocuteurs\` SET ${columns} WHERE \`code_interlocuteur\` = ?`
 
         // Execute query
-        const [rows] = await connection.query(query, [...values, interlocuteurID])
+        const [rows] = await connection.query(query, [
+            ...values,
+            interlocuteurID,
+        ])
         return NextResponse.json(rows)
     } catch (error) {
         console.error(error)
@@ -89,7 +98,8 @@ export async function DELETE(
     }
 
     try {
-        const query = 'DELETE FROM `Interlocuteurs` WHERE `code_interlocuteur` = ?'
+        const query =
+            'DELETE FROM `Interlocuteurs` WHERE `code_interlocuteur` = ?'
         const [rows] = await connection.query(query, interlocuteurID)
         return NextResponse.json(rows)
     } catch (error) {

@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
 enum StatutAcceptationDon {
     Valide = 'Valide',
@@ -7,9 +9,11 @@ enum StatutAcceptationDon {
 }
 
 export async function GET(request: Request) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const url = new URL(request.url)
         const statuts = [
             { id: 'A', label: StatutAcceptationDon.Attente },
             { id: 'V', label: StatutAcceptationDon.Valide },

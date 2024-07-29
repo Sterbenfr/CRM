@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { Produit } from '@/app/dons/type-produits/page'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../auth/[...nextauth]/authOptions'
 import connection from '../../../../utils/db'
 import { streamToString } from '../../../../utils/streamUtils'
 
 export async function GET(request: Request) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', request.url))
+    }
     try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_type_produits as id, libelle as label FROM `TypesProduits` LIMIT 1000',
         )

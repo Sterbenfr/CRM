@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]/authOptions'
 import connection from '../../../utils/db'
 import bcrypt from 'bcryptjs'
 import { streamToString } from '../../../utils/streamUtils'
 import { RowDataPacket } from 'mysql2'
 
 export async function POST(req: NextRequest) {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return NextResponse.redirect(new URL('/error/not-access', req.url))
+    }
     let data: { oldPassword: string; newPassword: string; userId: string }
     try {
         data = JSON.parse(await streamToString(req.body))
