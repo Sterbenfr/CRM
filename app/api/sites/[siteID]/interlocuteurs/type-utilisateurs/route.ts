@@ -4,8 +4,10 @@ import connection from '../../../../../../utils/db'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { type_utilisateur } from '@/app/sites/[siteID]/interlocuteurs/type-utilisateurs/page'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_type_utilisateur as id, libelle as label FROM `TypesUtilisateurs` LIMIT 1000',
         )

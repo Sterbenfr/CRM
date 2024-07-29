@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
 import connection from '../../../../utils/db'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'Select code_Don as id, code_Don as label, code_type_don as params1, date_proposition_don as params2 FROM Dons;',
         )

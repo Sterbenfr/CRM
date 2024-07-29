@@ -4,8 +4,10 @@ import connection from '../../../../utils/db'
 import { streamToString } from '../../../../utils/streamUtils'
 import type { Mode_Conservation_Produits } from '@/app/dons/type-mode-conservation-produits/page'
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const url = new URL(request.url)
         const [rows] = await connection.query(
             'SELECT code_mode_conservation_produits as id, libelle as label FROM `ModeConservationProduits` LIMIT 1000',
         )
