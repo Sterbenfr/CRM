@@ -125,6 +125,10 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                 modifiedUtilisateur[key as keyof UtilisateurID] === null ||
                 modifiedUtilisateur[key as keyof UtilisateurID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedUtilisateur(prevState => ({
                     ...prevState,
                     [key]: utilisateur[0][key as keyof UtilisateurID],
@@ -329,7 +333,7 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='nom'
-                                        value={modifiedUtilisateur.nom ?? ''} 
+                                        value={modifiedUtilisateur.nom ?? ''}
                                         placeholder={
                                             utilisateur[0].nom === null ||
                                             utilisateur[0].nom === ''
@@ -418,7 +422,9 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                                         className={style.selectF}
                                         type='number'
                                         name='tel_perso'
-                                        value={modifiedUtilisateur.tel_perso ?? ''}
+                                        value={
+                                            modifiedUtilisateur.tel_perso ?? ''
+                                        }
                                         placeholder={
                                             utilisateur[0].tel_perso === null ||
                                             utilisateur[0].tel_perso === ''
