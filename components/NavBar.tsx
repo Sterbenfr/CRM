@@ -117,7 +117,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                     <Link
                         href='/documentation'
                         className={`${styles.doc} ${
-                            firstPathnameSegment === '/prestataire'
+                            firstPathnameSegment === '/documentation'
                                 ? styles.circle
                                 : ''
                         }`}
