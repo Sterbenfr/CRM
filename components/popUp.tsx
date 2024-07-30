@@ -224,7 +224,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
     useEffect(() => {
         setInputs(fields)
-    }, [fields])
+    }, [])
 
     const handleInputChange = (id: string, value: string | boolean) => {
         // Invoke the function if provided
