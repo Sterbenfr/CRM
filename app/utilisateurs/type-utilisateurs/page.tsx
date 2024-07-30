@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import PopUp from '@/components/popUp'
 import withAuthorization from '@/components/withAuthorization'
-import List from '../../../../../components/list'
-import style from '../../../../../styles/components.module.css'
+import List from '../../../components/list'
+import style from '../../../styles/components.module.css'
 import Image from 'next/image'
 
 export interface type_utilisateur {
@@ -11,7 +11,7 @@ export interface type_utilisateur {
     label: string
 }
 
-function UtilisateursPage({ params }: { params: { siteID: string } }) {
+function UtilisateursPage() {
     const [Utilisateurs, setUtilisateurs] = useState<type_utilisateur[]>([])
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -22,10 +22,11 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
 
     useEffect(() => {
         const fetchUtilisateurs = async () => {
-            if (!params.siteID) return
+            
             const res = await fetch(
-                `../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                `../../api/utilisateurs/type-utilisateurs`,
             )
+            
 
             if (!res.ok) {
                 throw new Error('Failed to fetch data')
@@ -36,7 +37,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
         }
 
         fetchUtilisateurs()
-    }, [params.siteID])
+    }, [])
 
     return (
         <>
@@ -55,10 +56,10 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                 </div>
 
                 <List
-                    items={Utilisateurs.map(utilisateur => ({
-                        value1: utilisateur.id.toString(),
-                        value2: utilisateur.id.toString(),
-                        value3: utilisateur.label,
+                    items={Utilisateurs.map(type_utilisateur => ({
+                        value1: type_utilisateur.id.toString(),
+                        value2: type_utilisateur.id.toString(),
+                        value3: type_utilisateur.label,
                     }))}
                     functions={{
                         fonc1: () => {
@@ -66,7 +67,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`,
+                        url: `../../api/utilisateurs/type-utilisateurs`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -77,7 +78,7 @@ function UtilisateursPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`../../../../api/sites/${params.siteID}/utilisateurs/type-utilisateurs`}
+                            url={`../../api/utilisateurs/type-utilisateurs`}
                             fields={[
                                 {
                                     id: 'code_type_utilisateur',

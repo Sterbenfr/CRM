@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../../../auth/[...nextauth]/authOptions'
 import connection from '../../../../../../utils/db'
 import { streamToString } from '../../../../../../utils/streamUtils'
-import type { type_utilisateur } from '@/app/sites/[siteID]/interlocuteurs/type-utilisateurs/page'
+import type { type_interlocuteur } from '@/app/sites/[siteID]/interlocuteurs/type-interlocuteur/page'
 
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions)
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     }
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_utilisateur as id, libelle as label FROM `TypesUtilisateurs` LIMIT 1000',
+            'SELECT code_type_interlocuteur as id, libelle as label FROM `TypeInterlocuteur` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
@@ -23,14 +23,14 @@ export async function GET(request: Request) {
     }
 }
 export async function POST(req: NextRequest) {
-    let TypesUtilisateurs: type_utilisateur
+    let TypesInterlocuteurs: type_interlocuteur
     try {
-        TypesUtilisateurs = JSON.parse(await streamToString(req.body))
+        TypesInterlocuteurs = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!TypesUtilisateurs) {
+    if (!TypesInterlocuteurs) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `TypesUtilisateurs` SET ?'
-        const [rows] = await connection.query(query, TypesUtilisateurs)
+        const query = 'INSERT INTO `TypeInterlocuteur` SET ?'
+        const [rows] = await connection.query(query, TypesInterlocuteurs)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(
@@ -56,10 +56,10 @@ export async function DELETE(req: NextRequest) {
     }
     try {
         const query =
-            'DELETE FROM `TypesUtilisateurs` WHERE `code_type_utilisateur` = ?'
+            'DELETE FROM `TypeInterlocuteur` WHERE `code_type_interlocuteur` = ?'
         const [rows] = await connection.query(
             query,
-            body.join(' or code_type_utilisateur = '),
+            body.join(' or code_type_interlocuteur = '),
         )
         return NextResponse.json(rows)
     } catch (error) {
