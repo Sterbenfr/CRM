@@ -332,8 +332,8 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                 <TypesButtons
                     items={[
                         {
-                            label: `Types d'utilisateurs`,
-                            url: 'type-utilisateurs',
+                            label: `Types d'interlocuteurs`,
+                            url: 'type-interlocuteurs',
                         },
                     ]}
                 />
