@@ -27,12 +27,12 @@ export interface ModalitesLivraison {
     prenom_contact_livraison: string
     telephone_contact_livraison: string
     mail_contact_livraison: string
-    nombre_palettes_prevu: number
-    nombre_palettes_consignees_prevu: number
-    nombre_cartons_prevu: number
-    poids_prevu_kg: number
+    nombre_palettes_prevu: string
+    nombre_palettes_consignees_prevu: string
+    nombre_cartons_prevu: string
+    poids_prevu_kg: string
     produits_sur_palettes: string
-    temperature_conserv_produits: number
+    temperature_conserv_produits: string
     commentaires: string
     pieces_associees: Blob
 }
@@ -68,7 +68,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
     const [codeDon] = useState(params.donsID)
     const [codeTypeLivraison, setCodeTypeLivraison] = useState('')
     const [datePrevueLivraison, setDatePrevueLivraison] = useState(new Date())
-    const [heurePrevueLivraison, setHeurePrevueLivraison] = useState('')
+    const [heurePrevueLivraison, setHeurePrevueLivraison] = useState('12:00:00')
     const [adresseEnlevement, setAdresseEnlevement] = useState('')
     const [civiliteContactEnlevement, setCiviliteContactEnlevement] =
         useState('')
@@ -309,7 +309,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 id: 'heure_prevue_livraison',
                 type: 'input',
                 value: heurePrevueLivraison,
-                required: true,
                 maxLength: 8,
                 onInputChange: handleHeurePrevueLivraison,
                 placeholder: 'Exemple: 14:00',
@@ -320,7 +319,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 placeholder: 'Exemple: 1 rue de la Paix, 75000 Paris',
                 value: adresseEnlevement,
                 maxLength: 255,
-                required: true,
                 onInputChange: handleAdresseEnlevement,
             },
             {
@@ -337,7 +335,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 placeholder: 'Exemple: Dupont',
                 maxLength: 20,
                 onInputChange: handleNomContactEnlevement,
-            }, // a voir si select
+            },
             {
                 id: 'prenom_contact_enlevement',
                 type: 'input',
@@ -421,7 +419,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombrePalettesPrevu,
                 placeholder: 'Exemple: 10',
-                required: true,
+                maxLength: 10,
                 onInputChange: handleNombrePalettesPrevu,
             },
             {
@@ -429,7 +427,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombrePalettesConsigneesPrevu,
                 placeholder: 'Exemple: 7',
-                required: true,
+                maxLength: 10,
                 onInputChange: handleNombrePalettesConsigneesPrevu,
             },
             {
@@ -437,7 +435,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 type: 'number',
                 value: nombreCartonsPrevu,
                 placeholder: 'Exemple: 34',
-                required: true,
+                maxLength: 10,
                 onInputChange: handleNombreCartonsPrevu,
             },
             {
@@ -475,6 +473,15 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
 
         if (fields[FindIndex('poids_prevu_kg')].value === '') {
             fields[FindIndex('poids_prevu_kg')].value = null
+        }
+        if (fields[FindIndex('nombre_cartons_prevu')].value === '') {
+            fields[FindIndex('nombre_cartons_prevu')].value = null
+        }
+        if (fields[FindIndex('nombre_palettes_consignees_prevu')].value === '') {
+            fields[FindIndex('nombre_palettes_consignees_prevu')].value = null
+        }
+        if (fields[FindIndex('nombre_palettes_prevu')].value === '') {
+            fields[FindIndex('nombre_palettes_prevu')].value = null
         }
         if (fields[FindIndex('telephone_contact_livraison')].value !== '') {
             fields[FindIndex('mail_contact_livraison')].required = false
@@ -533,6 +540,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                     type: 'number',
                     placeholder: 'Exemple: 27',
                     value: temperatureConservProduits,
+                    maxLength: 3,
                     onInputChange: handleTemperatureConservProduits,
                 })
 
