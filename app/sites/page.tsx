@@ -141,7 +141,6 @@ function SitesPage() {
                 id: 'designation_longue',
                 type: 'input',
                 value: designationLongue,
-                required: true,
                 placeholder: 'Siège social de la société',
                 onInputChange: handledesignationLongueChange,
                 maxLength: 40,
@@ -150,6 +149,7 @@ function SitesPage() {
                 id: 'designation_courte',
                 type: 'input',
                 value: designationCourte,
+                required: true,
                 placeholder: 'Siège',
                 onInputChange: handledesignationCourteChange,
                 maxLength: 15,
@@ -175,7 +175,6 @@ function SitesPage() {
                 type: 'input',
                 value: numeroTelephone,
                 placeholder: 'Exemple: 0658905910',
-                required: true,
                 onInputChange: handleNumeroTelephoneChange,
                 maxLength: 12,
             },
@@ -183,25 +182,25 @@ function SitesPage() {
                 id: 'adresse_mail',
                 type: 'input',
                 value: adresseMail,
-                required: true,
                 placeholder: 'Exemple: Siege.social@gmail.com',
                 onInputChange: handleAdresseMailChange,
             },
             {
                 id: 'date_ouverture',
                 type: 'date',
-                value: dateOuverture && !isNaN(dateOuverture?.getTime())
-                    ? dateOuverture.toISOString().split('T')[0]
-                    : null,
-                required: true,
+                value:
+                    dateOuverture && !isNaN(dateOuverture?.getTime())
+                        ? dateOuverture.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateOuvertureChange,
             },
             {
                 id: 'date_fermeture',
                 type: 'date',
-                value: dateFermeture && !isNaN(dateFermeture?.getTime())
-                ? dateFermeture.toISOString().split('T')[0]
-                : null,
+                value:
+                    dateFermeture && !isNaN(dateFermeture?.getTime())
+                        ? dateFermeture.toISOString().split('T')[0]
+                        : null,
                 onInputChange: handleDateFermetureChange,
             },
             {
@@ -212,7 +211,6 @@ function SitesPage() {
                 onInputChange: handleCommentairesChange,
                 maxLength: 200,
             },
-            
         ]
 
         if (dateFermeture !== undefined && dateOuverture > dateFermeture) {
@@ -225,12 +223,6 @@ function SitesPage() {
 
         if (dateOuverture === undefined) {
             fields[6].value = null
-        }
-
-        if (fields[4].value !== '') {
-            fields[5].required = false
-        } else if (fields[5].value !== '') {
-            fields[4].required = false
         }
 
         return fields

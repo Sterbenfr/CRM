@@ -5,6 +5,7 @@ import connection from '../../../../../../utils/db'
 import { streamToString } from '../../../../../../utils/streamUtils'
 import type { type_interlocuteur } from '@/app/sites/[siteID]/interlocuteurs/type-interlocuteur/page'
 
+
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions)
     if (!session) {

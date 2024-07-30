@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!sites.designation_longue || !sites.adresse || !sites.code_type_site) {
+    if (!sites.designation_courte || !sites.adresse || !sites.code_type_site) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

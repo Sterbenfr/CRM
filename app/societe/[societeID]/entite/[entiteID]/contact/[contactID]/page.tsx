@@ -116,13 +116,7 @@ function ContactPage({
         )
 
     const requiredValue = () => {
-        const keysToCheck = [
-            'civilite',
-            'nom',
-            'prenom',
-            'numero_portable',
-            'adresse_mail',
-        ]
+        const keysToCheck = ['civilite', 'nom', 'prenom']
 
         keysToCheck.forEach(key => {
             if (
@@ -148,8 +142,7 @@ function ContactPage({
             !modifiedContact.nom ||
             modifiedContact.nom.trim() === '' ||
             !modifiedContact.prenom ||
-            modifiedContact.prenom.trim() === '' ||
-            !(modifiedContact.numero_portable || modifiedContact.adresse_mail)
+            modifiedContact.prenom.trim() === ''
         ) {
             canSubmit = false
         } else {

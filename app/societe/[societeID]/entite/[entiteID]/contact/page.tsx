@@ -177,6 +177,14 @@ function ContactsPage({
                 onInputChange: handleNumeroPortable,
             },
             {
+                id: 'numero_fixe',
+                type: 'number',
+                value: numeroFixe,
+                placeholder: 'Exemple: 0634167452',
+                maxLength: 12,
+                onInputChange: handleNumeroFixe,
+            },
+            {
                 id: 'adresse_mail',
                 type: 'input',
                 value: adresseMail,
@@ -207,14 +215,6 @@ function ContactsPage({
                 onInputChange: handleService,
             },
             {
-                id: 'numero_fixe',
-                type: 'number',
-                value: numeroFixe,
-                placeholder: 'Exemple: 0634167452',
-                maxLength: 12,
-                onInputChange: handleNumeroFixe,
-            },
-            {
                 id: 'commentaires',
                 type: 'input',
                 value: commentaires,
@@ -232,10 +232,10 @@ function ContactsPage({
                 onInputChange: handleDateArretContact,
             },
         ]
-
         if (fields[4].value !== '') {
-            fields[5].required = false
-        } else if (fields[5].value !== '') {
+            fields[6].required = false
+        }
+        if (fields[6].value !== '') {
             fields[4].required = false
         }
 

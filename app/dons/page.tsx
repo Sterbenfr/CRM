@@ -331,9 +331,8 @@ function DonsPage() {
                     type: 'select',
                     value: codeContactEntiteDonatrice,
                     url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
-                    required: true,
                     onChange: handleCodeContactEntiteDonatriceChange,
-                }, //si c'est un nouveau contact ?
+                },
                 {
                     id: 'code_type_don',
                     type: 'select',
@@ -392,7 +391,6 @@ function DonsPage() {
                     value: codeUtilisateurAccepteRefuseDon,
                     url: '../api/select/sites/utilisateurs/donsAccepteRefuse',
                     placeholder: 'Exemple: Marie Dujardin',
-                    required: true,
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
                 }, //default : login
                 {
@@ -402,7 +400,7 @@ function DonsPage() {
                     createURL: '/sites',
                     value: siteBeneficiaireDon,
                     required: true,
-                    placeholder: 'Exemple: Entrepôt Principal',
+                    placeholder: 'Exemple: AD',
                     onInputChange: handleSiteBeneficiaireDonChange,
                 },
                 {

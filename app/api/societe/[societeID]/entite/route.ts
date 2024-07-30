@@ -61,8 +61,7 @@ export async function POST(req: NextRequest) {
     if (
         !Entite.raison_sociale ||
         !Entite.code_type_entite ||
-        !Entite.code_societe_appartenance ||
-        !Entite.adresse
+        !Entite.code_societe_appartenance
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },

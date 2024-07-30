@@ -29,64 +29,71 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                             height={80}
                         />
                     </Link>
-                    <Link
-                        href='/'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/' ? styles.underline : ''
-                        }`}
-                    >
-                        Calendrier
-                    </Link>
-                    <Link
-                        href='/dons'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/dons'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Dons
-                    </Link>
-                    <Link
-                        href='/societe'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/societe'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Entreprise
-                    </Link>
-                    <Link
-                        href='/sites'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/sites'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Sites RC
-                    </Link>
-                    <Link
-                        href='/prestataire'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/prestataire'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Prestataires
-                    </Link>
-                    <Link
-                        href='/utilisateurs'
-                        className={`${styles.links} ${
-                            firstPathnameSegment === '/utilisateurs'
-                                ? styles.underline
-                                : ''
-                        }`}
-                    >
-                        Utilisateurs
-                    </Link>
+                    {session ? (
+                        <>
+                            <Link
+                                href='/'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Calendrier
+                            </Link>
+                            <Link
+                                href='/dons'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/dons'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Dons
+                            </Link>
+                            <Link
+                                href='/societe'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/societe'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Entreprise
+                            </Link>
+                            <Link
+                                href='/sites'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/sites'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Sites RC
+                            </Link>
+                            <Link
+                                href='/prestataire'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/prestataire'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Prestataires
+                            </Link>
+                            <Link
+                                href='/utilisateurs'
+                                className={`${styles.links} ${
+                                    firstPathnameSegment === '/utilisateurs'
+                                        ? styles.underline
+                                        : ''
+                                }`}
+                            >
+                                Utilisateurs
+                            </Link>{' '}
+                        </>
+                    ) : null}
+
                     {session ? (
                         <>
                             <Link
