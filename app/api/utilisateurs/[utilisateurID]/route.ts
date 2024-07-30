@@ -51,6 +51,7 @@ export async function PUT(
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
+    console.log(body, 'body')
     if (body === null || body === undefined) {
         console.log(body, 'body', request.body)
         return NextResponse.json(
@@ -64,7 +65,9 @@ export async function PUT(
     }
 
     try {
-        body.password = await bcrypt.hash(body.password, 10)
+        if (body.password) {
+            body.password = await bcrypt.hash(body.password, 10)
+        }
         const columnMapping: { [key: string]: string } = {
             code_utilisateur: 'code_utilisateur',
         }

@@ -127,7 +127,7 @@ function UtilisateursPage() {
                 id: 'civilite',
                 type: 'select',
                 value: civilite,
-                url: `../../api/select/genre`,
+                url: `../api/select/genre`,
                 required: true,
                 onChange: handleCiviliteChange,
             },
@@ -163,7 +163,7 @@ function UtilisateursPage() {
                 type: 'select',
                 required: true,
                 value: codeTypeUtilisateur,
-                url: `../../api/select/utilisateurs`,
+                url: `../api/select/utilisateurs`,
                 onChange: handleCodeTypeUtilisateurChange,
             },
             {
@@ -194,10 +194,10 @@ function UtilisateursPage() {
             },
         ]
 
-        if (fields[6].value !== '') {
-            fields[7].required = false
-        } else if (fields[7].value !== '') {
+        if (fields[5].value !== '') {
             fields[6].required = false
+        } else if (fields[6].value !== '') {
+            fields[5].required = false
         }
 
         return fields
@@ -216,7 +216,7 @@ function UtilisateursPage() {
     useEffect(() => {
         const fetchUtilisateurs = async () => {
             const res = await fetch(
-                `../../api/utilisateurs?page=${page}&limit=${itemsPerPage}`,
+                `../api/utilisateurs?page=${page}&limit=${itemsPerPage}`,
             )
 
             if (!res.ok) {
@@ -233,7 +233,7 @@ function UtilisateursPage() {
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
                 const res = await fetch(
-                    `../../api/utilisateurs`,
+                    `../api/utilisateurs`,
                 )
 
                 if (!res.ok) {
@@ -295,7 +295,7 @@ function UtilisateursPage() {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `../../api/utilisateurs`,
+                        url: `../api/utilisateurs`,
                     }}
                     attribut={{
                         att1: 'Civilité',
@@ -336,7 +336,7 @@ function UtilisateursPage() {
                     <div className={style.PopUp}>
                         <PopUp
                             onClose={handleClose}
-                            url={`../../api/utilisateurs`}
+                            url={`../api/utilisateurs`}
                             fields={fields}
                         />
                     </div>
