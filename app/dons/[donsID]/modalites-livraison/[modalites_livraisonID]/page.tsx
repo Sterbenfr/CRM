@@ -299,8 +299,6 @@ function Modalites_livraisonPage({
         requiredValue()
 
         if (
-            !modifiedModalite_livraison.heure_prevue_livraison ||
-            modifiedModalite_livraison.heure_prevue_livraison.trim() === '' ||
             !modifiedModalite_livraison.adresse_enlevement ||
             modifiedModalite_livraison.adresse_enlevement.trim() === '' ||
             !modifiedModalite_livraison.nombre_palettes_prevu ||
@@ -612,8 +610,7 @@ function Modalites_livraisonPage({
                                         type='input'
                                         name='heure_prevue_livraison'
                                         value={
-                                            modifiedModalite_livraison.heure_prevue_livraison ??
-                                            ''
+                                            modifiedModalite_livraison.heure_prevue_livraison
                                         }
                                         placeholder={
                                             modalite_livraison[0]
