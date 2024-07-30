@@ -220,6 +220,10 @@ function EntitePage({
                 modifiedEntite[key as keyof EntiteID] === null ||
                 modifiedEntite[key as keyof EntiteID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedEntite(prevState => ({
                     ...prevState,
                     [key]: entite[0][key as keyof EntiteID],
@@ -443,7 +447,9 @@ function EntitePage({
                                         className={style.selectF}
                                         type='input'
                                         name='raison_sociale'
-                                        value={modifiedEntite.raison_sociale ?? ''}
+                                        value={
+                                            modifiedEntite.raison_sociale ?? ''
+                                        }
                                         placeholder={
                                             entite[0].raison_sociale === null ||
                                             entite[0].raison_sociale === ''

@@ -103,6 +103,10 @@ function GroupePage({
                 modifiedGroupe[key as keyof GroupeID] === null ||
                 modifiedGroupe[key as keyof GroupeID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedGroupe(prevState => ({
                     ...prevState,
                     [key]: groupe[0][key as keyof GroupeID],

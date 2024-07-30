@@ -141,6 +141,10 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                 modifiedSociete[key as keyof SocieteID] === null ||
                 modifiedSociete[key as keyof SocieteID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedSociete(prevState => ({
                     ...prevState,
                     [key]: societe[0][key as keyof SocieteID],
@@ -343,7 +347,9 @@ function SocietePage({ params }: { params: { societeID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='raison_sociale'
-                                        value={modifiedSociete.raison_sociale ?? ''}
+                                        value={
+                                            modifiedSociete.raison_sociale ?? ''
+                                        }
                                         placeholder={
                                             societe[0].raison_sociale ===
                                                 null ||

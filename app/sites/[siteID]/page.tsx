@@ -117,7 +117,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
             <div className={style.page}>
                 <h2 className={style.load}>Chargement...</h2>
             </div>
-    )
+        )
 
     const requiredValue = () => {
         const keysToCheck = [
@@ -133,6 +133,10 @@ function SitePage({ params }: { params: { siteID: string } }) {
                 modifiedSite[key as keyof SiteID] === null ||
                 modifiedSite[key as keyof SiteID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedSite(prevState => ({
                     ...prevState,
                     [key]: site[0][key as keyof SiteID],
@@ -149,24 +153,21 @@ function SitePage({ params }: { params: { siteID: string } }) {
             modifiedSite.designation_longue.trim() === '' ||
             !modifiedSite.adresse ||
             modifiedSite.adresse.trim() === '' ||
-            !(
-                modifiedSite.numero_telephone ||
-                modifiedSite.adresse_mail
-            )
+            !(modifiedSite.numero_telephone || modifiedSite.adresse_mail)
         ) {
-            canSubmit = false;
+            canSubmit = false
         } else {
-            canSubmit = true;
+            canSubmit = true
         }
 
         if (canSubmit) {
             const jsonPayload = {
                 ...modifiedSite,
             }
-    
+
             // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
-    
+
             try {
                 const res = await fetch(`../../api/sites/${params.siteID}`, {
                     method: 'PUT',
@@ -175,13 +176,13 @@ function SitePage({ params }: { params: { siteID: string } }) {
                     },
                     body: body,
                 })
-    
+
                 if (!res.ok) {
                     const errorDetail = await res.text()
                     console.error('Failed to update data:', errorDetail)
                     throw new Error('Failed to update data')
                 }
-    
+
                 const updatedSite: SiteID[] = await res.json()
                 setSite(updatedSite)
                 setModify(false)
@@ -190,7 +191,6 @@ function SitePage({ params }: { params: { siteID: string } }) {
             }
             window.location.reload()
         }
-
     }
 
     const initialValue = () => {
@@ -243,10 +243,6 @@ function SitePage({ params }: { params: { siteID: string } }) {
             const element = document.getElementById('hide1')
             if (element) {
                 element.style.display = 'none'
-            }
-            const element2 = document.getElementById('hide2')
-            if (element2) {
-                element2.style.display = 'none'
             }
         }
 
@@ -328,7 +324,10 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                         className={style.selectF}
                                         type='input'
                                         name='designation_longue'
-                                        value={modifiedSite.designation_longue ?? ''}
+                                        value={
+                                            modifiedSite.designation_longue ??
+                                            ''
+                                        }
                                         placeholder={
                                             site[0].designation_longue ===
                                                 null ||
@@ -490,7 +489,9 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                         className={style.selectF}
                                         type='number'
                                         name='numero_telephone'
-                                        value={modifiedSite.numero_telephone ?? ''}
+                                        value={
+                                            modifiedSite.numero_telephone ?? ''
+                                        }
                                         placeholder={
                                             site[0].numero_telephone === null ||
                                             site[0].numero_telephone === ''
@@ -591,19 +592,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                 </a>
                             )}
                         </div>
-                        <div className={style.info} id='hide2'>
-                            {!modify && (
-                                <a
-                                    className={style.linkID}
-                                    href={`/sites/${params.siteID}/user-site-link`}
-                                >
-                                    <p className={style.titre}>
-                                        {' '}
-                                        Utilisateur(s) suivant le site{' '}
-                                    </p>
-                                </a>
-                            )}
-                        </div>
+                        
                     </div>
                 </div>
             </div>

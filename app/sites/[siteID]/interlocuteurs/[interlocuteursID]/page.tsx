@@ -127,6 +127,10 @@ function InterlocuteurPage({
                 modifiedInterlocuteur[key as keyof InterlocuteurID] === null ||
                 modifiedInterlocuteur[key as keyof InterlocuteurID] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedInterlocuteur(prevState => ({
                     ...prevState,
                     [key]: interlocuteur[0][key as keyof InterlocuteurID],
@@ -362,7 +366,9 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='input'
                                         name='prenom'
-                                        value={modifiedInterlocuteur.prenom ?? ''}
+                                        value={
+                                            modifiedInterlocuteur.prenom ?? ''
+                                        }
                                         placeholder={
                                             interlocuteur[0].prenom === null ||
                                             interlocuteur[0].prenom === ''
@@ -421,7 +427,10 @@ function InterlocuteurPage({
                                         className={style.selectF}
                                         type='number'
                                         name='tel_perso'
-                                        value={modifiedInterlocuteur.tel_perso ?? ''}
+                                        value={
+                                            modifiedInterlocuteur.tel_perso ??
+                                            ''
+                                        }
                                         placeholder={
                                             interlocuteur[0].tel_perso ===
                                                 null ||

@@ -984,7 +984,6 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
 }
 
 .errorPopUp {
@@ -997,6 +996,14 @@
     border-radius: 10px;
     width: 50%;
     height: 50%;
+}
+
+.z1 {
+    z-index: 100;
+}
+
+.z2 {
+    z-index: 200;
 }
 
 .notLog {
@@ -1015,4 +1022,8 @@
     font-size: 1.2rem;
     color: #000000;
     width: 100%;
+}
+
+.isReq {
+    border: 2px solid red;
 }

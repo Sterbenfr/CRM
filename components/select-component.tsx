@@ -43,7 +43,6 @@ export default function SelectComponent({
                 )
             }
             const data = await response.json()
-            console.log(data)
             const formattedOptions = data.map(
                 (item: {
                     id: string

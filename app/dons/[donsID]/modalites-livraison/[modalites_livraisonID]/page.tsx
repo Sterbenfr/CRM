@@ -245,7 +245,6 @@ function Modalites_livraisonPage({
             setFile(event.target.files[0])
         }
     }
-
     if (
         !Array.isArray(modalite_livraison) ||
         modalite_livraison.length === 0 ||
@@ -282,6 +281,10 @@ function Modalites_livraisonPage({
                     key as keyof Modalite_livraisonID
                 ] === ''
             ) {
+                const input = document.querySelector(`input[name=${key}]`)
+                if (input) {
+                    input.classList.add(style.isReq)
+                }
                 setModifiedModalite_livraison(prevState => ({
                     ...prevState,
                     [key]: modalite_livraison[0][
@@ -756,7 +759,8 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='telephone_contact_enlevement'
                                         value={
-                                            modifiedModalite_livraison.telephone_contact_enlevement ?? ''
+                                            modifiedModalite_livraison.telephone_contact_enlevement ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -806,7 +810,8 @@ function Modalites_livraisonPage({
                                         type='mail'
                                         name='mail_contact_enlevement'
                                         value={
-                                            modifiedModalite_livraison.mail_contact_enlevement ?? ''
+                                            modifiedModalite_livraison.mail_contact_enlevement ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -847,7 +852,8 @@ function Modalites_livraisonPage({
                                         type='input'
                                         name='adresse_enlevement'
                                         value={
-                                            modifiedModalite_livraison.adresse_enlevement ?? ''
+                                            modifiedModalite_livraison.adresse_enlevement ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1031,7 +1037,8 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='telephone_contact_livraison'
                                         value={
-                                            modifiedModalite_livraison.telephone_contact_livraison ?? ''
+                                            modifiedModalite_livraison.telephone_contact_livraison ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1080,7 +1087,8 @@ function Modalites_livraisonPage({
                                         type='mail'
                                         name='mail_contact_livraison'
                                         value={
-                                            modifiedModalite_livraison.mail_contact_livraison ?? ''
+                                            modifiedModalite_livraison.mail_contact_livraison ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1121,7 +1129,8 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_prevu ?? ''
+                                            modifiedModalite_livraison.nombre_palettes_prevu ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1170,7 +1179,8 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_consignees_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu ?? ''
+                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1220,7 +1230,8 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_cartons_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_cartons_prevu ?? ''
+                                            modifiedModalite_livraison.nombre_cartons_prevu ??
+                                            ''
                                         }
                                         placeholder={
                                             modalite_livraison[0]
