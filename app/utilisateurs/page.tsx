@@ -172,7 +172,6 @@ function UtilisateursPage() {
                 value: telPerso,
                 maxLength: 12,
                 placeholder: 'Exemple: 0601020304',
-                required: true,
                 onInputChange: handleTelPersoChange,
             }, // soit le tel soit le mail pas rien
             {
