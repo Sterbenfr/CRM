@@ -46,7 +46,6 @@ function ReceptionPage({
     const [modifiedReception, setModifiedReception] = useState<
         Partial<ReceptionID>
     >({})
-    let [canSubmit] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchSessionAndReception = async () => {
@@ -177,39 +176,9 @@ function ReceptionPage({
             </div>
         )
 
-    const requiredValue = () => {
-        const keysToCheck = [
-            'numero_livraison',
-            'date_reception',
-            'heure_reception',
-        ]
-
-        keysToCheck.forEach(key => {
-            if (
-                modifiedReception[key as keyof ReceptionID] === null ||
-                modifiedReception[key as keyof ReceptionID] === ''
-            ) {
-                setModifiedReception(prevState => ({
-                    ...prevState,
-                    [key]: reception[0][key as keyof ReceptionID],
-                }))
-            }
-        })
-    }
-
     const handleSubmit = async () => {
-        requiredValue()
 
-        if (
-            !modifiedReception.heure_reception ||
-            modifiedReception.heure_reception.trim() === ''
-        ) {
-            canSubmit = false
-        } else {
-            canSubmit = true
-        }
-
-        if (canSubmit) {
+        
             const filePaths = await fileUpload('../../../../api/upload/piece')
 
             const jsonPayload = {
@@ -245,7 +214,7 @@ function ReceptionPage({
                 console.error('Error submitting form:', error)
             }
             window.location.reload()
-        }
+        
     }
 
     const Print = () => {
@@ -447,7 +416,7 @@ function ReceptionPage({
                                         type='input'
                                         name='heure_prevue_livraison'
                                         value={
-                                            modifiedReception.heure_reception ?? ''
+                                            modifiedReception.heure_reception
                                         }
                                         placeholder={
                                             reception[0].heure_reception ==
