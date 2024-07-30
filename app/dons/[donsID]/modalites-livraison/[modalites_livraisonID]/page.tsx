@@ -38,12 +38,12 @@ interface Modalite_livraisonID {
     prenom_contact_livraison: string
     telephone_contact_livraison: string
     mail_contact_livraison: string
-    nombre_palettes_prevu: number
-    nombre_palettes_consignees_prevu: number
-    nombre_cartons_prevu: number
-    poids_prevu_kg: number
+    nombre_palettes_prevu: string
+    nombre_palettes_consignees_prevu: string
+    nombre_cartons_prevu: string
+    poids_prevu_kg: string
     produits_sur_palettes: string
-    temperature_conserv_produits: number
+    temperature_conserv_produits: string
     commentaires: string
     pieces_associees: string
     libelle_type_livraison: string
@@ -196,48 +196,6 @@ function Modalites_livraisonPage({
             : new Date().toISOString().split('T')[0]
     }
 
-    const handleHeureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (
-            event.target.value[event.target.value.length - 1] === ':' ||
-            !isNaN(parseInt(event.target.value[event.target.value.length - 1]))
-        ) {
-            if (parseInt(event.target.value.slice(0, 2)) > 23) {
-                event.target.value = '23' + event.target.value.slice(2)
-            }
-            if (parseInt(event.target.value.slice(3, 5)) > 59) {
-                event.target.value =
-                    event.target.value.slice(0, 3) +
-                    '59' +
-                    event.target.value.slice(5)
-            }
-            if (parseInt(event.target.value.slice(6, 8)) > 59) {
-                event.target.value =
-                    event.target.value.slice(0, 6) +
-                    '59' +
-                    event.target.value.slice(8)
-            }
-            if (
-                event.target.value.length === 3 &&
-                event.target.value[2] !== ':'
-            ) {
-                event.target.value =
-                    event.target.value.slice(0, 2) + ':' + event.target.value[2]
-            }
-            if (event.target.value.length === 5) {
-                event.target.value = event.target.value + ':00'
-            }
-            if (event.target.value.length === 7) {
-                event.target.value = event.target.value.slice(0, 5)
-            }
-            modalite_livraison[0].heure_prevue_livraison = event.target.value
-        } else {
-            event.target.value = event.target.value.slice(
-                0,
-                event.target.value.length - 1,
-            )
-        }
-    }
-
     const handleFileChange: React.ChangeEventHandler<
         HTMLInputElement
     > = event => {
@@ -267,9 +225,6 @@ function Modalites_livraisonPage({
             'adresse_livraison',
             'telephone_contact_livraison',
             'mail_contact_livraison',
-            'nombre_palettes_prevu',
-            'nombre_palettes_consignees_prevu',
-            'nombre_cartons_prevu',
         ]
 
         keysToCheck.forEach(key => {
@@ -301,12 +256,6 @@ function Modalites_livraisonPage({
         if (
             !modifiedModalite_livraison.adresse_enlevement ||
             modifiedModalite_livraison.adresse_enlevement.trim() === '' ||
-            !modifiedModalite_livraison.nombre_palettes_prevu ||
-            modifiedModalite_livraison.nombre_palettes_prevu === 0 ||
-            !modifiedModalite_livraison.nombre_palettes_consignees_prevu ||
-            modifiedModalite_livraison.nombre_palettes_consignees_prevu === 0 ||
-            !modifiedModalite_livraison.nombre_cartons_prevu ||
-            modifiedModalite_livraison.nombre_cartons_prevu === 0 ||
             !(
                 modifiedModalite_livraison.telephone_contact_enlevement ||
                 modifiedModalite_livraison.mail_contact_enlevement
@@ -602,38 +551,14 @@ function Modalites_livraisonPage({
                                 <p className={style.titre}>
                                     Heure prévue livraison :
                                 </p>
-                                {modify &&
-                                session?.user.role ===
-                                    ('AD' || 'AP' || 'EN' || 'SU') ? (
-                                    <input
-                                        className={style.selectF}
-                                        type='input'
-                                        name='heure_prevue_livraison'
-                                        value={
-                                            modifiedModalite_livraison.heure_prevue_livraison
-                                        }
-                                        placeholder={
-                                            modalite_livraison[0]
-                                                .heure_prevue_livraison ==
-                                                null ||
-                                            modalite_livraison[0]
-                                                .heure_prevue_livraison === ''
-                                                ? 'Exemple: 14:20'
-                                                : 'Actuellement: ' +
-                                                  modalite_livraison[0]
-                                                      .heure_prevue_livraison
-                                        }
-                                        onInput={handleHeureChange}
-                                    />
-                                ) : (
-                                    <p>
-                                        {modalite_livraison[0]
-                                            .heure_prevue_livraison == null
-                                            ? '/'
-                                            : modalite_livraison[0]
-                                                  .heure_prevue_livraison}
-                                    </p>
-                                )}
+
+                                <p>
+                                    {modalite_livraison[0]
+                                        .heure_prevue_livraison == (null || '')
+                                        ? '/'
+                                        : modalite_livraison[0]
+                                              .heure_prevue_livraison}
+                                </p>
                             </div>
                         </div>
 
@@ -1129,8 +1054,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_prevu ??
-                                            ''
+                                            modifiedModalite_livraison.nombre_palettes_prevu
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1156,7 +1080,8 @@ function Modalites_livraisonPage({
                                 ) : (
                                     <p>
                                         {modalite_livraison[0]
-                                            .nombre_palettes_prevu == null
+                                            .nombre_palettes_prevu ==
+                                        (null || '')
                                             ? '/'
                                             : modalite_livraison[0]
                                                   .nombre_palettes_prevu}
@@ -1179,8 +1104,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_palettes_consignees_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu ??
-                                            ''
+                                            modifiedModalite_livraison.nombre_palettes_consignees_prevu
                                         }
                                         placeholder={
                                             modalite_livraison[0]
@@ -1230,8 +1154,7 @@ function Modalites_livraisonPage({
                                         type='number'
                                         name='nombre_cartons_prevu'
                                         value={
-                                            modifiedModalite_livraison.nombre_cartons_prevu ??
-                                            ''
+                                            modifiedModalite_livraison.nombre_cartons_prevu
                                         }
                                         placeholder={
                                             modalite_livraison[0]
