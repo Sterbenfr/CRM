@@ -334,6 +334,7 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                         {
                             label: `Types d'interlocuteurs`,
                             url: 'type-interlocuteur',
+
                         },
                     ]}
                 />

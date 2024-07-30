@@ -433,7 +433,7 @@ function PrestatairesPage() {
                         <PopUp
                             onClose={handleClose}
                             url='../api/prestataire'
-                            fields={fields} // Use the fields state here
+                            fields={fields}
                         />
                     </div>
                 )}
