@@ -35,7 +35,7 @@ const fieldLabels: { [key: string]: string } = {
     date_cerfa: 'Date du cerfa',
     cerfa: 'Cerfa',
     //Modaliteés Livraison
-    numero_livraison: 'Numéro de livraison',
+    numero_livraison: 'Numéro de réception',
     code_Don: 'Don',
     code_type_livraison: 'Type de livraison',
     date_prevue_livraison: 'Date de livraison prévue',
@@ -360,6 +360,7 @@ const PopUp: React.FC<PopUpProps> = ({
             nombre_palettes_recues: 'une réception',
             adresse_enlevement: 'une livraison',
             code_modalite_interaction: 'une interaction',
+            code_type_utilisateur: 'un interlocuteur site RC',
             password: 'un utilisateur',
         }
         return tableNameMapping[fieldId] || 'un type'
