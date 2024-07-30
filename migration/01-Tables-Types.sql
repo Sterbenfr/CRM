@@ -150,3 +150,8 @@ INSERT INTO TypeLivraison (code_type_livraison, libelle) VALUES
 ('DON', 'Donateur'),
 ('RES', 'Restos'),
 ('TRA', 'Transporteur');
+
+CREATE TABLE TypeInterlocuteur (
+    code_type_interlocuteur CHAR(4) PRIMARY KEY,
+    libelle VARCHAR(50) NOT NULL
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -744,7 +744,7 @@ function Docu() {
                                     rechercher par statut du don. Il vous suffit
                                     de taper dans la barre de recherche le
                                     statut que vous souhaitez. (validé, en
-                                    attente, annulé)
+                                    attente, refusé)
                                 </li>
                             </ol>
                             <br />
@@ -1294,8 +1294,8 @@ function Docu() {
                                         Accès aux détails :
                                     </span>{' '}
                                     Pour consulter les informations détaillées
-                                    d&apos;un site du RC, cliquez simplement
-                                    sur l&apos;un des éléments présentés.
+                                    d&apos;un site du RC, cliquez simplement sur
+                                    l&apos;un des éléments présentés.
                                 </li>
                             </ol>
                             <br />
@@ -1314,8 +1314,7 @@ function Docu() {
                                     Fonctionnalités
                                 </a>
                                 ). Ne cochez pas ces cases si vous ne souhaitez
-                                pas réaliser des actions sur les sites du 
-                                RC.
+                                pas réaliser des actions sur les sites du RC.
                             </p>
                         </div>
                         <div className={style.sousCompart}>
@@ -1332,7 +1331,8 @@ function Docu() {
                                     Accessibilité :
                                 </span>{' '}
                                 Cette page est accessible depuis la page
-                                d&apos;information d&apos;un Sites RC(voir la page{' '}
+                                d&apos;information d&apos;un Sites RC(voir la
+                                page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.4'
@@ -1361,8 +1361,8 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre de prestataires
-                                    affichés par page.
+                                    page et personnaliser le nombre de
+                                    prestataires affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -1416,8 +1416,8 @@ function Docu() {
                                         Pagination et affichage :
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
-                                    page et personnaliser le nombre d&apos;utilisateurs
-                                    affichés par page.
+                                    page et personnaliser le nombre
+                                    d&apos;utilisateurs affichés par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -1641,8 +1641,8 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accéder à la page Reception de la livraison (Voir
-                                ici comment accéder à la page{' '}
+                                Accéder à la page Reception de la livraison
+                                (Voir ici comment accéder à la page{' '}
                                 <a
                                     className={style.linkA}
                                     href='#2.3'

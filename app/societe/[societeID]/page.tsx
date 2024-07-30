@@ -130,11 +130,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
         )
 
     const requiredValue = () => {
-        const keysToCheck = [
-            'raison_sociale',
-            'Siren',
-            'code_type_activite_Societe',
-        ]
+        const keysToCheck = ['raison_sociale', 'code_type_activite_Societe']
 
         keysToCheck.forEach(key => {
             if (
@@ -158,9 +154,7 @@ function SocietePage({ params }: { params: { societeID: string } }) {
 
         if (
             !modifiedSociete.raison_sociale ||
-            modifiedSociete.raison_sociale.trim() === '' ||
-            !modifiedSociete.Siren ||
-            modifiedSociete.Siren.trim() === ''
+            modifiedSociete.raison_sociale.trim() === ''
         ) {
             canSubmit = false
         } else {

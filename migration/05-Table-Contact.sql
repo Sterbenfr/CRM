@@ -1,6 +1,6 @@
 CREATE TABLE Contacts (
     code_entite INT(7) NOT NULL,
-    code_contact INT(3) NOT NULL AUTO_INCREMENT,
+    code_contact INT(6) NOT NULL AUTO_INCREMENT,
     civilite CHAR(3) NOT NULL,
     nom VARCHAR(20) NOT NULL,
     prenom VARCHAR(20) NOT NULL,

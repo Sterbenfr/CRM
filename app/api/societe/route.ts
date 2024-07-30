@@ -50,11 +50,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (
-        !societes.Siren ||
-        !societes.code_type_activite_Societe ||
-        !societes.raison_sociale
-    ) {
+    if (!societes.code_type_activite_Societe || !societes.raison_sociale) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },

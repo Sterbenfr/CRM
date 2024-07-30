@@ -154,7 +154,6 @@ function SocietesPage() {
                 type: 'number',
                 value: Siren,
                 placeholder: 'Exemple: 453684259',
-                required: true,
                 maxLength: 9,
                 onInputChange: handleSirenChange,
             }, // if number !== 9 = pas de validation

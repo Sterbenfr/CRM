@@ -206,14 +206,7 @@ function EntitePage({
         )
 
     const requiredValue = () => {
-        const keysToCheck = [
-            'raison_sociale',
-            'nom_societe',
-            'adresse',
-            'telephone',
-            'mail',
-            'TE_libelle',
-        ]
+        const keysToCheck = ['raison_sociale', 'nom_societe', 'TE_libelle']
 
         keysToCheck.forEach(key => {
             if (
@@ -237,10 +230,7 @@ function EntitePage({
 
         if (
             !modifiedEntite.raison_sociale ||
-            modifiedEntite.raison_sociale.trim() === '' ||
-            !modifiedEntite.adresse ||
-            modifiedEntite.adresse.trim() === '' ||
-            !(modifiedEntite.telephone || modifiedEntite.mail)
+            modifiedEntite.raison_sociale.trim() === ''
         ) {
             canSubmit = false
         } else {

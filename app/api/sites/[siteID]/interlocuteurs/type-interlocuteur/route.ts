@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     }
     try {
         const [rows] = await connection.query(
-            'SELECT code_type_utilisateur as id, libelle as label FROM `TypesUtilisateurs` LIMIT 1000',
+            'SELECT code_type_interlocuteur as id, libelle as label FROM `TypeInterlocuteur` LIMIT 1000',
         )
         return NextResponse.json(rows)
     } catch (err) {
@@ -23,14 +23,14 @@ export async function GET(request: Request) {
     }
 }
 export async function POST(req: NextRequest) {
-    let TypesUtilisateurs: type_utilisateur
+    let TypeInterlocuteur: type_utilisateur
     try {
-        TypesUtilisateurs = JSON.parse(await streamToString(req.body))
+        TypeInterlocuteur = JSON.parse(await streamToString(req.body))
     } catch (error) {
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    if (!TypesUtilisateurs) {
+    if (!TypeInterlocuteur) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const query = 'INSERT INTO `TypesUtilisateurs` SET ?'
-        const [rows] = await connection.query(query, TypesUtilisateurs)
+        const query = 'INSERT INTO `TypeInterlocuteur` SET ?'
+        const [rows] = await connection.query(query, TypeInterlocuteur)
         return NextResponse.json(rows)
     } catch (error) {
         return NextResponse.json(
@@ -56,10 +56,10 @@ export async function DELETE(req: NextRequest) {
     }
     try {
         const query =
-            'DELETE FROM `TypesUtilisateurs` WHERE `code_type_utilisateur` = ?'
+            'DELETE FROM `TypeInterlocuteur` WHERE `code_type_interlocuteur` = ?'
         const [rows] = await connection.query(
             query,
-            body.join(' or code_type_utilisateur = '),
+            body.join(' or code_type_interlocuteur = '),
         )
         return NextResponse.json(rows)
     } catch (error) {

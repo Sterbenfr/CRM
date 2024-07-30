@@ -49,7 +49,7 @@ interface DonID {
     date_cerfa: Date
     cerfa: string
     code_site_beneficiaire_don: string
-    designation_longue: string
+    designation_courte: string
 }
 
 function DonPage({ params }: { params: { donsID: string } }) {
@@ -604,18 +604,18 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                     onChange={e => handleSiteChange(e)}
                                     onInputChange={e => handleSiteChange(e)}
                                     placeholder={
-                                        don[0].designation_longue == null ||
-                                        don[0].designation_longue === ''
+                                        don[0].designation_courte == null ||
+                                        don[0].designation_courte === ''
                                             ? 'Exemple: Entrepot Principal'
                                             : 'Actuellement: ' +
-                                              don[0].designation_longue
+                                              don[0].designation_courte
                                     }
                                 />
                             ) : (
                                 <p>
-                                    {don[0].designation_longue == null
+                                    {don[0].designation_courte == null
                                         ? '/'
-                                        : don[0].designation_longue}
+                                        : don[0].designation_courte}
                                 </p>
                             )}
                         </div>

@@ -60,7 +60,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
 
     const [raisonSociale, setRaisonSociale] = useState('')
     const [nomCommercial, setNomCommercial] = useState('')
-    //const [logo, setLogo] = useState<Blob>()
     const [siret, setSiret] = useState('')
     const [codeApe, setCodeApe] = useState('')
     const [codeRna, setCodeRna] = useState('')
@@ -76,7 +75,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     const [codeTypeCompetence, setCodeTypeCompetence] = useState('')
     const [commentairesLogistique, setCommentairesLogistique] = useState('')
     const [presenceQuai, setPresenceQuai] = useState(false)
-    //const [piecesAssociees, setPiecesAssociees] = useState<Blob>()
     const [cerfa, setCerfa] = useState(false)
     const [codeFrequenceCerfa, setCodeFrequenceCerfa] = useState('')
     const [dateArretActivite, setDateArretActivite] = useState<Date>()
@@ -92,12 +90,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
     ) => {
         setNomCommercial(event.target.value)
     }
-
-    /*const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setLogo(event.target.files[0])
-        }
-    }*/
 
     const handleSiretChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSiret(event.target.value)
@@ -183,14 +175,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setPresenceQuai(!presenceQuai)
     }
 
-    /*const handlePiecesAssocieesChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        if (event.target.files) {
-            setPiecesAssociees(event.target.files[0])
-        }
-    }*/
-
     const handleCodeFrequenceCerfaChange = (
         event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
@@ -272,7 +256,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 id: 'adresse',
                 type: 'input',
                 value: adresse,
-                required: true,
                 onInputChange: handleAdresseChange,
                 maxLength: 255,
                 placeholder: 'Exemple: 12 rue de la paix, 75000 Paris',
@@ -284,22 +267,19 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 12,
                 onInputChange: handleTelephoneChange,
                 placeholder: 'Exemple: 0123456789',
-                required: true,
-            }, // tel ou mail obligée
+            },
             {
                 id: 'mail',
                 type: 'input',
                 value: mail,
                 maxLength: 50,
                 onInputChange: handleMailChange,
-                required: true,
                 placeholder: 'Exemple: Alpha.corp@gmail.com',
             },
             {
                 id: 'logo',
                 type: 'file',
                 value: null,
-                //onInputChange: handleLogoChange,
             },
             {
                 id: 'Siret',
@@ -468,11 +448,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             incrementFileIndex++
         }
 
-        if (fields[5].value !== '') {
-            fields[6].required = false
-        } else if (fields[6].value !== '') {
-            fields[5].required = false
-        }
         setFileIndex(17 + incrementFileIndex)
         return fields
     }, [

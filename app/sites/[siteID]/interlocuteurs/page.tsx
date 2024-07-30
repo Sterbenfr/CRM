@@ -146,7 +146,7 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                 placeholder: 'Exemple: Jean',
                 onInputChange: handlePrenomChange,
             },
-            
+
             {
                 id: 'code_type_utilisateur',
                 type: 'select',
@@ -267,9 +267,9 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                     items={Interlocuteurs.map(user => ({
                         value1: user.code_interlocuteur.toString(),
                         value2:
-                            user.civilite == "M."
+                            user.civilite == 'M.'
                                 ? 'Monsieur'
-                                : user.civilite == "Mme"
+                                : user.civilite == 'Mme'
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,
@@ -295,9 +295,9 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                     searchItems={search.map(user => ({
                         value1: user.code_interlocuteur.toString(),
                         value2:
-                            user.civilite === "M."
+                            user.civilite === 'M.'
                                 ? 'Monsieur'
-                                : user.civilite === "Mme"
+                                : user.civilite === 'Mme'
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,
@@ -332,8 +332,8 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                 <TypesButtons
                     items={[
                         {
-                            label: `Types d'utilisateurs`,
-                            url: 'type-utilisateurs',
+                            label: `Types d'interlocuteurs`,
+                            url: 'type-interlocuteur',
                         },
                     ]}
                 />

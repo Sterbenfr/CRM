@@ -29,7 +29,7 @@ CREATE TABLE Dons (
     cerfa VARCHAR(200),
     PRIMARY KEY (code_Don),
     FOREIGN KEY (code_Entite_donatrice) REFERENCES Entite(code_Entite) ON UPDATE CASCADE ON DELETE SET NULL,
-    FOREIGN KEY (code_contact_Entite_donatrice) REFERENCES ContactEntite(code_utilisateur_suivant) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (code_contact_Entite_donatrice) REFERENCES Contacts(code_contact) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (code_type_don) REFERENCES TypesDons(code_type_don) ON UPDATE CASCADE,
     FOREIGN KEY (code_type_competences) REFERENCES TypesCompetences(code_type_competence) ON UPDATE CASCADE,
     FOREIGN KEY (code_type_produits) REFERENCES TypesProduits(code_type_produits) ON UPDATE CASCADE,

@@ -10,7 +10,7 @@ export async function GET(request: Request) {
     }
     try {
         const [rows] = await connection.query(
-            'Select code_site as id, designation_longue as label from Sites;',
+            'Select code_site as id, designation_courte as label from Sites;',
         )
         return NextResponse.json(rows)
     } catch (err) {

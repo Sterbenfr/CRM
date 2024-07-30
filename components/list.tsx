@@ -66,40 +66,34 @@ const List: React.FC<{
         setShowConfirm(true)
     }
 
-    const confirmDelete = () => {
+    const confirmDelete = async () => {
         if (!functions.url?.includes('type')) {
-            Promise.all(
-                lineCheckbox.map(item =>
-                    fetch(`${functions.url}/${item}`, {
-                        method: 'DELETE',
-                    }),
-                ),
-            ).then(() => {
-                setTimeout(() => {
-                    window.location.reload()
-                }, 100)
+            lineCheckbox.map(async item => {
+                await fetch(`${functions.url}/${item}`, {
+                    method: 'DELETE',
+                })
             })
+            setTimeout(() => {
+                window.location.reload()
+            }, 400)
         } else {
-            fetch(functions.url, {
+            const res = await fetch(functions.url, {
                 method: 'DELETE',
                 body: JSON.stringify(lineCheckbox),
             })
-                .then(res => res.json())
-                .then(err => {
-                    if (
-                        err.error
-                            .toString()
-                            .includes('foreign key constraint fails')
-                    ) {
-                        setErrorMessage(
-                            'Impossible de supprimer un/des élément(s) sélectionné(s)',
-                        )
-                    } else {
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 400)
-                    }
-                })
+            const err = await res.json()
+            if (
+                err.error &&
+                err.error.toString().includes('foreign key constraint fails')
+            ) {
+                setErrorMessage(
+                    'Impossible de supprimer un/des élément(s) sélectionné(s)',
+                )
+            } else {
+                setTimeout(() => {
+                    window.location.reload()
+                }, 400)
+            }
         }
     }
 

@@ -120,13 +120,7 @@ function SitePage({ params }: { params: { siteID: string } }) {
         )
 
     const requiredValue = () => {
-        const keysToCheck = [
-            'designation_longue',
-            'adresse',
-            'code_type_site',
-            'numero_telephone',
-            'adresse_mail',
-        ]
+        const keysToCheck = ['designation_courte', 'adresse', 'code_type_site']
 
         keysToCheck.forEach(key => {
             if (
@@ -149,11 +143,10 @@ function SitePage({ params }: { params: { siteID: string } }) {
         requiredValue()
 
         if (
-            !modifiedSite.designation_longue ||
-            modifiedSite.designation_longue.trim() === '' ||
+            !modifiedSite.designation_courte ||
+            modifiedSite.designation_courte.trim() === '' ||
             !modifiedSite.adresse ||
-            modifiedSite.adresse.trim() === '' ||
-            !(modifiedSite.numero_telephone || modifiedSite.adresse_mail)
+            modifiedSite.adresse.trim() === ''
         ) {
             canSubmit = false
         } else {
@@ -592,7 +585,6 @@ function SitePage({ params }: { params: { siteID: string } }) {
                                 </a>
                             )}
                         </div>
-                        
                     </div>
                 </div>
             </div>
