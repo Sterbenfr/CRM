@@ -122,7 +122,6 @@ function UtilisateursPage() {
             onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
             onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
         }[] = [
-            
             {
                 id: 'civilite',
                 type: 'select',
@@ -150,6 +149,14 @@ function UtilisateursPage() {
                 onInputChange: handlePrenomChange,
             },
             {
+                id: 'code_type_utilisateur',
+                type: 'select',
+                required: true,
+                value: codeTypeUtilisateur,
+                url: `../api/select/utilisateurs`,
+                onChange: handleCodeTypeUtilisateurChange,
+            },
+            {
                 id: 'password',
                 type: 'password',
                 maxLength: 150,
@@ -157,14 +164,6 @@ function UtilisateursPage() {
                 required: true,
                 placeholder: 'Exemple: France2024!',
                 onInputChange: handlePasswordChange,
-            },
-            {
-                id: 'code_type_utilisateur',
-                type: 'select',
-                required: true,
-                value: codeTypeUtilisateur,
-                url: `../api/select/utilisateurs`,
-                onChange: handleCodeTypeUtilisateurChange,
             },
             {
                 id: 'tel_perso',
@@ -209,7 +208,6 @@ function UtilisateursPage() {
         commentaires,
         password,
         codeTypeUtilisateur,
-        
     ])
 
     useEffect(() => {
@@ -231,9 +229,7 @@ function UtilisateursPage() {
 
         const fetchSearchUtilisateurs = async () => {
             if (search.length === 0) {
-                const res = await fetch(
-                    `../api/utilisateurs`,
-                )
+                const res = await fetch(`../api/utilisateurs`)
 
                 if (!res.ok) {
                     throw new Error('Failed to fetch data')
@@ -278,9 +274,9 @@ function UtilisateursPage() {
                     items={Utilisateurs.map(user => ({
                         value1: user.code_utilisateur.toString(),
                         value2:
-                            user.civilite == "M."
+                            user.civilite == 'M.'
                                 ? 'Monsieur'
-                                : user.civilite == "Mme"
+                                : user.civilite == 'Mme'
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,
@@ -306,9 +302,9 @@ function UtilisateursPage() {
                     searchItems={search.map(user => ({
                         value1: user.code_utilisateur.toString(),
                         value2:
-                            user.civilite === "M."
+                            user.civilite === 'M.'
                                 ? 'Monsieur'
-                                : user.civilite === "Mme"
+                                : user.civilite === 'Mme'
                                   ? 'Madame'
                                   : 'Non renseigné',
                         value3: user.nom,
