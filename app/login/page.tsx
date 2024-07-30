@@ -25,6 +25,10 @@ const LoginPage = () => {
             window.location.href = '/'
         } else if (result) {
             console.error(result.error)
+            const paragraph = document.querySelector('h3')
+            if (paragraph) {
+                paragraph.textContent = 'Mauvais mot de passe.'
+            }
         }
     }
 
@@ -164,6 +168,7 @@ const LoginPage = () => {
                     <button className={style.submit} type='submit'>
                         Se connecter
                     </button>
+                    <h3></h3>
                 </form>
             )}
         </div>

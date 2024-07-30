@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const [interactionsrelance]: any[] = await connection.query(
-            'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_relance AS date, CONCAT("Relance d\'interaction du don : ", i.code_interaction) AS title, e.code_societe_appartenance, e.nom_commercial FROM `Interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
+            'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_relance AS date, CONCAT("Relance d\'interaction du don : ", e.nom_commercial) AS title, e.code_societe_appartenance, e.nom_commercial FROM `Interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
 
         // Ajouter un préfixe aux identifiants pour éviter les conflits
