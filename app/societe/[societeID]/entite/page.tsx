@@ -488,7 +488,6 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 await res.json()
             setEntite(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSearchEntite = async () => {
@@ -508,7 +507,11 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         fetchEntite()
         fetchSearchEntite()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.societeID, page, itemsPerPage, generateFields])
+    }, [params.societeID, page, itemsPerPage])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

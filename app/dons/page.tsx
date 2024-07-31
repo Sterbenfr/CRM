@@ -584,16 +584,6 @@ function DonsPage() {
                 await res.json()
             setDons(data)
             setTotalItems(total) // set the total items
-            setFields(
-                generateFields(
-                    debutMiseDispo,
-                    finMiseDispo,
-                    selectedTypeDon,
-                    selectedTypeMarchandise,
-                    commentaires,
-                    statutAcceptationDon,
-                ),
-            )
         }
 
         const fetchSearchDons = async () => {
@@ -618,8 +608,20 @@ function DonsPage() {
         selectedTypeMarchandise,
         statutAcceptationDon,
         debutMiseDispo,
-        generateFields,
     ])
+
+    useEffect(() => {
+        setFields(
+            generateFields(
+                debutMiseDispo,
+                finMiseDispo,
+                selectedTypeDon,
+                selectedTypeMarchandise,
+                commentaires,
+                statutAcceptationDon,
+            ),
+        )
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

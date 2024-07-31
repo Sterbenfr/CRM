@@ -477,7 +477,9 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         if (fields[FindIndex('nombre_cartons_prevu')].value === '') {
             fields[FindIndex('nombre_cartons_prevu')].value = null
         }
-        if (fields[FindIndex('nombre_palettes_consignees_prevu')].value === '') {
+        if (
+            fields[FindIndex('nombre_palettes_consignees_prevu')].value === ''
+        ) {
             fields[FindIndex('nombre_palettes_consignees_prevu')].value = null
         }
         if (fields[FindIndex('nombre_palettes_prevu')].value === '') {
@@ -601,7 +603,6 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
             }: { data: ModalitesLivraison[]; total: number } = await res.json()
             setModalitesLivraison(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         const fetchSearchModalitesLivraisons = async () => {
@@ -623,7 +624,11 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         fetchModalitesLivraisons()
         fetchSearchModalitesLivraisons()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.donsID, generateFields])
+    }, [page, itemsPerPage, params.donsID])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

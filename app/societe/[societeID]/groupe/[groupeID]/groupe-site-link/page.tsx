@@ -156,11 +156,14 @@ function SuiviGroupePage({
                 await res.json()
             setSuiviGroupe(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         fetchSuiviGroupe()
-    }, [page, itemsPerPage, params, generateFields])
+    }, [page, itemsPerPage, params])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

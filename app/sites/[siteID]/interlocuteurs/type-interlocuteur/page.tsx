@@ -12,7 +12,9 @@ export interface type_interlocuteur {
 }
 
 function InterlocuteursPage({ params }: { params: { siteID: string } }) {
-    const [Interlocuteurs, setInterlocuteurs] = useState<type_interlocuteur[]>([])
+    const [Interlocuteurs, setInterlocuteurs] = useState<type_interlocuteur[]>(
+        [],
+    )
 
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 
@@ -24,7 +26,7 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
         const fetchInterlocuteurs = async () => {
             if (!params.siteID) return
             const res = await fetch(
-                `../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteurs`,
+                `../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteur`,
             )
 
             if (!res.ok) {
@@ -42,7 +44,9 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
         <>
             <div className={style.page}>
                 <div className={style.croixID}>
-                    <h1 className={style.lg1}>Types d&apos;utilisateurs</h1>
+                    <h1 className={style.lg1}>
+                        Types d&apos;interlocuteurs RC
+                    </h1>
                     <a href='javascript:history.go(-1)' className={style.btnC}>
                         <Image
                             className={style.CR}
@@ -66,7 +70,7 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                                 ? setIsPopUpOpen(false)
                                 : setIsPopUpOpen(true)
                         },
-                        url: `../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteurs`,
+                        url: `../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteur`,
                     }}
                     attribut={{
                         att1: 'Code',
@@ -77,10 +81,10 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                     <div className={style.PopUpType}>
                         <PopUp
                             onClose={handleClose}
-                            url={`../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteurs`}
+                            url={`../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteur`}
                             fields={[
                                 {
-                                    id: 'code_type_utilisateur',
+                                    id: 'code_type_interlocuteur',
                                     type: 'input',
                                     value: null,
                                     required: true,

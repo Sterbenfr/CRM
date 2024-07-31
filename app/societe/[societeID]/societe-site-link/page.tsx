@@ -148,11 +148,14 @@ function ContactSocietePage({ params }: { params: { societeID: string } }) {
                 await res.json()
             setContacts(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         fetchContacts()
-    }, [page, itemsPerPage, params, generateFields])
+    }, [page, itemsPerPage, params])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
