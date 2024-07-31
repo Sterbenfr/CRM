@@ -23,6 +23,7 @@ export interface Prestataire {
     mail_contact_prestataire: string
     commentaires: string
     date_arret_activite_du_prestataire: Date
+    label_type_prestataire: string
 }
 
 function PrestatairesPage() {
@@ -365,7 +366,7 @@ function PrestatairesPage() {
                     items={Prestataires.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3: Prestataire.code_type_de_Prestataire.toString(),
+                        value3: Prestataire.label_type_prestataire.toString(),
                         value4:
                             Prestataire.adresse.toString() == ''
                                 ? '/'
@@ -391,7 +392,7 @@ function PrestatairesPage() {
                     }}
                     attribut={{
                         att1: 'Raison sociale',
-                        att2: 'Code type prestataire',
+                        att2: 'Type de prestataire',
                         att3: 'Adresse',
                         att4: 'Téléphone du contact',
                         att5: 'Mail du contact',
@@ -399,7 +400,7 @@ function PrestatairesPage() {
                     searchItems={search.map(Prestataire => ({
                         value1: Prestataire.code_Prestataire.toString(),
                         value2: Prestataire.raison_sociale.toString(),
-                        value3: Prestataire.code_type_de_Prestataire.toString(),
+                        value3: Prestataire.label_type_prestataire.toString(),
                         value4:
                             Prestataire.adresse.toString() == ''
                                 ? '/'

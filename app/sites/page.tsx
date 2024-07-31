@@ -291,11 +291,10 @@ function SitesPage() {
                 <List
                     items={Sites.map(Sites => ({
                         value1: Sites.code_site.toString(),
-                        value2: Sites.designation_longue.toString(),
+                        value2: Sites.designation_courte.toString(),
                         value3: Sites.adresse.toString(),
                         value4:
-                            Sites.date_ouverture.toString().split('T')[0] ==
-                                null || undefined
+                            Sites.date_ouverture == null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:
@@ -316,7 +315,7 @@ function SitesPage() {
                         url: '../api/sites',
                     }}
                     attribut={{
-                        att1: 'Désignation longue',
+                        att1: 'Désignation courte',
                         att2: 'Adresse',
                         att3: "Date d'ouverture",
                         att4: 'Téléphone',
@@ -327,8 +326,7 @@ function SitesPage() {
                         value2: Sites.designation_longue.toString(),
                         value3: Sites.adresse.toString(),
                         value4:
-                            Sites.date_ouverture.toString().split('T')[0] ==
-                                null || undefined
+                            Sites.date_ouverture == null || undefined
                                 ? '/'
                                 : Sites.date_ouverture.toString().split('T')[0],
                         value5:

@@ -23,7 +23,7 @@ export async function GET(request: Request) {
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `Prestataires` ORDER BY `code_Prestataire` DESC LIMIT ?, ?',
+            'SELECT Prestataires.*,TypePrestataires.libelle as label_type_prestataire FROM `Prestataires` LEFT JOIN TypePrestataires ON TypePrestataires.code_type_de_Prestataire = Prestataires.code_type_de_Prestataire ORDER BY `code_Prestataire` DESC LIMIT ?, ?',
             [offset, limitNumber],
         )
 

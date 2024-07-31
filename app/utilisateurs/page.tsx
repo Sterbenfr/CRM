@@ -192,12 +192,6 @@ function UtilisateursPage() {
             },
         ]
 
-        if (fields[5].value !== '') {
-            fields[6].required = false
-        } else if (fields[6].value !== '') {
-            fields[5].required = false
-        }
-
         return fields
     }, [
         civilite,

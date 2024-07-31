@@ -1323,7 +1323,7 @@ function Docu() {
                                 id='2.4.1'
                                 ref={elementRef}
                             >
-                                Utilisateurs du site
+                                Interlocuteur(s) du site
                             </h3>
                             <br />
                             <p>
@@ -1662,7 +1662,7 @@ function Docu() {
                                 id='3.7'
                                 ref={elementRef}
                             >
-                                Types d&apos;Entité
+                                Types d&apos;entité
                             </h3>
                             <p>Pour y accéder :</p>
                             <br />
@@ -1796,7 +1796,7 @@ function Docu() {
                                 id='3.12'
                                 ref={elementRef}
                             >
-                                Types d&apos;Utilisateurs
+                                Types d&apos;utilisateurs
                             </h3>
                             <p>Pour y accéder :</p>
                             <br />

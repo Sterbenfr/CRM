@@ -120,9 +120,9 @@ const fieldLabels: { [key: string]: string } = {
     code_Societe: 'Société',
     Logo: 'Logo',
     site_Web: 'Site Web',
-    code_type_activite_Societe: "Type d'activité de la société",
+    code_type_activite_Societe: "Type d'activité de l'entreprise",
     code_Groupe_appartenance: 'Appartenance du groupe',
-    date_arret_activite_Societe: "Date d'arrêt d'activité de la société",
+    date_arret_activite_Societe: "Date d'arrêt d'activité de l'entreprise'",
     //SuiviSociete
     code_type_de_Site: 'Type de site',
     code_site_suivi: 'Site assurant suivi',
@@ -363,7 +363,7 @@ const PopUp: React.FC<PopUpProps> = ({
             nombre_palettes_recues: 'une réception',
             adresse_enlevement: 'une livraison',
             code_modalite_interaction: 'une interaction',
-            code_type_utilisateur: 'un interlocuteur site RC',
+            code_type_interlocuteur: 'un interlocuteur site RC',
             password: 'un utilisateur',
         }
         return tableNameMapping[fieldId] || 'un type'
