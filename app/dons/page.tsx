@@ -513,7 +513,7 @@ function DonsPage() {
             ) {
                 fields.splice(6, 0, {
                     id: 'code_mode_conservation_produits',
-                    type: 'select', //que si code_type_produits = alimentaire
+                    type: 'select',
                     value: null,
                     url: '../api/dons/type-mode-conservations-produits',
                 })
