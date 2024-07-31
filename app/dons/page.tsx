@@ -330,7 +330,9 @@ function DonsPage() {
                     id: 'code_contact_Entite_donatrice',
                     type: 'select',
                     value: codeContactEntiteDonatrice,
-                    url: `../api/select/societe/entite/${EntiteDonatrice}/contact`,
+                    url: EntiteDonatrice
+                        ? `../api/select/societe/entite/${EntiteDonatrice}/contact`
+                        : '',
                     onChange: handleCodeContactEntiteDonatriceChange,
                 },
                 {
