@@ -23,7 +23,7 @@ const withAuthorization = <P extends object>(
             data: ExtendedSession | null
             status: string
         }
-        const router = useRouter() // Move this line inside the component
+        const router = useRouter() 
 
         useEffect(() => {
             if (!loading && !session) {
@@ -60,11 +60,3 @@ function getDisplayName(WrappedComponent: React.ComponentType<any>): string {
 }
 
 export default withAuthorization
-
-/**import withAuthorization from '../path/to/withAuthorization'
-
-const MyProtectedPage = () => {
-    // Page content here
-}
-
-export default withAuthorization(MyProtectedPage, ['AD', 'PR', 'RR']) */

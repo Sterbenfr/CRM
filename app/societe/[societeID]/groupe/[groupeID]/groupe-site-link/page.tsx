@@ -25,7 +25,7 @@ function SuiviGroupePage({
     params: { societeID: string; groupeID: string }
 }) {
     const [SuiviGroupe, setSuiviGroupe] = useState<SuiviGroupes[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 

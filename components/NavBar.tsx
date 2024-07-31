@@ -59,7 +59,7 @@ const NavBar: React.FC<NavBarProps> = ({ children }) => {
                                         : ''
                                 }`}
                             >
-                                Entreprise
+                                Entreprises
                             </Link>
                             <Link
                                 href='/sites'

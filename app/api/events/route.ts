@@ -9,7 +9,6 @@ export async function GET(request: Request) {
         return NextResponse.redirect(new URL('/error/not-access', request.url))
     }
     try {
-        // Récupérer les données de don, réception, modalités de livraison et entreprise
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const [donsD]: any[] = await connection.query(
             'SELECT nom_commercial, code_Don AS id, date_debut_mise_disposition AS date, CONCAT("Début de mise à disposition du don : ", nom_commercial) AS title FROM `Dons` LEFT JOIN Entite ON Entite.code_entite = Dons.code_Entite_donatrice',
@@ -36,7 +35,6 @@ export async function GET(request: Request) {
             'SELECT i.code_Entite_Prospectee, i.code_interaction AS id, i.date_relance AS date, CONCAT("Relance d\'interaction du don : ", e.nom_commercial) AS title, e.code_societe_appartenance, e.nom_commercial FROM `Interactions` i LEFT JOIN `Entite` e ON e.code_entite = i.code_Entite_Prospectee',
         )
 
-        // Ajouter un préfixe aux identifiants pour éviter les conflits
         const formattedDonsD = donsD.map((donsD: { id: number }) => ({
             ...donsD,
             id: `donsD-${donsD.id}`,
@@ -89,7 +87,6 @@ export async function GET(request: Request) {
             }),
         )
 
-        // Combiner les ensembles de résultats
         const events = [
             ...formattedDonsD,
             ...formattedDonsF,
@@ -101,7 +98,6 @@ export async function GET(request: Request) {
 
         return NextResponse.json(events)
     } catch (err) {
-        console.error('Internal Server Error:', err) // Log the error for debugging purposes
         return NextResponse.json(
             { error: 'Internal Server Error : ' + err },
             { status: 500 },

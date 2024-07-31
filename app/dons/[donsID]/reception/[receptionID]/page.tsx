@@ -186,7 +186,6 @@ function ReceptionPage({
                 pieces_associees: filePaths[0],
             }
 
-            // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
 
             try {

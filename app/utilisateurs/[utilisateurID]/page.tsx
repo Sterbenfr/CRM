@@ -157,7 +157,6 @@ function UtilisateurPage({ params }: { params: { utilisateurID: string } }) {
                 ...modifiedUtilisateur,
             }
 
-            // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
 
             try {

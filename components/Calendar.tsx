@@ -11,10 +11,10 @@ const CalendarPage = () => {
     const [events, setEvents] = useState<{ id: string }[]>([])
     const [filteredEvents, setFilteredEvents] = useState<{ id: string }[]>([])
     const [filters, setFilters] = useState({
-        dons: false, // Nouvelle checkbox combinée
+        dons: false, 
         receptions: false,
         modaliteslivraison: false,
-        interactions: false, // Nouvelle checkbox combinée
+        interactions: false, 
     })
 
     useEffect(() => {

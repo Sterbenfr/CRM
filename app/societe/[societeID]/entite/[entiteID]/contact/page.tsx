@@ -29,7 +29,7 @@ function ContactsPage({
     params: { societeID: string; entiteID: string }
 }) {
     const [contacts, setContacts] = useState<Contact[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Contact[]>([])
@@ -197,7 +197,7 @@ function ContactsPage({
                 id: 'photo',
                 type: 'file',
                 value: null,
-            }, //type blob
+            }, 
             {
                 id: 'fonction',
                 type: 'input',
@@ -205,7 +205,7 @@ function ContactsPage({
                 placeholder: 'Exemple: Assistante',
                 maxLength: 30,
                 onInputChange: handleFonction,
-            }, // a voir si select
+            }, 
             {
                 id: 'service',
                 type: 'input',
@@ -267,7 +267,7 @@ function ContactsPage({
             const { data, total }: { data: Contact[]; total: number } =
                 await res.json()
             setContacts(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total) 
         }
 
         const fetchSearchContacts = async () => {
@@ -293,14 +293,13 @@ function ContactsPage({
         setFields(generateFields())
     }, [generateFields])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1)
     }
 
     return (
@@ -369,8 +368,8 @@ function ContactsPage({
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange} 
+                    totalItems={totalItems} 
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

@@ -14,7 +14,6 @@ export async function GET(request: Request) {
         const [rows] = await connection.query(
             'SELECT code_type_utilisateur as id, libelle as label FROM `TypesUtilisateurs` LIMIT 1000',
         )
-        console.log(rows)
         return NextResponse.json(rows)
 
     } catch (err) {

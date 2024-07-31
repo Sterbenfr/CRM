@@ -1,7 +1,7 @@
-/* calendarStyles.css */
+
 .fc .fc-toolbar.fc-header-toolbar {
-    background-color: #ffffff; /* couleur de l'entete*/
-    color: rgb(0, 0, 0); /* couleur du texte de l'entete */
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
     border: 2px solid #e5007d;
     font-weight: bold;
     padding-right: 4.5rem;
@@ -14,8 +14,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff; /* couleur bouton de droite */
-    border-color: #ffffff; /* couleur bordure bouton de droite */
+    background-color: #ffffff;
+    border-color: #ffffff;
     color: #000000;
     font: 1.2rem;
     height: 50px;
@@ -23,7 +23,7 @@
     font-weight: bold;
     border: none !important;
     box-shadow: none !important;
-    outline: none !important; /* Force à ne pas afficher le contour */
+    outline: none !important;
 }
 
 .fc .fc-button-primary:not(:disabled):hover {
@@ -34,14 +34,14 @@
 .fc .fc-button-primary:not(:disabled).fc-button-active:active,
 .fc .fc-button-primary:not(:disabled).fc-button-active:hover,
 .fc .fc-button-primary:not(:disabled).fc-button-active:focus {
-    background-color: #ffffff; /* couleur bouton de droite */
-    border-color: #ffffff; /* couleur bordure bouton de droite */
+    background-color: #ffffff;
+    border-color: #ffffff;
     color: #000000;
     font: 1.2rem;
     font-weight: bold;
     border: none !important;
     box-shadow: none !important;
-    outline: none !important; /* Force à ne pas afficher le contour */
+    outline: none !important;
     display: none;
 }
 
@@ -51,67 +51,63 @@
 }
 
 .fc .fc-daygrid-day-top {
-    background-color: #00000000; /* couleur pour la bande des jours ( joues avec l'alpha pour la transparence ) */
+    background-color: #00000000;
     color: black;
 }
 
 .fc .fc-day-today {
-    background-color: #ff84c8 !important; /* laisses le !important sinon ça ne fonctionne , couleur du fond de case du jour actuelle */
+    background-color: #ff84c8 !important;
 }
 
 .fc-theme-standard .fc-scrollgrid {
-    border: 2px solid #e5007d; /*couleur de la bordure général du calendrier */
+    border: 2px solid #e5007d;
     border-radius: 5px;
 }
 
 .fc .fc-daygrid-day.fc-day-other {
-    background-color: #f2f2f2; /* couleur pour les jours hors mois actuelle choisi */
+    background-color: #f2f2f2;
 }
 
 .fc .fc-daygrid-event:focus,
 .fc .fc-daygrid-event:active {
-    background-color: white; /* Ou définissez la couleur souhaitée */
+    background-color: white;
     color: inherit;
-    outline: none; /* Enlève le contour si présent */
+    outline: none;
 }
 
 .fc .fc-daygrid-day:focus,
 .fc .fc-daygrid-day:active {
-    background-color: #ffffff !important; /* Définissez la couleur de fond souhaitée */
-    color: #000000; /* Définissez la couleur de texte souhaitée */
-    outline: none; /* Enlève le contour si présent */
+    background-color: #ffffff !important;
+    color: #000000;
+    outline: none;
 }
 
-/* Container for the entire checkbox section */
 .filter-container {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
-    gap: 10px; /* Space between each checkbox */
-    padding: 15px; /* Padding around the container */
-    border: 2px solid #e5007d; /* Optional: adds a border around the container */
-    border-radius: 5px; /* Optional: rounds the corners of the container */
+    gap: 10px;
+    padding: 15px;
+    border: 2px solid #e5007d;
+    border-radius: 5px;
     width: auto;
-    margin: auto; /* Centers the container */
+    margin: auto;
     accent-color: #e5007d;
-    margin-bottom: 20px; /* Optional: adds space between the container and other elements */
+    margin-bottom: 20px;
 }
 
-/* Styles for each label, enhancing spacing and interaction */
 .filter-container label {
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-/* Custom checkbox appearance */
 .filter-container input[type='checkbox'] {
-    margin-right: 10px; /* Space between checkbox and label text */
+    margin-right: 10px; 
     cursor: pointer;
 }
 
-/* Optional: Style for hover effect on labels */
 .filter-container label:hover {
     background-color: #f2f2f2;
 }

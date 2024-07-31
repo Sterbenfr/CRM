@@ -74,7 +74,6 @@ export default function SelectComponent({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url])
 
-    // Renvoyer le menu déroulant avec les options
     return (
         <select
             className={style.selectF}

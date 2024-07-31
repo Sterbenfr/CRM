@@ -527,7 +527,7 @@ function DonsPage() {
                     type: 'date',
                     value: dateAcceptationRefusDon.toISOString().split('T')[0],
                     onInputChange: handleDateAcceptationRefusDonChange,
-                }) //que si status different de attente)
+                })
                 incrementFileIndex2++
             }
 
@@ -537,7 +537,7 @@ function DonsPage() {
                     type: 'date',
                     value: dateRemerciement.toISOString().split('T')[0],
                     onInputChange: handleDateRemerciementChange,
-                }) //depend de indicateur_remerciement
+                })
                 incrementFileIndex2++
             }
 
@@ -547,7 +547,7 @@ function DonsPage() {
                     type: 'date',
                     value: dateCerfa.toISOString().split('T')[0],
                     onInputChange: handleDateCerfaChange,
-                }) // depend de cerfa_fait
+                })
                 incrementFileIndex2++
             }
 
@@ -586,7 +586,7 @@ function DonsPage() {
             const { data, total }: { data: Don[]; total: number } =
                 await res.json()
             setDons(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total)
         }
 
         const fetchSearchDons = async () => {
@@ -715,7 +715,7 @@ function DonsPage() {
                         <PopUp
                             onClose={handleClose}
                             url='../api/dons'
-                            fields={fields} // Use the fields state here
+                            fields={fields}
                             fileUrl='../api/upload/piece'
                             fileUrl2='../api/upload/cerfa'
                             fileIndex={fileIndex}

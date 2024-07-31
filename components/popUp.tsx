@@ -197,7 +197,7 @@ interface PopUpProps {
     onClose: () => void
     fields: Field[]
     url: string
-    onFieldChange?: (id: string, value: string | boolean) => void // New callback function
+    onFieldChange?: (id: string, value: string | boolean) => void 
     fileUrl?: string
     fileUrl2?: string
     fileIndex?: number
@@ -217,8 +217,8 @@ const PopUp: React.FC<PopUpProps> = ({
     const [inputs, setInputs] = useState<Field[]>(fields)
     const [file, setFile] = useState<File | null>(null)
     const [file2, setFile2] = useState<File | null>(null)
-    let colIndex = 0 //seulement pour dons
-    let rowIndex = 0 //seulement pour dons
+    let colIndex = 0 
+    let rowIndex = 0 
 
     const [validationErrors, setValidationErrors] = useState<{
         [key: string]: string
@@ -229,7 +229,6 @@ const PopUp: React.FC<PopUpProps> = ({
     }, [fields])
 
     const handleInputChange = (id: string, value: string | boolean) => {
-        // Invoke the function if provided
         const updatedInputs = inputs.map(input =>
             input.id === id ? { ...input, value } : input,
         )
@@ -275,7 +274,6 @@ const PopUp: React.FC<PopUpProps> = ({
             if (fileUrl && fileIndex && file !== null) {
                 const formData = new FormData()
                 formData.append('image', file as Blob)
-                console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl, {
                         method: 'POST',
@@ -286,7 +284,6 @@ const PopUp: React.FC<PopUpProps> = ({
                     }
                     const data = await response.json()
                     filePath = data.filePath
-                    console.log('File uploaded to fileUrl:', filePath)
                 } catch (error) {
                     console.error('Error uploading file:', error)
                 }
@@ -295,7 +292,6 @@ const PopUp: React.FC<PopUpProps> = ({
             if (fileUrl2 && fileIndex2 && file2 !== null) {
                 const formData = new FormData()
                 formData.append('image', file2 as Blob)
-                console.log('FormData prepared:', formData)
                 try {
                     const response = await fetch(fileUrl2, {
                         method: 'POST',
@@ -306,7 +302,6 @@ const PopUp: React.FC<PopUpProps> = ({
                     }
                     const data = await response.json()
                     file2Path = data.filePath
-                    console.log('File uploaded to fileUrl2:', file2Path)
                 } catch (error) {
                     console.error('Error uploading file:', error)
                 }
@@ -321,7 +316,6 @@ const PopUp: React.FC<PopUpProps> = ({
                 return acc
             }, {})
 
-            console.log('after reduce : ', inputsData)
             try {
                 const response = await fetch(endpoint, {
                     method: 'POST',
@@ -332,8 +326,6 @@ const PopUp: React.FC<PopUpProps> = ({
                 })
 
                 if (response.ok) {
-                    const jsonResponse = await response.json()
-                    console.log('Submission successful', jsonResponse)
                     onClose()
                 } else {
                     console.error('Submission failed', await response.text())
@@ -420,19 +412,19 @@ const PopUp: React.FC<PopUpProps> = ({
                                   : input.id === 'nom_destinataire_cerfa' &&
                                       colIndex === 1
                                     ? 2
-                                    : colIndex), //seulement pour dons
+                                    : colIndex), 
                         (rowIndex =
                             input.id === 'code_Entite_donatrice' ||
                             input.id === 'code_Utilisateur_saisie_don' ||
                             input.id === 'nom_destinataire_cerfa'
                                 ? 0
-                                : rowIndex + 1), //seulement pour dons
+                                : rowIndex + 1), 
                         (
                             <div
-                                className={style.popupCol} // seulement pour dons
+                                className={style.popupCol} 
                                 key={input.id}
-                                data-col={colIndex} //seulement pour dons
-                                data-row={rowIndex} //seulement pour dons
+                                data-col={colIndex} 
+                                data-row={rowIndex} 
                             >
                                 <div className={style.rowPop} key={input.id}>
                                     <label className={style.label}>

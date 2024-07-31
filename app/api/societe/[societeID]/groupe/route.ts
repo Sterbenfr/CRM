@@ -74,7 +74,6 @@ export async function POST(
     }
 
     try {
-        console.log(groupe)
         const query = 'INSERT INTO `Groupe` SET ?'
         const [rows] = await connection.query(query, groupe)
         const [update] = await connection.query(

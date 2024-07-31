@@ -63,7 +63,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        console.log(ModalitesLivraison)
         const query = 'INSERT INTO `ModalitesLivraison` SET ?'
         const [rows] = await connection.query(query, ModalitesLivraison)
         return NextResponse.json(rows)

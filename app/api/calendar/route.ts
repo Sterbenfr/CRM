@@ -1,4 +1,3 @@
-// app/api/calendar/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { GET as getEventsByDate } from '../events/route'
 import { getServerSession } from 'next-auth'

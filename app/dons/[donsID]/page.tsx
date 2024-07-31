@@ -14,7 +14,7 @@ interface ExtendedSession extends Session {
         name?: string | null
         email?: string | null
         image?: string | null
-        role?: string // Add the role property
+        role?: string 
         id?: string
     }
 }
@@ -137,10 +137,8 @@ function DonPage({ params }: { params: { donsID: string } }) {
 
         const currentStatus = modifiedDon.cerfa_fait || don[0].cerfa_fait
 
-        // Toggle between 'V' and 'F'
         const newStatus = currentStatus === 'O' ? 'N' : 'O'
 
-        // Update modifiedDon with the new status
         setModifiedDon({
             ...modifiedDon,
             cerfa_fait: newStatus,
@@ -164,7 +162,6 @@ function DonPage({ params }: { params: { donsID: string } }) {
     }
 
     const handleSubmit = async () => {
-        // Format date values
         const formatDate = (date: Date | undefined) => {
             if (!date) return null
             const d = new Date(date)
@@ -193,7 +190,6 @@ function DonPage({ params }: { params: { donsID: string } }) {
             pieces_associees: filePaths[1],
         }
 
-        // Convert non-file data to JSON
         const body = JSON.stringify(jsonPayload)
 
         try {
@@ -679,7 +675,7 @@ function DonPage({ params }: { params: { donsID: string } }) {
                                                     .split('T')[0]
                                               : new Date()
                                                     .toISOString()
-                                                    .split('T')[0] // Use today's date if don[0].date_remerciement is not set
+                                                    .split('T')[0]
                                     }
                                     onChange={handleInputChange}
                                 />

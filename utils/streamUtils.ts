@@ -1,5 +1,3 @@
-// utils/streamUtils.ts
-
 export async function streamToString(
     stream: ReadableStream<Uint8Array> | null,
 ): Promise<string> {

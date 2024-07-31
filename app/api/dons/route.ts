@@ -59,7 +59,6 @@ export async function POST(req: NextRequest) {
             { status: 400 },
         )
     }
-    console.log(dons)
     try {
         const query = 'INSERT INTO `Dons` SET ?'
         const [rows] = await connection.query(query, dons)
