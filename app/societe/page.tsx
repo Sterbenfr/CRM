@@ -45,7 +45,6 @@ function SocietesPage() {
 
     const [raisonSociale, setRaisonSociale] = useState('')
     const [nomCommercial, setNomCommercial] = useState('')
-    //const [Logo, setLogo] = useState<Blob>()
     const [siteWeb, setSiteWeb] = useState('')
     const [Siren, setSiren] = useState('')
     const [codeTypeActiviteSociete, setCodeTypeActiviteSociete] = useState('')
@@ -69,12 +68,6 @@ function SocietesPage() {
     ) => {
         setNomCommercial(event.target.value)
     }
-
-    /*const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setLogo(event.target.files[0])
-        }
-    }*/
 
     const handleSiteWebChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -169,7 +162,6 @@ function SocietesPage() {
                 id: 'Logo',
                 type: 'file',
                 value: null,
-                //onInputChange: handleLogoChange,
             },
             {
                 id: 'site_Web',

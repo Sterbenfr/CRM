@@ -444,7 +444,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 value: poidsPrevuKg,
                 placeholder: 'Exemple: 580',
                 onInputChange: handlePoidsPrevuKg,
-            }, //pas negatif
+            },
             {
                 id: 'produits_sur_palettes',
                 type: 'checkbox',
