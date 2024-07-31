@@ -342,7 +342,8 @@ function PrestatairesPage() {
 
         fetchDons()
         fetchSearchDons()
-    }, [page, itemsPerPage, search])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, itemsPerPage])
 
     useEffect(() => {
         setFields(generateFields())

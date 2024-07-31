@@ -269,7 +269,8 @@ function SitesPage() {
 
         fetchSites()
         fetchSearchSites()
-    }, [page, itemsPerPage, dateOuverture, dateFermeture, search])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, itemsPerPage, dateOuverture, dateFermeture])
 
     useEffect(() => {
         setFields(generateFields())

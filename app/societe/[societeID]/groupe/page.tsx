@@ -18,11 +18,10 @@ export interface Groupe {
 
 function GroupesPage({ params }: { params: { societeID: string } }) {
     const [groupes, setGroupes] = useState<Groupe[]>([])
-    const [page, setPage] = useState(1) 
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
-    const [search, setSearch] = useState<Groupe[]>([])
 
     const [nomDuGroupe, setNomDuGroupe] = useState('')
     const [siteWeb, setSiteWeb] = useState('')
@@ -162,23 +161,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
             setTotalItems(total)
         }
 
-        const fetchSearchGroupe = async () => {
-            if (search.length === 0) {
-                const res = await fetch(
-                    `../../../api/societe/${params.societeID}/groupe`,
-                )
-
-                if (!res.ok) {
-                    throw new Error('Failed to fetch data')
-                }
-
-                const { data }: { data: Groupe[] } = await res.json()
-                setSearch(data)
-            }
-        }
-
         fetchGroupes()
-        fetchSearchGroupe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, itemsPerPage, params.societeID])
 
@@ -192,7 +175,7 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) 
+        setPage(1)
     }
 
     return (
@@ -250,8 +233,8 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                     />
                     <Pagination
                         onPageChange={handlePageChange}
-                        onItemsPerPageChange={handleItemsPerPageChange} 
-                        totalItems={totalItems} 
+                        onItemsPerPageChange={handleItemsPerPageChange}
+                        totalItems={totalItems}
                         itemsPerPage={itemsPerPage}
                         currentPage={page}
                     />
