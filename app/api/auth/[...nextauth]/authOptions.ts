@@ -27,7 +27,6 @@ export const authOptions: AuthOptions = {
                 if (!isValid) {
                     throw new Error('Invalid password')
                 }
-                // Return the user object with all required properties
                 return {
                     id: user.id,
                     email: user.email,

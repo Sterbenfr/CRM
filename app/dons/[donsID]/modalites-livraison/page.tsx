@@ -45,7 +45,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
         code_type_don: string
         code_type_produits: string
     }>()
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [isPopUpOpen, setIsPopUpOpen] = useState(false)
@@ -636,7 +636,7 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1)
     }
 
     return (
@@ -710,8 +710,8 @@ function ModalitesLivraisonPage({ params }: { params: { donsID: string } }) {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

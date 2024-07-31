@@ -64,7 +64,7 @@ export default function SearchComponent({
                 if (onInputChange) {
                     onInputChange(e)
                 }
-                e.target.value = matchingOption.label // Call the onChange prop with the id
+                e.target.value = matchingOption.label 
             }
         }
 

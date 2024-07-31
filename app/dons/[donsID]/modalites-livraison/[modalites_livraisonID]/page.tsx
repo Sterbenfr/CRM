@@ -273,13 +273,11 @@ function Modalites_livraisonPage({
         if (canSubmit) {
             const filePaths = await fileUpload('../../../../api/upload/piece')
 
-            console.log(modalite_livraison[0].code_Prestataire_transporteur)
             const jsonPayload = {
                 ...modifiedModalite_livraison,
                 pieces_associees: filePaths[0],
             }
 
-            // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
 
             try {

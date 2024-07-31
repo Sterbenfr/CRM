@@ -30,7 +30,7 @@ function InteractionsPage({
     params: { societeID: string; entiteID: string }
 }) {
     const [Interactions, setInteractions] = useState<Interactions[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Interactions[]>([])
@@ -192,7 +192,7 @@ function InteractionsPage({
                 id: 'pieces_associees',
                 type: 'file',
                 value: null,
-            }, // type blob
+            }, 
             {
                 id: 'date_relance',
                 type: 'date',
@@ -255,7 +255,6 @@ function InteractionsPage({
         setFields(generateFields())
     }, [generateFields])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }

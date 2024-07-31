@@ -51,9 +51,7 @@ export async function PUT(
         return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
-    console.log(body, 'body')
     if (body === null || body === undefined) {
-        console.log(body, 'body', request.body)
         return NextResponse.json(
             { error: 'Body is null or undefined' },
             { status: 400 },
@@ -78,7 +76,6 @@ export async function PUT(
         const values = Object.values(body)
         const query = `UPDATE \`Utilisateurs\` SET ${columns} WHERE \`code_utilisateur\` = ?`
 
-        // Execute query
         const [rows] = await connection.query(query, [...values, utilisateurID])
         return NextResponse.json(rows)
     } catch (error) {

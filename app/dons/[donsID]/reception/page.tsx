@@ -25,7 +25,7 @@ export interface Reception {
 
 function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [Receptions, setReceptions] = useState<Reception[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Reception[]>([])
@@ -361,16 +361,14 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
         setFields(generateFields())
     }, [generateFields])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1)
     }
-    console.log(Receptions)
     return (
         <>
             <div className={style.page}>
@@ -449,8 +447,8 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange} 
+                    totalItems={totalItems} 
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

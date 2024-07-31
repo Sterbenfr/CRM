@@ -10,7 +10,6 @@ interface User {
     name: string
 }
 
-// Find user by email and include their role
 export async function findUser(email: string): Promise<User | null> {
     try {
         const [rows] = await connection.execute<mysql.RowDataPacket[]>(
@@ -36,7 +35,6 @@ export async function findUser(email: string): Promise<User | null> {
     }
 }
 
-// Verify password against the hashed password in the database
 export async function verifyPassword(
     password: string,
     hash: string,

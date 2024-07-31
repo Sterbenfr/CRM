@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        console.log(contact)
         const query = 'INSERT INTO `SuiviGroupe` SET ?'
         const [rows] = await connection.query(query, contact)
         return NextResponse.json(rows)

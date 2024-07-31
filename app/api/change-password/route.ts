@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     const { oldPassword, newPassword, userId } = data
 
     try {
-        // Decrypte l'ancien MDP
+ 
         const [rows] = await connection.query<RowDataPacket[]>(
             'SELECT password FROM `Utilisateurs` WHERE mail = ?',
             [userId],
@@ -33,9 +33,7 @@ export async function POST(req: NextRequest) {
             )
         }
         const currentPasswordHash = rows[0].password
-        console.log(currentPasswordHash)
 
-        // Verifie l'ancien MDP
 
         const isOldPasswordCorrect = await bcrypt.compare(
             oldPassword,
@@ -48,10 +46,8 @@ export async function POST(req: NextRequest) {
             )
         }
 
-        // Crypte le MDP
         const newPasswordHash = await bcrypt.hash(newPassword, 10)
 
-        // Met a jour le mdp
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const queryUpdate = await connection.query(
             'UPDATE `Utilisateurs` SET password = ? WHERE mail = ?',

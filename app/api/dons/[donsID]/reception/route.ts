@@ -67,7 +67,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        console.log(reception)
         const query = 'INSERT INTO `Reception` SET ?'
         const [rows] = await connection.query(query, reception)
         return NextResponse.json(rows)

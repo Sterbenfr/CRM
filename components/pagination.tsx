@@ -52,13 +52,13 @@ export const Pagination: React.FC<PaginationProps> = ({
                 startPage = totalPages - 4
             }
 
-            pages.push(1) // Always include the first page
+            pages.push(1) 
 
             for (let i = startPage; i <= endPage; i++) {
                 pages.push(i)
             }
 
-            pages.push(totalPages) // Always include the last page
+            pages.push(totalPages) 
         }
 
         return pages.map(page => (

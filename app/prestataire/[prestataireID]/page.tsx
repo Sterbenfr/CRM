@@ -164,7 +164,6 @@ function PrestatairePage({ params }: { params: { prestataireID: string } }) {
             const jsonPayload = {
                 ...modifiedPrestataire,
             }
-            // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
 
             try {

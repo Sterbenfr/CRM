@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
     }
     try {
         Utilisateur.password = await bcrypt.hash(Utilisateur.password, 10)
-        console.log(Utilisateur)
         const query = 'INSERT INTO `Utilisateurs` SET ?'
         const [rows] = await connection.query(query, Utilisateur)
         return NextResponse.json({ rows })

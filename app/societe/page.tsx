@@ -23,7 +23,7 @@ export interface Societe {
 
 function SocietesPage() {
     const [Societes, setSocietes] = useState<Societe[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Societe[]>([])
@@ -156,7 +156,7 @@ function SocietesPage() {
                 placeholder: 'Exemple: 453684259',
                 maxLength: 9,
                 onInputChange: handleSirenChange,
-            }, // if number !== 9 = pas de validation
+            }, 
             {
                 id: 'code_type_activite_Societe',
                 type: 'select',
@@ -238,7 +238,7 @@ function SocietesPage() {
             const { data, total }: { data: Societe[]; total: number } =
                 await res.json()
             setSocietes(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total)
         }
 
         const fetchSocieteSearch = async () => {
@@ -262,14 +262,13 @@ function SocietesPage() {
         setFields(generateFields())
     }, [generateFields])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1) 
     }
 
     return (
@@ -334,8 +333,8 @@ function SocietesPage() {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange} 
+                    totalItems={totalItems} 
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

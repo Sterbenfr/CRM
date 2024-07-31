@@ -70,7 +70,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        console.log(Entite)
         const query = 'INSERT INTO `Entite` SET ?'
         const [rows] = await connection.query(query, Entite)
         return NextResponse.json(rows)

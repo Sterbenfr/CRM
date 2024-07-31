@@ -1,4 +1,3 @@
-/* NAV BAR */
 
 .navbar {
     display: flex;
@@ -11,8 +10,8 @@
     background-color: #212529;
     padding-right: 10rem;
     margin-bottom: 2rem;
-    position: fixed; /* Fixed position */
-    top: 0; /* Aligns the navbar to the top */
+    position: fixed; 
+    top: 0; 
     z-index: 10000;
 }
 
@@ -38,8 +37,8 @@
 }
 
 .links {
-    color: #f2f2f2; /* Couleur du texte des liens */
-    text-decoration: none; /* Supprime le soulignement des liens */
+    color: #f2f2f2; 
+    text-decoration: none; 
     width: auto;
     font-size: 1.2rem;
     text-align: center;
@@ -55,8 +54,8 @@
 }
 
 .doc {
-    color: #f2f2f2; /* Couleur du texte des liens */
-    text-decoration: none; /* Supprime le soulignement des liens */
+    color: #f2f2f2; 
+    text-decoration: none; 
     width: auto;
     font-size: 1.5rem;
     text-align: center;
@@ -80,8 +79,6 @@
 .circle {
     border: 3px solid #e5007d;
 }
-
-/* BTN FONCTION */
 
 .functionBlock {
     display: flex;
@@ -149,8 +146,6 @@
 .searchLine:focus {
     background-color: #f2f2f2;
 }
-
-/* LINE */
 
 .colName {
     margin-top: 1rem;
@@ -298,8 +293,6 @@
     background-color: #f2f2f2;
 }
 
-/* PAGINATION */
-
 .pagination {
     display: flex;
     align-items: center;
@@ -369,8 +362,6 @@
     transition: 0.2s;
 }
 
-/* ID PAGE */
-
 .idPage {
     margin-bottom: 4rem;
     display: flex;
@@ -426,10 +417,7 @@
     padding-left: 2rem;
     padding-right: 2rem;
     border-left: 3px solid #e5007d;
-    /*border-right: 3px solid #e5007d ;*/
 }
-
-/* LOGIN */
 
 .pageLog {
     display: flex;
@@ -504,8 +492,6 @@
     background-color: #f2f2f2;
     cursor: pointer;
 }
-
-/* PopUp */
 
 .page {
     display: flex;
@@ -970,8 +956,6 @@
     padding: 4rem;
     padding-bottom: 0rem;
 }
-
-/* ErrorPopUP */
 
 .popUpBackground {
     display: flex;

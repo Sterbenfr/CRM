@@ -21,7 +21,7 @@ export interface ContactSociete {
 
 function ContactSocietePage({ params }: { params: { societeID: string } }) {
     const [contacts, setContacts] = useState<ContactSociete[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 

@@ -38,7 +38,7 @@ export interface Entite {
 
 function EntitesPage({ params }: { params: { societeID: string } }) {
     const [Entites, setEntite] = useState<Entite[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Entite[]>([])
@@ -288,7 +288,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 14,
                 onInputChange: handleSiretChange,
                 placeholder: 'Exemple: 15269783246918',
-            }, // if number !== 14 = pas de validation
+            }, 
             {
                 id: 'code_ape',
                 type: 'input',
@@ -296,7 +296,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 5,
                 onInputChange: handleCodeApeChange,
                 placeholder: 'Exemple: 1234A',
-            }, // 4 chiffres et 1 lettre
+            }, 
             {
                 id: 'code_rna',
                 type: 'input',
@@ -304,7 +304,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 maxLength: 10,
                 onInputChange: handleCodeRnaChange,
                 placeholder: 'Exemple: W123456789',
-            }, // W + 9 chiffres
+            }, 
             {
                 id: 'code_cee',
                 type: 'number',
@@ -349,19 +349,18 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 type: 'checkbox',
                 value: presenceQuai ? 'O' : 'N',
                 onInputChange: handlePresenceQuaiChange,
-            }, // checkbox + dans la table
+            }, 
             {
                 id: 'pieces_associees',
                 type: 'file',
                 value: null,
-                //onInputChange: handlePiecesAssocieesChange,
             },
             {
                 id: 'cerfa',
                 type: 'checkbox',
                 value: cerfa ? 'O' : 'N',
                 onInputChange: handleCerfaChange,
-            }, // checkbox + dans la table
+            }, 
             {
                 id: 'code_frequence_cerfa',
                 type: 'select',
@@ -487,7 +486,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
             const { data, total }: { data: Entite[]; total: number } =
                 await res.json()
             setEntite(data)
-            setTotalItems(total) // set the total items
+            setTotalItems(total) 
         }
 
         const fetchSearchEntite = async () => {
@@ -513,14 +512,13 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
         setFields(generateFields())
     }, [generateFields])
 
-    // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
     }
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1) 
     }
 
     return (
@@ -593,8 +591,8 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} // pass the new prop here
-                    totalItems={totalItems} // use the total items from the state
+                    onItemsPerPageChange={handleItemsPerPageChange} 
+                    totalItems={totalItems} 
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

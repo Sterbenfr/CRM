@@ -20,7 +20,6 @@ const Line: React.FC<LineProps> = ({
     param5,
     param6,
 }) => {
-    // Click handler function
     const handleClick = (key: string) => {
         if (
             window.location.href.includes('/type') ||
@@ -29,7 +28,6 @@ const Line: React.FC<LineProps> = ({
             return
         }
 
-        // Navigate to the current URL + /key
         window.location.href = `${window.location.href}/${key}`
     }
 

@@ -67,7 +67,6 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        console.log(groupe)
         const query = 'INSERT INTO `Groupe` SET ?'
         const [rows] = await connection.query(query, groupe)
         return NextResponse.json(rows)

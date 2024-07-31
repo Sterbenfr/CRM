@@ -11,16 +11,13 @@ function Docu() {
     ) => {
         event.preventDefault()
         const targetID = event.currentTarget.getAttribute('data-id')
-        console.log('Target ID:', targetID)
         if (targetID) {
-            // Add this check
             const TargetElement = document.getElementById(targetID)
             if (TargetElement) {
                 const rect = TargetElement.getBoundingClientRect()
                 const scrollTop =
                     window.pageYOffset || document.documentElement.scrollTop
                 const elementTop = rect.top + scrollTop
-                console.log('Scrolling to:', elementTop)
                 window.scrollTo({
                     top: elementTop - 130,
                     behavior: 'smooth',
@@ -46,7 +43,7 @@ function Docu() {
                                 pourrez retrouver ci-dessous le sommaire de la
                                 documentation. Pour accéder à une section en
                                 particulier, cliquez sur le titre correspondant.
-                                Ce sormaire es également représentatif de
+                                Ce sommaire est également représentatif de
                                 l&apos;architecture de l&apos;application.
                             </p>
                         </div>
@@ -125,6 +122,16 @@ function Docu() {
                                                 onClick={scrollToElement}
                                             >
                                                 Imprimer des données
+                                            </a>
+                                        </li>
+                                        <li className={style.linkLi}>
+                                            <a
+                                                className={style.linkA}
+                                                href='#1.7'
+                                                data-id='1.7'
+                                                onClick={scrollToElement}
+                                            >
+                                                Les dates
                                             </a>
                                         </li>
                                     </ol>
@@ -502,7 +509,7 @@ function Docu() {
                                                 data-id='3.8'
                                                 onClick={scrollToElement}
                                             >
-                                                Types de fréqence Cerfa
+                                                Types de fréquence CERFA
                                             </a>
                                         </li>
                                         <li className={style.linkLi}>
@@ -854,6 +861,34 @@ function Docu() {
                                 </li>
                             </ol>
                         </div>
+                        <div className={style.sousCompart}>
+                            <h3
+                                className={style.titre3}
+                                id='1.7'
+                                ref={elementRef}
+                            >
+                                Les dates
+                            </h3>
+                            <p>Gestion des dates :</p>
+                            <br />
+                            <ol>
+                                <li className={style.linkLi}>
+                                    <span className={style.important}>
+                                        Changer de date :
+                                    </span>{' '}
+                                    Cliquer sur l&paos;icône du calendrier à droite de la date.
+                                    Puis cliquer sur la date que vous souhaitez.
+                                </li>
+                                <li className={style.linkLi}>
+                                    <span className={style.important}>
+                                        Supprimer :
+                                    </span>{' '}
+                                    Cliquer sur l&paos;icône du calendrier à droite de la date.
+                                    Puis cliquer sur le bouton &quot;Effacer&quot; en bas du calendrier.
+                                    <br />   
+                                </li>
+                            </ol>
+                        </div>
                     </div>
                     <h2 className={style.titre2} id='2' ref={elementRef}>
                         Les pages
@@ -876,7 +911,7 @@ function Docu() {
                                         4 cases cochables :
                                     </span>{' '}
                                     Vous pourrez sélectionner les informations
-                                    qui vous sont intéressantes à être affiche
+                                    qui vous sont intéressantes à être affiché
                                     sur le calendrier.
                                 </li>
                                 <li className={style.linkLi}>
@@ -1034,7 +1069,7 @@ function Docu() {
                                     </span>{' '}
                                     Vous pouvez paginer les résultats en bas de
                                     page et personnaliser le nombre
-                                    d&apos;entreprise affichés par page.
+                                    d&apos;entreprises affichées par page.
                                 </li>
                                 <li className={style.linkLi}>
                                     <span className={style.important}>
@@ -1641,7 +1676,7 @@ function Docu() {
                             <p>Pour y accéder :</p>
                             <br />
                             <p>
-                                Accéder à la page Reception de la livraison
+                                Accéder à la page réception de la livraison
                                 (Voir ici comment accéder à la page{' '}
                                 <a
                                     className={style.linkA}
@@ -1689,7 +1724,7 @@ function Docu() {
                                 id='3.8'
                                 ref={elementRef}
                             >
-                                Types de fréqence Cerfa
+                                Types de Fréquence CERFA
                             </h3>
                             <p>Pour y accéder :</p>
                             <br />
@@ -1707,7 +1742,7 @@ function Docu() {
                                 </a>
                                 ) puis dirigez vous en bas de la page ou vous
                                 pourrez cliquer sur le bouton &quot;Types de
-                                fréqence Cerfa&quot;
+                                fréquence CERFA&quot;
                             </p>
                         </div>
                         <div className={style.sousCompart}>

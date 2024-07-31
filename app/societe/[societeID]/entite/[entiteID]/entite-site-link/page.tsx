@@ -25,7 +25,7 @@ function ContactEntitePage({
     params: { societeID: string; entiteID: string }
 }) {
     const [contacts, setContacts] = useState<ContactEntite[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1) 
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
 

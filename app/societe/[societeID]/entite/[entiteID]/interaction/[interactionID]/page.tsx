@@ -14,7 +14,7 @@ interface ExtendedSession extends Session {
         name?: string | null
         email?: string | null
         image?: string | null
-        role?: string // Add the role property
+        role?: string 
         id?: string
     }
 }
@@ -210,7 +210,6 @@ function InteractionPage({
                 pieces_associees: filePaths[0],
             }
 
-            // Convert non-file data to JSON
             const body = JSON.stringify(jsonPayload)
 
             try {

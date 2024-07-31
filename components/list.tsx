@@ -486,7 +486,6 @@ const List: React.FC<{
                                         : pageInfos.totalItems,
                                 )
                                 .map(item => (
-                                    // Wrap Line component with a div and add onClick event
                                     <div key={item.value1}>
                                         <Line
                                             deleteFunction={
@@ -541,7 +540,6 @@ const List: React.FC<{
                         )
                     ) : (
                         items.map(item => (
-                            // Wrap Line component with a div and add onClick event
                             <div key={item.value1}>
                                 <Line
                                     deleteFunction={handleLineCheckboxChange}

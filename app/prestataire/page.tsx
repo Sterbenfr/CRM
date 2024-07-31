@@ -27,7 +27,7 @@ export interface Prestataire {
 
 function PrestatairesPage() {
     const [Prestataires, setPrestataires] = useState<Prestataire[]>([])
-    const [page, setPage] = useState(1) // new state for the current page
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Prestataire[]>([])
@@ -353,7 +353,7 @@ function PrestatairesPage() {
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) // reset page to 1 when items per page changes
+        setPage(1)
     }
 
     return (
