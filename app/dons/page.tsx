@@ -376,7 +376,7 @@ function DonsPage() {
                     url: '../api/select/sites/utilisateurs',
                     required: true,
                     onInputChange: handleCodeUtilisateurSaisieDonChange,
-                }, //default : login
+                },
                 {
                     id: 'statut_acceptation_don',
                     type: 'select',
@@ -388,11 +388,14 @@ function DonsPage() {
                 {
                     id: 'code_Utilisateur_accepte_refuse_don',
                     type: 'search',
-                    value: codeUtilisateurAccepteRefuseDon,
+                    value:
+                        codeUtilisateurAccepteRefuseDon !== ''
+                            ? codeUtilisateurAccepteRefuseDon
+                            : null,
                     url: '../api/select/sites/utilisateurs/donsAccepteRefuse',
                     placeholder: 'Exemple: Marie Dujardin',
                     onInputChange: handleCodeUtilisateurAccepteRefuseDonChange,
-                }, //default : login
+                },
                 {
                     id: 'code_site_beneficiaire_don',
                     type: 'search',

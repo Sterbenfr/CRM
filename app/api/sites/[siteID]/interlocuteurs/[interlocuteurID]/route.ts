@@ -14,7 +14,7 @@ export async function GET(
     const interlocuteurID = params.interlocuteurID
     try {
         const [rows] = await connection.query(
-            'SELECT i.code_interlocuteur, i.civilite, i.nom, i.prenom, i.tel_perso, i.mail, i.commentaires, i.code_type_utilisateur, t.libelle AS libelle_type_utilisateur FROM Interlocuteurs i LEFT JOIN TypesUtilisateurs t ON i.code_type_utilisateur = t.code_type_utilisateur WHERE code_interlocuteur = ?;',
+            'SELECT i.code_interlocuteur, i.civilite, i.nom, i.prenom, i.tel_perso, i.mail, i.commentaires, i.code_type_interlocuteur, t.libelle AS libelle_type_utilisateur FROM Interlocuteurs i LEFT JOIN TypeInterlocuteur t ON i.code_type_interlocuteur = t.code_type_interlocuteur WHERE code_interlocuteur = ?;',
             [interlocuteurID],
         )
         return NextResponse.json(rows)

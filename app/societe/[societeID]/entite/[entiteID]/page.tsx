@@ -643,7 +643,7 @@ function EntitePage({
                                     />
                                 ) : (
                                     <p>
-                                        {entite[0].code_cee === (null || '')
+                                        {entite[0].code_cee == (null || '')
                                             ? '/'
                                             : entite[0].code_cee}
                                     </p>

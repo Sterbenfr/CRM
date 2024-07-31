@@ -26,7 +26,7 @@ interface InterlocuteurID {
     tel_perso: string
     mail: string
     commentaires: string
-    code_type_utilisateur: string
+    code_type_interlocuteur: string
     libelle_type_utilisateur: string
 }
 
@@ -82,12 +82,12 @@ function InterlocuteurPage({
         if (!interlocuteur || interlocuteur.length === 0 || !session) return
         let value = event.target.value
 
-        if (interlocuteur[0].code_type_utilisateur !== '' && value === '') {
-            value = interlocuteur[0].code_type_utilisateur
+        if (interlocuteur[0].code_type_interlocuteur !== '' && value === '') {
+            value = interlocuteur[0].code_type_interlocuteur
         }
         setModifiedInterlocuteur({
             ...modifiedInterlocuteur,
-            code_type_utilisateur: value,
+            code_type_interlocuteur: value,
         })
     }
 
@@ -118,7 +118,7 @@ function InterlocuteurPage({
             'civilite',
             'nom',
             'prenom',
-            'code_type_utilisateur',
+            'code_type_interlocuteur',
             'tel_perso',
             'mail',
         ]

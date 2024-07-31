@@ -14,7 +14,7 @@ CREATE TABLE Interactions (
     FOREIGN KEY (code_Entite_Prospectee) REFERENCES Entite(code_Entite) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (code_type_interaction) REFERENCES TypeInteractions(code_type_interaction) ON UPDATE CASCADE,
     FOREIGN KEY (code_modalite_interaction) REFERENCES ModaliteInteractions(code_modalite_interaction) ON UPDATE CASCADE,
-    FOREIGN KEY (code_contact_entite) REFERENCES ContactEntite(code_utilisateur_suivant) ON UPDATE CASCADE ON DELETE SET NULL
+    FOREIGN KEY (code_contact_entite) REFERENCES Contacts(code_contact) ON UPDATE CASCADE ON DELETE SET NULL
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO Interactions (
     code_Utilisateur_Prospecteur,

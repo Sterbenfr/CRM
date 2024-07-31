@@ -324,15 +324,13 @@ function ContactsPage({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,
                         value3: contact.prenom,
-                        value4: contact.fonction == '' ? '/' : contact.fonction,
-                        value5:
-                            contact.numero_portable == ''
-                                ? '/'
-                                : contact.numero_portable,
-                        value6:
-                            contact.adresse_mail == ''
-                                ? '/'
-                                : contact.adresse_mail,
+                        value4: contact.fonction ? contact.fonction : '/',
+                        value5: contact.numero_portable
+                            ? contact.numero_portable
+                            : '/',
+                        value6: contact.adresse_mail
+                            ? contact.adresse_mail
+                            : '/',
                     }))}
                     functions={{
                         fonc1: () => {
@@ -353,15 +351,13 @@ function ContactsPage({
                         value1: contact.code_contact.toString(),
                         value2: contact.nom,
                         value3: contact.prenom,
-                        value4: contact.fonction == '' ? '/' : contact.fonction,
-                        value5:
-                            contact.numero_portable == ''
-                                ? '/'
-                                : contact.numero_portable,
-                        value6:
-                            contact.adresse_mail == ''
-                                ? '/'
-                                : contact.adresse_mail,
+                        value4: contact.fonction ? contact.fonction : '',
+                        value5: contact.numero_portable
+                            ? contact.numero_portable
+                            : '',
+                        value6: contact.adresse_mail
+                            ? contact.adresse_mail
+                            : '',
                     }))}
                     pageInfos={{
                         page,

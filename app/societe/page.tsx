@@ -275,7 +275,7 @@ function SocietesPage() {
     return (
         <>
             <div className={style.page}>
-                <h1 className={style.lg}>Entreprise</h1>
+                <h1 className={style.lg}>Entreprises</h1>
                 <List
                     items={Societes.map(Societe => ({
                         value1: Societe.code_Societe.toString(),

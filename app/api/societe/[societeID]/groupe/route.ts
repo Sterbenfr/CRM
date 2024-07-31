@@ -52,7 +52,14 @@ export async function GET(
     }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+    req: NextRequest,
+    {
+        params,
+    }: {
+        params: { societeID: string }
+    },
+) {
     let groupe: Groupe
     try {
         groupe = JSON.parse(await streamToString(req.body))
@@ -70,7 +77,11 @@ export async function POST(req: NextRequest) {
         console.log(groupe)
         const query = 'INSERT INTO `Groupe` SET ?'
         const [rows] = await connection.query(query, groupe)
-        return NextResponse.json(rows)
+        const [update] = await connection.query(
+            'UPDATE Entreprise SET code_Groupe_appartenance = ? WHERE code_Entreprise = ?',
+            [groupe.code_groupe, params.societeID],
+        )
+        return NextResponse.json({ rows, update })
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + error },

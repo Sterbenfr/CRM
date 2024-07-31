@@ -184,10 +184,10 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
             },
         ]
 
-        if (fields[6].value !== '') {
-            fields[7].required = false
-        } else if (fields[7].value !== '') {
+        if (fields[5].value !== '') {
             fields[6].required = false
+        } else if (fields[6].value !== '') {
+            fields[5].required = false
         }
 
         return fields

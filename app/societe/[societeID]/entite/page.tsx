@@ -546,7 +546,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         value3:
                             entite.telephone === '' ? '/' : entite.telephone,
                         value4: entite.mail === '' ? '/' : entite.mail,
-                        value5: entite.adresse,
+                        value5: entite.adresse ? entite.adresse : '/',
                         value6:
                             entite.date_arret_activite == null
                                 ? '/'
@@ -575,7 +575,7 @@ function EntitesPage({ params }: { params: { societeID: string } }) {
                         value3:
                             entite.telephone === '' ? '/' : entite.telephone,
                         value4: entite.mail === '' ? '/' : entite.mail,
-                        value5: entite.adresse,
+                        value5: entite.adresse ? entite.adresse : '',
                         value6:
                             entite.date_arret_activite == null
                                 ? '/'
