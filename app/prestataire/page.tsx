@@ -324,7 +324,6 @@ function PrestatairesPage() {
                 await res.json()
             setPrestataires(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         const fetchSearchDons = async () => {
@@ -342,7 +341,11 @@ function PrestatairesPage() {
 
         fetchDons()
         fetchSearchDons()
-    }, [page, itemsPerPage, generateFields, search])
+    }, [page, itemsPerPage, search])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

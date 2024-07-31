@@ -114,6 +114,8 @@ const fieldLabels: { [key: string]: string } = {
     prenom: 'Prénom',
     tel_perso: 'Téléphone personnel',
     password: 'Mot de passe',
+    //Interlocuteur
+    code_type_interlocuteur: "Type d'interlocuteur",
     //Societe
     code_Societe: 'Société',
     Logo: 'Logo',
@@ -224,7 +226,7 @@ const PopUp: React.FC<PopUpProps> = ({
 
     useEffect(() => {
         setInputs(fields)
-    }, [])
+    }, [fields])
 
     const handleInputChange = (id: string, value: string | boolean) => {
         // Invoke the function if provided
@@ -257,6 +259,7 @@ const PopUp: React.FC<PopUpProps> = ({
     }
 
     const handleAction = async () => {
+        setInputs(fields)
         const isAnyRequiredInputEmpty = inputs.some(
             input => input.required && !fieldLabels[input.id],
         )

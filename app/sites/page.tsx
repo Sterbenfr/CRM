@@ -252,7 +252,6 @@ function SitesPage() {
                 await res.json()
             setSites(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         const fetchSearchSites = async () => {
@@ -270,14 +269,11 @@ function SitesPage() {
 
         fetchSites()
         fetchSearchSites()
-    }, [
-        page,
-        itemsPerPage,
-        generateFields,
-        dateOuverture,
-        dateFermeture,
-        search,
-    ])
+    }, [page, itemsPerPage, dateOuverture, dateFermeture, search])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage)

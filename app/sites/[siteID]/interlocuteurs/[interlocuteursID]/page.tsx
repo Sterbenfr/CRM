@@ -19,6 +19,7 @@ interface ExtendedSession extends Session {
 
 interface InterlocuteurID {
     code_interlocuteur: number
+    code_site: number
     civilite: string
     nom: string
     prenom: string

@@ -160,7 +160,6 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
                 await res.json()
             setGroupes(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSearchGroupe = async () => {
@@ -181,7 +180,11 @@ function GroupesPage({ params }: { params: { societeID: string } }) {
         fetchGroupes()
         fetchSearchGroupe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.societeID, generateFields])
+    }, [page, itemsPerPage, params.societeID])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

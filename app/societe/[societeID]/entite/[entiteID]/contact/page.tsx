@@ -268,7 +268,6 @@ function ContactsPage({
                 await res.json()
             setContacts(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSearchContacts = async () => {
@@ -288,14 +287,11 @@ function ContactsPage({
 
         fetchContacts()
         fetchSearchContacts()
-    }, [
-        params.societeID,
-        params.entiteID,
-        page,
-        itemsPerPage,
-        search,
-        generateFields,
-    ])
+    }, [params.societeID, params.entiteID, page, itemsPerPage, search])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

@@ -239,7 +239,6 @@ function SocietesPage() {
                 await res.json()
             setSocietes(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSocieteSearch = async () => {
@@ -257,7 +256,11 @@ function SocietesPage() {
 
         fetchSocietes()
         fetchSocieteSearch()
-    }, [page, itemsPerPage, generateFields, search])
+    }, [page, itemsPerPage, search])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

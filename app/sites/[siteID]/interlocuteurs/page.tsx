@@ -10,13 +10,14 @@ import Image from 'next/image'
 
 export interface Interlocuteurs {
     code_interlocuteur: number
+    code_site: number
     civilite: string
     nom: string
     prenom: string
     tel_perso: string
     mail: string
     commentaires: string
-    code_type_utilisateur: number
+    code_type_interlocuteur: number
 }
 
 function InterlocuteursPage({ params }: { params: { siteID: string } }) {
@@ -148,11 +149,11 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
             },
 
             {
-                id: 'code_type_utilisateur',
+                id: 'code_type_interlocuteur',
                 type: 'select',
                 required: true,
                 value: codeTypeUtilisateur,
-                url: `../../../../../api/select/utilisateurs`,
+                url: `../../../../../api/sites/${params.siteID}/interlocuteurs/type-interlocuteur`,
                 onChange: handleCodeTypeUtilisateurChange,
             },
             {
@@ -215,7 +216,6 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                 await res.json()
             setInterlocuteurs(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSearchInterlocuteurs = async () => {
@@ -236,7 +236,11 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
         fetchInterlocuteurs()
         fetchSearchInterlocuteurs()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.siteID, generateFields])
+    }, [page, itemsPerPage, params.siteID])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
@@ -334,7 +338,6 @@ function InterlocuteursPage({ params }: { params: { siteID: string } }) {
                         {
                             label: `Types d'interlocuteurs`,
                             url: 'type-interlocuteur',
-
                         },
                     ]}
                 />

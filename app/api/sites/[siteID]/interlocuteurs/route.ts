@@ -27,12 +27,12 @@ export async function GET(
         const offset = (pageNumber - 1) * limitNumber
 
         const [rows] = await connection.query(
-            'SELECT * FROM `Interlocuteurs` LEFT JOIN SitesRattachement ON Interlocuteurs.code_interlocuteur = SitesRattachement.code_interlocuteur WHERE SitesRattachement.code_site = ? LIMIT ?, ?',
+            'SELECT * FROM `Interlocuteurs` WHERE code_site = ? LIMIT ?, ?',
             [siteID, offset, limitNumber],
         )
 
         const [totalResult] = await connection.query(
-            'SELECT COUNT(*) as count FROM `Interlocuteurs` LEFT JOIN SitesRattachement ON Interlocuteurs.code_interlocuteur = SitesRattachement.code_interlocuteur WHERE SitesRattachement.code_site = ?',
+            'SELECT COUNT(*) as count FROM `Interlocuteurs` WHERE code_site = ?',
             [siteID],
         )
 
@@ -48,9 +48,8 @@ export async function GET(
     }
 }
 
-type extendedInterlocuteurs = Interlocuteurs & { code_site: string }
 export async function POST(req: NextRequest) {
-    let Interlocuteur: extendedInterlocuteurs
+    let Interlocuteur: Interlocuteurs
     try {
         Interlocuteur = JSON.parse(await streamToString(req.body))
     } catch (error) {
@@ -62,25 +61,20 @@ export async function POST(req: NextRequest) {
         !Interlocuteur.civilite ||
         !Interlocuteur.nom ||
         !Interlocuteur.prenom ||
-        !Interlocuteur.code_type_utilisateur
+        !Interlocuteur.code_type_interlocuteur
     ) {
         return NextResponse.json(
             { error: 'Missing product data' },
             { status: 400 },
         )
     }
-    const { code_site, ...user } = Interlocuteur
     try {
         const query = 'INSERT INTO `Interlocuteurs` SET ?'
-        const [result] = await connection.query<ResultSetHeader>(query, user)
-        const query2 =
-            'INSERT INTO `SitesRattachement` SET code_interlocuteur = ?, code_site = ?, code_type_utilisateur = ?'
-        const [rows2] = await connection.query(query2, [
-            result.insertId,
-            code_site,
-            Interlocuteur.code_type_utilisateur,
-        ])
-        return NextResponse.json({ result, rows2 })
+        const [result] = await connection.query<ResultSetHeader>(
+            query,
+            Interlocuteur,
+        )
+        return NextResponse.json({ result })
     } catch (error) {
         return NextResponse.json(
             { error: 'Internal Server Error : ' + error },

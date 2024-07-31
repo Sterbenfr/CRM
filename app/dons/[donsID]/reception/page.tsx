@@ -336,7 +336,6 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                 await res.json()
             setReceptions(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         const fetchSearchDons = async () => {
@@ -356,7 +355,11 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
 
         fetchDons()
         fetchSearchDons()
-    }, [page, itemsPerPage, params.donsID, generateFields, search])
+    }, [page, itemsPerPage, params.donsID, search])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

@@ -224,7 +224,6 @@ function UtilisateursPage() {
                 await res.json()
             setUtilisateurs(data)
             setTotalItems(total) // set the total items
-            setFields(generateFields())
         }
 
         const fetchSearchUtilisateurs = async () => {
@@ -243,7 +242,11 @@ function UtilisateursPage() {
         fetchUtilisateurs()
         fetchSearchUtilisateurs()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, generateFields])
+    }, [page, itemsPerPage])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
 
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {

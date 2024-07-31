@@ -229,7 +229,6 @@ function InteractionsPage({
                 await res.json()
             setInteractions(data)
             setTotalItems(total)
-            setFields(generateFields())
         }
 
         const fetchSearchInteractions = async () => {
@@ -250,7 +249,12 @@ function InteractionsPage({
         fetchInteractions()
         fetchSearchInteractions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, itemsPerPage, params.societeID, params.entiteID, generateFields])
+    }, [page, itemsPerPage, params.societeID, params.entiteID])
+
+    useEffect(() => {
+        setFields(generateFields())
+    }, [generateFields])
+
     // add a function to handle page changes
     const handlePageChange = (newPage: number) => {
         setPage(newPage)
