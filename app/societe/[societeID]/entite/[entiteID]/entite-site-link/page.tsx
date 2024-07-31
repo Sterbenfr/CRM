@@ -25,9 +25,10 @@ function ContactEntitePage({
     params: { societeID: string; entiteID: string }
 }) {
     const [contacts, setContacts] = useState<ContactEntite[]>([])
-    const [page, setPage] = useState(1) 
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [search, setSearch] = useState<ContactEntite[]>([])
 
     const [codeTypeDeSite, setCodeTypeDeSite] = useState('AD')
     const [codeSiteSuivi, setCodeSiteSuivi] = useState('')
@@ -148,7 +149,20 @@ function ContactEntitePage({
             setTotalItems(total)
         }
 
+        const fetchSearchContacts = async () => {
+            const res = await fetch(
+                `../../../../../api/societe/${params.societeID}/entite/${params.entiteID}/entite-site-link`,
+            )
+
+            if (!res.ok) {
+                throw new Error('Failed to fetch data')
+            }
+            const { data }: { data: ContactEntite[] } = await res.json()
+            setSearch(data)
+        }
+
         fetchContacts()
+        fetchSearchContacts()
     }, [page, itemsPerPage, params])
 
     useEffect(() => {
@@ -206,7 +220,7 @@ function ContactEntitePage({
                         att3: "Site suivant l'entité",
                         att4: 'Utilisateur suivant l’entité',
                     }}
-                    searchItems={contacts.map(contact => ({
+                    searchItems={search.map(contact => ({
                         value1: contact.code_entite.toString(),
                         value2: contact.raison_sociale
                             ? contact.raison_sociale

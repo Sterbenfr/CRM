@@ -25,7 +25,7 @@ export interface Reception {
 
 function ReceptionsPage({ params }: { params: { donsID: string } }) {
     const [Receptions, setReceptions] = useState<Reception[]>([])
-    const [page, setPage] = useState(1) 
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Reception[]>([])
@@ -355,7 +355,7 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
 
         fetchDons()
         fetchSearchDons()
-    }, [page, itemsPerPage, params.donsID, search])
+    }, [page, itemsPerPage, params.donsID])
 
     useEffect(() => {
         setFields(generateFields())
@@ -447,8 +447,8 @@ function ReceptionsPage({ params }: { params: { donsID: string } }) {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} 
-                    totalItems={totalItems} 
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

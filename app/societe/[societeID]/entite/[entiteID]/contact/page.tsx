@@ -29,7 +29,7 @@ function ContactsPage({
     params: { societeID: string; entiteID: string }
 }) {
     const [contacts, setContacts] = useState<Contact[]>([])
-    const [page, setPage] = useState(1) 
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Contact[]>([])
@@ -197,7 +197,7 @@ function ContactsPage({
                 id: 'photo',
                 type: 'file',
                 value: null,
-            }, 
+            },
             {
                 id: 'fonction',
                 type: 'input',
@@ -205,7 +205,7 @@ function ContactsPage({
                 placeholder: 'Exemple: Assistante',
                 maxLength: 30,
                 onInputChange: handleFonction,
-            }, 
+            },
             {
                 id: 'service',
                 type: 'input',
@@ -267,7 +267,7 @@ function ContactsPage({
             const { data, total }: { data: Contact[]; total: number } =
                 await res.json()
             setContacts(data)
-            setTotalItems(total) 
+            setTotalItems(total)
         }
 
         const fetchSearchContacts = async () => {
@@ -287,7 +287,8 @@ function ContactsPage({
 
         fetchContacts()
         fetchSearchContacts()
-    }, [params.societeID, params.entiteID, page, itemsPerPage, search])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.societeID, params.entiteID, page, itemsPerPage])
 
     useEffect(() => {
         setFields(generateFields())
@@ -368,8 +369,8 @@ function ContactsPage({
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} 
-                    totalItems={totalItems} 
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

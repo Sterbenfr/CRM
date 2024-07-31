@@ -23,7 +23,7 @@ export interface Societe {
 
 function SocietesPage() {
     const [Societes, setSocietes] = useState<Societe[]>([])
-    const [page, setPage] = useState(1) 
+    const [page, setPage] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [search, setSearch] = useState<Societe[]>([])
@@ -156,7 +156,7 @@ function SocietesPage() {
                 placeholder: 'Exemple: 453684259',
                 maxLength: 9,
                 onInputChange: handleSirenChange,
-            }, 
+            },
             {
                 id: 'code_type_activite_Societe',
                 type: 'select',
@@ -256,7 +256,8 @@ function SocietesPage() {
 
         fetchSocietes()
         fetchSocieteSearch()
-    }, [page, itemsPerPage, search])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, itemsPerPage])
 
     useEffect(() => {
         setFields(generateFields())
@@ -268,7 +269,7 @@ function SocietesPage() {
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) 
+        setPage(1)
     }
 
     return (
@@ -333,8 +334,8 @@ function SocietesPage() {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} 
-                    totalItems={totalItems} 
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />

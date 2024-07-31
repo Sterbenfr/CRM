@@ -172,7 +172,7 @@ function UtilisateursPage() {
                 maxLength: 12,
                 placeholder: 'Exemple: 0601020304',
                 onInputChange: handleTelPersoChange,
-            }, 
+            },
             {
                 id: 'mail',
                 type: 'input',
@@ -217,7 +217,7 @@ function UtilisateursPage() {
             const { data, total }: { data: Utilisateurs[]; total: number } =
                 await res.json()
             setUtilisateurs(data)
-            setTotalItems(total) 
+            setTotalItems(total)
         }
 
         const fetchSearchUtilisateurs = async () => {
@@ -248,7 +248,7 @@ function UtilisateursPage() {
 
     const handleItemsPerPageChange = (newItemsPerPage: number) => {
         setItemsPerPage(newItemsPerPage)
-        setPage(1) 
+        setPage(1)
     }
 
     return (
@@ -318,8 +318,8 @@ function UtilisateursPage() {
                 />
                 <Pagination
                     onPageChange={handlePageChange}
-                    onItemsPerPageChange={handleItemsPerPageChange} 
-                    totalItems={totalItems} 
+                    onItemsPerPageChange={handleItemsPerPageChange}
+                    totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={page}
                 />{' '}
